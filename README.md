@@ -1,11 +1,18 @@
 # IR2 QA Project on bAbi Toy Tasks
 The main assignment of IR2. 
 
-[The paper introducing the bAbi toy tasks](./question-answering-2015.pdf)
+# Documents
 
-bAbi website: https://research.fb.com/downloads/babi/
+### bAbi
+- [The paper introducing the bAbi toy tasks](./question-answering-2015.pdf)
 
-# Related Work
+- bAbi website: https://research.fb.com/downloads/babi/
+
+### Sharelatex
+
+- https://www.sharelatex.com/project/5a004d7dc2a42c52c415bdb5
+
+## Related Work
 ### Papers
 
 LSTM with Attention
@@ -21,10 +28,6 @@ Convolutional Sequence to Sequence
 Memory Networks
 
 - https://arxiv.org/pdf/1503.08895.pdf Memory networks using weak supervision, linked to by the FB bAbi folks.
-
-### Sharelatex
-
-- https://www.sharelatex.com/project/5a004d7dc2a42c52c415bdb5
 
 ### Tutorials
 On Deep learning NLP and memory networks
