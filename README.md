@@ -1,11 +1,10 @@
-# ir2_main_assignment
+# IR2 QA Project on bAbi Toy Tasks
 The main assignment of IR2. 
-
 
 # Documents
 ### Papers
 
-Lstm with attention
+LSTM with attention
 
 - https://arxiv.org/pdf/1509.06664.pdf
 
@@ -18,12 +17,13 @@ Convolutional Neural Networks
 - https://www.sharelatex.com/project/5a004d7dc2a42c52c415bdb5
 
 ### Tutorials
-On Deep learning nlp and memory networks
+On Deep learning NLP and memory networks
 
 - http://web.stanford.edu/class/cs224n/syllabus.html
 - http://web.stanford.edu/class/cs224n/lectures/cs224n-2017-lecture16-DMN-QA.pdf
 - https://www.youtube.com/watch?v=T3octNTE7Is
 
-Lstm tutorial + attention
+LSTM tutorial + attention
 
-- https://github.com/tensorflow/nmt
+- https://github.com/tensorflow/nmt a good tutorial on LSTM encoder-decoder systems with attention in Tensorflow.
+- http://colah.github.io/posts/2015-08-Understanding-LSTMs/ a good read on how LSTM cells work and the intuition behind them.
