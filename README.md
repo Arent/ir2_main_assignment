@@ -1,7 +1,11 @@
 # IR2 QA Project on bAbi Toy Tasks
 The main assignment of IR2. 
 
-# Documents
+[The paper introducing the bAbi toy tasks](./question-answering-2015.pdf)
+
+bAbi website: https://research.fb.com/downloads/babi/
+
+# Related Work
 ### Papers
 
 LSTM with Attention
