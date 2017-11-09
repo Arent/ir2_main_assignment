@@ -8,7 +8,7 @@ LSTM with attention
 
 - https://arxiv.org/pdf/1509.06664.pdf
 
-Convolutional Neural Networks
+Convolutional Sequence to Sequence
 
 - https://arxiv.org/pdf/1705.03122.pdf
 
