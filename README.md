@@ -14,6 +14,10 @@ Convolutional Sequence to Sequence
 
 - https://arxiv.org/pdf/1705.03122.pdf
 
+Memory Networks
+
+- https://arxiv.org/pdf/1503.08895.pdf Memory networks using weak supervision, linked to by the FB bAbi folks.
+
 ### Sharelatex
 
 - https://www.sharelatex.com/project/5a004d7dc2a42c52c415bdb5
@@ -21,9 +25,8 @@ Convolutional Sequence to Sequence
 ### Tutorials
 On Deep learning NLP and memory networks
 
-- http://web.stanford.edu/class/cs224n/syllabus.html
-- http://web.stanford.edu/class/cs224n/lectures/cs224n-2017-lecture16-DMN-QA.pdf
-- https://www.youtube.com/watch?v=T3octNTE7Is
+- http://web.stanford.edu/class/cs224n/syllabus.html Stanford NLP + Deep Learning course
+- http://web.stanford.edu/class/cs224n/lectures/cs224n-2017-lecture16-DMN-QA.pdf / https://www.youtube.com/watch?v=T3octNTE7Is Lecture from that same course on dynamic memory networks.
 
 LSTM tutorial + attention
 
