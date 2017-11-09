@@ -27,3 +27,4 @@ LSTM tutorial + attention
 
 - https://github.com/tensorflow/nmt a good tutorial on LSTM encoder-decoder systems with attention in Tensorflow.
 - http://colah.github.io/posts/2015-08-Understanding-LSTMs/ a good read on how LSTM cells work and the intuition behind them.
+- https://distill.pub/2016/augmented-rnns/
