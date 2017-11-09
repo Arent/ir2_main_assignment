@@ -4,8 +4,10 @@ The main assignment of IR2.
 # Documents
 ### Papers
 
-LSTM with attention
+LSTM with Attention
 
+- https://arxiv.org/pdf/1409.0473.pdf Paper that introduces attention in an encoder-decoder architecture for NMT, this is the same type of architecture that we will use. Known as Bahdanau's attention, implemented in Tensorflow already.
+- https://arxiv.org/pdf/1508.04025.pdf Paper that proposes a lot of variations on Bahdanau's attention version above, one of which is used a lot today as an alternative to Bahdanau attention, known as Luong attention. Luong is the guy who wrote the tensorflow/nmt tutorial. Also implemented in Tensorflow already.
 - https://arxiv.org/pdf/1509.06664.pdf
 
 Convolutional Sequence to Sequence
