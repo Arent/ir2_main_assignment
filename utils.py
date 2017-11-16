@@ -165,8 +165,8 @@ def pad_to_k(x, k):
 
 
 def pad_results(data_list, k):
-    lengths = np.array([len(example) for example in data_list])
-    padded_examples = np.array([pad_to_k(example, k) for example in data_list ])
+    lengths = np.array([len(example) for example in data_list])[np.newaxis, :]
+    padded_examples = np.array([pad_to_k(example, k) for example in data_list ])[np.newaxis, :]
 
     return padded_examples.astype(np.int32), lengths.astype(np.int32)
 

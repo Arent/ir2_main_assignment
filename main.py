@@ -19,7 +19,7 @@ parser.add_argument('--task', type=str, default='1',
 parser.add_argument('--batch_size', type=int, default=80,
                     help='Batch size')
 parser.add_argument('--seperate_context', type=bool, default=True,
-                    help='Batch size')
+                    help='Seprate context from questions')
 
 args = parser.parse_args()
 
@@ -33,10 +33,11 @@ hidden_state_size_context = 100
 hidden_state_size_question = 100
 batch_size = 1
 learning_rate = 1e-4
-
+epochs = 25
 
 # Load the training / testing data.
 train, test = utils.load_data(args.task, args.task, args.data_dir, word2id, tokenizer, args.batch_size, args.seperate_context)
+train_examples_num = len(train)
 train_context, train_question, train_answer  = list(zip(*train))
 test_context, test_question, test_answer  = list(zip(*train))
 
@@ -57,9 +58,10 @@ test_question_padded, test_question_lengts = utils.pad_results(test_question, ma
 lengths_question = tf.placeholder(dtype=tf.int32, shape=[batch_size])
 lengths_context = tf.placeholder(dtype=tf.int32, shape=[batch_size])
 answer = tf.placeholder(dtype=tf.int32, shape=[batch_size])
+rnn_input_context = tf.placeholder(tf.int32, shape=[batch_size, max_length])
+rnn_input_question = tf.placeholder(tf.int32, shape=[batch_size, max_length])
 
-rnn_input_context = tf.placeholder(tf.int32, [batch_size, max_length])
-rnn_input_question = tf.placeholder(tf.int32, [batch_size, max_length])
+
 
 embedding_matrix_context = tf.get_variable("embedding_matrix_context", \
         [vocab_size, embedding_size], dtype=tf.float32)
@@ -69,26 +71,28 @@ embedding_matrix_question = tf.get_variable("embedding_matrix_question", \
         [vocab_size, embedding_size], dtype=tf.float32)
 embeddings_question = tf.nn.embedding_lookup(embedding_matrix_question, rnn_input_question) # [1, time, emb_size]
 
-print('embeddings_question', embeddings_question)
+# print('embeddings_question', embeddings_question)
 print('embeddings_context', embeddings_context)
 
-print('\n'*10)
-
 # Build RNN cell
-lstm_context = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_context)
-lstm_question = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_question)
-    
-# Run Dynamic RNN encoder_outpus: [max_time, batch_size, num_units] encoder_state: [batch_size, num_units]
-initial_state_context = lstm_context.zero_state(batch_size, tf.float32)
-encoder_outputs_context, encoder_state_context = tf.nn.dynamic_rnn(
-    cell=lstm_context, inputs=embeddings_context,
-    sequence_length=lengths_context, time_major=True, initial_state =initial_state_context)
+with tf.variable_scope("context"):
+    lstm_context = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_context)
+    # initial_state_context = lstm_context.zero_state(batch_size, tf.float32)
+    encoder_outputs_context, encoder_state_context = tf.nn.dynamic_rnn(
+        cell=lstm_context, inputs=embeddings_context, dtype=tf.float32,
+        sequence_length=lengths_context, time_major=False)#, initial_state =initial_state_context)
+
+with tf.variable_scope("question"):
+    lstm_question = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_question)
+    # initial_state_question = lstm_context.zero_state(batch_size, tf.float32)
+    encoder_outputs_question, encoder_state_question = tf.nn.dynamic_rnn(
+        lstm_question, embeddings_question, dtype=tf.float32,
+        sequence_length=lengths_question, time_major=False)#, initial_state=initial_state_question)
+    # Run Dynamic RNN encoder_outpus: [max_time, batch_size, num_units] encoder_state: [batch_size, num_units]
 
 
-initial_state_question = lstm_context.zero_state(batch_size, tf.float32)
-encoder_outputs_question, encoder_state_question = tf.nn.dynamic_rnn(
-    lstm_question, embeddings_question,
-    sequence_length=lengths_question, time_major=True, initial_state=initial_state_question)
+
+
 
 combined_context_question = encoder_state_context[1] + encoder_state_question[1]
 
@@ -102,12 +106,16 @@ train_op = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy_loss)
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    for i in range(len(train_context_padded)):
-        o, train_loss = sess.run(train_op, cross_entropy_loss ,
-                feeddict={lengths_question:train_question_lengts[i] , lengths_context:train_context_lengts[i], 
-                rnn_input_context: train_context_padded[i], rnn_input_question: train_question_padded[i], answer:train_answer[i]})
-        
-        print('Step: ', i , ' loss: ', train_loss)
+    for e in range(epochs):
+        for i in range(train_examples_num):
+
+            answer_data = np.array(train_answer[i])
+
+            o, train_loss = sess.run([train_op, cross_entropy_loss] ,
+                    feed_dict={lengths_question:train_question_lengts[:,i] , lengths_context:train_context_lengts[:,i], 
+                    rnn_input_context: train_context_padded[:,i], rnn_input_question: train_question_padded[:,i], answer:answer_data})
+            if i % 100 == 0:
+                print('Epoch:',e,'Step: ', i , ' loss: ', train_loss)
 
 
 
