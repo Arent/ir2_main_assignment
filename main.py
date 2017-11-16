@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import argparse
 import os
-
+import random
 from nltk.tokenize.moses import MosesTokenizer
 
 import utils
@@ -28,12 +28,12 @@ word2id, id2word = utils.load_vocab(args.vocab)
 vocab_size = len(word2id)
 tokenizer = MosesTokenizer()
 
-embedding_size = 50
-hidden_state_size_context = 100
-hidden_state_size_question = 100
+embedding_size = 25
+hidden_state_size_context = 45
+hidden_state_size_question = 45
 batch_size = 1
-learning_rate = 1e-4
-epochs = 25
+learning_rate = 1e-3
+epochs = 10
 
 # Load the training / testing data.
 train, test = utils.load_data(args.task, args.task, args.data_dir, word2id, tokenizer, args.batch_size, args.seperate_context)
@@ -48,7 +48,6 @@ max_length = max(len(l) for l in train_context + test_context +
 
 train_context_padded, train_context_lengts = utils.pad_results(train_context, max_length)
 train_question_padded, train_question_lengts = utils.pad_results(train_question, max_length)
-
 test_context_padded, test_context_lengts = utils.pad_results(test_context, max_length)
 test_question_padded, test_question_lengts = utils.pad_results(test_question, max_length)
 
@@ -71,8 +70,6 @@ embedding_matrix_question = tf.get_variable("embedding_matrix_question", \
         [vocab_size, embedding_size], dtype=tf.float32)
 embeddings_question = tf.nn.embedding_lookup(embedding_matrix_question, rnn_input_question) # [1, time, emb_size]
 
-# print('embeddings_question', embeddings_question)
-print('embeddings_context', embeddings_context)
 
 # Build RNN cell
 with tf.variable_scope("context"):
@@ -88,29 +85,34 @@ with tf.variable_scope("question"):
     encoder_outputs_question, encoder_state_question = tf.nn.dynamic_rnn(
         lstm_question, embeddings_question, dtype=tf.float32,
         sequence_length=lengths_question, time_major=False)#, initial_state=initial_state_question)
-    # Run Dynamic RNN encoder_outpus: [max_time, batch_size, num_units] encoder_state: [batch_size, num_units]
 
 
 
 
 
 combined_context_question = encoder_state_context[1] + encoder_state_question[1]
-
 prediction_weights = tf.get_variable("prediction_weights", [hidden_state_size_context, vocab_size])
 logits = tf.matmul(combined_context_question, prediction_weights)
 
 labels = labels=tf.one_hot(indices=answer, depth=vocab_size)
 cross_entropy_loss = tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels)
-train_op = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy_loss)
+
+
+optimizer = tf.train.AdamOptimizer(learning_rate)
+
+gradients, variables = zip(*optimizer.compute_gradients(cross_entropy_loss))
+gradients, _ = tf.clip_by_global_norm(gradients, 3.0)
+train_op = optimizer.apply_gradients(zip(gradients, variables))
+
+
+# train_op = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy_loss)
 
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     for e in range(epochs):
         for i in range(train_examples_num):
-
             answer_data = np.array(train_answer[i])
-
             o, train_loss = sess.run([train_op, cross_entropy_loss] ,
                     feed_dict={lengths_question:train_question_lengts[:,i] , lengths_context:train_context_lengts[:,i], 
                     rnn_input_context: train_context_padded[:,i], rnn_input_question: train_question_padded[:,i], answer:answer_data})
