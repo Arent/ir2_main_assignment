@@ -137,7 +137,7 @@ def _init_babi(fname, seperate_context):
             if seperate_context:
                 tasks.append((C, Q, A))
             else:
-                tasks.append((Q, A))
+                tasks.append((C + Q, A))
     return tasks
 
 
@@ -157,7 +157,7 @@ def _process_data(data_list, tokenizer, w2i):
 
 def pad_to_k(x, k):    
     if len(x) < k:
-        return(np.pad(x, (0, 0),(0, k-len(x)) , 'constant'))
+        return(np.pad(x, (0, k-len(x)) , 'constant'))
     elif len(x) > k:
         return x[0:k]
     else:
@@ -165,9 +165,10 @@ def pad_to_k(x, k):
 
 
 def pad_results(data_list, k):
-    lengths = [len(example) for example in data_list]
-    padded_examples = [pad_to_k(example) for example in data_list ]
-    return padded_examples, lengths
+    lengths = np.array([len(example) for example in data_list])
+    padded_examples = np.array([pad_to_k(example, k) for example in data_list ])
+
+    return padded_examples.astype(np.int32), lengths.astype(np.int32)
 
 
 
