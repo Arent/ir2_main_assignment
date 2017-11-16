@@ -38,27 +38,17 @@ epochs = 10
 # Load the training / testing data.
 train, test = utils.load_data(args.task, args.task, args.data_dir, word2id, tokenizer, args.batch_size, args.seperate_context)
 train_examples_num = len(train)
-train_context, train_question, train_answer  = list(zip(*train))
-test_context, test_question, test_answer  = list(zip(*train))
-
-
-max_length = max(len(l) for l in train_context + test_context +
-        train_question + test_question + train_answer + test_answer)
-
-
-train_context_padded, train_context_lengts = utils.pad_results(train_context, max_length)
-train_question_padded, train_question_lengts = utils.pad_results(train_question, max_length)
-test_context_padded, test_context_lengts = utils.pad_results(test_context, max_length)
-test_question_padded, test_question_lengts = utils.pad_results(test_question, max_length)
+max_length = utils.get_max_length(train + test)
+print('max_length', max_length)
 
 
 
 
-lengths_question = tf.placeholder(dtype=tf.int32, shape=[batch_size])
-lengths_context = tf.placeholder(dtype=tf.int32, shape=[batch_size])
-answer = tf.placeholder(dtype=tf.int32, shape=[batch_size])
-rnn_input_context = tf.placeholder(tf.int32, shape=[batch_size, max_length])
-rnn_input_question = tf.placeholder(tf.int32, shape=[batch_size, max_length])
+lengths_question = tf.placeholder(dtype=tf.int32, shape=[None])
+lengths_context = tf.placeholder(dtype=tf.int32, shape=[None])
+answer = tf.placeholder(dtype=tf.int32, shape=[None])
+rnn_input_context = tf.placeholder(tf.int32, shape=[None, max_length])
+rnn_input_question = tf.placeholder(tf.int32, shape=[None, max_length])
 
 
 
@@ -96,7 +86,7 @@ logits = tf.matmul(combined_context_question, prediction_weights)
 
 labels = labels=tf.one_hot(indices=answer, depth=vocab_size)
 cross_entropy_loss = tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels)
-
+print('cross_entropy_loss', cross_entropy_loss)
 
 optimizer = tf.train.AdamOptimizer(learning_rate)
 
@@ -105,19 +95,23 @@ gradients, _ = tf.clip_by_global_norm(gradients, 3.0)
 train_op = optimizer.apply_gradients(zip(gradients, variables))
 
 
-# train_op = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy_loss)
 
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     for e in range(epochs):
-        for i in range(train_examples_num):
-            answer_data = np.array(train_answer[i])
+        i = 0
+        for context_batch, question_batch, answer_batch in utils.batch_generator(train, batch_size, max_length):
+            i +=1
+            context, context_lengths = context_batch
+            question, question_lengths = question_batch
+
             o, train_loss = sess.run([train_op, cross_entropy_loss] ,
-                    feed_dict={lengths_question:train_question_lengts[:,i] , lengths_context:train_context_lengts[:,i], 
-                    rnn_input_context: train_context_padded[:,i], rnn_input_question: train_question_padded[:,i], answer:answer_data})
+                    feed_dict={lengths_question:question_lengths, lengths_context:context_lengths, 
+                    rnn_input_context: context, rnn_input_question:question, answer:answer_batch})
             if i % 100 == 0:
-                print('Epoch:',e,'Step: ', i , ' loss: ', train_loss)
+                print('Epoch:',e,'Step: ', i , ' train loss: ', train_loss)
+
 
 
 

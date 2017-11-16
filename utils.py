@@ -165,13 +165,42 @@ def pad_to_k(x, k):
 
 
 def pad_results(data_list, k):
-    lengths = np.array([len(example) for example in data_list])[np.newaxis, :]
-    padded_examples = np.array([pad_to_k(example, k) for example in data_list ])[np.newaxis, :]
+    lengths = np.array([len(example) for example in data_list])
+    padded_examples = np.array([pad_to_k(example, k) for example in data_list ])
 
     return padded_examples.astype(np.int32), lengths.astype(np.int32)
 
+def get_max_length(data_tuple_list):
+    context, question, answer =  list(zip(*data_tuple_list))
+    return max(len(l) for l in context + question)
 
+def batch_generator(data, batch_size, max_length):
+    '''
+    This function:
+    - unpacks and pads the data
+    - Randomly shuffles the data
+    - Returns a batch_size partion of the data each time it is called. 
+    '''
+    
+    random.shuffle(data)
+    size = len(data)
+    #unpack data
+    context, question, answer  = list(zip(*data))
+   
+    #Pad quesiton and context data to max length
+    context, length_context = pad_results(context, max_length)
 
+    question, length_question = pad_results(question, max_length)
+
+    batch_partitions = np.linspace(start=0, stop=size - (size%batch_size), num=int(size/batch_size),endpoint=False)
+    for idx in batch_partitions:
+        start = int(idx)
+        end = int(start + batch_size -1)
+        context_batch = (context[start:end, :], length_context[start:end])
+        question_batch = (question[start:end, :], length_question[start:end])
+        answer_batch = answer[start:end]
+
+        yield context_batch, question_batch, answer_batch
 
 
 
