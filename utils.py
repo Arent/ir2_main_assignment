@@ -1,10 +1,10 @@
 import os
-
+import random
 import numpy as np
 import tensorflow as tf
 
 # source: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def load_data(id, test_id, data_dir, w2i, tokenizer, batch_size):
+def load_data(id, test_id, data_dir, w2i, tokenizer, batch_size, seperate_context=False):
     babi_map = {
         "1": "qa1_single-supporting-fact",
         "2": "qa2_two-supporting-facts",
@@ -54,8 +54,8 @@ def load_data(id, test_id, data_dir, w2i, tokenizer, batch_size):
         test_id = id 
     babi_name = babi_map[id]
     babi_test_name = babi_map[test_id]
-    babi_train_raw = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name))
-    babi_test_raw = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name))
+    babi_train_raw = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name), seperate_context)
+    babi_test_raw = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name), seperate_context)
 
     return _process_data(babi_train_raw, tokenizer, w2i), _process_data(babi_test_raw, tokenizer, w2i)
 
@@ -64,7 +64,10 @@ def load_vocab(filename):
   w2i = {}
   i2w = {}
   with open(filename) as f:
-    for i, line in enumerate(f):
+    lines = f.readlines()
+    random.shuffle(lines)
+
+    for i, line in enumerate(lines):
       word = line[:-1]
       w2i[word] = i
       i2w[i] = word
@@ -74,7 +77,7 @@ def _to_index(word, w2i):
   return w2i[word] if word in w2i else w2i['<unk>']
 
 # adapted from: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def _init_babi(fname):
+def _init_babi_old(fname):
 
     tasks = []
     for i, line in enumerate(open(fname)):
@@ -88,6 +91,7 @@ def _init_babi(fname):
         line = line.replace('.', ' . ')
         line = line.replace('?', ' ? ')
         line = line[line.find(' ')+1:]
+
         if line.find('?') == -1:
             C += line.lower()
         else:
@@ -99,10 +103,80 @@ def _init_babi(fname):
             tasks.append((Q, A))
     return tasks
 
-def _process_data(data, tokenizer, w2i):
+
+def _init_babi(fname, seperate_context):
+
+    tasks = []
+    for i, line in enumerate(open(fname)):
+        #Find the first space in the line. The id is the characters left from that.
+        id = int(line[0:line.find(' ')]) 
+        #The id represent the line ids for one question. Reset if id =1
+        if id == 1:
+            C = "" #Context
+            Q = "" #Question
+            A = "" #Answer
+
+        line = line.strip() 
+        line = line.replace('.', ' . ')
+        line = line.replace('?', ' ? ')
+        line = line[line.find(' ')+1:]
+        
+        #Append the the lines to the context if the question hasn't arised yet
+        if line.find('?') == -1:
+            C += line.lower()
+        else:
+            #Question mark is found. Parse the answer and save the context, question and answer
+            #Last line contains the question annser, the id's of the supporting facts and a tab
+
+            idx = line.find('?') + 1
+            Q = line[:idx]
+
+            tmp = line[idx+1:].split('\t')
+            A = tmp[1].strip()
+
+            if seperate_context:
+                tasks.append((C, Q, A))
+            else:
+                tasks.append((Q, A))
+    return tasks
+
+
+def _process_data(data_list, tokenizer, w2i):
     def to_index(word):
       return w2i[word] if word in w2i else w2i['<unk>']
+    
+    data_list_ids= [] 
+    for data_tuple in data_list:
+        data_tuple_words = [tokenizer.tokenize(element.lower()) for element in list(data_tuple)]
+        new_tuple = [ [to_index(word) for word in element] for element in data_tuple_words]
+        data_list_ids.append(new_tuple)
 
-    data = map(lambda x: (tokenizer.tokenize(x[0].lower()), x[1]), data)
-    data = map(lambda x: ([to_index(w) for w in x[0]], to_index(x[1])), data)
-    return data
+    return data_list_ids
+
+
+
+def pad_to_k(x, k):
+    sh = x.shape
+    if len(sh) != 2:
+        raise NotImplementedError
+    
+    if sh[1] < k:
+        return(np.pad(x, [(0, 0),(0, k-sh[1])], 'constant'))
+    elif sh[1] > k:
+        return x[:,0:k]
+    else:
+        return x
+    
+
+
+
+def pad_results(data_list, k):
+    for example in data_list:
+
+
+
+
+
+
+
+
