@@ -44,11 +44,11 @@ print('max_length', max_length)
 
 
 
-lengths_question = tf.placeholder(dtype=tf.int32, shape=[None])
-lengths_context = tf.placeholder(dtype=tf.int32, shape=[None])
-answer = tf.placeholder(dtype=tf.int32, shape=[None])
-rnn_input_context = tf.placeholder(tf.int32, shape=[None, max_length])
-rnn_input_question = tf.placeholder(tf.int32, shape=[None, max_length])
+lengths_question = tf.placeholder(dtype=tf.int32, shape=[batch_size])
+lengths_context = tf.placeholder(dtype=tf.int32, shape=[batch_size])
+answer = tf.placeholder(dtype=tf.int32, shape=[batch_size])
+rnn_input_context = tf.placeholder(tf.int32, shape=[batch_size, max_length])
+rnn_input_question = tf.placeholder(tf.int32, shape=[batch_size, max_length])
 
 
 
@@ -84,9 +84,9 @@ combined_context_question = encoder_state_context[1] + encoder_state_question[1]
 prediction_weights = tf.get_variable("prediction_weights", [hidden_state_size_context, vocab_size])
 logits = tf.matmul(combined_context_question, prediction_weights)
 
-labels = labels=tf.one_hot(indices=answer, depth=vocab_size)
+labels=tf.one_hot(indices=answer, depth=vocab_size)
 cross_entropy_loss = tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels)
-print('cross_entropy_loss', cross_entropy_loss)
+print('labels', cross_entropy_loss)
 
 optimizer = tf.train.AdamOptimizer(learning_rate)
 

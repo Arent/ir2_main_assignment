@@ -186,6 +186,8 @@ def batch_generator(data, batch_size, max_length):
     size = len(data)
     #unpack data
     context, question, answer  = list(zip(*data))
+    answer = np.array(answer).flatten()
+
    
     #Pad quesiton and context data to max length
     context, length_context = pad_results(context, max_length)
@@ -195,7 +197,7 @@ def batch_generator(data, batch_size, max_length):
     batch_partitions = np.linspace(start=0, stop=size - (size%batch_size), num=int(size/batch_size),endpoint=False)
     for idx in batch_partitions:
         start = int(idx)
-        end = int(start + batch_size -1)
+        end = int(idx + batch_size)
         context_batch = (context[start:end, :], length_context[start:end])
         question_batch = (question[start:end, :], length_question[start:end])
         answer_batch = answer[start:end]
