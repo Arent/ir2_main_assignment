@@ -1,10 +1,10 @@
 import os
-
+import random
 import numpy as np
 import tensorflow as tf
 
 # source: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size):
+def load_data(id, test_id, data_dir, w2i, tokenizer, batch_size, seperate_context=False):
     babi_map = {
         "1": "qa1_single-supporting-fact",
         "2": "qa2_two-supporting-facts",
@@ -50,78 +50,36 @@ def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size):
         "sh19": "../shuffled/qa19_path-finding",
         "sh20": "../shuffled/qa20_agents-motivations",
     }
-    babi_name = babi_map[task_id]
-    babi_test_name = babi_map[task_id]
-    train_q, train_a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name))
-    test_q, test_a = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name))
+    if (test_id == ""):
+        test_id = id 
+    babi_name = babi_map[id]
+    babi_test_name = babi_map[test_id]
+    babi_train_raw = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name), seperate_context)
+    babi_test_raw = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name), seperate_context)
 
-    # Create and return iterators.
-    tf_vocab = tf.contrib.lookup.index_table_from_file(vocab_file,
-        default_value=0)
-    train_it = _get_iterator(train_q, train_a, tf_vocab, batch_size)
-    test_it = _get_iterator(test_q, test_a, tf_vocab, len(test_a))
-    return train_it, test_it
+    return _process_data(babi_train_raw, tokenizer, w2i), _process_data(babi_test_raw, tokenizer, w2i)
 
-def _get_iterator(questions, answers, tf_vocab, batch_size):
-    dataset_q = tf.data.Dataset.from_tensor_slices(questions)
-    dataset_a = tf.data.Dataset.from_tensor_slices(answers)
-    dataset = tf.data.Dataset.zip((dataset_q, dataset_a))
 
-    # Shuffle the dataset randomly.
-    dataset = dataset.shuffle(1000)
-
-    # Split words in the sentence.
-    dataset = dataset.map(lambda q, a: (tf.string_split([q]).values, a))
-
-    # Convert words to word_ids.
-    dataset = dataset.map(
-        lambda q, a: (tf.cast(tf_vocab.lookup(q), tf.int32),
-                      tf.cast(tf_vocab.lookup(a), tf.int32)))
-
-    # Add question length.
-    dataset = dataset.map(lambda q, a: (q, a, tf.size(q)))
-
-    # The batching function batches entries and pads shorter questions
-    # with sos symbols.
-    eos_id = tf.cast(tf_vocab.lookup(tf.constant("</s>")), tf.int32)
-    def batching_func(x):
-      return x.padded_batch(
-          batch_size,
-          # Only the question is a variable length vector.
-          padded_shapes=(tf.TensorShape([None]),  # question
-                         tf.TensorShape([]),      # answer
-                         tf.TensorShape([])),     # question length
-          # Pad the extra values with an end-of-sentence token.
-          padding_values=(eos_id,  # question
-                          0,           # answer -- unused
-                          0))          # question length -- unused
-    dataset = batching_func(dataset)
-
-    return dataset.make_initializable_iterator()
-
-# Loads the vocabulary in a regular python dict.
 def load_vocab(filename):
   w2i = {}
   i2w = {}
   with open(filename) as f:
-    i = 0
-    for line in f:
+    lines = f.readlines()
+    random.shuffle(lines)
+
+    for i, line in enumerate(lines):
       word = line[:-1]
-      if word in w2i:
-        # word already in vocab
-        continue
       w2i[word] = i
       i2w[i] = word
-      if i == 0 and word != "<unk>":
-        print("WARNING: first word in vocabulary file must be <unk>")
-      i += 1
   return w2i, i2w
 
-# adapted from: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def _init_babi(fname):
+def _to_index(word, w2i):
+  return w2i[word] if word in w2i else w2i['<unk>']
 
-    questions = []
-    answers = []
+# adapted from: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
+def _init_babi_old(fname):
+
+    tasks = []
     for i, line in enumerate(open(fname)):
         id = int(line[0:line.find(' ')])
         if id == 1:
@@ -133,14 +91,82 @@ def _init_babi(fname):
         line = line.replace('.', ' . ')
         line = line.replace('?', ' ? ')
         line = line[line.find(' ')+1:]
+
         if line.find('?') == -1:
             C += line.lower()
         else:
             idx = line.find('?') + 1
             tmp = line[idx+1:].split('\t')
-            Q = C + line[:idx].lower()
-            A = tmp[1].strip().lower()
+            Q = C + line[:idx]
+            A = tmp[1].strip()
 
-            questions.append(tf.constant(Q))
-            answers.append(tf.constant(A))
-    return questions, answers
+            tasks.append((Q, A))
+    return tasks
+
+
+def _init_babi(fname, seperate_context):
+
+    tasks = []
+    for i, line in enumerate(open(fname)):
+        #Find the first space in the line. The id is the characters left from that.
+        id = int(line[0:line.find(' ')]) 
+        #The id represent the line ids for one question. Reset if id =1
+        if id == 1:
+            C = "" #Context
+            Q = "" #Question
+            A = "" #Answer
+
+        line = line.strip() 
+        line = line.replace('.', ' . ')
+        line = line.replace('?', ' ? ')
+        line = line[line.find(' ')+1:]
+        
+        #Append the the lines to the context if the question hasn't arised yet
+        if line.find('?') == -1:
+            C += line.lower()
+        else:
+            #Question mark is found. Parse the answer and save the context, question and answer
+            #Last line contains the question annser, the id's of the supporting facts and a tab
+
+            idx = line.find('?') + 1
+            Q = line[:idx]
+
+            tmp = line[idx+1:].split('\t')
+            A = tmp[1].strip()
+
+            if seperate_context:
+                tasks.append((C, Q, A))
+            else:
+                tasks.append((C + Q, A))
+    return tasks
+
+
+def _process_data(data_list, tokenizer, w2i):
+    def to_index(word):
+      return w2i[word] if word in w2i else w2i['<unk>']
+    
+    data_list_ids= [] 
+    for data_tuple in data_list:
+        data_tuple_words = [tokenizer.tokenize(element.lower()) for element in list(data_tuple)]
+        new_tuple = [ [to_index(word) for word in element] for element in data_tuple_words]
+        data_list_ids.append(new_tuple)
+
+    return data_list_ids
+
+
+
+def pad_to_k(x, k):    
+    if len(x) < k:
+        return(np.pad(x, (0, k-len(x)) , 'constant'))
+    elif len(x) > k:
+        return x[0:k]
+    else:
+        return x
+
+
+def pad_results(data_list, k):
+    lengths = np.asarray([len(example) for example in data_list])
+    padded_examples = np.asarray([pad_to_k(example, k) for example in data_list ])
+
+    return padded_examples.astype(np.int32), lengths.astype(np.int32)
+
