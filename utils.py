@@ -155,24 +155,19 @@ def _process_data(data_list, tokenizer, w2i):
 
 
 
-def pad_to_k(x, k):
-    sh = x.shape
-    if len(sh) != 2:
-        raise NotImplementedError
-    
-    if sh[1] < k:
-        return(np.pad(x, [(0, 0),(0, k-sh[1])], 'constant'))
-    elif sh[1] > k:
-        return x[:,0:k]
+def pad_to_k(x, k):    
+    if len(x) < k:
+        return(np.pad(x, (0, 0),(0, k-len(x)) , 'constant'))
+    elif len(x) > k:
+        return x[0:k]
     else:
         return x
-    
-
 
 
 def pad_results(data_list, k):
-    for example in data_list:
-
+    lengths = [len(example) for example in data_list]
+    padded_examples = [pad_to_k(example) for example in data_list ]
+    return padded_examples, lengths
 
 
 
