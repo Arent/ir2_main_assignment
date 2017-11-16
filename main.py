@@ -26,114 +26,88 @@ args = parser.parse_args()
 # Load the vocabulary.
 word2id, id2word = utils.load_vocab(args.vocab)
 vocab_size = len(word2id)
-print('vocabulary_size', vocab_size)
 tokenizer = MosesTokenizer()
+
 embedding_size = 50
 hidden_state_size_context = 100
 hidden_state_size_question = 100
 batch_size = 1
+learning_rate = 1e-4
 
 
 # Load the training / testing data.
 train, test = utils.load_data(args.task, args.task, args.data_dir, word2id, tokenizer, args.batch_size, args.seperate_context)
-
-
 train_context, train_question, train_answer  = list(zip(*train))
-
 test_context, test_question, test_answer  = list(zip(*train))
 
 
-max_sentence_length = max(len(l) for l in train_context + test_context +
-		train_question + test_question + train_answer + test_answer)
+max_length = max(len(l) for l in train_context + test_context +
+        train_question + test_question + train_answer + test_answer)
 
 
-print(max_sentence_length)
-# Print the first training sample.
+train_context_padded, train_context_lengts = utils.pad_results(train_context, max_length)
+train_question_padded, train_question_lengts = utils.pad_results(train_question, max_length)
 
-# for i in range(10):
-# 	context_ids, question_ids, answer_ids = train[i]
-
-# 	context_str =  " ".join([id2word[w_id] for w_id in context_ids])
-# 	question_str = " ".join([id2word[w_id] for w_id in question_ids])
-# 	answer_str = " ".join([id2word[w_id] for w_id in answer_ids])
-
-# 	print("Context: %s = %s \n" % (context_ids, context_str))
-# 	print("Question: %s = %s \n" % (question_ids, question_str))
-# 	print("Answer: %s = %s \n" % (answer_ids, answer_str))
+test_context_padded, test_context_lengts = utils.pad_results(test_context, max_length)
+test_question_padded, test_question_lengts = utils.pad_results(test_question, max_length)
 
 
 
 
+lengths_question = tf.placeholder(dtype=tf.int32, shape=[batch_size])
+lengths_context = tf.placeholder(dtype=tf.int32, shape=[batch_size])
+answer = tf.placeholder(dtype=tf.int32, shape=[batch_size])
 
-# lengths_question = tf.placeholder(dtype=tf.int32, shape=[batch])
-# rnn_input_context = tf.placeholder(tf.float32, [batch_size, max_sentence_length])
-# rnn_input_question = tf.placeholder(tf.float32, [batch_size, max_sentence_length])
+rnn_input_context = tf.placeholder(tf.int32, [batch_size, max_length])
+rnn_input_question = tf.placeholder(tf.int32, [batch_size, max_length])
 
-# # embedding_matrix_context = tf.get_variable("embedding_matrix_context", \
-# #         [vocab_size, embedding_size], dtype=tf.float32)
-# # embeddings_context = tf.nn.embedding_lookup(embedding_matrix, rnn_input_context) # [1, time, emb_size]
+embedding_matrix_context = tf.get_variable("embedding_matrix_context", \
+        [vocab_size, embedding_size], dtype=tf.float32)
+embeddings_context = tf.nn.embedding_lookup(embedding_matrix_context, rnn_input_context) # [1, time, emb_size]
 
-# # embedding_matrix_question = tf.get_variable("embedding_matrix_question", \
-# #         [vocab_size, embedding_size], dtype=tf.float32)
-# # embeddings_question = tf.nn.embedding_lookup(embedding_matrix, rnn_input_question) # [1, time, emb_size]
+embedding_matrix_question = tf.get_variable("embedding_matrix_question", \
+        [vocab_size, embedding_size], dtype=tf.float32)
+embeddings_question = tf.nn.embedding_lookup(embedding_matrix_question, rnn_input_question) # [1, time, emb_size]
 
+print('embeddings_question', embeddings_question)
+print('embeddings_context', embeddings_context)
 
-# # # Build RNN cell
-# # lstm_context = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_context)
-# # lstm_question = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_question)
-	
-# # # Run Dynamic RNN encoder_outpus: [max_time, batch_size, num_units] encoder_state: [batch_size, num_units]
+print('\n'*10)
 
-
-# # encoder_outputs, encoder_state = tf.nn.dynamic_rnn(
-# #     encoder_cell, encoder_emb_inp,
-
-# #     sequence_length=source_sequence_length, time_major=True)
-
-
-
-
-
-
-# import numpy as np
-# import tensorflow as tf
-
-# batch = 2
-# dim = 3
-# hidden = 4
+# Build RNN cell
+lstm_context = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_context)
+lstm_question = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_question)
+    
+# Run Dynamic RNN encoder_outpus: [max_time, batch_size, num_units] encoder_state: [batch_size, num_units]
+initial_state_context = lstm_context.zero_state(batch_size, tf.float32)
+encoder_outputs_context, encoder_state_context = tf.nn.dynamic_rnn(
+    cell=lstm_context, inputs=embeddings_context,
+    sequence_length=lengths_context, time_major=True, initial_state =initial_state_context)
 
 
+initial_state_question = lstm_context.zero_state(batch_size, tf.float32)
+encoder_outputs_question, encoder_state_question = tf.nn.dynamic_rnn(
+    lstm_question, embeddings_question,
+    sequence_length=lengths_question, time_major=True, initial_state=initial_state_question)
+
+combined_context_question = encoder_state_context[1] + encoder_state_question[1]
+
+prediction_weights = tf.get_variable("prediction_weights", [hidden_state_size_context, vocab_size])
+logits = tf.matmul(combined_context_question, prediction_weights)
+
+labels = labels=tf.one_hot(indices=answer, depth=vocab_size)
+cross_entropy_loss = tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels)
+train_op = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy_loss)
 
 
-# lengths = tf.placeholder(dtype=tf.int32, shape=[batch])
-# inputs = tf.placeholder(dtype=tf.float32, shape=[batch, None, dim])
-# cell = tf.nn.rnn_cell.GRUCell(hidden)
-# cell_state = cell.zero_state(batch, tf.float32)
-# output, _ = tf.nn.dynamic_rnn(cell, inputs, lengths, initial_state=cell_state)
-
-
-
-
-
-# inputs_ = np.asarray([[[0, 0, 0], [1, 1, 1], [2, 2, 2], [3, 3, 3]],
-#                     [[6, 6, 6], [7, 7, 7], [8, 8, 8], [9, 9, 9]]],
-#                     dtype=np.int32)
-# lengths_ = np.asarray([3, 1], dtype=np.int32)
-
-# with tf.Session() as sess:
-#     sess.run(tf.global_variables_initializer())
-#     output_ = sess.run(output, {inputs: inputs_, lengths: lengths_})
-#     print(output_)
-
-
-
-
-
-
-
-
-
-
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    for i in range(len(train_context_padded)):
+        o, train_loss = sess.run(train_op, cross_entropy_loss ,
+                feeddict={lengths_question:train_question_lengts[i] , lengths_context:train_context_lengts[i], 
+                rnn_input_context: train_context_padded[i], rnn_input_question: train_question_padded[i], answer:train_answer[i]})
+        
+        print('Step: ', i , ' loss: ', train_loss)
 
 
 
