@@ -31,7 +31,7 @@ tokenizer = MosesTokenizer()
 embedding_size = 25
 hidden_state_size_context = 45
 hidden_state_size_question = 45
-batch_size = 1
+batch_size = 3
 learning_rate = 1e-3
 epochs = 10
 
@@ -39,16 +39,15 @@ epochs = 10
 train, test = utils.load_data(args.task, args.task, args.data_dir, word2id, tokenizer, args.batch_size, args.seperate_context)
 train_examples_num = len(train)
 max_length = utils.get_max_length(train + test)
-print('max_length', max_length)
 
 
 
 
-lengths_question = tf.placeholder(dtype=tf.int32, shape=[batch_size])
-lengths_context = tf.placeholder(dtype=tf.int32, shape=[batch_size])
-answer = tf.placeholder(dtype=tf.int32, shape=[batch_size])
-rnn_input_context = tf.placeholder(tf.int32, shape=[batch_size, max_length])
-rnn_input_question = tf.placeholder(tf.int32, shape=[batch_size, max_length])
+lengths_question = tf.placeholder(dtype=tf.int32, shape=[None])
+lengths_context = tf.placeholder(dtype=tf.int32, shape=[None])
+answer = tf.placeholder(dtype=tf.int32, shape=[None])
+rnn_input_context = tf.placeholder(tf.int32, shape=[None, max_length])
+rnn_input_question = tf.placeholder(tf.int32, shape=[None, max_length])
 
 
 
@@ -85,8 +84,7 @@ prediction_weights = tf.get_variable("prediction_weights", [hidden_state_size_co
 logits = tf.matmul(combined_context_question, prediction_weights)
 
 labels=tf.one_hot(indices=answer, depth=vocab_size)
-cross_entropy_loss = tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels)
-print('labels', cross_entropy_loss)
+cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels))
 
 optimizer = tf.train.AdamOptimizer(learning_rate)
 
@@ -102,17 +100,27 @@ with tf.Session() as sess:
     for e in range(epochs):
         i = 0
         for context_batch, question_batch, answer_batch in utils.batch_generator(train, batch_size, max_length):
-            i +=1
+            i +=batch_size
             context, context_lengths = context_batch
             question, question_lengths = question_batch
 
             o, train_loss = sess.run([train_op, cross_entropy_loss] ,
                     feed_dict={lengths_question:question_lengths, lengths_context:context_lengths, 
                     rnn_input_context: context, rnn_input_question:question, answer:answer_batch})
-            if i % 100 == 0:
-                print('Epoch:',e,'Step: ', i , ' train loss: ', train_loss)
 
+            if i % 90 == 0:
+                print('step: ',i, 'train_loss:', train_loss)
 
+        #After each epoch print the test set
+        t_context_batch, t_question_batch, t_answer_batch =  next(utils.batch_generator(test, 500, max_length))
+        t_context, t_context_lengths = t_context_batch
+        t_question, t_question_lengths = t_question_batch
+
+        o, test_loss = sess.run([train_op, cross_entropy_loss] ,
+            feed_dict={lengths_question:t_question_lengths, lengths_context:t_context_lengths, 
+            rnn_input_context: t_context, rnn_input_question:t_question, answer:t_answer_batch})
+
+        print(' ------------ Epoch: ',e, 'test_loss:', test_loss, '------------')
 
 
 
