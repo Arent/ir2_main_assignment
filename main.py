@@ -6,6 +6,7 @@ import random
 from nltk.tokenize.moses import MosesTokenizer
 
 import utils
+from models import LSTM
 
 # Parse cmd line args.
 parser = argparse.ArgumentParser(description='Deep Learning '
@@ -29,7 +30,7 @@ vocab_size = len(word2id)
 tokenizer = MosesTokenizer()
 
 embedding_size = 50
-hidden_state_size_context = 100
+hidden_state_size= 100
 hidden_state_size_question = 100
 batch_size = 2
 learning_rate = 1e-3
@@ -42,93 +43,23 @@ max_length = utils.get_max_length(train + test)
 
 
 
-
+#Define placeholder
 lengths_question = tf.placeholder(dtype=tf.int32, shape=[None])
 lengths_context = tf.placeholder(dtype=tf.int32, shape=[None])
 answer = tf.placeholder(dtype=tf.int32, shape=[None])
 rnn_input_context = tf.placeholder(tf.int32, shape=[None, max_length])
 rnn_input_question = tf.placeholder(tf.int32, shape=[None, max_length])
 
+model = LSTM(context=rnn_input_context, context_length = lengths_context,
+        question= rnn_input_question, question_length=lengths_question, answer=answer,
+        vocab_size=max_length,
+        optimizer =tf.train.AdamOptimizer(learning_rate),embedding_size_context=embedding_size, 
+        embedding_size_question= embedding_size, hidden_layer_size=hidden_state_size )
 
-
-embedding_matrix_context = tf.get_variable("embedding_matrix_context", \
-        [vocab_size, embedding_size], dtype=tf.float32)
-embeddings_context = tf.nn.embedding_lookup(embedding_matrix_context, rnn_input_context) # [1, time, emb_size]
-
-embedding_matrix_question = tf.get_variable("embedding_matrix_question", \
-        [vocab_size, embedding_size], dtype=tf.float32)
-embeddings_question = tf.nn.embedding_lookup(embedding_matrix_question, rnn_input_question) # [1, time, emb_size]
-
-
-# Build RNN cell
-with tf.variable_scope("context"):
-    lstm_context = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_context)
-    # initial_state_context = lstm_context.zero_state(batch_size, tf.float32)
-    encoder_outputs_context, encoder_state_context = tf.nn.dynamic_rnn(
-        cell=lstm_context, inputs=embeddings_context, dtype=tf.float32,
-        sequence_length=lengths_context, time_major=False)#, initial_state =initial_state_context)
-
-with tf.variable_scope("question"):
-    lstm_question = tf.nn.rnn_cell.BasicLSTMCell(hidden_state_size_question)
-    # initial_state_question = lstm_context.zero_state(batch_size, tf.float32)
-    encoder_outputs_question, encoder_state_question = tf.nn.dynamic_rnn(
-        lstm_question, embeddings_question, dtype=tf.float32,
-        sequence_length=lengths_question, time_major=False)#, initial_state=initial_state_question)
-
-
-
-
-
-combined_context_question = encoder_state_context[1] + encoder_state_question[1]
-prediction_weights = tf.get_variable("prediction_weights", [hidden_state_size_context, vocab_size])
-logits = tf.matmul(combined_context_question, prediction_weights)
-
-labels=tf.one_hot(indices=answer, depth=vocab_size)
-cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels))
-
-optimizer = tf.train.AdamOptimizer(learning_rate)
-
-
-gradients, variables = zip(*optimizer.compute_gradients(cross_entropy_loss))
-gradients, _ = tf.clip_by_global_norm(gradients, 3.0)
-train_op = optimizer.apply_gradients(zip(gradients, variables))
-
-
-def accuracy():
-    test_generator = utils.batch_generator(data=test, batch_size=1000, max_length=66)
-    context_batch, question_batch, answer_batch  = next(test_generator)
-    context, context_lengths = context_batch
-    question,question_lengths = question_batch
-    result = sess.run(logits ,
-            feed_dict={lengths_question:question_lengths, lengths_context:context_lengths, 
-            rnn_input_context: context, rnn_input_question:question, answer:answer_batch})
-
-    predicted_anser_ids = np.argmax(result,axis=1)
-    accuracy = np.mean(answer_batch == predicted_anser_ids)
-    return accuracy
-
-def qualitative_inspection(num_evaluations):
-    test_generator = utils.batch_generator(data=test, batch_size=1, max_length=66)
-    for i in range(num_evaluations):
-        context_batch, question_batch, answer_batch  = next(test_generator)
-        context, context_lengths = context_batch
-        question,question_lengths = question_batch
-
-
-        result = sess.run(logits ,
-            feed_dict={lengths_question:question_lengths, lengths_context:context_lengths, 
-            rnn_input_context: context, rnn_input_question:question, answer:answer_batch})
-        
-        question_ids = np.squeeze(question)[0:question_lengths[0]]
-        context_ids = np.squeeze(context)[0:context_lengths[0]]
-        anser_ids = answer_batch
-        predicted_anser_ids = np.argmax(result,axis=1)
-        print('')
-        print('context:  ', " ".join([ id2word[id_] for id_ in context_ids]))
-        print('question:  ', " ".join([ id2word[id_] for id_ in question_ids]))
-        print('--Real anser:  ',  " ".join([ id2word[id_] for id_ in anser_ids]))
-        print('--Predicted anser:  ',  " ".join([ id2word[id_] for id_ in predicted_anser_ids]))
-        print('')
+logits = model.inference
+loss = model.loss
+accuracy = model.accuracy
+train_op = model.train
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
@@ -136,10 +67,10 @@ with tf.Session() as sess:
         i = 0
         for context_batch, question_batch, answer_batch in utils.batch_generator(train, batch_size, max_length):
             i +=batch_size
-            context, context_lengths = context_batch
+            context, context_lengths= context_batch
             question, question_lengths = question_batch
 
-            o, train_loss = sess.run([train_op, cross_entropy_loss] ,
+            train_loss,  o = sess.run([loss, train_op] ,
                     feed_dict={lengths_question:question_lengths, lengths_context:context_lengths, 
                     rnn_input_context: context, rnn_input_question:question, answer:answer_batch})
 
@@ -151,41 +82,14 @@ with tf.Session() as sess:
         t_context, t_context_lengths = t_context_batch
         t_question, t_question_lengths = t_question_batch
 
-        o, test_loss = sess.run([train_op, cross_entropy_loss] ,
+        o, test_loss, t_accuracy, t_result = sess.run([ loss, accuracy, logits] ,
             feed_dict={lengths_question:t_question_lengths, lengths_context:t_context_lengths, 
             rnn_input_context: t_context, rnn_input_question:t_question, answer:t_answer_batch})
-        print(' ------------ Epoch: ',e,'accuracy:',accuracy(), 'test_loss:', test_loss, '------------')
-
-    print('Accuracy is', accuracy(), 'now qualitative_inspection:\n\n' ) 
-    qualitative_inspection(40)
+        print(' ------------ Epoch: ',e,'accuracy:',t_accuracy, 'test_loss:', test_loss, '------------')
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    print('Accuracy is', t_accuracy, 'now qualitative_inspection:\n\n' ) 
+    utils.qualitative_inspection(t_context, t_context_lengths, t_question, t_question_lengths, 
+            t_answer_batch, t_result, max_evaluations=40)
 
 

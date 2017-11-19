@@ -204,5 +204,23 @@ def batch_generator(data, batch_size, max_length):
         yield context_batch, question_batch, answer_batch
 
 
+def qualitative_inspection(context, context_lengths, question, question_lengths, answer, result, max_evaluations):
+        assert max_evaluations <= context.shape[0]
+        assert context.shape[0] <= question.shape[0]
+
+        for i in range(max_evaluations):
+            question_ids = np.squeeze(question[i,:])[ 0:question_lengths[i]]
+            context_ids = np.squeeze(context[i,:])[0:context_lengths[i]]
+            anser_ids = answer[i]
+            predicted_anser_ids = np.argmax(result[i,:],axis=1)
+            print('')
+            print('context:  ', " ".join([ id2word[id_] for id_ in context_ids]))
+            print('question:  ', " ".join([ id2word[id_] for id_ in question_ids]))
+            print('--Real anser:  ',  " ".join([ id2word[id_] for id_ in anser_ids]))
+            print('--Predicted anser:  ',  " ".join([ id2word[id_] for id_ in predicted_anser_ids]))
+            print('')
+
+
+
 
 
