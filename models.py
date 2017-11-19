@@ -96,7 +96,9 @@ class LSTM:
     @property
     def accuracy(self): 
         if self._accuracy is None:            
-            predicted_anser_ids = tf.argmax(self.inference, axis=1)
-            self._accuracy = tf.reduce_mean(tf.cast(self.answer == predicted_anser_ids, tf.int32)) 
+            predicted_anser_ids = tf.cast(tf.argmax(self.inference, axis=1),tf.int32)
+            print(predicted_anser_ids)
+            print(self.answer)
+            self._accuracy = tf.reduce_mean(tf.cast(tf.equal(self.answer, predicted_anser_ids), tf.float32)) 
 
         return self._accuracy

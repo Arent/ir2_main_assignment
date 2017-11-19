@@ -32,9 +32,9 @@ tokenizer = MosesTokenizer()
 embedding_size = 50
 hidden_state_size= 100
 hidden_state_size_question = 100
-batch_size = 2
+batch_size = 3
 learning_rate = 1e-3
-epochs = 10
+epochs = 1
 
 # Load the training / testing data.
 train, test = utils.load_data(args.task, args.task, args.data_dir, word2id, tokenizer, args.batch_size, args.seperate_context)
@@ -52,7 +52,7 @@ rnn_input_question = tf.placeholder(tf.int32, shape=[None, max_length])
 
 model = LSTM(context=rnn_input_context, context_length = lengths_context,
         question= rnn_input_question, question_length=lengths_question, answer=answer,
-        vocab_size=max_length,
+        vocab_size=vocab_size,
         optimizer =tf.train.AdamOptimizer(learning_rate),embedding_size_context=embedding_size, 
         embedding_size_question= embedding_size, hidden_layer_size=hidden_state_size )
 
@@ -82,7 +82,7 @@ with tf.Session() as sess:
         t_context, t_context_lengths = t_context_batch
         t_question, t_question_lengths = t_question_batch
 
-        o, test_loss, t_accuracy, t_result = sess.run([ loss, accuracy, logits] ,
+        test_loss, t_accuracy, t_result = sess.run([ loss, accuracy, logits] ,
             feed_dict={lengths_question:t_question_lengths, lengths_context:t_context_lengths, 
             rnn_input_context: t_context, rnn_input_question:t_question, answer:t_answer_batch})
         print(' ------------ Epoch: ',e,'accuracy:',t_accuracy, 'test_loss:', test_loss, '------------')
@@ -90,6 +90,6 @@ with tf.Session() as sess:
 
     print('Accuracy is', t_accuracy, 'now qualitative_inspection:\n\n' ) 
     utils.qualitative_inspection(t_context, t_context_lengths, t_question, t_question_lengths, 
-            t_answer_batch, t_result, max_evaluations=40)
+            t_answer_batch, t_result,id2word, max_evaluations=40)
 
 
