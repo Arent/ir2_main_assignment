@@ -3,7 +3,7 @@ import tensorflow as tf
 class LSTM:
     def __init__(self, context, context_length, question, question_length, answer, 
         vocab_size, optimizer = tf.train.AdamOptimizer(1e-3), embedding_size_context=50, embedding_size_question=50, 
-        hidden_layer_size=100):
+        hidden_layer_size=100, dropout=0.3, recurrent_cell =tf.nn.rnn_cell.BasicLSTMCell, context_cells =1, question_cells=1 ):
             ''' This function saves the placeholders and
             links to inference, train, loss and accuracy functions '''
 
@@ -20,11 +20,11 @@ class LSTM:
             self.embedding_size_question= embedding_size_question
             self.hidden_layer_size = hidden_layer_size
 
-            self.batch_size = tf.shape(context)[0]
-            self.max_length = tf.shape(context)[1]
-
+            self.recurrent_cell = recurrent_cell
+            self.dropout = dropout
             #Set the optimizer
             self.optimizer = optimizer
+
             #Link to train, inference, loss and accuracy operations
             self._inference = None
             self._train = None
@@ -44,8 +44,9 @@ class LSTM:
                 embeddings_context = tf.nn.embedding_lookup(embedding_matrix_context, self.context) # [1, time, emb_size]
 
                 #Create an lstm for the context
-                lstm_context = tf.nn.rnn_cell.BasicLSTMCell(self.hidden_layer_size)
-
+                lstm_context = self.recurrent_cell(self.hidden_layer_size)
+                lstm_context = tf.contrib.rnn.DropoutWrapper(
+                                lstm_context, output_keep_prob=1.0 - self.dropout)
                 #Create the lstm embedded output for context
                 encoder_outputs_context, encoder_state_context = tf.nn.dynamic_rnn(
                 cell=lstm_context, inputs=embeddings_context, dtype=tf.float32,
@@ -57,15 +58,21 @@ class LSTM:
                         [self.vocab_size, self.embedding_size_question], dtype=tf.float32)
                 embeddings_question = tf.nn.embedding_lookup(embedding_matrix_question, self.question) # [1, time, emb_size]
 
-                lstm_question = tf.nn.rnn_cell.BasicLSTMCell(self.hidden_layer_size)
-                
+                lstm_question = self.recurrent_cell(self.hidden_layer_size)
+                lstm_question = tf.contrib.rnn.DropoutWrapper(
+                            lstm_question, output_keep_prob=1.0 - self.dropout)
+
+
                 encoder_outputs_question, encoder_state_question = tf.nn.dynamic_rnn(
                 cell=lstm_question, inputs=embeddings_question, dtype=tf.float32,
                 sequence_length=self.question_length, time_major=False)#, initial_state =initial_state_context)
 
 
             #combine the lstm state of the  question and context
-            combined_context_question = encoder_state_context[1] + encoder_state_question[1]
+            if self.recurrent_cell is tf.contrib.rnn.GRUCell:
+                combined_context_question = encoder_state_context + encoder_state_question
+            else:
+                combined_context_question = encoder_state_context[1] + encoder_state_question[1]
             
             #Use and MLP for the last layer
             prediction_weights = tf.get_variable("prediction_weights", [self.hidden_layer_size, self.vocab_size])
@@ -97,8 +104,6 @@ class LSTM:
     def accuracy(self): 
         if self._accuracy is None:            
             predicted_anser_ids = tf.cast(tf.argmax(self.inference, axis=1),tf.int32)
-            print(predicted_anser_ids)
-            print(self.answer)
             self._accuracy = tf.reduce_mean(tf.cast(tf.equal(self.answer, predicted_anser_ids), tf.float32)) 
 
         return self._accuracy
