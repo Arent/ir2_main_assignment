@@ -4,7 +4,8 @@ import numpy as np
 class QARNN:
 
   def __init__(self, mode, vocab_size, contexts, questions, answers, context_lengths, question_lengths,
-      embedding_size=64, num_units=64, activation=tf.nn.relu, encoder_type="uni", keep_prob=0.7, cell_type="gru"):
+      embedding_size=64, num_units=64, activation=tf.nn.relu, encoder_type="bi", keep_prob=0.7,
+      cell_type="gru", num_output_hidden=[256]):
     self.embedding_size = embedding_size
     self.num_units = num_units
     self.activation = activation
@@ -12,6 +13,7 @@ class QARNN:
     self.encoder_type = encoder_type
     self.keep_prob = keep_prob
     self.cell_type = cell_type
+    self.num_output_hidden = num_output_hidden
     self.mode = mode
 
     self.context = contexts
@@ -56,14 +58,17 @@ class QARNN:
     encoded_question = final_state
 
     # Combine the story and question.
-    # encoder_output = tf.concat([encoded_context, encoded_question], axis=-1)
-    encoder_output = encoded_context + encoded_question
+    encoder_output = tf.concat([encoded_context, encoded_question], axis=-1)
+    # encoder_output = encoded_context + encoded_question
 
     # Perform dropout when training.
-    h = tf.layers.dense(encoder_output, self.num_units,
-        activation=self.activation, use_bias=False)
-    if self.mode == tf.contrib.learn.ModeKeys.TRAIN:
-      h = tf.nn.dropout(h, self.keep_prob)
+    prev_h = encoder_output
+    for num_hidden_units in self.num_output_hidden:
+      h = tf.layers.dense(prev_h, num_hidden_units,
+          activation=self.activation, use_bias=False)
+      if self.mode == tf.contrib.learn.ModeKeys.TRAIN:
+        h = tf.nn.dropout(h, self.keep_prob)
+      prev_h = h
 
     # Predict the answer word.
     self.logits = tf.layers.dense(h, self.vocab_size,
