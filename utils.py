@@ -52,34 +52,37 @@ def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size):
     }
     babi_name = babi_map[task_id]
     babi_test_name = babi_map[task_id]
-    train_q, train_a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name))
-    test_q, test_a = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name))
+    train_c, train_q, train_a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name))
+    test_c, test_q, test_a = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name))
 
     # Create and return iterators.
     tf_vocab = tf.contrib.lookup.index_table_from_file(vocab_file,
         default_value=0)
-    train_it = _get_iterator(train_q, train_a, tf_vocab, batch_size)
-    test_it = _get_iterator(test_q, test_a, tf_vocab, len(test_a))
+    train_it = _get_iterator(train_c, train_q, train_a, tf_vocab, batch_size)
+    test_it = _get_iterator(test_c, test_q, test_a, tf_vocab, len(test_a))
     return train_it, test_it
 
-def _get_iterator(questions, answers, tf_vocab, batch_size):
+def _get_iterator(contexts, questions, answers, tf_vocab, batch_size):
+    dataset_c = tf.data.Dataset.from_tensor_slices(contexts)
     dataset_q = tf.data.Dataset.from_tensor_slices(questions)
     dataset_a = tf.data.Dataset.from_tensor_slices(answers)
-    dataset = tf.data.Dataset.zip((dataset_q, dataset_a))
+    dataset = tf.data.Dataset.zip((dataset_c, dataset_q, dataset_a))
 
     # Shuffle the dataset randomly.
     dataset = dataset.shuffle(1000)
 
     # Split words in the sentence.
-    dataset = dataset.map(lambda q, a: (tf.string_split([q]).values, a))
+    dataset = dataset.map(lambda c, q, a: (tf.string_split([c]).values,
+        tf.string_split([q]).values, a))
 
     # Convert words to word_ids.
     dataset = dataset.map(
-        lambda q, a: (tf.cast(tf_vocab.lookup(q), tf.int32),
+        lambda c, q, a: (tf.cast(tf_vocab.lookup(c), tf.int32),
+                      tf.cast(tf_vocab.lookup(q), tf.int32),
                       tf.cast(tf_vocab.lookup(a), tf.int32)))
 
-    # Add question length.
-    dataset = dataset.map(lambda q, a: (q, a, tf.size(q)))
+    # Add context and question length.
+    dataset = dataset.map(lambda c, q, a: (c, q, a, tf.size(c), tf.size(q)))
 
     # The batching function batches entries and pads shorter questions
     # with sos symbols.
@@ -88,12 +91,16 @@ def _get_iterator(questions, answers, tf_vocab, batch_size):
       return x.padded_batch(
           batch_size,
           # Only the question is a variable length vector.
-          padded_shapes=(tf.TensorShape([None]),  # question
+          padded_shapes=(tf.TensorShape([None]),  # context
+                         tf.TensorShape([None]),  # question
                          tf.TensorShape([]),      # answer
+                         tf.TensorShape([]),      # context length
                          tf.TensorShape([])),     # question length
           # Pad the extra values with an end-of-sentence token.
-          padding_values=(eos_id,  # question
+          padding_values=(eos_id,      # context
+                          eos_id,      # question
                           0,           # answer -- unused
+                          0,           # context length -- unused
                           0))          # question length -- unused
     dataset = batching_func(dataset)
 
@@ -120,6 +127,7 @@ def load_vocab(filename):
 # adapted from: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
 def _init_babi(fname):
 
+    contexts = []
     questions = []
     answers = []
     for i, line in enumerate(open(fname)):
@@ -138,9 +146,10 @@ def _init_babi(fname):
         else:
             idx = line.find('?') + 1
             tmp = line[idx+1:].split('\t')
-            Q = C + line[:idx].lower()
+            Q = line[:idx].lower()
             A = tmp[1].strip().lower()
 
             questions.append(tf.constant(Q))
             answers.append(tf.constant(A))
-    return questions, answers
+            contexts.append(tf.constant(C))
+    return contexts, questions, answers
