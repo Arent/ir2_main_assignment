@@ -111,7 +111,7 @@ class QARNN:
         outputs = tf.concat(bi_outputs, axis=-1)
 
         if self.cell_type == "lstm":
-          final_state = tf.concat([final_state[1].h, final_state[1].h], axis=-1)
+          final_state = tf.concat([bi_final_state[1].h, bi_final_state[1].h], axis=-1)
         else:
           final_state = tf.concat(bi_final_state, axis=-1)
     return outputs, final_state
