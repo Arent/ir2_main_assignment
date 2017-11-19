@@ -22,6 +22,9 @@ class LSTM:
 
             self.recurrent_cell = recurrent_cell
             self.dropout = dropout
+            self.context_cells = context_cells
+            self.question_cells = question_cells
+
             #Set the optimizer
             self.optimizer = optimizer
 
@@ -30,58 +33,76 @@ class LSTM:
             self._train = None
             self._loss = None
             self._accuracy = None
+            self._prediction = None
 
+
+    def _recurrent_block(self, scope_name, input, input_lengths, dropout=0, n_lstm=1, reuse=False):
+        with tf.variable_scope(scope_name, reuse=reuse):
+
+            embedding_matrix = tf.get_variable("embedding_matrix", \
+                [self.vocab_size, self.embedding_size_context], dtype=tf.float32)
+
+            embeddings = tf.nn.embedding_lookup(embedding_matrix, input) # [1, time, emb_size]
+
+            #Create an lstm cell
+            lstm =[]
+            for _ in range(n_lstm):
+                cell = self.recurrent_cell(self.hidden_layer_size)
+                cell = tf.contrib.rnn.DropoutWrapper(
+                            cell, output_keep_prob=1.0 - dropout)
+                lstm.append(cell)
+
+            lstm = tf.contrib.rnn.MultiRNNCell(lstm)
+            #Create the lstm embedded output 
+            encoder_outputs, encoder_state = tf.nn.dynamic_rnn(
+                cell=lstm, inputs=embeddings, dtype=tf.float32,
+                sequence_length=input_lengths, time_major=False)
+
+            last_state = encoder_state[n_lstm-1]
+            if isinstance(last_state, tuple):
+                last_state = last_state[1]
+            return encoder_state[n_lstm-1]
+    
     @property
     def inference(self):
         #The first time this function is called the operations are made
         #Otherwise, return the inference operation
         if self._inference is None:
             #Set up the embeddings and lstm units for the context and question inputs
-            with tf.variable_scope('context'):
-                #Create embeddings for the context input
-                embedding_matrix_context = tf.get_variable("embedding_matrix", \
-                [self.vocab_size, self.embedding_size_context], dtype=tf.float32)
-                embeddings_context = tf.nn.embedding_lookup(embedding_matrix_context, self.context) # [1, time, emb_size]
-
-                #Create an lstm for the context
-                lstm_context = self.recurrent_cell(self.hidden_layer_size)
-                lstm_context = tf.contrib.rnn.DropoutWrapper(
-                                lstm_context, output_keep_prob=1.0 - self.dropout)
-                #Create the lstm embedded output for context
-                encoder_outputs_context, encoder_state_context = tf.nn.dynamic_rnn(
-                cell=lstm_context, inputs=embeddings_context, dtype=tf.float32,
-                sequence_length=self.context_length, time_major=False)#, initial_state =initial_state_context)
-
-            with tf.variable_scope("question"):
-                #Create embeddings for the question input
-                embedding_matrix_question = tf.get_variable("embedding_matrix", \
-                        [self.vocab_size, self.embedding_size_question], dtype=tf.float32)
-                embeddings_question = tf.nn.embedding_lookup(embedding_matrix_question, self.question) # [1, time, emb_size]
-
-                lstm_question = self.recurrent_cell(self.hidden_layer_size)
-                lstm_question = tf.contrib.rnn.DropoutWrapper(
-                            lstm_question, output_keep_prob=1.0 - self.dropout)
-
-
-                encoder_outputs_question, encoder_state_question = tf.nn.dynamic_rnn(
-                cell=lstm_question, inputs=embeddings_question, dtype=tf.float32,
-                sequence_length=self.question_length, time_major=False)#, initial_state =initial_state_context)
-
-
-            #combine the lstm state of the  question and context
-            if self.recurrent_cell is tf.contrib.rnn.GRUCell:
-                combined_context_question = encoder_state_context + encoder_state_question
-            else:
-                combined_context_question = encoder_state_context[1] + encoder_state_question[1]
+            encoder_state_context = self._recurrent_block('context', self.context, self.context_length, 
+                dropout=self.dropout, n_lstm=self.context_cells)
+            
+            encoder_state_question = self._recurrent_block('question', self.question, self.question_length, 
+                dropout=self.dropout, n_lstm=self.question_cells)
             
             #Use and MLP for the last layer
-            prediction_weights = tf.get_variable("prediction_weights", [self.hidden_layer_size, self.vocab_size])
-            
-            self._inference = tf.matmul(combined_context_question, prediction_weights)
+            with tf.variable_scope("prediction"):
+                combined_context_question = encoder_state_context + encoder_state_question
+                prediction_weights = tf.get_variable("weights", [self.hidden_layer_size, self.vocab_size])
+                self._inference = tf.matmul(combined_context_question, prediction_weights)
         
 
         return self._inference
 
+    @property
+    def prediction(self):
+        #The first time this function is called the operations are made
+        #Otherwise, return the prediction operation
+        #Similar to inference, but no dropout
+        if self._prediction is None:
+            #Set up the embeddings and lstm units for the context and question inputs
+            encoder_state_context = self._recurrent_block('context', self.context, self.context_length, 
+                dropout=0, n_lstm=self.context_cells, reuse=True)
+            encoder_state_question = self._recurrent_block('question', self.question, self.question_length, 
+                dropout=0,n_lstm=self.question_cells, reuse=True)
+                        
+            with tf.variable_scope("prediction", reuse=True):
+                combined_context_question = encoder_state_context + encoder_state_question
+                prediction_weights = tf.get_variable("weights", [self.hidden_layer_size, self.vocab_size])
+                self._prediction = tf.matmul(combined_context_question, prediction_weights)
+        
+
+        return self._prediction
     @property
     def loss(self):
         if self._loss is None:

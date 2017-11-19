@@ -45,7 +45,7 @@ max_length = utils.get_max_length(train + test)
 
 
 
-for i in range(10):
+for k in range(10):
     #Define placeholder
     lengths_question = tf.placeholder(dtype=tf.int32, shape=[None])
     lengths_context = tf.placeholder(dtype=tf.int32, shape=[None])
@@ -57,12 +57,13 @@ for i in range(10):
             vocab_size=vocab_size,
             optimizer =tf.train.AdamOptimizer(learning_rate),embedding_size_context=embedding_size, 
             embedding_size_question= embedding_size, hidden_layer_size=hidden_state_size,
-            dropout = 0.3, recurrent_cell = tf.nn.rnn_cell.GRUCell )
+            dropout = 0.3, recurrent_cell = tf.nn.rnn_cell.GRUCell,context_cells =2, question_cells=1  ) #tf.nn.rnn_cell.GRUCell
 
     logits = model.inference
     loss = model.loss
     accuracy = model.accuracy
     train_op = model.train
+    prediction=model.prediction
 
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
@@ -77,21 +78,22 @@ for i in range(10):
                         feed_dict={lengths_question:question_lengths, lengths_context:context_lengths, 
                         rnn_input_context: context, rnn_input_question:question, answer:answer_batch})
 
-                if i % 500 == 0:
+                if i % 250 == 0:
                     print('step: ',i, 'train_loss:', train_loss)
 
             #After each epoch print the test set
-            t_context_batch, t_question_batch, t_answer_batch =  next(utils.batch_generator(test, 500, max_length))
+            t_context_batch, t_question_batch, t_answer_batch =  next(utils.batch_generator(test, 1000, max_length))
             t_context, t_context_lengths = t_context_batch
             t_question, t_question_lengths = t_question_batch
 
-            test_loss, t_accuracy, t_result = sess.run([ loss, accuracy, logits] ,
+            test_loss, t_accuracy, t_result = sess.run([ loss, accuracy, prediction] ,
                 feed_dict={lengths_question:t_question_lengths, lengths_context:t_context_lengths, 
                 rnn_input_context: t_context, rnn_input_question:t_question, answer:t_answer_batch})
-            print(' ------------ Epoch: ',e,'accuracy:',t_accuracy, 'test_loss:', test_loss, '------------')
+            # print(' ------------ Epoch: ',e,'accuracy:',t_accuracy, 'test_loss:', test_loss, '------------')
 
 
-        print('****Accuracy is', t_accuracy, 'now qualitative_inspection:\n\n' ) 
+    
+    print('------------ Experiment ',k, 'accuracy', t_accuracy, '------------' ) 
     tf.reset_default_graph()
     # utils.qualitative_inspection(t_context, t_context_lengths, t_question, t_question_lengths, 
             # t_answer_batch, t_result,id2word, max_evaluations=40)
