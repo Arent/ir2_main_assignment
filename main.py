@@ -28,10 +28,10 @@ word2id, id2word = utils.load_vocab(args.vocab)
 vocab_size = len(word2id)
 tokenizer = MosesTokenizer()
 
-embedding_size = 25
-hidden_state_size_context = 45
-hidden_state_size_question = 45
-batch_size = 3
+embedding_size = 50
+hidden_state_size_context = 100
+hidden_state_size_question = 100
+batch_size = 2
 learning_rate = 1e-3
 epochs = 10
 
@@ -88,12 +88,47 @@ cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logi
 
 optimizer = tf.train.AdamOptimizer(learning_rate)
 
+
 gradients, variables = zip(*optimizer.compute_gradients(cross_entropy_loss))
 gradients, _ = tf.clip_by_global_norm(gradients, 3.0)
 train_op = optimizer.apply_gradients(zip(gradients, variables))
 
 
+def accuracy():
+    test_generator = utils.batch_generator(data=test, batch_size=1000, max_length=66)
+    context_batch, question_batch, answer_batch  = next(test_generator)
+    context, context_lengths = context_batch
+    question,question_lengths = question_batch
+    result = sess.run(logits ,
+            feed_dict={lengths_question:question_lengths, lengths_context:context_lengths, 
+            rnn_input_context: context, rnn_input_question:question, answer:answer_batch})
 
+    predicted_anser_ids = np.argmax(result,axis=1)
+    accuracy = np.mean(answer_batch == predicted_anser_ids)
+    return accuracy
+
+def qualitative_inspection(num_evaluations):
+    test_generator = utils.batch_generator(data=test, batch_size=1, max_length=66)
+    for i in range(num_evaluations):
+        context_batch, question_batch, answer_batch  = next(test_generator)
+        context, context_lengths = context_batch
+        question,question_lengths = question_batch
+
+
+        result = sess.run(logits ,
+            feed_dict={lengths_question:question_lengths, lengths_context:context_lengths, 
+            rnn_input_context: context, rnn_input_question:question, answer:answer_batch})
+        
+        question_ids = np.squeeze(question)[0:question_lengths[0]]
+        context_ids = np.squeeze(context)[0:context_lengths[0]]
+        anser_ids = answer_batch
+        predicted_anser_ids = np.argmax(result,axis=1)
+        print('')
+        print('context:  ', " ".join([ id2word[id_] for id_ in context_ids]))
+        print('question:  ', " ".join([ id2word[id_] for id_ in question_ids]))
+        print('--Real anser:  ',  " ".join([ id2word[id_] for id_ in anser_ids]))
+        print('--Predicted anser:  ',  " ".join([ id2word[id_] for id_ in predicted_anser_ids]))
+        print('')
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
@@ -119,8 +154,10 @@ with tf.Session() as sess:
         o, test_loss = sess.run([train_op, cross_entropy_loss] ,
             feed_dict={lengths_question:t_question_lengths, lengths_context:t_context_lengths, 
             rnn_input_context: t_context, rnn_input_question:t_question, answer:t_answer_batch})
+        print(' ------------ Epoch: ',e,'accuracy:',accuracy(), 'test_loss:', test_loss, '------------')
 
-        print(' ------------ Epoch: ',e, 'test_loss:', test_loss, '------------')
+    print('Accuracy is', accuracy(), 'now qualitative_inspection:\n\n' ) 
+    qualitative_inspection(40)
 
 
 

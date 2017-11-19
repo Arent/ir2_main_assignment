@@ -188,7 +188,6 @@ def batch_generator(data, batch_size, max_length):
     context, question, answer  = list(zip(*data))
     answer = np.array(answer).flatten()
 
-   
     #Pad quesiton and context data to max length
     context, length_context = pad_results(context, max_length)
 
