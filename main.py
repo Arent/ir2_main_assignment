@@ -44,6 +44,8 @@ parser.add_argument("--num_epochs", type=int, default=20,
                     help="Number of training epochs.")
 parser.add_argument("--learning_rate", type=float, default=0.001,
                     help="Learning rate of the optimizer.")
+parser.add_argument("--max_gradient_norm", type=float, default=1.0,
+                    help="Maximum norm for gradients.")
 parser.add_argument("--model_dir", type=str, default=None,
                     help="Directory to store the model parameters.")
 args = parser.parse_args()
@@ -69,7 +71,15 @@ with tf.variable_scope("root"):
       questions, answers, context_lengths, question_lengths)
   train_loss = train_model.loss()
   optimizer = tf.train.AdamOptimizer(args.learning_rate)
-  train_op = optimizer.minimize(train_loss)
+
+  # Clip the gradients before applying them.
+  params = tf.trainable_variables()
+  gradients = tf.gradients(train_loss, params)
+  clipped_gradients, _ = tf.clip_by_global_norm(gradients,
+      args.max_gradient_norm)
+  train_op = optimizer.apply_gradients(
+      zip(clipped_gradients, params))
+
 
 # Create the testing model.
 with tf.variable_scope("root", reuse=True):
