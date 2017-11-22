@@ -3,6 +3,12 @@ The main assignment of IR2.
 
 # Setup
 
+## Requirements	
+
+> import nltk
+> nltk.download('perluniprops')
+> nltk.download('nonbreaking_prefixes')
+
 ## Fetch all the datasets
 Before running any code in the codebase, please run:
 
@@ -17,7 +23,6 @@ Note: Creating the dataset requires an active internet connection and can take a
 
 ## Testing the convolutional seq2seq implementation.
 The following steps describe how to train or experiment with the conv seq2seq model.
-
 
 # Documents
 

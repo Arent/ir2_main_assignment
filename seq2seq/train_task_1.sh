@@ -15,7 +15,7 @@ export TRAIN_STEPS=1000
 
 export MODEL_DIR=./models/qa_test
 
-python -m bin.train \
+python3 -m bin.train \
   --config_paths="
       ./example_configs/qa_conv_small.yml,
       ./example_configs/train_seq2seq.yml,

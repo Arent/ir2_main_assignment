@@ -16,7 +16,7 @@ export MODEL_DIR=./models/qa_test
 export PRED_DIR=./predictions
 mkdir -p ${PRED_DIR}
 
-python -m bin.infer \
+python3 -m bin.infer \
   --tasks "
     - class: DecodeText" \
   --model_dir $MODEL_DIR \
