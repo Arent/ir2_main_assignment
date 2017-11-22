@@ -1,6 +1,24 @@
 # IR2 QA Project on bAbi Toy Tasks
 The main assignment of IR2. 
 
+# Setup
+
+## Fetch all the datasets
+Before running any code in the codebase, please run:
+
+> ./setup.sh
+
+or
+
+> sh setup.sh
+
+This will download the bAbI dataset and converts it to the format required by the seq2seq framework. 
+Note: Creating the dataset requires an active internet connection and can take a few minutes.
+
+## Testing the convolutional seq2seq implementation.
+The following steps describe how to train or experiment with the conv seq2seq model.
+
+
 # Documents
 
 ### bAbi
