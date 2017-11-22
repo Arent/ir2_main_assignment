@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 # source: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size):
+def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size, prep=True):
     babi_map = {
         "1": "qa1_single-supporting-fact",
         "2": "qa2_two-supporting-facts",
@@ -52,15 +52,22 @@ def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size):
     }
     babi_name = babi_map[task_id]
     babi_test_name = babi_map[task_id]
-    train_c, train_q, train_a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name))
-    test_c, test_q, test_a = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name))
+    train_c, train_q, train_a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name), prep=prep)
+    test_c, test_q, test_a = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name), prep=prep)
 
-    # Create and return iterators.
-    tf_vocab = tf.contrib.lookup.index_table_from_file(vocab_file,
-        default_value=0)
-    train_it = _get_iterator(train_c, train_q, train_a, tf_vocab, batch_size)
-    test_it = _get_iterator(test_c, test_q, test_a, tf_vocab, len(test_a))
-    return train_it, test_it
+    # Return the training and test prepared for training.
+    # Otherwise return the parsed data
+    if prep:
+        # Create and return iterators.
+        tf_vocab = tf.contrib.lookup.index_table_from_file(vocab_file,
+            default_value=0)
+        train_it = _get_iterator(train_c, train_q, train_a, tf_vocab, batch_size)
+        test_it = _get_iterator(test_c, test_q, test_a, tf_vocab, len(test_a))
+        return train_it, test_it
+    else:
+        train = zip(train_c, train_q, train_a)
+        test = zip(test_c, test_q, test_a)
+        return train, test
 
 def _get_iterator(contexts, questions, answers, tf_vocab, batch_size):
     dataset_c = tf.data.Dataset.from_tensor_slices(contexts)
@@ -125,7 +132,7 @@ def load_vocab(filename):
   return w2i, i2w
 
 # adapted from: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def _init_babi(fname):
+def _init_babi(fname, prep=True):
 
     contexts = []
     questions = []
@@ -149,7 +156,12 @@ def _init_babi(fname):
             Q = line[:idx].lower()
             A = tmp[1].strip().lower()
 
-            questions.append(tf.constant(Q))
-            answers.append(tf.constant(A))
-            contexts.append(tf.constant(C))
+            if prep:
+                questions.append(tf.constant(Q))
+                answers.append(tf.constant(A))
+                contexts.append(tf.constant(C))
+            else:
+                questions.append(Q)
+                answers.append(A)
+                contexts.append(C)
     return contexts, questions, answers
