@@ -187,6 +187,8 @@ with tf.Session() as sess:
   step = 0
   count = 0
   train_accs = []
+  best_model = None
+  best_model_acc = None
 
   # Evaluate before training.
   print("Performing evaluation before training...")
@@ -222,24 +224,37 @@ with tf.Session() as sess:
       # Evaluate on the validation set.
       print("Evaluating model...")
       sess.run(val.initializer)
-      loss, acc, ppl, summary =  sess.run([val_loss, val_acc, val_ppl, val_summaries])
+      val_accuracy, val_perplexity, summary =  sess.run([val_acc, val_ppl, val_summaries])
       # val_writer.add_summary(summary, epoch_num) TODO
-      print("Epoch %d: validation accuracy = %f -- validation perplexity = %f" % (epoch_num, acc, ppl))
+      print("Epoch %d: validation accuracy = %f -- validation perplexity = %f" %
+          (epoch_num, val_accuracy, val_perplexity))
 
       # Evaluate the model on the test set.
       sess.run(test.initializer)
-      contexts, questions, answers, context_lengths, question_lengths, answer_lengths, predictions, acc, ppl, summary = sess.run([
+      contexts, questions, answers, context_lengths, question_lengths, answer_lengths, predictions, test_accuracy, test_perplexity, summary = sess.run([
           test_context, test_question, test_answer_output, test_context_length, test_question_length,
           test_answer_length, tf.argmax(test_logits, axis=-1), test_acc, test_ppl, test_summaries])
-      print("Epoch %d: test accuracy: %f -- test perplexity: %f" % (epoch_num, acc, ppl))
+      print("Epoch %d: test accuracy: %f -- test perplexity: %f" % (epoch_num, test_accuracy, test_perplexity))
       print("---- Qualitative Analysis")
       eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
           answer_lengths, predictions, i2w, k=1)
       # test_writer.add_summary(summary, epoch_num) TODO
       print("=========================")
 
+      # Save the best model.
+      if best_model is None or best_model[1] > val_perplexity:
+        best_model = (epoch_num, val_perplexity, val_accuracy, test_perplexity, test_accuracy)
+      if best_model_acc is None or best_model_acc[2] < val_accuracy:
+        best_model_acc = (epoch_num, val_perplexity, val_accuracy, test_perplexity, test_accuracy)
+
       # Re-initialize the training iterator.
       sess.run(train.initializer)
       epoch_num += 1
       step = 0
       continue
+
+print("Best model (ppl) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test perplexity = %f -- test accuracy = %f" %
+    best_model)
+print("Best model (acc) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test perplexity = %f -- test accuracy = %f" %
+    best_model_acc)
+
