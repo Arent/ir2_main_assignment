@@ -34,6 +34,7 @@ from seq2seq.data import postproc
 from seq2seq.configurable import Configurable
 from seq2seq.metrics import rouge
 from seq2seq.metrics import bleu
+from seq2seq.metrics import accuracy
 
 
 def accumulate_strings(values, name="strings"):
@@ -180,6 +181,16 @@ class BleuMetricSpec(TextMetricSpec):
   def metric_fn(self, hypotheses, references):
     return bleu.moses_multi_bleu(hypotheses, references, lowercase=False)
 
+
+class AccuracyMetricSpec(TextMetricSpec):
+  """Calculates BLEU score using the Moses multi-bleu.perl script.
+  """
+
+  def __init__(self, params):
+    super(AccuracyMetricSpec, self).__init__(params, "accuracy")
+
+  def metric_fn(self, hypotheses, references):
+    return accuracy.accuracy(hypotheses, references, lowercase=False)
 
 class RougeMetricSpec(TextMetricSpec):
   """Calculates BLEU score using the Moses multi-bleu.perl script.
