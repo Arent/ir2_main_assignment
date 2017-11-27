@@ -39,6 +39,10 @@ parser.add_argument("--max_gradient_norm", type=float, default=1.0,
 parser.add_argument("--dropout_keep_prob", type=float, default=0.7,
                     help="Dropout keep probability")
 
+# General model arguments.
+parser.add_argument("--model_type", type=str, default="normal",
+                    help="normal|attention")
+
 # Model encoder arguments.
 parser.add_argument("--embedding_size", type=int, default=64,
                     help="Size of the word embeddings.")
@@ -64,6 +68,9 @@ args = parser.parse_args()
 if args.data_dir is None or args.model_dir is None or args.vocab is None:
   print("--data_dir and/or --model_dir and/or --vocab argument missing.")
   sys.exit(1)
+
+assert (args.model_type == "normal" or args.model_type == "attention")
+attention = args.model_type == "attention"
 
 # Parse the necessary strings to the correct format.
 cell_type = misc_utils.parse_cell_type(args.cell_type)
@@ -96,16 +103,25 @@ with tf.variable_scope("QARNN"):
       cell_type=cell_type, num_output_hidden=num_output_hidden,
       num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm)
+      max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the training model graph.
-  final_context_state = train_model.create_encoder("context_encoder",
+  context_outputs, final_context_state = train_model.create_encoder("context_encoder",
       context, context_length)
-  final_question_state = train_model.create_encoder("question_encoder",
+  _, final_question_state = train_model.create_encoder("question_encoder",
       question, question_length)
   merged_state = train_model.merge_states(final_context_state,
       final_question_state)
-  logits = train_model.create_rnn_decoder(answer_input, answer_length, merged_state)
+
+  if args.model_type == "attention":
+    initial_state = final_question_state
+    attention_states = context_outputs
+  else:
+    initial_state = merged_state
+    attention_states = None
+
+  logits = train_model.create_rnn_decoder(answer_input, answer_length,
+      initial_state, attention_states=attention_states)
   train_loss = train_model.loss(logits, answer_output, answer_length)
   train_ppl = train_model.perplexity(train_loss, tf.shape(logits)[0], answer_length)
   train_acc = train_model.accuracy(logits, answer_output, answer_length)
@@ -119,16 +135,25 @@ with tf.variable_scope("QARNN", reuse=True):
       cell_type=cell_type, num_output_hidden=num_output_hidden,
       num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm)
+      max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the validation model graph.
-  val_final_context_state = val_model.create_encoder("context_encoder",
+  val_context_outputs, val_final_context_state = val_model.create_encoder("context_encoder",
       val_context, val_context_length)
-  val_final_question_state = val_model.create_encoder("question_encoder",
+  _, val_final_question_state = val_model.create_encoder("question_encoder",
       val_question, val_question_length)
   val_merged_state = val_model.merge_states(val_final_context_state,
       val_final_question_state)
-  val_logits = val_model.create_rnn_decoder(val_answer_input, val_answer_length, val_merged_state)
+
+  if args.model_type == "attention":
+    val_initial_state = val_final_question_state
+    val_attention_states = val_context_outputs
+  else:
+    val_initial_state = val_merged_state
+    val_attention_states = None
+
+  val_logits = val_model.create_rnn_decoder(val_answer_input, val_answer_length,
+      val_initial_state, attention_states=val_attention_states)
   val_loss = val_model.loss(val_logits, val_answer_output, val_answer_length)
   val_ppl = val_model.perplexity(val_loss, tf.shape(val_logits)[0], val_answer_length)
   val_acc = val_model.accuracy(val_logits, val_answer_output, val_answer_length)
@@ -141,16 +166,25 @@ with tf.variable_scope("QARNN", reuse=True):
       cell_type=cell_type, num_output_hidden=num_output_hidden,
       num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm)
+      max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the testing model graph.
-  test_final_context_state = test_model.create_encoder("context_encoder",
+  test_context_outputs, test_final_context_state = test_model.create_encoder("context_encoder",
       test_context, test_context_length)
-  test_final_question_state = test_model.create_encoder("question_encoder",
+  _, test_final_question_state = test_model.create_encoder("question_encoder",
       test_question, test_question_length)
   test_merged_state = test_model.merge_states(test_final_context_state,
       test_final_question_state)
-  test_predictions = test_model.create_rnn_decoder(test_answer_input, test_answer_length, test_merged_state)
+
+  if args.model_type == "attention":
+    test_initial_state = test_final_question_state
+    test_attention_states = test_context_outputs
+  else:
+    test_initial_state = test_merged_state
+    test_attention_states = None
+
+  test_predictions = test_model.create_rnn_decoder(test_answer_input, test_answer_length,
+      test_initial_state, attention_states=test_attention_states)
   test_acc = tf.placeholder(tf.float32, shape=[])
 
 # Create Tensorboard summaries.
@@ -182,6 +216,7 @@ with tf.Session() as sess:
   total_step = 0
   step = 0
   count = 0
+  epochs_without_improvement = 0
   train_accs = []
   best_model = None
   best_model_acc = None
@@ -245,6 +280,21 @@ with tf.Session() as sess:
         best_model = (epoch_num, val_perplexity, val_accuracy, test_accuracy)
       if best_model_acc is None or best_model_acc[2] < val_accuracy:
         best_model_acc = (epoch_num, val_perplexity, val_accuracy, test_accuracy)
+        epochs_without_improvement = 0
+      else:
+        epochs_without_improvement += 1
+
+      print("Epochs without improvement:", epochs_without_improvement)
+
+      # Reset the optimizer with a decayed learning rate if not improving.
+      # if epochs_without_improvement > 1:
+      #   train_model.learning_rate *= 0.5
+      #   train_op = train_model.train_step(train_loss)
+      #   epochs_without_improvement = 0
+      #   adam_inits = [var.initializer for var in tf.global_variables() if 'Adam' in var.name or 'beta' in var.name]
+      #   sess.run(adam_inits)
+      #   print("Restarting optimizer with learning rate %f" %
+      #       train_model.learning_rate)
 
       # Re-initialize the training iterator.
       sess.run(train.initializer)
@@ -256,4 +306,3 @@ print("Best model (ppl) at epoch %d -- validation perplexity = %f -- validation 
     best_model)
 print("Best model (acc) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test accuracy = %f" %
     best_model_acc)
-

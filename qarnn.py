@@ -5,7 +5,7 @@ class QARNN:
 
   def __init__(self, mode, vocab, vocab_size, embedding_size=64, num_units=64, encoder_type="uni", keep_prob=0.7,
       cell_type=tf.contrib.rnn.LSTMCell, num_output_hidden=[256], num_enc_layers=1, merge_mode="concat",
-      optimizer=tf.train.AdamOptimizer, learning_rate=0.001, max_gradient_norm=1.0, max_infer_length=10):
+      optimizer=tf.train.AdamOptimizer, learning_rate=0.001, max_gradient_norm=1.0, max_infer_length=10, attention=False):
     self.embedding_size = embedding_size
     self.num_units = num_units
     self.vocab_size = vocab_size
@@ -21,6 +21,7 @@ class QARNN:
     self.mode = mode
     self.max_infer_length = max_infer_length
     self.vocab = vocab
+    self.attention = attention
 
   # Creates an encoder on the given sequence, returns the final state of the encoder.
   def create_encoder(self, name, sequence, sequence_length):
@@ -46,13 +47,11 @@ class QARNN:
 
         cell = tf.contrib.rnn.MultiRNNCell(cells)
 
-        _, final_state = tf.nn.dynamic_rnn(cell, embeddings,
+        encoder_outputs, final_state = tf.nn.dynamic_rnn(cell, embeddings,
             dtype=tf.float32, sequence_length=sequence_length)
 
         # For multilayer RNNs, use the final layer's state.
         final_state = final_state[-1]
-
-        return final_state
       else:
 
         # Bidirectional encoders can have only 1 layer in our implementation.
@@ -67,12 +66,15 @@ class QARNN:
           bw_cell = tf.contrib.rnn.DropoutWrapper(bw_cell, output_keep_prob=self.keep_prob)
 
         # Run the bidirectional RNN.
-        _, bi_final_state = tf.nn.bidirectional_dynamic_rnn(
+        bi_outputs, bi_final_state = tf.nn.bidirectional_dynamic_rnn(
             fw_cell,
             bw_cell,
             embeddings,
             sequence_length=sequence_length,
             dtype=tf.float32)
+
+        # Concatenate the forward and backward layer to create the encoder output.
+        encoder_outputs = tf.concat(bi_outputs, axis=-1)
 
         # For tuple states such as LSTM, return only h as the encoded, concatenate
         # forward and backward RNN outputs.
@@ -83,7 +85,7 @@ class QARNN:
         else:
           final_state = tf.concat(bi_final_state, axis=-1)
 
-    return final_state
+    return encoder_outputs, final_state
 
   # Combine the context and question states.
   def merge_states(self, final_context_state, final_question_state):
@@ -106,7 +108,7 @@ class QARNN:
       merged_state = None
     return merged_state
 
-  def create_rnn_decoder(self, decoder_inputs, input_length, initial_state):
+  def create_rnn_decoder(self, decoder_inputs, input_length, initial_state, attention_states=None):
     sos_id = tf.cast(self.vocab.lookup(tf.constant("<s>")), tf.int32)
     eos_id = tf.cast(self.vocab.lookup(tf.constant("</s>")), tf.int32)
     with tf.variable_scope("decoder") as decoder_scope:
@@ -117,8 +119,16 @@ class QARNN:
           decoder_inputs) # [batch, time, emb_size]
 
       num_units = self.num_units if self.encoder_type == "uni" else 2 * self.num_units
-      num_units = 2 * num_units if self.merge_mode == "concat" else num_units
+      num_units = 2 * num_units if self.merge_mode == "concat" and not self.attention else num_units
       cell = self.cell_type(num_units)
+
+      if self.attention:
+        attention_mechanism = tf.contrib.seq2seq.BahdanauAttention(num_units,
+            attention_states)
+        cell = tf.contrib.seq2seq.AttentionWrapper(cell,
+            attention_mechanism)
+        batch_size = tf.shape(decoder_inputs)[0]
+        initial_state = cell.zero_state(batch_size, initial_state.dtype).clone(cell_state=initial_state)
 
       if self.mode != tf.contrib.learn.ModeKeys.INFER:
         helper = tf.contrib.seq2seq.TrainingHelper(decoder_inputs,
@@ -162,7 +172,7 @@ class QARNN:
     return loss
 
   def train_step(self, loss):
-    optimizer = self.optimizer(self.learning_rate)
+    optimizer = self.optimizer(self.learning_rate, beta1=0.) # TODO adam specific
 
     # Clip the gradients before applying them.
     params = tf.trainable_variables()
