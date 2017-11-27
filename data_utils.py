@@ -73,7 +73,7 @@ def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size, val_split):
     train_it = _get_iterator(train_c, train_q, train_a, tf_vocab, batch_size)
     val_it = _get_iterator(val_c, val_q, val_a, tf_vocab, len(val_a))
     test_it = _get_iterator(test_c, test_q, test_a, tf_vocab, len(test_a))
-    return train_it, val_it, test_it
+    return train_it, val_it, test_it, tf_vocab
 
 def _get_iterator(contexts, questions, answers, tf_vocab, batch_size):
     dataset_c = tf.data.Dataset.from_tensor_slices(contexts)

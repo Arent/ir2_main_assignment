@@ -3,7 +3,7 @@ import numpy as np
 
 class QARNN:
 
-  def __init__(self, mode, vocab_size, embedding_size=64, num_units=64, encoder_type="uni", keep_prob=0.7,
+  def __init__(self, mode, vocab, vocab_size, embedding_size=64, num_units=64, encoder_type="uni", keep_prob=0.7,
       cell_type=tf.contrib.rnn.LSTMCell, num_output_hidden=[256], num_enc_layers=1, merge_mode="concat",
       optimizer=tf.train.AdamOptimizer, learning_rate=0.001, max_gradient_norm=1.0, max_infer_length=10):
     self.embedding_size = embedding_size
@@ -20,6 +20,7 @@ class QARNN:
     self.max_gradient_norm = max_gradient_norm
     self.mode = mode
     self.max_infer_length = max_infer_length
+    self.vocab = vocab
 
   # Creates an encoder on the given sequence, returns the final state of the encoder.
   def create_encoder(self, name, sequence, sequence_length):
@@ -106,6 +107,8 @@ class QARNN:
     return merged_state
 
   def create_rnn_decoder(self, decoder_inputs, input_length, initial_state):
+    sos_id = tf.cast(self.vocab.lookup(tf.constant("<s>")), tf.int32)
+    eos_id = tf.cast(self.vocab.lookup(tf.constant("</s>")), tf.int32)
     with tf.variable_scope("decoder") as decoder_scope:
 
       embedding_matrix = tf.get_variable("answer_embedding", \
@@ -117,9 +120,15 @@ class QARNN:
       num_units = 2 * num_units if self.merge_mode == "concat" else num_units
       cell = self.cell_type(num_units)
 
-      # if self.mode != tf.contrib.learn.ModeKeys.INFER:
-      helper = tf.contrib.seq2seq.TrainingHelper(decoder_inputs,
-          input_length) # TODO train/eval/infer
+      if self.mode != tf.contrib.learn.ModeKeys.INFER:
+        helper = tf.contrib.seq2seq.TrainingHelper(decoder_inputs,
+            input_length)
+        maximum_iterations = tf.shape(decoder_inputs)[1]
+      else:
+        batch_size = tf.shape(decoder_inputs)[0]
+        helper = tf.contrib.seq2seq.GreedyEmbeddingHelper(embedding_matrix,
+            tf.fill([batch_size], sos_id), eos_id)
+        maximum_iterations = 10
 
       projection_layer = tf.layers.Dense(self.vocab_size,
           use_bias=False, name="output_projection")
@@ -129,12 +138,13 @@ class QARNN:
           output_layer=projection_layer)
 
       outputs, _, _ = tf.contrib.seq2seq.dynamic_decode(decoder,
-          impute_finished=True, scope=decoder_scope)
+          impute_finished=True, scope=decoder_scope, maximum_iterations=maximum_iterations)
 
-      logits = outputs.rnn_output
-      return logits
-
-  # Create an MLP decoder.
+      if self.mode != tf.contrib.learn.ModeKeys.INFER:
+        logits = outputs.rnn_output
+        return logits
+      else:
+        return outputs.sample_id
 
   def loss(self, logits, answer, answer_length):
     cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(
@@ -170,8 +180,6 @@ class QARNN:
     prediction = tf.argmax(logits, axis=-1, output_type=answer.dtype)
 
     # Don't include the end-of-sentence tokens in accuracy calculations.
-    answer = answer[:, :-1]
-    prediction = prediction[:, :-1]
     answer_length = answer_length - 1
 
     # Mask padded batch elements.

@@ -80,7 +80,7 @@ misc_utils.print_args(args)
 # Load the training / testing data.
 print("Loading data...")
 tokenizer = MosesTokenizer()
-train, val, test = data_utils.load_data(args.task, args.data_dir,
+train, val, test, tf_vocab = data_utils.load_data(args.task, args.data_dir,
     args.vocab, tokenizer, args.batch_size, args.val_split)
 context, question, answer_input, answer_output, context_length, question_length, answer_length = train.get_next()
 val_context, val_question, val_answer_input, val_answer_output, val_context_length, val_question_length, val_answer_length = val.get_next()
@@ -90,7 +90,7 @@ print("vocabulary size = %d" % vocab_size)
 # Create the training model.
 print("Building model...")
 with tf.variable_scope("QARNN"):
-  train_model = QARNN(tf.contrib.learn.ModeKeys.TRAIN, vocab_size,
+  train_model = QARNN(tf.contrib.learn.ModeKeys.TRAIN, tf_vocab, vocab_size,
       embedding_size=args.embedding_size, num_units=args.num_units,
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
       cell_type=cell_type, num_output_hidden=num_output_hidden,
@@ -113,7 +113,7 @@ with tf.variable_scope("QARNN"):
 
 # Create the validation model.
 with tf.variable_scope("QARNN", reuse=True):
-  val_model = QARNN(tf.contrib.learn.ModeKeys.EVAL, vocab_size,
+  val_model = QARNN(tf.contrib.learn.ModeKeys.EVAL, tf_vocab, vocab_size,
       embedding_size=args.embedding_size, num_units=args.num_units,
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
       cell_type=cell_type, num_output_hidden=num_output_hidden,
@@ -135,7 +135,7 @@ with tf.variable_scope("QARNN", reuse=True):
 
 # Create the testing model.
 with tf.variable_scope("QARNN", reuse=True):
-  test_model = QARNN(tf.contrib.learn.ModeKeys.EVAL, vocab_size,
+  test_model = QARNN(tf.contrib.learn.ModeKeys.INFER, tf_vocab, vocab_size,
       embedding_size=args.embedding_size, num_units=args.num_units,
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
       cell_type=cell_type, num_output_hidden=num_output_hidden,
@@ -150,19 +150,15 @@ with tf.variable_scope("QARNN", reuse=True):
       test_question, test_question_length)
   test_merged_state = test_model.merge_states(test_final_context_state,
       test_final_question_state)
-  test_logits = test_model.create_rnn_decoder(test_answer_input, test_answer_length, test_merged_state)
-  test_loss = test_model.loss(test_logits, test_answer_output, test_answer_length)
-  test_ppl = test_model.perplexity(test_loss, tf.shape(test_logits)[0], test_answer_length)
-  test_acc = test_model.accuracy(test_logits, test_answer_output, test_answer_length)
+  test_predictions = test_model.create_rnn_decoder(test_answer_input, test_answer_length, test_merged_state)
+  test_acc = tf.placeholder(tf.float32, shape=[])
 
 # Create Tensorboard summaries.
 train_summaries = tf.summary.scalar("train_loss", train_loss)
 val_acc_summary = tf.summary.scalar("val_accuracy", val_acc)
 val_ppl_summary = tf.summary.scalar("val_perplexity", val_ppl)
 val_summaries = tf.summary.merge([val_acc_summary, val_ppl_summary])
-test_acc_summary = tf.summary.scalar("test_accuracy", test_acc)
-test_ppl_summary = tf.summary.scalar("test_perplexity", test_ppl)
-test_summaries = tf.summary.merge([test_acc_summary, test_ppl_summary])
+test_summaries = tf.summary.scalar("test_accuracy", test_acc)
 
 # Parameter saver.
 saver = tf.train.Saver()
@@ -193,9 +189,9 @@ with tf.Session() as sess:
   # Evaluate before training.
   print("Performing evaluation before training...")
   sess.run(test.initializer)
-  contexts, questions, answers, context_lengths, question_lengths, answer_lengths, predictions, acc, ppl = sess.run([
+  contexts, questions, answers, context_lengths, question_lengths, answer_lengths, predictions = sess.run([
       test_context, test_question, test_answer_output, test_context_length, test_question_length,
-      test_answer_length, tf.argmax(test_logits, axis=-1), test_acc, test_ppl])
+      test_answer_length, test_predictions])
   print("---- Qualitative Analysis")
   eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
       answer_lengths, predictions, i2w, k=1)
@@ -231,21 +227,24 @@ with tf.Session() as sess:
 
       # Evaluate the model on the test set.
       sess.run(test.initializer)
-      contexts, questions, answers, context_lengths, question_lengths, answer_lengths, predictions, test_accuracy, test_perplexity, summary = sess.run([
+      contexts, questions, answers, context_lengths, question_lengths, answer_lengths, predictions = sess.run([
           test_context, test_question, test_answer_output, test_context_length, test_question_length,
-          test_answer_length, tf.argmax(test_logits, axis=-1), test_acc, test_ppl, test_summaries])
-      print("Epoch %d: test accuracy: %f -- test perplexity: %f" % (epoch_num, test_accuracy, test_perplexity))
+          test_answer_length, test_predictions])
+      test_accuracy = eval_utils.compute_test_accuracy(answers, answer_lengths,
+          predictions, w2i["</s>"], args.task != "8")
+      print("Epoch %d: test accuracy: %f" % (epoch_num, test_accuracy))
       print("---- Qualitative Analysis")
       eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
           answer_lengths, predictions, i2w, k=1)
+      summary = sess.run(test_summaries, feed_dict={test_acc: test_accuracy})
       # test_writer.add_summary(summary, epoch_num) TODO
       print("=========================")
 
       # Save the best model.
       if best_model is None or best_model[1] > val_perplexity:
-        best_model = (epoch_num, val_perplexity, val_accuracy, test_perplexity, test_accuracy)
+        best_model = (epoch_num, val_perplexity, val_accuracy, test_accuracy)
       if best_model_acc is None or best_model_acc[2] < val_accuracy:
-        best_model_acc = (epoch_num, val_perplexity, val_accuracy, test_perplexity, test_accuracy)
+        best_model_acc = (epoch_num, val_perplexity, val_accuracy, test_accuracy)
 
       # Re-initialize the training iterator.
       sess.run(train.initializer)
@@ -253,8 +252,8 @@ with tf.Session() as sess:
       step = 0
       continue
 
-print("Best model (ppl) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test perplexity = %f -- test accuracy = %f" %
+print("Best model (ppl) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test accuracy = %f" %
     best_model)
-print("Best model (acc) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test perplexity = %f -- test accuracy = %f" %
+print("Best model (acc) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test accuracy = %f" %
     best_model_acc)
 
