@@ -172,7 +172,7 @@ class QARNN:
     return loss
 
   def train_step(self, loss):
-    optimizer = self.optimizer(self.learning_rate, beta1=0.) # TODO adam specific
+    optimizer = self.optimizer(self.learning_rate) #, beta1=0.) # TODO adam specific
 
     # Clip the gradients before applying them.
     params = tf.trainable_variables()
