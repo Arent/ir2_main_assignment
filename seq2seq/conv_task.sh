@@ -22,7 +22,7 @@ python3 -m bin.train \
         - $DEV_SOURCES
        target_files:
         - $DEV_TARGETS" \
-  --batch_size 8 \
+  --batch_size $BATCH_SIZE \
   --train_steps $TRAIN_STEPS \
   --output_dir $MODEL_DIR \
   --eval_every_n_steps $MIN_EVAL
