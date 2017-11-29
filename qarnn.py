@@ -123,8 +123,8 @@ class QARNN:
       cell = self.cell_type(num_units)
 
       if self.attention:
-        attention_mechanism = tf.contrib.seq2seq.BahdanauAttention(num_units,
-            attention_states)
+        attention_mechanism = tf.contrib.seq2seq.LuongAttention(num_units,
+            attention_states, memory_sequence_length=input_length, scale=True)
         cell = tf.contrib.seq2seq.AttentionWrapper(cell,
             attention_mechanism)
         batch_size = tf.shape(decoder_emb_inputs)[0]

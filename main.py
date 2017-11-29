@@ -252,7 +252,7 @@ test_summaries = tf.summary.scalar("test_accuracy", test_acc)
 
 # Parameter saver.
 saver = tf.train.Saver()
-steps_per_stats = 3
+steps_per_stats = 100
 
 # Train the model.
 with tf.Session() as sess:
@@ -334,23 +334,24 @@ with tf.Session() as sess:
       # Save the best model.
       if best_model is None or best_model[1] > val_perplexity:
         best_model = (epoch_num, val_perplexity, val_accuracy, test_accuracy)
+
       if best_model_acc is None or best_model_acc[2] < val_accuracy:
         best_model_acc = (epoch_num, val_perplexity, val_accuracy, test_accuracy)
         epochs_without_improvement = 0
       else:
         epochs_without_improvement += 1
 
-      # print("Epochs without improvement:", epochs_without_improvement)
+      print("Epochs without improvement:", epochs_without_improvement)
 
       # Reset the optimizer with a decayed learning rate if not improving.
-      # if epochs_without_improvement > 1:
-      #   train_model.learning_rate *= 0.5
-      #   train_op = train_model.train_step(train_loss)
-      #   epochs_without_improvement = 0
-      #   adam_inits = [var.initializer for var in tf.global_variables() if 'Adam' in var.name or 'beta' in var.name]
-      #   sess.run(adam_inits)
-      #   print("Restarting optimizer with learning rate %f" %
-      #       train_model.learning_rate)
+      if epochs_without_improvement > 10:
+        train_model.learning_rate *= 0.5
+        train_op = train_model.train_step(train_loss)
+        epochs_without_improvement = 0
+        adam_inits = [var.initializer for var in tf.global_variables() if 'Adam' in var.name or 'beta' in var.name]
+        sess.run(adam_inits)
+        print("Restarting optimizer with learning rate %f" %
+            train_model.learning_rate)
 
       # Re-initialize the training iterator.
       sess.run(train.initializer)
