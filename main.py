@@ -104,13 +104,23 @@ with tf.variable_scope("QARNN"):
 
   # Build the training model graph.
 
-  question_context_question = tf.concat(question, context, axis=1)
-  output_context, encoded_context = train_model.create_encoder("context_encoder",
-      context, context_length)
-  output_question, encoded_question = train_model.create_encoder("question_encoder",
-      question, question_length)
+  # question_context_question = tf.concat(question, context, axis=1)
+  if args.use_attention:
 
-  merged_encoding = train_model.create_attention_layer(encoded_question, output_context, context_length)
+    output_context, encoded_context = train_model.create_encoder("context_encoder",
+        context, context_length)
+    output_question, encoded_question = train_model.create_encoder("question_encoder",
+        question, question_length)
+
+    merged_encoding = train_model.create_attention_layer(encoded_question, output_context, context_length)
+
+  else:
+    encoded_context = train_model.create_encoder("context_encoder",
+        context, context_length)
+    encoded_question = train_model.create_encoder("question_encoder",
+        question, question_length)
+
+    merged_encoding = train_model.merge_encodings( encoded_context , encoded_question)
 
   logits = train_model.create_decoder(merged_encoding)
   train_loss = train_model.loss(logits, answer)
@@ -129,12 +139,23 @@ with tf.variable_scope("QARNN", reuse=True):
       use_attention=args.use_attention)
 
   # Build the testing model graph.
-  test_output_context, test_encoded_context = test_model.create_encoder("context_encoder",
-      test_context, test_context_length)
-  ttest_output_question, test_encoded_question = test_model.create_encoder("question_encoder",
-      test_question, test_question_length)
 
-  test_merged_encoding = test_model.create_attention_layer(test_encoded_question, test_output_context, test_context_length)
+  if args.use_attention:
+    test_output_context, test_encoded_context = test_model.create_encoder("context_encoder",
+        test_context, test_context_length)
+    ttest_output_question, test_encoded_question = test_model.create_encoder("question_encoder",
+        test_question, test_question_length)
+
+    test_merged_encoding = test_model.create_attention_layer(test_encoded_question, test_output_context, test_context_length)
+  
+  else:
+    test_encoded_context = test_model.create_encoder("context_encoder",
+                          test_context, test_context_length)      
+    test_encoded_question = test_model.create_encoder("question_encoder",
+                          test_question, test_question_length)
+
+    test_merged_encoding = test_model.merge_encodings(test_encoded_context, test_encoded_question)
+
   test_logits = test_model.create_decoder(test_merged_encoding)
   test_acc = test_model.accuracy(test_logits, test_answer)
 
