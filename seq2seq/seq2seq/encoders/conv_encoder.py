@@ -115,7 +115,13 @@ class ConvEncoder(Encoder):
     final_state = tf.reduce_mean(cnn_c_output, 1)
 
     return EncoderOutput(
-        outputs=cnn_a_output,
+        outputs=cnn_c_output,
         final_state=final_state,
-        attention_values=cnn_c_output,
+        attention_values=cnn_a_output,
         attention_values_length=sequence_length)
+
+    # return EncoderOutput(
+    #     outputs=cnn_a_output,
+    #     final_state=final_state,
+    #     attention_values=cnn_c_output,
+    #     attention_values_length=sequence_length)

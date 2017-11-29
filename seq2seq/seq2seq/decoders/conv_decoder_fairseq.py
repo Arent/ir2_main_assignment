@@ -45,6 +45,8 @@ from tensorflow.python.framework import tensor_util
 from tensorflow.python.ops import control_flow_ops
 from seq2seq.encoders.encoder import EncoderOutput
 
+from seq2seq.decoders.attention_decoder import AttentionDecoder
+
 class ConvDecoderOutput(
     #namedtuple("ConvDecoderOutput", ["logits", "predicted_ids", "cell_output", "attention_scores", "attention_context"])):
     namedtuple("ConvDecoderOutput", ["logits", "predicted_ids"])): 
@@ -52,7 +54,7 @@ class ConvDecoderOutput(
 
 
 @six.add_metaclass(abc.ABCMeta)
-class ConvDecoderFairseq(Decoder, GraphModule, Configurable):
+class ConvDecoderFairseq(AttentionDecoder, Decoder, GraphModule, Configurable):
   """An RNN Decoder that uses attention over an input sequence.
 
   Args:
@@ -81,10 +83,10 @@ class ConvDecoderFairseq(Decoder, GraphModule, Configurable):
                params,
                mode,
                vocab_size,
-               # attention_keys,
-               # attention_values,
-               # attention_values_length,
-               # attention_fn,
+               attention_keys,
+               attention_values,
+               attention_values_length,
+               attention_fn,
                config,
                target_embedding,
                pos_embedding,
@@ -92,7 +94,6 @@ class ConvDecoderFairseq(Decoder, GraphModule, Configurable):
                name="conv_decoder_fairseq"):
     GraphModule.__init__(self, name)
     Configurable.__init__(self, params, mode)
-    # super(AttentionDecoder, self).__init__(params, mode, name)
 
     
     self.vocab_size = vocab_size
@@ -103,10 +104,10 @@ class ConvDecoderFairseq(Decoder, GraphModule, Configurable):
     self.pos_embed = pos_embedding
     self.current_inputs = None
     self.initial_state = None
-    # self.attention_keys = attention_keys
-    # self.attention_values = attention_values
-    # self.attention_values_length = attention_values_length
-    # self.attention_fn = attention_fn
+    self.attention_keys = attention_keys
+    self.attention_values = attention_values
+    self.attention_values_length = attention_values_length
+    self.attention_fn = attention_fn
 
   @staticmethod
   def default_params():
@@ -133,13 +134,19 @@ class ConvDecoderFairseq(Decoder, GraphModule, Configurable):
   def output_size(self):
     return ConvDecoderOutput(
         logits=self.vocab_size,   # need pay attention
-        predicted_ids=tf.TensorShape([]))
+        predicted_ids=tf.TensorShape([]),
+        cell_output=self.cell.output_size,
+        attention_scores=tf.shape(self.attention_values)[1:-1],
+        attention_context=self.attention_values.get_shape()[-1])
 
   @property
   def output_dtype(self):
     return ConvDecoderOutput(
         logits=tf.float32,
-        predicted_ids=tf.int32)
+        predicted_ids=tf.int32,
+        cell_output=tf.float32,
+        attention_scores=tf.float32,
+        attention_context=tf.float32)
 
   def print_shape(self, name, tensor):
     print(name, tensor.get_shape().as_list()) 
@@ -253,13 +260,26 @@ class ConvDecoderFairseq(Decoder, GraphModule, Configurable):
       # next_layer = tf.concat([input_embed, attention_context], 1)   
       next_layer = input_embed
       if self.params["cnn.layers"] > 0:
-        nhids_list = parse_list_or_default(self.params["cnn.nhids"], self.params["cnn.layers"], self.params["cnn.nhid_default"])
-        kwidths_list = parse_list_or_default(self.params["cnn.kwidths"], self.params["cnn.layers"], self.params["cnn.kwidth_default"])
+        nhids_list = parse_list_or_default(self.params["cnn.nhids"],
+                                           self.params["cnn.layers"],
+                                           self.params["cnn.nhid_default"])
+
+        kwidths_list = parse_list_or_default(self.params["cnn.kwidths"],
+                                             self.params["cnn.layers"],
+                                             self.params["cnn.kwidth_default"])
         
         # mapping emb dim to hid dim
-        next_layer = linear_mapping_weightnorm(next_layer, nhids_list[0], dropout=self.params["embedding_dropout_keep_prob"], var_scope_name="linear_mapping_before_cnn")      
+        next_layer = linear_mapping_weightnorm(next_layer,
+                                               nhids_list[0],
+                                               dropout=self.params["embedding_dropout_keep_prob"], 
+                                               var_scope_name="linear_mapping_before_cnn")      
          
-        next_layer = conv_decoder_stack(input_embed, enc_output, next_layer, nhids_list, kwidths_list, {'src':self.params["embedding_dropout_keep_prob"], 'hid': self.params["nhid_dropout_keep_prob"]}, mode=self.mode)
+        next_layer = conv_decoder_stack(input_embed, enc_output,
+                                        next_layer, nhids_list,
+                                        kwidths_list, 
+                                        {'src':self.params["embedding_dropout_keep_prob"], 
+                                         'hid': self.params["nhid_dropout_keep_prob"]}, 
+                                        mode=self.mode)
     
     with tf.variable_scope("softmax"):
       if is_train:

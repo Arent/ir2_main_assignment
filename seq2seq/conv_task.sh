@@ -1,9 +1,5 @@
 export PYTHONIOENCODING=UTF-8
 
-export TRAIN_STEPS=100
-export MIN_EVAL=10
-
-
 python3 -m bin.train \
   --config_paths="
       ./example_configs/conv_seq2seq.yml,

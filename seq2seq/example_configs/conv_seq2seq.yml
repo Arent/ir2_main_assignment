@@ -1,16 +1,19 @@
 model: ConvSeq2Seq
 model_params:
-  embedding.dim: 256
+  attention.class: seq2seq.decoders.attention.AttentionLayerDot 
+  attention.params:
+    num_units: 150
+  embedding.dim: 150
   encoder.class: seq2seq.encoders.ConvEncoderFairseq
   encoder.params:
     cnn.layers: 4
-    cnn.nhids: 256,256,256,256
-    cnn.kwidths: 3,3,3,3
+    cnn.nhids: "150,150,150,150"
+    cnn.kwidths: "3,3,3,3"
   decoder.class: seq2seq.decoders.ConvDecoderFairseq
   decoder.params:
-    cnn.layers: 1
-    cnn.nhids: 256
-    cnn.kwidths: 3
+    cnn.layers: 3
+    cnn.nhids: 150,150,150
+    cnn.kwidths: 3,3,3
   optimizer.name: Momentum
   optimizer.params:
     momentum: 0.99

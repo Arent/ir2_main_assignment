@@ -30,39 +30,35 @@ def parse_list_or_default(params_str, number, default_val, delimitor=','):
     param_list = [int(x) for x in params_str.strip().split(delimitor)]
   return param_list
 
-
-def linear_mapping_stupid(inputs, out_dim, in_dim=None, dropout=1.0, var_scope_name="linear_mapping"):
-  with tf.variable_scope(var_scope_name):
-    print('name', tf.get_variable_scope().name) 
-    input_shape_tensor = tf.shape(inputs)   # dynamic shape, no None
-    input_shape = inputs.get_shape().as_list()    # static shape. may has None
-    print('input_shape', input_shape)
-    assert len(input_shape) == 3
-    inputs = tf.reshape(inputs, [-1, input_shape_tensor[-1]])
-     
-    linear_mapping_w = tf.get_variable("linear_mapping_w", [input_shape[-1], out_dim], initializer=tf.random_normal_initializer(mean=0, stddev=tf.sqrt(dropout*1.0/input_shape[-1])))
-    linear_mapping_b = tf.get_variable("linear_mapping_b", [out_dim], initializer=tf.zeros_initializer())
-      
-
-    output = tf.matmul(inputs, linear_mapping_w) + linear_mapping_b
-    print('xxxxx_params', input_shape, out_dim)
-    #output = tf.reshape(output, [input_shape[0], -1, out_dim])
-    output = tf.reshape(output, [input_shape_tensor[0], -1, out_dim])
  
-  return output
- 
-def linear_mapping(inputs, out_dim, in_dim=None, dropout=1.0, var_scope_name="linear_mapping"):
-  with tf.variable_scope(var_scope_name):
-    input_shape = inputs.get_shape().as_list()    # static shape. may has None
-    return tf.contrib.layers.fully_connected(inputs=inputs,num_outputs=out_dim,activation_fn=None, weights_initializer=tf.random_normal_initializer(mean=0, stddev=tf.sqrt(dropout*1.0/input_shape[-1])), biases_initializer=tf.zeros_initializer()) 
+# def linear_mapping(inputs, out_dim, in_dim=None, dropout=1.0, var_scope_name="linear_mapping"):
+#   with tf.variable_scope(var_scope_name):
+#     input_shape = inputs.get_shape().as_list()    # static shape. may has None
+#     weight_init = tf.random_normal_initializer(mean=0,
+#                                                stddev=tf.sqrt(dropout*1.0/input_shape[-1]))
+
+#     return tf.contrib.layers.fully_connected(inputs=inputs,
+#                                              num_outputs=out_dim,
+#                                              activation_fn=None,
+#                                              weights_initializer=weight_init, 
+#                                              biases_initializer=tf.zeros_initializer()) 
  
 def linear_mapping_weightnorm(inputs, out_dim, in_dim=None, dropout=1.0, var_scope_name="linear_mapping"):
   with tf.variable_scope(var_scope_name):
     input_shape = inputs.get_shape().as_list()    # static shape. may has None
-    input_shape_tensor = tf.shape(inputs)    
+    input_shape_tensor = tf.shape(inputs)  
+
+    weight_init = tf.random_normal_initializer(mean=0,
+                                               stddev=tf.sqrt(dropout*1.0/input_shape[-1]))
+
     # use weight normalization (Salimans & Kingma, 2016)  w = g* v/2-norm(v)
-    V = tf.get_variable('V', shape=[int(input_shape[-1]), out_dim], dtype=tf.float32, initializer=tf.random_normal_initializer(mean=0, stddev=tf.sqrt(dropout*1.0/int(input_shape[-1]))), trainable=True)
+    V = tf.get_variable('V', shape=[int(input_shape[-1]), out_dim], 
+                        dtype=tf.float32, 
+                        initializer=weight_init,
+                        trainable=True)
+
     V_norm = tf.norm(V.initialized_value(), axis=0)  # V shape is M*N,  V_norm shape is N
+    
     g = tf.get_variable('g', dtype=tf.float32, initializer=V_norm, trainable=True)
     b = tf.get_variable('b', shape=[out_dim], dtype=tf.float32, initializer=tf.zeros_initializer(), trainable=True)   # weightnorm bias is init zero
     
@@ -89,7 +85,12 @@ def conv1d_weightnorm(inputs, layer_idx, out_dim, kernel_size, padding="SAME", d
     
     # use weight normalization (Salimans & Kingma, 2016)
     W = tf.reshape(g, [1,1,out_dim])*tf.nn.l2_normalize(V,[0,1])
-    inputs = tf.nn.bias_add(tf.nn.conv1d(value=inputs, filters=W, stride=1, padding=padding), b)   
+
+    inputs = tf.nn.conv1d(value=inputs, filters=W, stride=1, padding=padding)
+    bias = False
+    if bias:
+      inputs = tf.nn.bias_add(inputs, b)   
+
     return inputs
 
 

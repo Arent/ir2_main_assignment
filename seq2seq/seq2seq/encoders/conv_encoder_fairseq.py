@@ -58,9 +58,9 @@ class ConvEncoderFairseq(Encoder):
   @staticmethod
   def default_params():
     return {
-        # "attention_cnn.units": 512,
-        # "attention_cnn.kernel_size": 3,
-        # "attention_cnn.layers": 15,
+        "attention_cnn.units": 256,
+        "attention_cnn.kernel_size": 3,
+        "attention_cnn.layers": 4,
         "cnn.layers": 4,
         "cnn.nhids": "256,256,256,256",
         "cnn.kwidths": "3,3,3,3",
@@ -110,19 +110,34 @@ class ConvEncoderFairseq(Encoder):
         keep_prob=self.params["embedding_dropout_keep_prob"],
         is_training=self.mode == tf.contrib.learn.ModeKeys.TRAIN)
     
-    # with tf.variable_scope("cnn_a"):
-    #   cnn_a_output = inputs
-    #   for layer_idx in range(self.params["attention_cnn.layers"]):
+    with tf.variable_scope("cnn_a"):
+      cnn_a_output = inputs
+      for layer_idx in range(self.params["attention_cnn.layers"]):
+        next_layer = tf.contrib.layers.conv2d(
+            inputs=cnn_a_output,
+            num_outputs=self.params["attention_cnn.units"],
+            kernel_size=self.params["attention_cnn.kernel_size"],
+            padding="SAME",
+            activation_fn=tf.nn.relu)
+        # Add a residual connection, except for the first layer
+        if layer_idx > 0:
+          next_layer += cnn_a_output
+        cnn_a_output = tf.tanh(next_layer)
+
+    # with tf.variable_scope("cnn_c"):
+    #   cnn_c_output = inputs
+    #   for layer_idx in range(self.params["cnn.layers"]):
     #     next_layer = tf.contrib.layers.conv2d(
-    #         inputs=cnn_a_output,
-    #         num_outputs=self.params["attention_cnn.units"],
-    #         kernel_size=self.params["attention_cnn.kernel_size"],
+    #         inputs=cnn_c_output,
+    #         num_outputs=self.params["cnn.nhids"],
+    #         kernel_size=self.params["cnn.kwidths"],
     #         padding="SAME",
     #         activation_fn=None)
+    #     next_layer = gated_linear_units(next_layer)
     #     # Add a residual connection, except for the first layer
     #     if layer_idx > 0:
-    #       next_layer += cnn_a_output
-    #     cnn_a_output = tf.tanh(next_layer)
+    #       next_layer += cnn_c_output
+    #     cnn_c_output = tf.tanh(next_layer)
 
     with tf.variable_scope("encoder_cnn"):    
       next_layer = inputs
