@@ -6,7 +6,7 @@ import glob
 import os
 
 
-filenames = glob.glob("en/*.txt")
+filenames = glob.glob("en-10k/*.txt")
 
 tokenizer = MosesTokenizer()
 vocab = defaultdict(int)
@@ -20,8 +20,13 @@ for filename in filenames:
 
 words_by_freq = sorted(vocab.items(), key=operator.itemgetter(1))[::-1]
 with open("vocab.txt", "w+") as f:
+  f.write("<unk>\n")
+  f.write("<s>\n")
+  f.write("</s>\n")
+
   for word, count in words_by_freq:
-    f.write(word)
-    f.write("\n")
+    if word != "<unk>" and word != "<s>" and word != "</s>":
+      f.write(word)
+      f.write("\n")
 
 print("Wrote vocabulary to vocab.txt")
