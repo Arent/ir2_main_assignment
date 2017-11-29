@@ -2,18 +2,18 @@ model: ConvSeq2Seq
 model_params:
   attention.class: seq2seq.decoders.attention.AttentionLayerDot 
   attention.params:
-    num_units: 20
+    num_units: 32
   embedding.dim: 32
   encoder.class: seq2seq.encoders.ConvEncoderFairseq
   encoder.params:
-    cnn.layers: 4
-    cnn.nhids: "20,20,20,20"
-    cnn.kwidths: "4,4,4,4"
+    cnn.layers: 2
+    cnn.nhids: 32,32
+    cnn.kwidths: 10,10
   decoder.class: seq2seq.decoders.ConvDecoderFairseq
   decoder.params:
-    cnn.layers: 3
-    cnn.nhids: 20,20,20
-    cnn.kwidths: 4,4,4
+    cnn.layers: 1
+    cnn.nhids: 32
+    cnn.kwidths: 4
   optimizer.name: Adam
   optimizer.params:
     epsilon: 0.0000008

@@ -34,7 +34,6 @@ from seq2seq.graph_module import GraphModule
 from seq2seq.configurable import Configurable
 from seq2seq.contrib.seq2seq.decoder import Decoder, dynamic_decode
 from seq2seq.contrib.seq2seq.decoder import _transpose_batch_time
-#from seq2seq.encoders.pooling_encoder import _create_position_embedding, position_encoding
 from seq2seq.encoders.conv_encoder_utils import *
 from seq2seq.inference import beam_search  
 from tensorflow.python.util import nest
