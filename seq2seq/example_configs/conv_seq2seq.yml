@@ -2,24 +2,22 @@ model: ConvSeq2Seq
 model_params:
   attention.class: seq2seq.decoders.attention.AttentionLayerDot 
   attention.params:
-    num_units: 150
-  embedding.dim: 150
+    num_units: 20
+  embedding.dim: 32
   encoder.class: seq2seq.encoders.ConvEncoderFairseq
   encoder.params:
     cnn.layers: 4
-    cnn.nhids: "150,150,150,150"
-    cnn.kwidths: "3,3,3,3"
+    cnn.nhids: "20,20,20,20"
+    cnn.kwidths: "4,4,4,4"
   decoder.class: seq2seq.decoders.ConvDecoderFairseq
   decoder.params:
     cnn.layers: 3
-    cnn.nhids: 150,150,150
-    cnn.kwidths: 3,3,3
-  optimizer.name: Momentum
+    cnn.nhids: 20,20,20
+    cnn.kwidths: 4,4,4
+  optimizer.name: Adam
   optimizer.params:
-    momentum: 0.99
-    use_nesterov: True     
-  optimizer.learning_rate: 0.25
-  optimizer.clip_gradients: 0.1
+    epsilon: 0.0000008
+  optimizer.learning_rate: 0.001
   source.max_seq_len: 66
   source.reverse: false
-  target.max_seq_len: 50
+  target.max_seq_len: 5
