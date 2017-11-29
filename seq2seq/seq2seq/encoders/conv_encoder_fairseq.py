@@ -110,19 +110,19 @@ class ConvEncoderFairseq(Encoder):
         keep_prob=self.params["embedding_dropout_keep_prob"],
         is_training=self.mode == tf.contrib.learn.ModeKeys.TRAIN)
     
-    with tf.variable_scope("cnn_a"):
-      cnn_a_output = inputs
-      for layer_idx in range(self.params["attention_cnn.layers"]):
-        next_layer = tf.contrib.layers.conv2d(
-            inputs=cnn_a_output,
-            num_outputs=self.params["attention_cnn.units"],
-            kernel_size=self.params["attention_cnn.kernel_size"],
-            padding="SAME",
-            activation_fn=tf.nn.relu)
-        # Add a residual connection, except for the first layer
-        if layer_idx > 0:
-          next_layer += cnn_a_output
-        cnn_a_output = tf.tanh(next_layer)
+    # with tf.variable_scope("cnn_a"):
+    #   cnn_a_output = inputs
+    #   for layer_idx in range(self.params["attention_cnn.layers"]):
+    #     next_layer = tf.contrib.layers.conv2d(
+    #         inputs=cnn_a_output,
+    #         num_outputs=self.params["attention_cnn.units"],
+    #         kernel_size=self.params["attention_cnn.kernel_size"],
+    #         padding="SAME",
+    #         activation_fn=tf.nn.relu)
+    #     # Add a residual connection, except for the first layer
+    #     if layer_idx > 0:
+    #       next_layer += cnn_a_output
+    #     cnn_a_output = tf.tanh(next_layer)
 
     # with tf.variable_scope("cnn_c"):
     #   cnn_c_output = inputs
