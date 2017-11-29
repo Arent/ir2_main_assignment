@@ -19,6 +19,7 @@ parser.add_argument("--task", type=str, default="1",
                     help="Task number")
 
 # I/O arguments.
+parser.add_argument("--debug", type=bool, default=False)
 parser.add_argument("--data_dir", type=str, default='data/baBI-tasks/en',
                     help="Directory containing the data.")
 parser.add_argument("--vocab", type=str, default='data/vocab.txt',
@@ -41,17 +42,17 @@ parser.add_argument("--dropout_keep_prob", type=float, default=0.7,
                     help="Dropout keep probability")
 
 # Model encoder arguments.
-parser.add_argument("--embedding_size", type=int, default=50,
+parser.add_argument("--embedding_size", type=int, default=32,
                     help="Size of the word embeddings.")
 parser.add_argument("--cell_type", type=str, default="lstm",
                     help="Cell type for the RNN.")
 parser.add_argument("--encoder_type", type=str, default="uni",
                     help="uni|bi")
-parser.add_argument("--num_units", type=int, default=50,
+parser.add_argument("--num_units", type=int, default=32,
                     help="Number of hidden units in the RNN encoder")
 parser.add_argument("--num_enc_layers", type=int, default=1,
                     help="Number of encoder layers in the encoder")
-parser.add_argument("--num_output_hidden", type=str, default="100",
+parser.add_argument("--num_output_hidden", type=str, default="50",
                     help="Number of units or the hidden layers, formatted as h1_size,h2_size,etc")
 
 # Model decoder arguments.
@@ -160,14 +161,17 @@ with tf.variable_scope("QARNN", reuse=True):
   test_acc = test_model.accuracy(test_logits, test_answer)
 
 # Create Tensorboard summaries.
-train_loss_summary = tf.summary.scalar("train_loss", train_loss)
-train_acc_summary = tf.summary.scalar("train_acc", train_acc)
-train_summaries = tf.summary.merge([train_loss_summary, train_acc_summary])
-test_summaries = tf.summary.scalar("test_accuracy", test_acc)
+if not args.debug:  
+  train_loss_summary = tf.summary.scalar("train_loss", train_loss)
+  train_acc_summary = tf.summary.scalar("train_acc", train_acc)
+  train_summaries = tf.summary.merge([train_loss_summary, train_acc_summary])
+  test_summaries = tf.summary.scalar("test_accuracy", test_acc)
 
 # Parameter saver.
-saver = tf.train.Saver()
-steps_per_stats = 3
+if not args.debug:
+  saver = tf.train.Saver()
+
+steps_per_stats = 500
 
 # Train the model.
 with tf.Session() as sess:
@@ -177,9 +181,10 @@ with tf.Session() as sess:
   sess.run(train.initializer)
 
   # Create the summary writers.
-  print("Creating summary writers...")
-  train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
-  test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
+  if not args.debug:
+    print("Creating summary writers...")
+    train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
+    test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
 
   # Bookkeeping stuff.
   epoch_num = 1
@@ -191,48 +196,67 @@ with tf.Session() as sess:
   # Evaluate before training.
   print("Performing evaluation before training...")
   sess.run(test.initializer)
-  contexts, questions, answers, context_lengths, question_lengths, predictions, acc, summary = sess.run([
-      test_context, test_question, test_answer, test_context_length, test_question_length,
-      tf.argmax(test_logits, axis=-1), test_acc, test_summaries])
-  print("---- Qualitative Analysis")
-  eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
-      predictions, i2w, k=3)
-  print("Test accuracy: %f" % acc)
-  test_writer.add_summary(summary, epoch_num)
-  print("=========================")
+  if args.debug:
+    contexts, questions, answers, context_lengths, question_lengths, predictions, acc = sess.run([
+        test_context, test_question, test_answer, test_context_length, test_question_length,
+        tf.argmax(test_logits, axis=-1), test_acc])
+    
+  else:
+    contexts, questions, answers, context_lengths, question_lengths, predictions, acc, summary = sess.run([
+        test_context, test_question, test_answer, test_context_length, test_question_length,
+        tf.argmax(test_logits, axis=-1), test_acc, test_summaries])
+    print("---- Qualitative Analysis")
+    eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
+        predictions, i2w, k=3)
+  print("Epoch %d Test accuracy: %f" % (epoch_num, acc))
+  if not args.debug:
+    test_writer.add_summary(summary, epoch_num)
+  # print("=========================")
 
   while epoch_num <= args.num_epochs:
 
     try:
       # Train on all batches for one epoch.
-      _, loss, summary = sess.run([train_op, train_loss, train_summaries])
+      if args.debug:
+        _, loss = sess.run([train_op, train_loss])
+
+      else:
+        _, loss, summary = sess.run([train_op, train_loss, train_summaries])
       step += 1
       total_step += 1
-      train_writer.add_summary(summary, total_step)
+      if not args.debug:
+        train_writer.add_summary(summary, total_step)
 
       # Print training statistics periodically.
       if step % steps_per_stats == 0:
-        print("Train loss at step %d = %f" % (step, loss))
+        print("----Train loss at step %d = %f" % (step, loss))
 
     except tf.errors.OutOfRangeError:
-      print("==== Finshed epoch %d ====" % epoch_num)
+      # print("==== Finshed epoch %d ====" % epoch_num)
 
       # Save model parameters. TODO Commented this out because it takes a lot of time and space.
       # save_path = saver.save(sess, os.path.join(args.model_dir, "model_epoch_%d.ckpt" % epoch_num))
       # print("Model checkpoint saved in %s" % save_path)
 
       # Evaluate the model on the test set.
-      print("Evaluating model...")
       sess.run(test.initializer)
-      contexts, questions, answers, context_lengths, question_lengths, predictions, acc, summary = sess.run([
-          test_context, test_question, test_answer, test_context_length, test_question_length,
-          tf.argmax(test_logits, axis=-1), test_acc, test_summaries])
-      print("---- Qualitative Analysis")
-      eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
-          predictions, i2w, k=15)
-      print("Test accuracy: %f" % acc)
-      test_writer.add_summary(summary, epoch_num)
-      print("=========================")
+
+      if args.debug:
+        contexts, questions, answers, context_lengths, question_lengths, predictions, acc = sess.run([
+            test_context, test_question, test_answer, test_context_length, test_question_length,
+            tf.argmax(test_logits, axis=-1), test_acc])
+      else:
+
+        contexts, questions, answers, context_lengths, question_lengths, predictions, acc, summary = sess.run([
+            test_context, test_question, test_answer, test_context_length, test_question_length,
+            tf.argmax(test_logits, axis=-1), test_acc, test_summaries])
+        print("---- Qualitative Analysis")
+        eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
+          predictions, i2w, k=5)
+      print("Epoch %d Test accuracy: %f" % (epoch_num, acc))
+      if not args.debug:
+        test_writer.add_summary(summary, epoch_num)
+      # print("=========================")
 
       # Re-initialize the training iterator.
       sess.run(train.initializer)

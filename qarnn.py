@@ -164,8 +164,12 @@ class QARNN:
 
     with tf.variable_scope('attention'): 
       #First calculate the attention weights using a weighted dot product similarity.
-      with tf.variable_scope('similarity_weights'):
-        similarity_weights = tf.get_variable('Ws', shape=[self.num_units, self.num_units], dtype=tf.float32)[tf.newaxis,:]
+      with tf.variable_scope('similarity_weights'): #, 
+        # similarity_weights = tf.get_variable('Ws', shape=[self.num_units, self.num_units], dtype=tf.float32)[tf.newaxis,:]
+
+        init_ws=tf.random_uniform(shape=[self.num_units, self.num_units], minval=-0.02,maxval=0.02) + tf.eye(self.num_units)
+        similarity_weights = tf.get_variable('Ws', initializer=init_ws, dtype=tf.float32)[tf.newaxis,:]
+
         similarity_weights = tf.tile(similarity_weights, [batch_size,1,1])
 
       with tf.variable_scope('attention_weights'):
