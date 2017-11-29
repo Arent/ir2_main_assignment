@@ -4,7 +4,7 @@ import numpy as np
 class QARNN:
 
   def __init__(self, mode, vocab, vocab_size, embedding_size=64, num_units=64, encoder_type="uni", keep_prob=0.7,
-      cell_type=tf.contrib.rnn.LSTMCell, num_output_hidden=[256], num_enc_layers=1, merge_mode="concat",
+      cell_type=tf.contrib.rnn.LSTMCell, num_enc_layers=1, merge_mode="concat",
       optimizer=tf.train.AdamOptimizer, learning_rate=0.001, max_gradient_norm=1.0, max_infer_length=10, attention=False):
     self.embedding_size = embedding_size
     self.num_units = num_units
@@ -12,7 +12,6 @@ class QARNN:
     self.encoder_type = encoder_type
     self.keep_prob = keep_prob
     self.cell_type = cell_type
-    self.num_output_hidden = num_output_hidden
     self.num_enc_layers = num_enc_layers
     self.merge_mode = merge_mode
     self.optimizer = optimizer

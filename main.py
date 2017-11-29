@@ -32,7 +32,7 @@ parser.add_argument("--optimizer", type=str, default="adam",
                     help="sgd|adam|adagrad|rmsprop")
 parser.add_argument("--learning_rate", type=float, default=0.001,
                     help="Learning rate of the optimizer.")
-parser.add_argument("--num_epochs", type=int, default=20,
+parser.add_argument("--num_epochs", type=int, default=7,
                     help="Number of training epochs.")
 parser.add_argument("--max_gradient_norm", type=float, default=1.0,
                     help="Maximum norm for gradients.")
@@ -42,17 +42,17 @@ parser.add_argument("--anneal_learning_rate", action="store_true",
                     default=False, help="Whether to anneal the learning rate.")
 
 # General model arguments.
-parser.add_argument("--model_type", type=str, default="normal",
+parser.add_argument("--model_type", type=str, default="attention",
                     help="normal|attention")
 
 # Model encoder arguments.
-parser.add_argument("--embedding_size", type=int, default=64,
+parser.add_argument("--embedding_size", type=int, default=32,
                     help="Size of the word embeddings.")
-parser.add_argument("--cell_type", type=str, default="lstm",
+parser.add_argument("--cell_type", type=str, default="gru",
                     help="Cell type for the RNN.")
-parser.add_argument("--encoder_type", type=str, default="uni",
+parser.add_argument("--encoder_type", type=str, default="bi",
                     help="uni|bi")
-parser.add_argument("--num_units", type=int, default=64,
+parser.add_argument("--num_units", type=int, default=32,
                     help="Number of hidden units in the RNN encoder")
 parser.add_argument("--num_enc_layers", type=int, default=1,
                     help="Number of encoder layers in the encoder")
@@ -60,8 +60,6 @@ parser.add_argument("--num_enc_layers", type=int, default=1,
 # Model decoder arguments.
 parser.add_argument("--merge_mode", type=str, default="concat",
                     help="sum|concat")
-parser.add_argument("--num_output_hidden", type=str, default="256",
-                    help="Number of units or the hidden layers, formatted as h1_size,h2_size,etc")
 
 # Parse all arguments.
 args = parser.parse_args()
@@ -77,7 +75,6 @@ attention = args.model_type == "attention"
 # Parse the necessary strings to the correct format.
 cell_type = misc_utils.parse_cell_type(args.cell_type)
 optimizer = misc_utils.parse_optimizer(args.optimizer)
-num_output_hidden = misc_utils.parse_num_hidden(args.num_output_hidden)
 
 # Load the vocabulary into numpy for evaluation and debugging purposes.
 w2i, i2w = data_utils.load_vocab(args.vocab)
@@ -102,42 +99,44 @@ with tf.variable_scope("QARNN"):
   train_model = QARNN(tf.contrib.learn.ModeKeys.TRAIN, tf_vocab, vocab_size,
       embedding_size=args.embedding_size, num_units=args.num_units,
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
-      cell_type=cell_type, num_output_hidden=num_output_hidden,
-      num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
-      optimizer=optimizer, learning_rate=args.learning_rate,
+      cell_type=cell_type, num_enc_layers=args.num_enc_layers,
+      merge_mode=args.merge_mode, optimizer=optimizer,
+      learning_rate=args.learning_rate,
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the training model graph.
-  # emb_context, emb_matrix = train_model.create_embeddings(context,
-  #     name="enc_embedding_matrix")
-  # emb_question, _ = train_model.create_embeddings(question,
-  #     embedding_matrix=emb_matrix)
-  # context_outputs, final_context_state = train_model.create_encoder("context_encoder",
-  #     emb_context, context_length)
-  # _, final_question_state = train_model.create_encoder("question_encoder",
-  #     emb_question, question_length)
-  # merged_state = train_model.merge_states(final_context_state,
-  #     final_question_state)
-
-  # if args.model_type == "attention":
-  #   initial_state = final_question_state
-  #   attention_states = context_outputs
-  # else:
-  #   initial_state = merged_state
-  #   attention_states = None
-
-  enc_input = tf.concat([question, context, question], axis=1)
-  enc_input_length = question_length * 2 + context_length
-  emb_enc_input, emb_matrix = train_model.create_embeddings(enc_input,
+  context = tf.concat([question, context], axis=1)
+  context_length = context_length + question_length
+  emb_context, emb_matrix = train_model.create_embeddings(context,
       name="enc_embedding_matrix")
-  outputs, final_state = train_model.create_encoder("encoder",
-      emb_enc_input, enc_input_length)
+  emb_question, _ = train_model.create_embeddings(question,
+      embedding_matrix=emb_matrix)
+  context_outputs, final_context_state = train_model.create_encoder("context_encoder",
+      emb_context, context_length)
+  _, final_question_state = train_model.create_encoder("question_encoder",
+      emb_question, question_length)
+  merged_state = train_model.merge_states(final_context_state,
+      final_question_state)
 
-  initial_state = final_state
   if args.model_type == "attention":
-    attention_states = outputs
+    initial_state = final_question_state
+    attention_states = context_outputs
   else:
+    initial_state = merged_state
     attention_states = None
+
+  # enc_input = tf.concat([question, context, question], axis=1)
+  # enc_input_length = question_length * 2 + context_length
+  # emb_enc_input, emb_matrix = train_model.create_embeddings(enc_input,
+  #     name="enc_embedding_matrix")
+  # outputs, final_state = train_model.create_encoder("encoder",
+  #     emb_enc_input, enc_input_length)
+
+  # initial_state = final_state
+  # if args.model_type == "attention":
+  #   attention_states = outputs
+  # else:
+  #   attention_states = None
 
   emb_answer, dec_emb_matrix = train_model.create_embeddings(answer_input,
       name="dec_embedding_matrix")
@@ -153,42 +152,43 @@ with tf.variable_scope("QARNN", reuse=True):
   val_model = QARNN(tf.contrib.learn.ModeKeys.EVAL, tf_vocab, vocab_size,
       embedding_size=args.embedding_size, num_units=args.num_units,
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
-      cell_type=cell_type, num_output_hidden=num_output_hidden,
-      num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
+      cell_type=cell_type,num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the validation model graph.
-  # val_emb_context, val_emb_matrix = val_model.create_embeddings(val_context,
-  #     name="enc_embedding_matrix")
-  # val_emb_question, _ = val_model.create_embeddings(val_question,
-  #     embedding_matrix=val_emb_matrix)
-  # val_context_outputs, val_final_context_state = val_model.create_encoder("context_encoder",
-  #     val_emb_context, val_context_length)
-  # _, val_final_question_state = val_model.create_encoder("question_encoder",
-  #     val_emb_question, val_question_length)
-  # val_merged_state = val_model.merge_states(val_final_context_state,
-  #     val_final_question_state)
-
-  # if args.model_type == "attention":
-  #   val_initial_state = val_final_question_state
-  #   val_attention_states = val_context_outputs
-  # else:
-  #   val_initial_state = val_merged_state
-  #   val_attention_states = None
-
-  val_enc_input = tf.concat([val_question, val_context, val_question], axis=1)
-  val_enc_input_length = val_question_length * 2 + val_context_length
-  val_emb_enc_input, val_emb_matrix = val_model.create_embeddings(val_enc_input,
+  val_context = tf.concat([val_question, val_context], axis=1)
+  val_context_length = val_context_length + val_question_length
+  val_emb_context, val_emb_matrix = val_model.create_embeddings(val_context,
       name="enc_embedding_matrix")
-  val_outputs, val_final_state = val_model.create_encoder("encoder",
-      val_emb_enc_input, val_enc_input_length)
+  val_emb_question, _ = val_model.create_embeddings(val_question,
+      embedding_matrix=val_emb_matrix)
+  val_context_outputs, val_final_context_state = val_model.create_encoder("context_encoder",
+      val_emb_context, val_context_length)
+  _, val_final_question_state = val_model.create_encoder("question_encoder",
+      val_emb_question, val_question_length)
+  val_merged_state = val_model.merge_states(val_final_context_state,
+      val_final_question_state)
 
-  val_initial_state = val_final_state
   if args.model_type == "attention":
-    val_attention_states = val_outputs
+    val_initial_state = val_final_question_state
+    val_attention_states = val_context_outputs
   else:
+    val_initial_state = val_merged_state
     val_attention_states = None
+
+  # val_enc_input = tf.concat([val_question, val_context, val_question], axis=1)
+  # val_enc_input_length = val_question_length * 2 + val_context_length
+  # val_emb_enc_input, val_emb_matrix = val_model.create_embeddings(val_enc_input,
+  #     name="enc_embedding_matrix")
+  # val_outputs, val_final_state = val_model.create_encoder("encoder",
+  #     val_emb_enc_input, val_enc_input_length)
+
+  # val_initial_state = val_final_state
+  # if args.model_type == "attention":
+  #   val_attention_states = val_outputs
+  # else:
+  #   val_attention_states = None
 
   val_emb_answer, val_dec_emb_matrix = train_model.create_embeddings(
       val_answer_input, name="dec_embedding_matrix")
@@ -203,41 +203,43 @@ with tf.variable_scope("QARNN", reuse=True):
   test_model = QARNN(tf.contrib.learn.ModeKeys.INFER, tf_vocab, vocab_size,
       embedding_size=args.embedding_size, num_units=args.num_units,
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
-      cell_type=cell_type, num_output_hidden=num_output_hidden,
-      num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
+      cell_type=cell_type,  num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the testing model graph.
-  # test_emb_context, test_emb_matrix = test_model.create_embeddings(test_context,
-  #     name="enc_embedding_matrix")
-  # test_emb_question, _ = test_model.create_embeddings(test_question,
-  #     embedding_matrix=test_emb_matrix)
-  # test_context_outputs, test_final_context_state = test_model.create_encoder("context_encoder",
-  #     test_emb_context, test_context_length)
-  # _, test_final_question_state = test_model.create_encoder("question_encoder",
-  #     test_emb_question, test_question_length)
-  # test_merged_state = test_model.merge_states(test_final_context_state,
-  #     test_final_question_state)
-
-  # if args.model_type == "attention":
-  #   test_initial_state = test_final_question_state
-  #   test_attention_states = test_context_outputs
-  # else:
-  #   test_initial_state = test_merged_state
-  #   test_attention_states = None
-  test_enc_input = tf.concat([test_question, test_context, test_question], axis=1)
-  test_enc_input_length = test_question_length * 2 + test_context_length
-  test_emb_enc_input, test_emb_matrix = test_model.create_embeddings(test_enc_input,
+  test_context = tf.concat([test_question, test_context], axis=1)
+  test_context_length = test_context_length + test_question_length
+  test_emb_context, test_emb_matrix = test_model.create_embeddings(test_context,
       name="enc_embedding_matrix")
-  test_outputs, test_final_state = test_model.create_encoder("encoder",
-      test_emb_enc_input, test_enc_input_length)
+  test_emb_question, _ = test_model.create_embeddings(test_question,
+      embedding_matrix=test_emb_matrix)
+  test_context_outputs, test_final_context_state = test_model.create_encoder("context_encoder",
+      test_emb_context, test_context_length)
+  _, test_final_question_state = test_model.create_encoder("question_encoder",
+      test_emb_question, test_question_length)
+  test_merged_state = test_model.merge_states(test_final_context_state,
+      test_final_question_state)
 
-  test_initial_state = test_final_state
   if args.model_type == "attention":
-    test_attention_states = test_outputs
+    test_initial_state = test_final_question_state
+    test_attention_states = test_context_outputs
   else:
+    test_initial_state = test_merged_state
     test_attention_states = None
+
+  # test_enc_input = tf.concat([test_question, test_context, test_question], axis=1)
+  # test_enc_input_length = test_question_length * 2 + test_context_length
+  # test_emb_enc_input, test_emb_matrix = test_model.create_embeddings(test_enc_input,
+  #     name="enc_embedding_matrix")
+  # test_outputs, test_final_state = test_model.create_encoder("encoder",
+  #     test_emb_enc_input, test_enc_input_length)
+
+  # test_initial_state = test_final_state
+  # if args.model_type == "attention":
+  #   test_attention_states = test_outputs
+  # else:
+  #   test_attention_states = None
 
   test_emb_answer, test_dec_emb_matrix = train_model.create_embeddings(
       test_answer_input, name="dec_embedding_matrix")
@@ -254,7 +256,7 @@ test_summaries = tf.summary.scalar("test_accuracy", test_acc)
 
 # Parameter saver.
 saver = tf.train.Saver()
-steps_per_stats = 100
+steps_per_stats = 50
 
 # Train the model.
 with tf.Session() as sess:
@@ -367,3 +369,4 @@ print("Best model (ppl) at epoch %d -- validation perplexity = %f -- validation 
     best_model)
 print("Best model (acc) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test accuracy = %f" %
     best_model_acc)
+print(best_model_acc[-1])
