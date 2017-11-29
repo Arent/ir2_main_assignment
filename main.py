@@ -106,10 +106,14 @@ with tf.variable_scope("QARNN"):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the training model graph.
+  emb_context, emb_matrix = train_model.create_embeddings(context,
+      name="enc_embedding_matrix")
+  emb_question, _ = train_model.create_embeddings(question,
+      embedding_matrix=emb_matrix)
   context_outputs, final_context_state = train_model.create_encoder("context_encoder",
-      context, context_length)
+      emb_context, context_length)
   _, final_question_state = train_model.create_encoder("question_encoder",
-      question, question_length)
+      emb_question, question_length)
   merged_state = train_model.merge_states(final_context_state,
       final_question_state)
 
@@ -120,8 +124,10 @@ with tf.variable_scope("QARNN"):
     initial_state = merged_state
     attention_states = None
 
-  logits = train_model.create_rnn_decoder(answer_input, answer_length,
-      initial_state, attention_states=attention_states)
+  emb_answer, dec_emb_matrix = train_model.create_embeddings(answer_input,
+      name="dec_embedding_matrix")
+  logits = train_model.create_rnn_decoder(emb_answer, answer_length,
+      initial_state, dec_emb_matrix, attention_states=attention_states)
   train_loss = train_model.loss(logits, answer_output, answer_length)
   train_ppl = train_model.perplexity(train_loss, tf.shape(logits)[0], answer_length)
   train_acc = train_model.accuracy(logits, answer_output, answer_length)
@@ -138,10 +144,14 @@ with tf.variable_scope("QARNN", reuse=True):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the validation model graph.
+  val_emb_context, val_emb_matrix = val_model.create_embeddings(val_context,
+      name="enc_embedding_matrix")
+  val_emb_question, _ = val_model.create_embeddings(val_question,
+      embedding_matrix=val_emb_matrix)
   val_context_outputs, val_final_context_state = val_model.create_encoder("context_encoder",
-      val_context, val_context_length)
+      val_emb_context, val_context_length)
   _, val_final_question_state = val_model.create_encoder("question_encoder",
-      val_question, val_question_length)
+      val_emb_question, val_question_length)
   val_merged_state = val_model.merge_states(val_final_context_state,
       val_final_question_state)
 
@@ -152,8 +162,10 @@ with tf.variable_scope("QARNN", reuse=True):
     val_initial_state = val_merged_state
     val_attention_states = None
 
-  val_logits = val_model.create_rnn_decoder(val_answer_input, val_answer_length,
-      val_initial_state, attention_states=val_attention_states)
+  val_emb_answer, val_dec_emb_matrix = train_model.create_embeddings(
+      val_answer_input, name="dec_embedding_matrix")
+  val_logits = val_model.create_rnn_decoder(val_emb_answer, val_answer_length,
+      val_initial_state, val_dec_emb_matrix, attention_states=val_attention_states)
   val_loss = val_model.loss(val_logits, val_answer_output, val_answer_length)
   val_ppl = val_model.perplexity(val_loss, tf.shape(val_logits)[0], val_answer_length)
   val_acc = val_model.accuracy(val_logits, val_answer_output, val_answer_length)
@@ -169,10 +181,14 @@ with tf.variable_scope("QARNN", reuse=True):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the testing model graph.
+  test_emb_context, test_emb_matrix = test_model.create_embeddings(test_context,
+      name="enc_embedding_matrix")
+  test_emb_question, _ = test_model.create_embeddings(test_question,
+      embedding_matrix=test_emb_matrix)
   test_context_outputs, test_final_context_state = test_model.create_encoder("context_encoder",
-      test_context, test_context_length)
+      test_emb_context, test_context_length)
   _, test_final_question_state = test_model.create_encoder("question_encoder",
-      test_question, test_question_length)
+      test_emb_question, test_question_length)
   test_merged_state = test_model.merge_states(test_final_context_state,
       test_final_question_state)
 
@@ -183,8 +199,10 @@ with tf.variable_scope("QARNN", reuse=True):
     test_initial_state = test_merged_state
     test_attention_states = None
 
-  test_predictions = test_model.create_rnn_decoder(test_answer_input, test_answer_length,
-      test_initial_state, attention_states=test_attention_states)
+  test_emb_answer, test_dec_emb_matrix = train_model.create_embeddings(
+      test_answer_input, name="dec_embedding_matrix")
+  test_predictions = test_model.create_rnn_decoder(test_emb_answer, test_answer_length,
+      test_initial_state, test_dec_emb_matrix, attention_states=test_attention_states)
   test_acc = tf.placeholder(tf.float32, shape=[])
 
 # Create Tensorboard summaries.
@@ -284,7 +302,7 @@ with tf.Session() as sess:
       else:
         epochs_without_improvement += 1
 
-      print("Epochs without improvement:", epochs_without_improvement)
+      # print("Epochs without improvement:", epochs_without_improvement)
 
       # Reset the optimizer with a decayed learning rate if not improving.
       # if epochs_without_improvement > 1:

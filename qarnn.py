@@ -23,14 +23,18 @@ class QARNN:
     self.vocab = vocab
     self.attention = attention
 
+  def create_embeddings(self, sequence, name=None, embedding_matrix=None):
+    if embedding_matrix is None:
+      embedding_matrix = tf.get_variable(name, [self.vocab_size, self.embedding_size],
+          dtype=tf.float32)
+
+    return tf.nn.embedding_lookup(embedding_matrix,
+        sequence), embedding_matrix # [batch, time, emb_size]
+
   # Creates an encoder on the given sequence, returns the final state of the encoder.
-  def create_encoder(self, name, sequence, sequence_length):
+  def create_encoder(self, name, embeddings, sequence_length):
 
     with tf.variable_scope(name) as scope:
-      embedding_matrix = tf.get_variable("embedding_matrix", \
-          [self.vocab_size, self.embedding_size], dtype=tf.float32)
-      embeddings = tf.nn.embedding_lookup(embedding_matrix,
-          sequence) # [batch, time, emb_size]
 
       if self.encoder_type == "uni":
 
@@ -108,15 +112,11 @@ class QARNN:
       merged_state = None
     return merged_state
 
-  def create_rnn_decoder(self, decoder_inputs, input_length, initial_state, attention_states=None):
+  def create_rnn_decoder(self, decoder_emb_inputs, input_length,
+      initial_state, embedding_matrix, attention_states=None):
     sos_id = tf.cast(self.vocab.lookup(tf.constant("<s>")), tf.int32)
     eos_id = tf.cast(self.vocab.lookup(tf.constant("</s>")), tf.int32)
     with tf.variable_scope("decoder") as decoder_scope:
-
-      embedding_matrix = tf.get_variable("answer_embedding", \
-          [self.vocab_size, self.embedding_size], dtype=tf.float32)
-      decoder_inputs = tf.nn.embedding_lookup(embedding_matrix,
-          decoder_inputs) # [batch, time, emb_size]
 
       num_units = self.num_units if self.encoder_type == "uni" else 2 * self.num_units
       num_units = 2 * num_units if self.merge_mode == "concat" and not self.attention else num_units
@@ -127,15 +127,15 @@ class QARNN:
             attention_states)
         cell = tf.contrib.seq2seq.AttentionWrapper(cell,
             attention_mechanism)
-        batch_size = tf.shape(decoder_inputs)[0]
+        batch_size = tf.shape(decoder_emb_inputs)[0]
         initial_state = cell.zero_state(batch_size, initial_state.dtype).clone(cell_state=initial_state)
 
       if self.mode != tf.contrib.learn.ModeKeys.INFER:
-        helper = tf.contrib.seq2seq.TrainingHelper(decoder_inputs,
+        helper = tf.contrib.seq2seq.TrainingHelper(decoder_emb_inputs,
             input_length)
-        maximum_iterations = tf.shape(decoder_inputs)[1]
+        maximum_iterations = tf.shape(decoder_emb_inputs)[1]
       else:
-        batch_size = tf.shape(decoder_inputs)[0]
+        batch_size = tf.shape(decoder_emb_inputs)[0]
         helper = tf.contrib.seq2seq.GreedyEmbeddingHelper(embedding_matrix,
             tf.fill([batch_size], sos_id), eos_id)
         maximum_iterations = 10
