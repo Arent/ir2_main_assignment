@@ -1,11 +1,30 @@
 import tensorflow as tf
 import numpy as np
 
+
+def softmax_with_sequence_length(logits, sequence_lengths):
+    '''Return the softmax for each row until the sequence_length'''
+    #Create boolean array from sequence_lengths
+    #eg: sequence_lengths = [1,4,5], max_length = 5 (and batch_size is 3)
+    #The boolean array(with shape: batch * max_time)  will be:
+    # 1, 0, 0, 0, 0
+    # 1, 1, 1, 1, 0
+    # 1, 1, 1, 1 ,1
+    batch_size = tf.shape(logits)[0]
+    max_length = tf.shape(logits)[1]
+    indices = tf.reshape(tf.tile(tf.range(max_length),[batch_size]), [batch_size,max_length])
+    boolean_array = tf.cast(indices < sequence_lengths, tf.float32)    
+    
+    # Calculate regular softmax. but multiply tf.exp(x) with the boolean_array
+    logits = tf.exp(logits -tf.reduce_max(logits,axis=1)[:,tf.newaxis]) * boolean_array
+    return logits / tf.reduce_sum(logits,axis=1)[:,tf.newaxis]
+
+
 class QARNN:
 
   def __init__(self, mode, vocab_size, embedding_size=64, num_units=64, encoder_type="bi", keep_prob=0.7,
       cell_type=tf.contrib.rnn.BasicLSTMCell, num_output_hidden=[256], num_enc_layers=1, merge_mode="concat",
-      optimizer=tf.train.AdamOptimizer, learning_rate=0.001, max_gradient_norm=1.0):
+      optimizer=tf.train.AdamOptimizer, learning_rate=0.001, max_gradient_norm=1.0, use_attention=False):
     self.embedding_size = embedding_size
     self.num_units = num_units
     self.vocab_size = vocab_size
@@ -19,6 +38,12 @@ class QARNN:
     self.learning_rate = learning_rate
     self.max_gradient_norm = max_gradient_norm
     self.mode = mode
+    self.use_attention = use_attention
+
+    if self.num_enc_layers > 1 or self.encoder_type == 'bi':
+      #Attention only implemented for simple Recurrent nets
+      if self.use_attention:
+        raise NotImplementedError
 
   # Creates an encoder on the given sequence, returns the final state of the encoder.
   def create_encoder(self, name, sequence, sequence_length):
@@ -44,7 +69,7 @@ class QARNN:
 
         cell = tf.contrib.rnn.MultiRNNCell(cells)
 
-        _, final_state = tf.nn.dynamic_rnn(cell, embeddings,
+        output, final_state = tf.nn.dynamic_rnn(cell, embeddings,
             dtype=tf.float32, sequence_length=sequence_length)
 
         # For multilayer RNNs, use the final layer's state.
@@ -54,7 +79,12 @@ class QARNN:
         if isinstance(final_state, tuple):
           final_state = final_state.h
 
-        return final_state
+        #For attention we need need the output of the context and the
+        #Final embedded layer of the question
+        if self.use_attention:
+          return output, final_state
+        else:
+          return final_state
       else:
 
         # Bidirectional encoders can have only 1 layer in our implementation.
@@ -102,6 +132,7 @@ class QARNN:
 
       # Create the hidden layers.
       prev_h = decoder_inputs
+      h = prev_h
       for num_hidden_units in self.num_output_hidden:
         h = tf.layers.dense(prev_h, num_hidden_units,
             activation=tf.nn.relu, use_bias=True)
@@ -117,6 +148,49 @@ class QARNN:
           activation=None, use_bias=False)
 
     return logits
+
+
+  def create_attention_layer(self, encoded_output_vector, output_matrix, output_lengths):
+    '''This function returns the attenttion of the encoded output vetor 
+    based on the columnd of the output_matrx 
+    output_matrix: [batch_size, max_time, num_units]
+    outout_lengths: [batch_size]
+    encoded_output_vector: [batch_size, num_units]
+    '''
+    output_lengths = output_lengths[:,tf.newaxis]
+    max_time = tf.shape(output_matrix)[1]
+    batch_size = tf.shape(output_matrix)[0]
+
+
+    with tf.variable_scope('attention'): 
+      #First calculate the attention weights using a weighted dot product similarity.
+      with tf.variable_scope('similarity_weights'):
+        similarity_weights = tf.get_variable('Ws', shape=[self.num_units, self.num_units], dtype=tf.float32)[tf.newaxis,:]
+        similarity_weights = tf.tile(similarity_weights, [batch_size,1,1])
+
+      with tf.variable_scope('attention_weights'):
+        encoded_output_vector = encoded_output_vector[:,:,tf.newaxis]
+        
+        attention_weights_input = tf.matmul(tf.matmul(output_matrix, similarity_weights), encoded_output_vector) 
+        attention_weights = softmax_with_sequence_length(logits=tf.squeeze(attention_weights_input), sequence_lengths=output_lengths)
+        attention_weights = attention_weights[:,:,tf.newaxis]
+        
+
+      with tf.variable_scope('context_vector'):
+        #The context vector is the weighted sum over the outputs, using the learned attention weights
+        output_matrix_bht = tf.transpose(output_matrix, [0,2,1])
+        context_vector =tf.squeeze(tf.matmul(output_matrix_bht, attention_weights))
+
+      #the final attention vector is learned using the concatination of the context vector
+      #and the encoded output vector with an extra non_linearity
+      with tf.variable_scope('attention_vector'):
+        encoded_output_vector = tf.squeeze(encoded_output_vector)
+        merged_context_output = tf.concat([context_vector, encoded_output_vector], axis=1)
+        attention_weight_matrix = tf.get_variable('Wa', shape=[self.num_units*2, self.num_units]) 
+        attention_vector = tf.tanh(tf.matmul(merged_context_output, attention_weight_matrix))
+
+    return attention_vector
+
 
   def loss(self, logits, answer):
     cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(

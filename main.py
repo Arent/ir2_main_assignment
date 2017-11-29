@@ -6,8 +6,11 @@ import sys
 from nltk.tokenize.moses import MosesTokenizer
 
 import data_utils, eval_utils, misc_utils
-
 from qarnn import QARNN
+
+
+import time
+stamp = time.strftime('#%a_%H_%M_%S')
 
 parser = argparse.ArgumentParser()
 
@@ -16,21 +19,21 @@ parser.add_argument("--task", type=str, default="1",
                     help="Task number")
 
 # I/O arguments.
-parser.add_argument("--data_dir", type=str, default=None,
+parser.add_argument("--data_dir", type=str, default='data/baBI-tasks/en',
                     help="Directory containing the data.")
-parser.add_argument("--vocab", type=str, default=None,
+parser.add_argument("--vocab", type=str, default='data/vocab.txt',
                     help="Vocabulary file")
-parser.add_argument("--model_dir", type=str, default=None,
+parser.add_argument("--model_dir", type=str, default='log/rand',
                     help="Directory to store the model parameters.")
 
 # Training details arguments.
-parser.add_argument("--batch_size", type=int, default=8,
+parser.add_argument("--batch_size", type=int, default=10,
                     help="Batch size")
 parser.add_argument("--optimizer", type=str, default="adam",
                     help="sgd|adam|adagrad|rmsprop")
-parser.add_argument("--learning_rate", type=float, default=0.001,
+parser.add_argument("--learning_rate", type=float, default=0.0005,
                     help="Learning rate of the optimizer.")
-parser.add_argument("--num_epochs", type=int, default=20,
+parser.add_argument("--num_epochs", type=int, default=25,
                     help="Number of training epochs.")
 parser.add_argument("--max_gradient_norm", type=float, default=1.0,
                     help="Maximum norm for gradients.")
@@ -38,22 +41,24 @@ parser.add_argument("--dropout_keep_prob", type=float, default=0.7,
                     help="Dropout keep probability")
 
 # Model encoder arguments.
-parser.add_argument("--embedding_size", type=int, default=64,
+parser.add_argument("--embedding_size", type=int, default=50,
                     help="Size of the word embeddings.")
 parser.add_argument("--cell_type", type=str, default="lstm",
                     help="Cell type for the RNN.")
 parser.add_argument("--encoder_type", type=str, default="uni",
                     help="uni|bi")
-parser.add_argument("--num_units", type=int, default=64,
+parser.add_argument("--num_units", type=int, default=50,
                     help="Number of hidden units in the RNN encoder")
 parser.add_argument("--num_enc_layers", type=int, default=1,
                     help="Number of encoder layers in the encoder")
+parser.add_argument("--num_output_hidden", type=str, default="100",
+                    help="Number of units or the hidden layers, formatted as h1_size,h2_size,etc")
 
 # Model decoder arguments.
 parser.add_argument("--merge_mode", type=str, default="concat",
                     help="sum|concat")
-parser.add_argument("--num_output_hidden", type=str, default="256",
-                    help="Number of units or the hidden layers, formatted as h1_size,h2_size,etc")
+parser.add_argument("--use_attention", type=bool, default=False,
+                    help="Wether to use an attention mechanism for predicting the output")
 
 # Parse all arguments.
 args = parser.parse_args()
@@ -93,15 +98,20 @@ with tf.variable_scope("QARNN"):
       cell_type=cell_type, num_output_hidden=num_output_hidden,
       num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm)
+      max_gradient_norm=args.max_gradient_norm,
+      use_attention=args.use_attention)
+
 
   # Build the training model graph.
-  encoded_context = train_model.create_encoder("context_encoder",
+
+  question_context_question = tf.concat(question, context, axis=1)
+  output_context, encoded_context = train_model.create_encoder("context_encoder",
       context, context_length)
-  encoded_question = train_model.create_encoder("question_encoder",
+  output_question, encoded_question = train_model.create_encoder("question_encoder",
       question, question_length)
-  merged_encoding = train_model.merge_encodings(encoded_context,
-      encoded_question)
+
+  merged_encoding = train_model.create_attention_layer(encoded_question, output_context, context_length)
+
   logits = train_model.create_decoder(merged_encoding)
   train_loss = train_model.loss(logits, answer)
   train_acc = train_model.accuracy(logits, answer)
@@ -115,15 +125,16 @@ with tf.variable_scope("QARNN", reuse=True):
       cell_type=cell_type, num_output_hidden=num_output_hidden,
       num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm)
+      max_gradient_norm=args.max_gradient_norm,
+      use_attention=args.use_attention)
 
   # Build the testing model graph.
-  test_encoded_context = test_model.create_encoder("context_encoder",
+  test_output_context, test_encoded_context = test_model.create_encoder("context_encoder",
       test_context, test_context_length)
-  test_encoded_question = test_model.create_encoder("question_encoder",
+  ttest_output_question, test_encoded_question = test_model.create_encoder("question_encoder",
       test_question, test_question_length)
-  test_merged_encoding = test_model.merge_encodings(test_encoded_context,
-      test_encoded_question)
+
+  test_merged_encoding = test_model.create_attention_layer(test_encoded_question, test_output_context, test_context_length)
   test_logits = test_model.create_decoder(test_merged_encoding)
   test_acc = test_model.accuracy(test_logits, test_answer)
 
@@ -197,7 +208,7 @@ with tf.Session() as sess:
           tf.argmax(test_logits, axis=-1), test_acc, test_summaries])
       print("---- Qualitative Analysis")
       eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
-          predictions, i2w, k=3)
+          predictions, i2w, k=15)
       print("Test accuracy: %f" % acc)
       test_writer.add_summary(summary, epoch_num)
       print("=========================")
