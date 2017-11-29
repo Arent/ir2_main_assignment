@@ -38,6 +38,8 @@ parser.add_argument("--max_gradient_norm", type=float, default=1.0,
                     help="Maximum norm for gradients.")
 parser.add_argument("--dropout_keep_prob", type=float, default=0.7,
                     help="Dropout keep probability")
+parser.add_argument("--anneal_learning_rate", action="store_true",
+                    default=False, help="Whether to anneal the learning rate.")
 
 # General model arguments.
 parser.add_argument("--model_type", type=str, default="normal",
@@ -341,17 +343,19 @@ with tf.Session() as sess:
       else:
         epochs_without_improvement += 1
 
-      print("Epochs without improvement:", epochs_without_improvement)
+      if args.anneal_learning_rate:
 
-      # Reset the optimizer with a decayed learning rate if not improving.
-      if epochs_without_improvement > 10:
-        train_model.learning_rate *= 0.5
-        train_op = train_model.train_step(train_loss)
-        epochs_without_improvement = 0
-        adam_inits = [var.initializer for var in tf.global_variables() if 'Adam' in var.name or 'beta' in var.name]
-        sess.run(adam_inits)
-        print("Restarting optimizer with learning rate %f" %
-            train_model.learning_rate)
+        # Reset the optimizer with a decayed learning rate if not improving.
+        if epochs_without_improvement > 1:
+          train_model.learning_rate *= 0.5
+          print("Restarting optimizer with learning rate %f" %
+              train_model.learning_rate)
+          train_op = train_model.train_step(train_loss)
+          epochs_without_improvement = 0
+          if args.optimizer == "adam":
+            adam_inits = [var.initializer for var in tf.global_variables() if 'Adam' in var.name or 'beta' in var.name]
+            sess.run(adam_inits)
+          print("=========================")
 
       # Re-initialize the training iterator.
       sess.run(train.initializer)
