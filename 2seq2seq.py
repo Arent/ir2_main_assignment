@@ -14,11 +14,12 @@ def write(data, path, task, eval_type):
 def main(args):
     tokenizer = MosesTokenizer()
 
-    train, test = data_utils.load_data(args.task, args.data_dir, args.vocab, 
+    train, val, test, _ = data_utils.load_data(args.task, args.data_dir, args.vocab, 
                                                    tokenizer, None, prep=False)
 
 
     write(train, args.target_dir, args.task, "train")
+    write(val, args.target_dir, args.task, "val")
     write(test, args.target_dir, args.task, "test")
 
 
@@ -35,6 +36,6 @@ if __name__ == '__main__':
                         help="Task number")
     parser.add_argument('--seperate_context', type=bool, default=False,
                         help='seperate the context from the question')
-    
+
     args = parser.parse_args()
     main(args)

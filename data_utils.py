@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 # source: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size, prep=True):
+def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size, val_split, prep=True):
     babi_map = {
         "1": "qa1_single-supporting-fact",
         "2": "qa2_two-supporting-facts",
@@ -72,22 +72,38 @@ def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size, prep=True):
     }
     babi_name = babi_map[task_id]
     babi_test_name = babi_map[task_id]
-    train_c, train_q, train_a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name), prep=prep)
+
+    c, q, a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name), prep=prep)
     test_c, test_q, test_a = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name), prep=prep)
+
+    # Pick out some random data for validation.
+    shuffled_indices = np.random.permutation(len(c))
+    split_index = int(round(val_split * len(c)))
+    train_indices = shuffled_indices[split_index:]
+    val_indices = shuffled_indices[:split_index]
+    train_c = [c[idx] for idx in train_indices]
+    train_q = [q[idx] for idx in train_indices]
+    train_a = [a[idx] for idx in train_indices]
+    val_c = [c[idx] for idx in val_indices]
+    val_q = [q[idx] for idx in val_indices]
+    val_a = [a[idx] for idx in val_indices]
 
     # Return the training and test prepared for training.
     # Otherwise return the parsed data
     if prep:
+
         # Create and return iterators.
         tf_vocab = tf.contrib.lookup.index_table_from_file(vocab_file,
             default_value=0)
         train_it = _get_iterator(train_c, train_q, train_a, tf_vocab, batch_size)
+        val_it = _get_iterator(val_c, val_q, val_a, tf_vocab, len(val_a))
         test_it = _get_iterator(test_c, test_q, test_a, tf_vocab, len(test_a))
-        return train_it, test_it
+        return train_it, val_it, test_it, tf_vocab
     else:
         train = zip(train_c, train_q, train_a)
+        val = zip(val_c, val_q, val_a)
         test = zip(test_c, test_q, test_a)
-        return train, test
+        return train, val, test, None
 
 def _get_iterator(contexts, questions, answers, tf_vocab, batch_size):
     dataset_c = tf.data.Dataset.from_tensor_slices(contexts)
@@ -100,7 +116,7 @@ def _get_iterator(contexts, questions, answers, tf_vocab, batch_size):
 
     # Split words in the sentence.
     dataset = dataset.map(lambda c, q, a: (tf.string_split([c]).values,
-        tf.string_split([q]).values, a))
+        tf.string_split([q]).values, tf.string_split([a]).values))
 
     # Convert words to word_ids.
     dataset = dataset.map(
@@ -108,27 +124,42 @@ def _get_iterator(contexts, questions, answers, tf_vocab, batch_size):
                       tf.cast(tf_vocab.lookup(q), tf.int32),
                       tf.cast(tf_vocab.lookup(a), tf.int32)))
 
-    # Add context and question length.
-    dataset = dataset.map(lambda c, q, a: (c, q, a, tf.size(c), tf.size(q)))
+    # Create an answer input prefixed with <s> and an answer output postfixed with </s>
+    sos_id = tf.cast(tf_vocab.lookup(tf.constant("<s>")), tf.int32)
+    eos_id = tf.cast(tf_vocab.lookup(tf.constant("</s>")), tf.int32)
+    dataset = dataset.map(
+        lambda c, q, a: (c,                            # context
+                         q,                            # question
+                         tf.concat(([sos_id], a), 0),  # answer_input
+                         tf.concat((a, [eos_id]), 0))) # answer_output
+
+
+    # Add context, question, and answer length.
+    dataset = dataset.map(lambda c, q, answer_input, answer_output: (c, q,
+        answer_input, answer_output, tf.size(c), tf.size(q),
+        tf.size(answer_input)))
 
     # The batching function batches entries and pads shorter questions
     # with sos symbols.
-    eos_id = tf.cast(tf_vocab.lookup(tf.constant("</s>")), tf.int32)
     def batching_func(x):
       return x.padded_batch(
           batch_size,
           # Only the question is a variable length vector.
           padded_shapes=(tf.TensorShape([None]),  # context
                          tf.TensorShape([None]),  # question
-                         tf.TensorShape([]),      # answer
+                         tf.TensorShape([None]),  # answer_input
+                         tf.TensorShape([None]),  # answer_output
                          tf.TensorShape([]),      # context length
-                         tf.TensorShape([])),     # question length
+                         tf.TensorShape([]),      # question length
+                         tf.TensorShape([])),     # answer length
           # Pad the extra values with an end-of-sentence token.
           padding_values=(eos_id,      # context
                           eos_id,      # question
-                          0,           # answer -- unused
+                          eos_id,      # answer_input
+                          eos_id,      # answer_output
                           0,           # context length -- unused
-                          0))          # question length -- unused
+                          0,           # question length -- unused
+                          0))          # answer length -- unused
     dataset = batching_func(dataset)
 
     return dataset.make_initializable_iterator()
@@ -174,7 +205,7 @@ def _init_babi(fname, prep=True):
             idx = line.find('?') + 1
             tmp = line[idx+1:].split('\t')
             Q = line[:idx].lower()
-            A = tmp[1].strip().lower()
+            A = " ".join(tmp[1].strip().lower().split(","))
 
             if prep:
                 questions.append(tf.constant(Q))

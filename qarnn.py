@@ -3,9 +3,9 @@ import numpy as np
 
 class QARNN:
 
-  def __init__(self, mode, vocab_size, embedding_size=64, num_units=64, encoder_type="bi", keep_prob=0.7,
-      cell_type=tf.contrib.rnn.BasicLSTMCell, num_output_hidden=[256], num_enc_layers=1, merge_mode="concat",
-      optimizer=tf.train.AdamOptimizer, learning_rate=0.001, max_gradient_norm=1.0):
+  def __init__(self, mode, vocab, vocab_size, embedding_size=64, num_units=64, encoder_type="uni", keep_prob=0.7,
+      cell_type=tf.contrib.rnn.LSTMCell, num_output_hidden=[256], num_enc_layers=1, merge_mode="concat",
+      optimizer=tf.train.AdamOptimizer, learning_rate=0.001, max_gradient_norm=1.0, max_infer_length=10, attention=False):
     self.embedding_size = embedding_size
     self.num_units = num_units
     self.vocab_size = vocab_size
@@ -19,15 +19,22 @@ class QARNN:
     self.learning_rate = learning_rate
     self.max_gradient_norm = max_gradient_norm
     self.mode = mode
+    self.max_infer_length = max_infer_length
+    self.vocab = vocab
+    self.attention = attention
+
+  def create_embeddings(self, sequence, name=None, embedding_matrix=None):
+    if embedding_matrix is None:
+      embedding_matrix = tf.get_variable(name, [self.vocab_size, self.embedding_size],
+          dtype=tf.float32)
+
+    return tf.nn.embedding_lookup(embedding_matrix,
+        sequence), embedding_matrix # [batch, time, emb_size]
 
   # Creates an encoder on the given sequence, returns the final state of the encoder.
-  def create_encoder(self, name, sequence, sequence_length):
+  def create_encoder(self, name, embeddings, sequence_length):
 
     with tf.variable_scope(name) as scope:
-      embedding_matrix = tf.get_variable("embedding_matrix", \
-          [self.vocab_size, self.embedding_size], dtype=tf.float32)
-      embeddings = tf.nn.embedding_lookup(embedding_matrix,
-          sequence) # [batch, time, emb_size]
 
       if self.encoder_type == "uni":
 
@@ -44,17 +51,11 @@ class QARNN:
 
         cell = tf.contrib.rnn.MultiRNNCell(cells)
 
-        _, final_state = tf.nn.dynamic_rnn(cell, embeddings,
+        encoder_outputs, final_state = tf.nn.dynamic_rnn(cell, embeddings,
             dtype=tf.float32, sequence_length=sequence_length)
 
         # For multilayer RNNs, use the final layer's state.
         final_state = final_state[-1]
-
-        # For tuple states such as LSTM, return only h as the encoded
-        if isinstance(final_state, tuple):
-          final_state = final_state.h
-
-        return final_state
       else:
 
         # Bidirectional encoders can have only 1 layer in our implementation.
@@ -69,64 +70,109 @@ class QARNN:
           bw_cell = tf.contrib.rnn.DropoutWrapper(bw_cell, output_keep_prob=self.keep_prob)
 
         # Run the bidirectional RNN.
-        _, bi_final_state = tf.nn.bidirectional_dynamic_rnn(
+        bi_outputs, bi_final_state = tf.nn.bidirectional_dynamic_rnn(
             fw_cell,
             bw_cell,
             embeddings,
             sequence_length=sequence_length,
             dtype=tf.float32)
 
+        # Concatenate the forward and backward layer to create the encoder output.
+        encoder_outputs = tf.concat(bi_outputs, axis=-1)
+
         # For tuple states such as LSTM, return only h as the encoded, concatenate
         # forward and backward RNN outputs.
-        if isinstance(final_state, tuple):
-          final_state = tf.concat([bi_final_state[1].h, bi_final_state[1].h], axis=-1)
+        if isinstance(bi_final_state[0], tf.contrib.rnn.LSTMStateTuple):
+          c = tf.concat([bi_final_state[0].c, bi_final_state[1].c], axis=-1)
+          h = tf.concat([bi_final_state[0].h, bi_final_state[1].h], axis=-1)
+          final_state = tf.contrib.rnn.LSTMStateTuple(c, h)
         else:
           final_state = tf.concat(bi_final_state, axis=-1)
 
-    return final_state
+    return encoder_outputs, final_state
 
-  # Combine the context and question encoding.
-  def merge_encodings(self, encoded_context, encoded_question):
+  # Combine the context and question states.
+  def merge_states(self, final_context_state, final_question_state):
     if self.merge_mode == "sum":
-      merged_encoding = encoded_context + encoded_question
+      if isinstance(final_context_state, tf.contrib.rnn.LSTMStateTuple):
+        c = final_context_state.c + final_question_state.c
+        h = final_context_state.h + final_question_state.h
+        merged_state = tf.contrib.rnn.LSTMStateTuple(c, h)
+      else:
+        merged_state = final_context_state + final_question_state
     elif self.merge_mode == "concat":
-      merged_encoding = tf.concat([encoded_context, encoded_question], axis=-1)
+      if isinstance(final_context_state, tf.contrib.rnn.LSTMStateTuple):
+        c = tf.concat([final_context_state.c, final_question_state.c], axis=-1)
+        h = tf.concat([final_context_state.h, final_question_state.h], axis=-1)
+        merged_state = tf.contrib.rnn.LSTMStateTuple(c, h)
+      else:
+        merged_state = tf.concat([final_context_state, final_question_state], axis=-1)
     else:
       print("ERROR: unknown merge mode")
-      merged_encoding = None
-    return merged_encoding
+      merged_state = None
+    return merged_state
 
-  # Create an MLP decoder.
-  def create_decoder(self, decoder_inputs):
-    with tf.variable_scope("decoder"):
+  def create_rnn_decoder(self, decoder_emb_inputs, input_length,
+      initial_state, embedding_matrix, attention_states=None):
+    sos_id = tf.cast(self.vocab.lookup(tf.constant("<s>")), tf.int32)
+    eos_id = tf.cast(self.vocab.lookup(tf.constant("</s>")), tf.int32)
+    with tf.variable_scope("decoder") as decoder_scope:
 
-      # Create the hidden layers.
-      prev_h = decoder_inputs
-      for num_hidden_units in self.num_output_hidden:
-        h = tf.layers.dense(prev_h, num_hidden_units,
-            activation=tf.nn.relu, use_bias=True)
+      num_units = self.num_units if self.encoder_type == "uni" else 2 * self.num_units
+      num_units = 2 * num_units if self.merge_mode == "concat" and not self.attention else num_units
+      cell = self.cell_type(num_units)
 
-        # Perform dropout when training.
-        if self.mode == tf.contrib.learn.ModeKeys.TRAIN:
-          h = tf.nn.dropout(h, self.keep_prob)
+      if self.attention:
+        attention_mechanism = tf.contrib.seq2seq.LuongAttention(num_units,
+            attention_states, memory_sequence_length=input_length, scale=True)
+        cell = tf.contrib.seq2seq.AttentionWrapper(cell,
+            attention_mechanism)
+        batch_size = tf.shape(decoder_emb_inputs)[0]
+        initial_state = cell.zero_state(batch_size, initial_state.dtype).clone(cell_state=initial_state)
 
-        prev_h = h
+      if self.mode != tf.contrib.learn.ModeKeys.INFER:
+        helper = tf.contrib.seq2seq.TrainingHelper(decoder_emb_inputs,
+            input_length)
+        maximum_iterations = tf.shape(decoder_emb_inputs)[1]
+      else:
+        batch_size = tf.shape(decoder_emb_inputs)[0]
+        helper = tf.contrib.seq2seq.GreedyEmbeddingHelper(embedding_matrix,
+            tf.fill([batch_size], sos_id), eos_id)
+        maximum_iterations = 10
 
-      # Predict the answer word using a dense output layer to vocab size.
-      logits = tf.layers.dense(h, self.vocab_size,
-          activation=None, use_bias=False)
+      projection_layer = tf.layers.Dense(self.vocab_size,
+          use_bias=False, name="output_projection")
 
-    return logits
+      decoder = tf.contrib.seq2seq.BasicDecoder(
+          cell, helper, initial_state,
+          output_layer=projection_layer)
 
-  def loss(self, logits, answer):
+      outputs, _, _ = tf.contrib.seq2seq.dynamic_decode(decoder,
+          impute_finished=True, scope=decoder_scope, maximum_iterations=maximum_iterations)
+
+      if self.mode != tf.contrib.learn.ModeKeys.INFER:
+        logits = outputs.rnn_output
+        return logits
+      else:
+        return outputs.sample_id
+
+  def loss(self, logits, answer, answer_length):
     cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(
         labels=answer,
         logits=logits,
         name="cross_entropy_loss")
-    return tf.reduce_mean(cross_entropy)
+
+    # Mask padded batch elements.
+    batch_size = tf.shape(logits)[0]
+    max_time = tf.shape(logits)[1]
+    mask = tf.sequence_mask(answer_length, max_time,
+        dtype=logits.dtype)
+
+    loss = tf.reduce_sum(cross_entropy * mask) / tf.to_float(batch_size)
+    return loss
 
   def train_step(self, loss):
-    optimizer = self.optimizer(self.learning_rate)
+    optimizer = self.optimizer(self.learning_rate) #, beta1=0.) # TODO adam specific
 
     # Clip the gradients before applying them.
     params = tf.trainable_variables()
@@ -140,6 +186,19 @@ class QARNN:
 
     return train_op
 
-  def accuracy(self, logits, answer):
+  def accuracy(self, logits, answer, answer_length):
     prediction = tf.argmax(logits, axis=-1, output_type=answer.dtype)
-    return tf.reduce_mean(tf.cast(tf.equal(answer, prediction), tf.float32))
+
+    # Don't include the end-of-sentence tokens in accuracy calculations.
+    answer_length = answer_length - 1
+
+    # Mask padded batch elements.
+    max_time = tf.shape(answer)[1]
+    mask = tf.sequence_mask(answer_length, max_time,
+        dtype=logits.dtype)
+
+    return tf.reduce_mean(tf.reduce_sum(tf.cast(tf.equal(answer, prediction), tf.float32) * mask,
+        reduction_indices=[1]) / tf.cast(answer_length, tf.float32))
+
+  def perplexity(self, loss, batch_size, answer_length):
+    return tf.exp((loss * tf.cast(batch_size, tf.float32)) / tf.cast(tf.reduce_sum(answer_length), tf.float32))
