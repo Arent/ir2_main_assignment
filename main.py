@@ -26,17 +26,17 @@ parser.add_argument("--model_dir", type=str, default=None,
                     help="Directory to store the model parameters.")
 
 # Training details arguments.
-parser.add_argument("--batch_size", type=int, default=8,
+parser.add_argument("--batch_size", type=int, default=16,
                     help="Batch size")
 parser.add_argument("--optimizer", type=str, default="adam",
                     help="sgd|adam|adagrad|rmsprop")
-parser.add_argument("--learning_rate", type=float, default=0.001,
+parser.add_argument("--learning_rate", type=float, default=0.0005,
                     help="Learning rate of the optimizer.")
-parser.add_argument("--num_epochs", type=int, default=7,
+parser.add_argument("--num_epochs", type=int, default=10,
                     help="Number of training epochs.")
 parser.add_argument("--max_gradient_norm", type=float, default=1.0,
                     help="Maximum norm for gradients.")
-parser.add_argument("--dropout_keep_prob", type=float, default=0.7,
+parser.add_argument("--dropout_keep_prob", type=float, default=0.8,
                     help="Dropout keep probability")
 parser.add_argument("--anneal_learning_rate", action="store_true",
                     default=False, help="Whether to anneal the learning rate.")
@@ -46,13 +46,13 @@ parser.add_argument("--model_type", type=str, default="attention",
                     help="normal|attention")
 
 # Model encoder arguments.
-parser.add_argument("--embedding_size", type=int, default=32,
+parser.add_argument("--embedding_size", type=int, default=64,
                     help="Size of the word embeddings.")
 parser.add_argument("--cell_type", type=str, default="gru",
                     help="Cell type for the RNN.")
 parser.add_argument("--encoder_type", type=str, default="bi",
                     help="uni|bi")
-parser.add_argument("--num_units", type=int, default=32,
+parser.add_argument("--num_units", type=int, default=64,
                     help="Number of hidden units in the RNN encoder")
 parser.add_argument("--num_enc_layers", type=int, default=1,
                     help="Number of encoder layers in the encoder")
@@ -267,9 +267,9 @@ with tf.Session() as sess:
 
   # Create the summary writers.
   print("Creating summary writers...")
-  # train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
-  # val_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "val"), sess.graph)
-  # test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
+  train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
+  val_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "val"), sess.graph)
+  test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
 
   # Bookkeeping stuff.
   epoch_num = 1
@@ -299,7 +299,7 @@ with tf.Session() as sess:
       _, loss, acc, ppl, summary = sess.run([train_op, train_loss, train_acc, train_ppl, train_summaries])
       step += 1
       total_step += 1
-      # train_writer.add_summary(summary, total_step)
+      train_writer.add_summary(summary, total_step)
 
       # Print training statistics periodically.
       if step % steps_per_stats == 0:
@@ -316,7 +316,7 @@ with tf.Session() as sess:
       print("Evaluating model...")
       sess.run(val.initializer)
       val_accuracy, val_perplexity, summary =  sess.run([val_acc, val_ppl, val_summaries])
-      # val_writer.add_summary(summary, epoch_num) TODO
+      val_writer.add_summary(summary, epoch_num)
       print("Epoch %d: validation accuracy = %f -- validation perplexity = %f" %
           (epoch_num, val_accuracy, val_perplexity))
 
@@ -332,7 +332,7 @@ with tf.Session() as sess:
       eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
           answer_lengths, predictions, i2w, k=1)
       summary = sess.run(test_summaries, feed_dict={test_acc: test_accuracy})
-      # test_writer.add_summary(summary, epoch_num) TODO
+      test_writer.add_summary(summary, epoch_num)
       print("=========================")
 
       # Save the best model.
@@ -369,4 +369,4 @@ print("Best model (ppl) at epoch %d -- validation perplexity = %f -- validation 
     best_model)
 print("Best model (acc) at epoch %d -- validation perplexity = %f -- validation accuracy = %f -- test accuracy = %f" %
     best_model_acc)
-print(best_model_acc[-1])
+print(best_model_acc[-2])

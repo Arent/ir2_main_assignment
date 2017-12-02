@@ -5,7 +5,7 @@ import sys
 import os
 
 # Disable info logs from tensorflows.
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 parser = argparse.ArgumentParser()
 
