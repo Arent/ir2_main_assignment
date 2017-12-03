@@ -29,13 +29,14 @@ parser.add_argument("--model_dir", type=str, default=None,
                     help="Directory to store the model parameters.")
 
 # Training details arguments.
-parser.add_argument("--batch_size", type=int, default=8,
+parser.add_argument("--batch_size", type=int, default=32,
                     help="Batch size")
 parser.add_argument("--t_batch_size", type=int, default=1000,
                     help="Batch size of the test set")
 parser.add_argument("--optimizer", type=str, default="adam",
                     help="sgd|adam|adagrad|rmsprop")
-parser.add_argument("--learning_rate", type=float, default=0.001,
+parser.add_argument("--learning_rate", type=float, default=0.001
+                    ,
                     help="Learning rate of the optimizer.")
 parser.add_argument("--num_epochs", type=int, default=500,
                     help="Number of training epochs.")
@@ -49,6 +50,9 @@ parser.add_argument("--embedding_size", type=int, default=32,
                     help="Size of the word embeddings and conv output")
 parser.add_argument("--num_layers", type=int, default=2,
                     help="Amount of convolutional layer blocks")
+
+np.random.seed(42)
+tf.set_random_seed(42)
 
 # Parse all arguments.
 args = parser.parse_args()
