@@ -33,4 +33,4 @@ def parse_num_hidden(num_hidden_str):
 
 def print_args(args):
   for name, val in args.__dict__.items():
-    print("%-20s %s" % (name + ":", val))
+    print("%-25s %s" % (name + ":", val))
