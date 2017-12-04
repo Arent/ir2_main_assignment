@@ -35,7 +35,7 @@ module load python/3.5.2 gcc/5.2.0 cuda/8.0.44 cudnn/8.0-v6.0
 python3 -u main.py --debug=True --use_attention=True --data_dir=data/$data --cell_type=$cell_type --num_units=$num_unit --encoder_type=$encoder_type --task=1 --num_epochs=20 --dropout_keep_prob=$dropout --num_enc_layers=$num_enc_layers --embedding_size=$embedding_size --batch_size=$batch
 ''')
 
-name_template = Template('$data-lr=$lr-type=$encoder_type-num_rnns=$encoder_units-h_size=$num_unit-emb=$embedding_size-dropout=$dropout-cell_type=$cell_type')
+name_template = Template('$data-batch:$batch-lr=$lr-type=$encoder_type-num_rnns=$encoder_units-h_size=$num_unit-emb=$embedding_size-dropout=$dropout-cell_type=$cell_type')
 
 
 job_file_names = []
@@ -57,7 +57,7 @@ for dataset in datasets:
 									minutes = '20'
 
 								name = name_template.substitute(data=dataset, lr=lr, encoder_type=encoder_type,encoder_units=encoder_units, 
-									num_unit=num_unit, embedding_size=embedding_size, dropout=dropout, cell_type=cell_type)
+									num_unit=num_unit, embedding_size=embedding_size, dropout=dropout, cell_type=cell_type, batch=batch)
 
 								job_file_names.append(name)
 								job_file_text = job_file_template.substitute(minutes=minutes,name=name, data=dataset, cell_type=cell_type, 
