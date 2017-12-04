@@ -74,7 +74,7 @@ with open('job_files', 'w') as job_files_script:
 		job_files_script.write("sbatch jobs/%s.job\n" % name)
 
 
-st = os.stat('job_file')
+st = os.stat('job_files')
 os.chmod('job_files', st.st_mode | stat.S_IEXEC)
 
 
