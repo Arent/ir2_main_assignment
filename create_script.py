@@ -79,8 +79,16 @@ st = os.stat('job_files')
 os.chmod('job_files', st.st_mode | stat.S_IEXEC)
 
 
+first = True
 with open('output_files.txt', 'w') as output_file:
 	for name in job_file_names:
-		output_file.write("outputs/%s.output\n" % name)
+		if first:
+			output_file.write("outputs/%s.output" % name)
+			first = False
+		else:
+			output_file.write("\noutputs/%s.output" % name)
+
+
+
 
 
