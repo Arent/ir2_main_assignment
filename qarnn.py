@@ -65,8 +65,8 @@ class QARNN:
 
         # Perform dropout during training.
         if self.mode == tf.contrib.learn.ModeKeys.TRAIN:
-          fw_cell = tf.contrib.rnn.DropoutWrapper(fw_cell, output_keep_prob=self.keep_prob)
-          bw_cell = tf.contrib.rnn.DropoutWrapper(bw_cell, output_keep_prob=self.keep_prob)
+          fw_cell = tf.contrib.rnn.DropoutWrapper(fw_cell, input_keep_prob=self.keep_prob)
+          bw_cell = tf.contrib.rnn.DropoutWrapper(bw_cell, input_keep_prob=self.keep_prob)
 
         # Run the bidirectional RNN.
         bi_outputs, bi_final_state = tf.nn.bidirectional_dynamic_rnn(
@@ -120,6 +120,10 @@ class QARNN:
       num_units = self.num_units if self.encoder_type == "uni" else 2 * self.num_units
       num_units = 2 * num_units if self.merge_mode == "concat" and not self.attention else num_units
       cell = self.cell_type(num_units)
+
+      # Perform dropout during training.
+      if self.mode == tf.contrib.learn.ModeKeys.TRAIN:
+        cell = tf.contrib.rnn.DropoutWrapper(cell, input_keep_prob=self.keep_prob)
 
       if self.attention:
         attention_mechanism = tf.contrib.seq2seq.LuongAttention(num_units,

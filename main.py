@@ -105,8 +105,6 @@ with tf.variable_scope("QARNN"):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the training model graph.
-  context = tf.concat([question, context], axis=1)
-  context_length = context_length + question_length
   emb_context, emb_matrix = train_model.create_embeddings(context,
       name="enc_embedding_matrix")
   emb_question, _ = train_model.create_embeddings(question,
@@ -124,19 +122,6 @@ with tf.variable_scope("QARNN"):
   else:
     initial_state = merged_state
     attention_states = None
-
-  # enc_input = tf.concat([question, context, question], axis=1)
-  # enc_input_length = question_length * 2 + context_length
-  # emb_enc_input, emb_matrix = train_model.create_embeddings(enc_input,
-  #     name="enc_embedding_matrix")
-  # outputs, final_state = train_model.create_encoder("encoder",
-  #     emb_enc_input, enc_input_length)
-
-  # initial_state = final_state
-  # if args.model_type == "attention":
-  #   attention_states = outputs
-  # else:
-  #   attention_states = None
 
   emb_answer, dec_emb_matrix = train_model.create_embeddings(answer_input,
       name="dec_embedding_matrix")
@@ -157,8 +142,6 @@ with tf.variable_scope("QARNN", reuse=True):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the validation model graph.
-  val_context = tf.concat([val_question, val_context], axis=1)
-  val_context_length = val_context_length + val_question_length
   val_emb_context, val_emb_matrix = val_model.create_embeddings(val_context,
       name="enc_embedding_matrix")
   val_emb_question, _ = val_model.create_embeddings(val_question,
@@ -176,19 +159,6 @@ with tf.variable_scope("QARNN", reuse=True):
   else:
     val_initial_state = val_merged_state
     val_attention_states = None
-
-  # val_enc_input = tf.concat([val_question, val_context, val_question], axis=1)
-  # val_enc_input_length = val_question_length * 2 + val_context_length
-  # val_emb_enc_input, val_emb_matrix = val_model.create_embeddings(val_enc_input,
-  #     name="enc_embedding_matrix")
-  # val_outputs, val_final_state = val_model.create_encoder("encoder",
-  #     val_emb_enc_input, val_enc_input_length)
-
-  # val_initial_state = val_final_state
-  # if args.model_type == "attention":
-  #   val_attention_states = val_outputs
-  # else:
-  #   val_attention_states = None
 
   val_emb_answer, val_dec_emb_matrix = train_model.create_embeddings(
       val_answer_input, name="dec_embedding_matrix")
@@ -208,8 +178,6 @@ with tf.variable_scope("QARNN", reuse=True):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the testing model graph.
-  test_context = tf.concat([test_question, test_context], axis=1)
-  test_context_length = test_context_length + test_question_length
   test_emb_context, test_emb_matrix = test_model.create_embeddings(test_context,
       name="enc_embedding_matrix")
   test_emb_question, _ = test_model.create_embeddings(test_question,
@@ -227,19 +195,6 @@ with tf.variable_scope("QARNN", reuse=True):
   else:
     test_initial_state = test_merged_state
     test_attention_states = None
-
-  # test_enc_input = tf.concat([test_question, test_context, test_question], axis=1)
-  # test_enc_input_length = test_question_length * 2 + test_context_length
-  # test_emb_enc_input, test_emb_matrix = test_model.create_embeddings(test_enc_input,
-  #     name="enc_embedding_matrix")
-  # test_outputs, test_final_state = test_model.create_encoder("encoder",
-  #     test_emb_enc_input, test_enc_input_length)
-
-  # test_initial_state = test_final_state
-  # if args.model_type == "attention":
-  #   test_attention_states = test_outputs
-  # else:
-  #   test_attention_states = None
 
   test_emb_answer, test_dec_emb_matrix = train_model.create_embeddings(
       test_answer_input, name="dec_embedding_matrix")
@@ -267,9 +222,9 @@ with tf.Session() as sess:
 
   # Create the summary writers.
   print("Creating summary writers...")
-  train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
-  val_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "val"), sess.graph)
-  test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
+  # train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
+  # val_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "val"), sess.graph)
+  # test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
 
   # Bookkeeping stuff.
   epoch_num = 1
@@ -299,7 +254,7 @@ with tf.Session() as sess:
       _, loss, acc, ppl, summary = sess.run([train_op, train_loss, train_acc, train_ppl, train_summaries])
       step += 1
       total_step += 1
-      train_writer.add_summary(summary, total_step)
+      # train_writer.add_summary(summary, total_step)
 
       # Print training statistics periodically.
       if step % steps_per_stats == 0:
@@ -316,7 +271,7 @@ with tf.Session() as sess:
       print("Evaluating model...")
       sess.run(val.initializer)
       val_accuracy, val_perplexity, summary =  sess.run([val_acc, val_ppl, val_summaries])
-      val_writer.add_summary(summary, epoch_num)
+      # val_writer.add_summary(summary, epoch_num)
       print("Epoch %d: validation accuracy = %f -- validation perplexity = %f" %
           (epoch_num, val_accuracy, val_perplexity))
 
@@ -332,7 +287,7 @@ with tf.Session() as sess:
       eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
           answer_lengths, predictions, i2w, k=1)
       summary = sess.run(test_summaries, feed_dict={test_acc: test_accuracy})
-      test_writer.add_summary(summary, epoch_num)
+      # test_writer.add_summary(summary, epoch_num)
       print("=========================")
 
       # Save the best model.

@@ -206,11 +206,12 @@ def _init_babi(fname, prep=True):
             tmp = line[idx+1:].split('\t')
             Q = line[:idx].lower()
             A = " ".join(tmp[1].strip().lower().split(","))
+            QCQ = " ".join([Q, C, Q])
 
             if prep:
                 questions.append(tf.constant(Q))
                 answers.append(tf.constant(A))
-                contexts.append(tf.constant(C))
+                contexts.append(tf.constant(QCQ))
             else:
                 questions.append(Q)
                 answers.append(A)
