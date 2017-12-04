@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 # source: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size, val_split, prep=True):
+def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size, val_split, prep=True, q_in_context=True):
     babi_map = {
         "1": "qa1_single-supporting-fact",
         "2": "qa2_two-supporting-facts",
@@ -73,8 +73,8 @@ def load_data(task_id, data_dir, vocab_file, tokenizer, batch_size, val_split, p
     babi_name = babi_map[task_id]
     babi_test_name = babi_map[task_id]
 
-    c, q, a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name), prep=prep)
-    test_c, test_q, test_a = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name), prep=prep)
+    c, q, a = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name), prep=prep, q_in_context=q_in_context)
+    test_c, test_q, test_a = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name), prep=prep, q_in_context=q_in_context)
 
     # Pick out some random data for validation.
     shuffled_indices = np.random.permutation(len(c))
@@ -183,7 +183,7 @@ def load_vocab(filename):
   return w2i, i2w
 
 # adapted from: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def _init_babi(fname, prep=True):
+def _init_babi(fname, prep=True, q_in_context=True):
 
     contexts = []
     questions = []
@@ -206,7 +206,11 @@ def _init_babi(fname, prep=True):
             tmp = line[idx+1:].split('\t')
             Q = line[:idx].lower()
             A = " ".join(tmp[1].strip().lower().split(","))
-            QCQ = " ".join([Q, C, Q])
+
+            if q_in_context:
+              QCQ = " ".join([Q, C, Q])
+            else:
+              QCQ = C
 
             if prep:
                 questions.append(tf.constant(Q))
