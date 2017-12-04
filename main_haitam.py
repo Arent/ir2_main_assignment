@@ -79,7 +79,10 @@ train_context, train_question, train_answer = list(zip(*train))
 test_context, test_question, test_answer = list(zip(*test))
 
 max_c_length = max(len(l) for l in train_context + test_context)
+avg_c_length = sum(len(l) for l in train_context + test_context) / len(train_context)
 max_q_length = max(len(l) for l in train_question + test_question)
+
+print("Average amount of words in context (used for normalization): {}".format(avg_c_length))
 
 test_context_padded, test_context_lengths = utils.pad_results(test_context, max_c_length)
 test_question_padded, test_question_lengths = utils.pad_results(test_question, max_q_length)
@@ -106,7 +109,8 @@ with tf.variable_scope("ABCNN"):
     encoded_context = train_model.create_encoder("context_encoder", e_context, k=10)
     encoded_question = train_model.create_encoder("question_encoder", e_question, k=5)
     attention_matrix = train_model.create_attention_matrix(encoded_context, encoded_question)
-    logits = train_model.create_decoder(attention_matrix, encoded_context, e_context, max_c_length, max_q_length)
+    logits = train_model.create_decoder(attention_matrix, encoded_context, e_context, max_c_length, max_q_length,
+                                        avg_c_length)
     train_loss = train_model.loss(logits, answer)
     train_acc = train_model.accuracy(logits, answer)
     train_op = train_model.train_step(train_loss)
@@ -131,7 +135,7 @@ with tf.variable_scope("ABCNN", reuse=True):
     test_encoded_question = test_model.create_encoder("question_encoder", test_e_question, k=5)
     test_attention_matrix = test_model.create_attention_matrix(test_encoded_context, test_encoded_question)
     test_logits = test_model.create_decoder(test_attention_matrix, test_encoded_context, test_e_context, max_c_length,
-                                            max_q_length)
+                                            max_q_length, avg_c_length)
     test_loss = test_model.loss(test_logits, test_answer_placeholder)
     test_acc = test_model.accuracy(test_logits, test_answer_placeholder)
 

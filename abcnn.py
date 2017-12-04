@@ -63,7 +63,7 @@ class ABCNN:
                     GLU = A1 * tf.nn.sigmoid(B1)
 
                     # Add residual connection
-                    res_con = GLU + conv_output
+                    res_con = tf.sqrt(0.5) * (GLU + conv_output)
                     conv_output = tf.nn.dropout(res_con, self.keep_prob)
 
         return conv_output
@@ -79,15 +79,19 @@ class ABCNN:
         attention_matrix = tf.nn.softmax(mat, 1)  # [batch_size x context_max_len]
         return attention_matrix
 
-    def create_decoder( self, attention_matrix, context_output, context, max_c_length, max_q_length ):
+    def create_decoder( self, attention_matrix, context_output, context, max_c_length, max_q_length, avg_c_length ):
         with tf.variable_scope("decoder"):
             # Multiply attention with context and sum over the len of the context
-            attention_vector = tf.einsum('ijk,ij->ik', context_output + context, attention_matrix)  # [batch_size x h_size]
+            attention_vector =  tf.einsum('ijk,ij->ik', context_output + context, attention_matrix)  # [batch_size x h_size]
+
+            # Norm factor as described in the Conv seq2seq paper, however since a batch varies in sentence size, the
+            # average length is used instead.
+            f = avg_c_length * tf.sqrt(1.0 / avg_c_length)
 
             with tf.name_scope('fc'):
                 # No bias to avoid giving the same answer to every question.
                 W_fc = self._get_weights_variable("w_f1", [self.h_size, self.vocab_size])
-                logits = tf.nn.relu(tf.matmul(attention_vector, W_fc), name="relu_f")
+                logits = tf.nn.relu(tf.matmul(f * attention_vector, W_fc), name="relu_f")
         return logits
 
     def loss( self, logits, answer ):
