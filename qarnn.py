@@ -40,7 +40,13 @@ class QARNN:
     self.mode = mode
     self.use_attention = use_attention
 
-    if self.num_enc_layers > 1 or self.encoder_type == 'bi':
+    if self.encoder_type == 'bi':
+      self.rnn_state_size = self.num_units*2
+    else:
+      self.rnn_state_size = self.num_units
+
+
+    if self.num_enc_layers > 1:
       #Attention only implemented for simple Recurrent nets
       if self.use_attention:
         raise NotImplementedError
@@ -99,7 +105,7 @@ class QARNN:
           bw_cell = tf.contrib.rnn.DropoutWrapper(bw_cell, output_keep_prob=self.keep_prob)
 
         # Run the bidirectional RNN.
-        _, bi_final_state = tf.nn.bidirectional_dynamic_rnn(
+        bi_outputs, bi_final_state = tf.nn.bidirectional_dynamic_rnn(
             fw_cell,
             bw_cell,
             embeddings,
@@ -108,12 +114,14 @@ class QARNN:
 
         # For tuple states such as LSTM, return only h as the encoded, concatenate
         # forward and backward RNN outputs.
-        if isinstance(final_state, tuple):
-          final_state = tf.concat([bi_final_state[1].h, bi_final_state[1].h], axis=-1)
+        outputs = tf.concat(bi_outputs, axis=-1)
+        
+        if isinstance(bi_final_state[0], tuple):
+          final_state = tf.concat([bi_final_state[0].h, bi_final_state[1].h], axis=-1)
         else:
           final_state = tf.concat(bi_final_state, axis=-1)
 
-    return final_state
+    return outputs, final_state
 
   # Combine the context and question encoding.
   def merge_encodings(self, encoded_context, encoded_question):
@@ -160,22 +168,27 @@ class QARNN:
     output_lengths = output_lengths[:,tf.newaxis]
     max_time = tf.shape(output_matrix)[1]
     batch_size = tf.shape(output_matrix)[0]
+    num_units = self.rnn_state_size
+    print('num_units', num_units)
 
 
     with tf.variable_scope('attention'): 
+      with tf.variable_scope("encoded_output_weights"):
+        encoded_output_weights= tf.get_variable('Wouttt', shape=[num_units, num_units], dtype=tf.float32)
+        encoded_output_vector = tf.matmul(encoded_output_vector, encoded_output_weights)
+
       #First calculate the attention weights using a weighted dot product similarity.
       with tf.variable_scope('similarity_weights'): #, 
-        # similarity_weights = tf.get_variable('Ws', shape=[self.num_units, self.num_units], dtype=tf.float32)[tf.newaxis,:]
-
-        init_ws=tf.random_uniform(shape=[self.num_units, self.num_units], minval=-0.02,maxval=0.02) + tf.eye(self.num_units)
-        similarity_weights = tf.get_variable('Ws', initializer=init_ws, dtype=tf.float32)[tf.newaxis,:]
-
+        # similarity_weights = tf.get_variable('Ws', shape=[num_units, num_units], dtype=tf.float32)[tf.newaxis,:]
+        similarity_weights = tf.eye(num_units)[tf.newaxis,:]
+        # init_ws=tf.random_uniform(shape=[self.num_units, self.num_units], minval=-0.02,maxval=0.02) + tf.eye(num_units)
+        # similarity_weights = tf.get_variable('Ws', initializer=init_ws, dtype=tf.float32)[tf.newaxis,:]
         similarity_weights = tf.tile(similarity_weights, [batch_size,1,1])
 
       with tf.variable_scope('attention_weights'):
         encoded_output_vector = encoded_output_vector[:,:,tf.newaxis]
-        
-        attention_weights_input = tf.matmul(tf.matmul(output_matrix, similarity_weights), encoded_output_vector) 
+        g = tf.get_variable('luong_scale', dtype=tf.float32, initializer=1.)
+        attention_weights_input = tf.matmul(tf.matmul(output_matrix, similarity_weights), encoded_output_vector) *g
         attention_weights = softmax_with_sequence_length(logits=tf.squeeze(attention_weights_input), sequence_lengths=output_lengths)
         attention_weights = attention_weights[:,:,tf.newaxis]
         
@@ -190,7 +203,7 @@ class QARNN:
       with tf.variable_scope('attention_vector'):
         encoded_output_vector = tf.squeeze(encoded_output_vector)
         merged_context_output = tf.concat([context_vector, encoded_output_vector], axis=1)
-        attention_weight_matrix = tf.get_variable('Wa', shape=[self.num_units*2, self.num_units]) 
+        attention_weight_matrix = tf.get_variable('Wa', shape=[num_units*2, num_units]) 
         attention_vector = tf.tanh(tf.matmul(merged_context_output, attention_weight_matrix))
 
     return attention_vector

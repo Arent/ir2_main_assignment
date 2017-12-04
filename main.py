@@ -105,15 +105,18 @@ with tf.variable_scope("QARNN"):
 
   # Build the training model graph.
 
-  # question_context_question = tf.concat(question, context, axis=1)
+  question_context_question = tf.concat([question, context], axis=1)
+  question_context_question_lengths = question_length + context_length
   if args.use_attention:
 
-    output_context, encoded_context = train_model.create_encoder("context_encoder",
-        context, context_length)
+    output_question_context_question, encoded_question_context_question = train_model.create_encoder("encoder",
+        question_context_question, question_context_question_lengths)
     output_question, encoded_question = train_model.create_encoder("question_encoder",
         question, question_length)
 
-    merged_encoding = train_model.create_attention_layer(encoded_question, output_context, context_length)
+    merged_encoding = train_model.create_attention_layer(encoded_question, 
+                                                        output_question_context_question, 
+                                                        question_context_question_lengths)
 
   else:
     encoded_context = train_model.create_encoder("context_encoder",
@@ -142,12 +145,15 @@ with tf.variable_scope("QARNN", reuse=True):
   # Build the testing model graph.
 
   if args.use_attention:
-    test_output_context, test_encoded_context = test_model.create_encoder("context_encoder",
-        test_context, test_context_length)
-    ttest_output_question, test_encoded_question = test_model.create_encoder("question_encoder",
+    test_question_context_question = tf.concat([test_question, test_context], axis=1)
+    test_question_context_question_lengths = test_question_length + test_context_length
+
+    test_output_qcq, test_encoded_qcq = test_model.create_encoder("encoder",
+        test_question_context_question, test_question_context_question_lengths)
+    test_output_question, test_encoded_question = test_model.create_encoder("question_encoder",
         test_question, test_question_length)
 
-    test_merged_encoding = test_model.create_attention_layer(test_encoded_question, test_output_context, test_context_length)
+    test_merged_encoding = test_model.create_attention_layer(test_encoded_question, test_output_qcq, test_question_context_question_lengths)
   
   else:
     test_encoded_context = test_model.create_encoder("context_encoder",
