@@ -269,3 +269,5 @@ with tf.Session() as sess:
       epoch_num += 1
       step = 0
       continue
+print(acc)
+
