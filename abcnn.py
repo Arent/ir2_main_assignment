@@ -5,13 +5,14 @@ import matplotlib.pyplot as plt
 
 class ABCNN:
     def __init__( self, vocab_size, embedding_size=32, keep_prob=0.7,
-                  optimizer=tf.train.AdamOptimizer, learning_rate=0.001, num_layers=2 ):
+                  optimizer=tf.train.AdamOptimizer, learning_rate=0.001, num_layers=2, decay_steps=100000 ):
         self.vocab_size = vocab_size
         self.keep_prob = keep_prob
         self.optimizer = optimizer
         self.learning_rate = learning_rate
         self.weight_regularizer = tf.contrib.layers.l2_regularizer(0.01)
         self.num_layers = num_layers
+        self.decay_steps  = decay_steps
 
         # Set h_size equal to embedding size
         self.h_size = embedding_size
@@ -114,9 +115,12 @@ class ABCNN:
 
         return loss
 
-    def train_step( self, loss ):
+    def train_step( self, loss, global_step ):
         with tf.name_scope("train_step"):
-            train_op = self.optimizer(self.learning_rate).minimize(loss)
+            learning_rate = tf.train.exponential_decay(self.learning_rate, global_step,
+                                                       self.decay_steps, 0.96, staircase=True)
+
+            train_op = self.optimizer(learning_rate).minimize(loss, global_step=global_step)
 
         return train_op
 

@@ -44,6 +44,8 @@ parser.add_argument("--eval_steps", type=int, default=1000,
                     help="Amount of steps after which should be evaluated.")
 parser.add_argument("--dropout_keep_prob", type=float, default=0.8,
                     help="Dropout keep probability")
+parser.add_argument("--decay_steps", type=float, default=100000,
+                    help="Amount of batch steps untill the learning rate is multiplied by 96")
 
 # Model encoder arguments.
 parser.add_argument("--embedding_size", type=int, default=32,
@@ -101,7 +103,8 @@ with tf.variable_scope("ABCNN"):
                         keep_prob=args.dropout_keep_prob,
                         optimizer=optimizer,
                         learning_rate=args.learning_rate,
-                        num_layers=args.num_layers)
+                        num_layers=args.num_layers,
+                        decay_steps=args.decay_steps)
 
     # Build the training model graph.
     e_context = train_model.create_embedding("context_encoder", context, max_c_length)
@@ -113,7 +116,8 @@ with tf.variable_scope("ABCNN"):
                                         avg_c_length)
     train_loss = train_model.loss(logits, answer)
     train_acc = train_model.accuracy(logits, answer)
-    train_op = train_model.train_step(train_loss)
+    global_step = tf.Variable(0, trainable=False)
+    train_op = train_model.train_step(train_loss, global_step)
 
 # Create the testing model.
 with tf.variable_scope("ABCNN", reuse=True):
@@ -126,7 +130,8 @@ with tf.variable_scope("ABCNN", reuse=True):
                        keep_prob=1.0,
                        optimizer=optimizer,
                        learning_rate=args.learning_rate,
-                       num_layers=args.num_layers)
+                       num_layers=args.num_layers,
+                       decay_steps=args.decay_steps)
 
     # Build the testing model graph.
     test_e_context = test_model.create_embedding("context_encoder", test_context, max_c_length)
@@ -194,7 +199,7 @@ with tf.Session() as sess:
                                                                                  max_q_length):
             i += args.batch_size
             # Train on all batches for one epoch.
-            _, tr_loss, summary, tr_acc = sess.run([train_op, train_loss, train_summaries, train_acc,
+            _, tr_loss, summary, tr_acc, g = sess.run([train_op, train_loss, train_summaries, train_acc, global_step
                                                     ],
                                                    feed_dict={ context: context_batch[0],
                                                                question: question_batch[0],
@@ -205,7 +210,7 @@ with tf.Session() as sess:
 
             # Print training statistics periodically.
             if i % steps_per_stats == 0:
-                print("Epoch: {}, Step: {}, Train accuracy: {}, Train loss: {}".format(e, i, tr_acc, tr_loss))
+                print("Epoch: {}; Step/batch_step: {},{}; Train accuracy: {}; Train loss: {}".format(e, i, g, tr_acc, tr_loss))
 
             if i % args.eval_steps == 0:
                 test_analysis(sess)
