@@ -61,7 +61,7 @@ for dataset in datasets:
 								job_file_names.append(name)
 								job_file_text = job_file_template.substitute(minutes=minutes,name=name, data=dataset, cell_type=cell_type, 
 																 num_unit=num_unit, encoder_type=encoder_type, dropout=dropout,
-																  num_enc_layers=encoder_units, embedding_size=embedding_size)
+																  num_enc_layers=encoder_units, embedding_size=embedding_size, batch=batch)
 
 								with open('jobs/'+name+'.job', 'w') as job_file:
 									job_file.write(job_file_text)
