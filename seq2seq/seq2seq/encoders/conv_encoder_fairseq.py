@@ -55,6 +55,7 @@ class ConvEncoderFairseq(Encoder):
     super(ConvEncoderFairseq, self).__init__(params, mode, name)
     self._combiner_fn = locate(self.params["position_embeddings.combiner_fn"])
     self.pos_embed = pos_embed 
+
   @staticmethod
   def default_params():
     return {
@@ -109,35 +110,6 @@ class ConvEncoderFairseq(Encoder):
         inputs=inputs,
         keep_prob=self.params["embedding_dropout_keep_prob"],
         is_training=self.mode == tf.contrib.learn.ModeKeys.TRAIN)
-    
-    # with tf.variable_scope("cnn_a"):
-    #   cnn_a_output = inputs
-    #   for layer_idx in range(self.params["attention_cnn.layers"]):
-    #     next_layer = tf.contrib.layers.conv2d(
-    #         inputs=cnn_a_output,
-    #         num_outputs=self.params["attention_cnn.units"],
-    #         kernel_size=self.params["attention_cnn.kernel_size"],
-    #         padding="SAME",
-    #         activation_fn=tf.nn.relu)
-    #     # Add a residual connection, except for the first layer
-    #     if layer_idx > 0:
-    #       next_layer += cnn_a_output
-    #     cnn_a_output = tf.tanh(next_layer)
-
-    # with tf.variable_scope("cnn_c"):
-    #   cnn_c_output = inputs
-    #   for layer_idx in range(self.params["cnn.layers"]):
-    #     next_layer = tf.contrib.layers.conv2d(
-    #         inputs=cnn_c_output,
-    #         num_outputs=self.params["cnn.nhids"],
-    #         kernel_size=self.params["cnn.kwidths"],
-    #         padding="SAME",
-    #         activation_fn=None)
-    #     next_layer = gated_linear_units(next_layer)
-    #     # Add a residual connection, except for the first layer
-    #     if layer_idx > 0:
-    #       next_layer += cnn_c_output
-    #     cnn_c_output = tf.tanh(next_layer)
 
     with tf.variable_scope("encoder_cnn"):    
       next_layer = inputs
@@ -150,6 +122,7 @@ class ConvEncoderFairseq(Encoder):
         next_layer = conv_encoder_stack(next_layer, nhids_list, kwidths_list, {'src':self.params["embedding_dropout_keep_prob"], 'hid': self.params["nhid_dropout_keep_prob"]}, mode=self.mode)
         
         next_layer = linear_mapping_weightnorm(next_layer, embed_size, var_scope_name="linear_mapping_after_cnn")
+      
       ## The encoder stack will receive gradients *twice* for each attention pass: dot product and weighted sum.
       ##cnn = nn.GradMultiply(cnn, 1 / (2 * nattn))  
       cnn_c_output = (next_layer + inputs) * tf.sqrt(0.5) 

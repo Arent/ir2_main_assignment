@@ -31,18 +31,6 @@ def parse_list_or_default(params_str, number, default_val, delimitor=','):
   return param_list
 
  
-# def linear_mapping(inputs, out_dim, in_dim=None, dropout=1.0, var_scope_name="linear_mapping"):
-#   with tf.variable_scope(var_scope_name):
-#     input_shape = inputs.get_shape().as_list()    # static shape. may has None
-#     weight_init = tf.random_normal_initializer(mean=0,
-#                                                stddev=tf.sqrt(dropout*1.0/input_shape[-1]))
-
-#     return tf.contrib.layers.fully_connected(inputs=inputs,
-#                                              num_outputs=out_dim,
-#                                              activation_fn=None,
-#                                              weights_initializer=weight_init, 
-#                                              biases_initializer=tf.zeros_initializer()) 
- 
 def linear_mapping_weightnorm(inputs, out_dim, in_dim=None, dropout=1.0, var_scope_name="linear_mapping"):
   with tf.variable_scope(var_scope_name):
     input_shape = inputs.get_shape().as_list()    # static shape. may has None
@@ -120,17 +108,7 @@ def conv_encoder_stack(inputs, nhids_list, kwidths_list, dropout_dict, mode):
       is_training=mode == tf.contrib.learn.ModeKeys.TRAIN)
    
     next_layer = conv1d_weightnorm(inputs=next_layer, layer_idx=layer_idx, out_dim=nout*2, kernel_size=kwidths_list[layer_idx], padding="SAME", dropout=dropout_dict['hid'], var_scope_name="conv_layer_"+str(layer_idx)) 
-    ''' 
-    next_layer = tf.contrib.layers.conv2d(
-        inputs=next_layer,
-        num_outputs=nout*2,
-        kernel_size=kwidths_list[layer_idx],
-        padding="SAME",   #should take attention
-        weights_initializer=tf.random_normal_initializer(mean=0, stddev=tf.sqrt(4 * dropout_dict['hid'] / (kwidths_list[layer_idx] * next_layer.get_shape().as_list()[-1]))),
-        biases_initializer=tf.zeros_initializer(),
-        activation_fn=None,
-        scope="conv_layer_"+str(layer_idx))
-    '''    
+ 
     next_layer = gated_linear_units(next_layer)
     next_layer = (next_layer + res_inputs) * tf.sqrt(0.5)
 
@@ -157,19 +135,10 @@ def conv_decoder_stack(target_embed, enc_output, inputs, nhids_list, kwidths_lis
     next_layer = tf.pad(next_layer, [[0, 0], [kwidths_list[layer_idx]-1, kwidths_list[layer_idx]-1], [0, 0]], "CONSTANT")
     
     next_layer = conv1d_weightnorm(inputs=next_layer, layer_idx=layer_idx, out_dim=nout*2, kernel_size=kwidths_list[layer_idx], padding="VALID", dropout=dropout_dict['hid'], var_scope_name="conv_layer_"+str(layer_idx)) 
-    '''
-    next_layer = tf.contrib.layers.conv2d(
-        inputs=next_layer,
-        num_outputs=nout*2,
-        kernel_size=kwidths_list[layer_idx],
-        padding="VALID",   #should take attention, not SAME but VALID
-        weights_initializer=tf.random_normal_initializer(mean=0, stddev=tf.sqrt(4 * dropout_dict['hid'] / (kwidths_list[layer_idx] * next_layer.get_shape().as_list()[-1]))),
-        biases_initializer=tf.zeros_initializer(),
-        activation_fn=None,
-        scope="conv_layer_"+str(layer_idx))
-    '''
+
     layer_shape = next_layer.get_shape().as_list()
     assert len(layer_shape) == 3
+    
     # to avoid using future information 
     next_layer = next_layer[:,0:-kwidths_list[layer_idx]+1,:]
 

@@ -114,7 +114,7 @@ class ConvDecoderFairseq(AttentionDecoder, Decoder, GraphModule, Configurable):
         "cnn.layers": 3,
         "cnn.nhids": "256,256,256",
         "cnn.kwidths": "3,3,3",
-        "cnn.nhid_default": 256,
+        "cnn.nhid_default": 16,
         "cnn.kwidth_default": 3,
         "embedding_dropout_keep_prob": 0.9,
         "nhid_dropout_keep_prob": 0.9,
@@ -122,7 +122,7 @@ class ConvDecoderFairseq(AttentionDecoder, Decoder, GraphModule, Configurable):
         "position_embeddings.enable": True,
         "position_embeddings.combiner_fn": "tensorflow.add",
         "max_decode_length": 49,
-        "nout_embed": 256,
+        "nout_embed": 16,
     }
  
   @property
