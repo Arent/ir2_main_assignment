@@ -1,5 +1,6 @@
 from string import Template 
 import os
+import stat 
 
 datasets =['en']
 learning_rates = ['0.0002', '0.0005', '0.001'] 
