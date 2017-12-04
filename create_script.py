@@ -2,7 +2,7 @@ from string import Template
 import os
 import stat 
 
-datasets =['en']
+datasets =['en-10k']
 learning_rates = ['0.0002', '0.0005', '0.001'] 
 enc_types= [('bi', '1'), ('uni', '1'), ('uni', '2')]
 num_units = ['16', '32', '64', '128', '256']
