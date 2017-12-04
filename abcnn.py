@@ -16,16 +16,16 @@ class ABCNN:
         # Set h_size equal to embedding size
         self.h_size = embedding_size
 
-    def _get_weights_variable( self, name, shape ):
+    def _get_weights_variable( self, name, shape, var=0.1):
         return tf.get_variable(name=name,
                                shape=shape,
-                               initializer=tf.contrib.layers.xavier_initializer(),
+                               initializer=tf.random_normal_initializer(0, var),
                                regularizer=self.weight_regularizer)
 
-    def _get_bias_variable( self, name, shape ):
+    def _get_bias_variable( self, name, shape, var=0.1 ):
         return tf.get_variable(name=name,
                                shape=shape,
-                               initializer=tf.contrib.layers.xavier_initializer(),
+                               initializer=tf.random_normal_initializer(0, var),
                                regularizer=self.weight_regularizer)
 
     @staticmethod
@@ -50,19 +50,23 @@ class ABCNN:
             conv_output = e
             for i in range(1, self.num_layers + 1):
                 with tf.name_scope('conv' + str(i)):
-                    W_conv = self._get_weights_variable("W" + str(i), [k, self.h_size, self.h_size])
-                    b_conv = self._get_bias_variable("B" + str(i), [self.h_size])
+                    W_conv = self._get_weights_variable("W" + str(i), [k, self.h_size, self.h_size],
+                                                        tf.sqrt(4.0*self.keep_prob/self.h_size))
+                    b_conv = self._get_bias_variable("B" + str(i), [self.h_size],
+                                                        tf.sqrt(4.0*self.keep_prob/self.h_size))
 
                     # weights for the GLU
-                    W_conv2 = self._get_weights_variable("W" + str(i) + "2", [k, self.h_size, self.h_size])
-                    b_conv2 = self._get_bias_variable("B" + str(i) + "2", [self.h_size])
+                    W_conv2 = self._get_weights_variable("W" + str(i) + "2", [k, self.h_size, self.h_size],
+                                                         tf.sqrt(4.0*self.keep_prob/self.h_size))
+                    b_conv2 = self._get_bias_variable("B" + str(i) + "2", [self.h_size],
+                                                         tf.sqrt(4.0*self.keep_prob/self.h_size))
 
                     # GLU operation
                     A1 = self._conv1d(conv_output, W_conv) + b_conv
                     B1 = self._conv1d(conv_output, W_conv2) + b_conv2
                     GLU = A1 * tf.nn.sigmoid(B1)
 
-                    # Add residual connection
+                    # Add residual connection (scaled according to Gehring et al. 2017)
                     res_con = tf.sqrt(0.5) * (GLU + conv_output)
                     conv_output = tf.nn.dropout(res_con, self.keep_prob)
 
@@ -84,8 +88,8 @@ class ABCNN:
             # Multiply attention with context and sum over the len of the context
             attention_vector =  tf.einsum('ijk,ij->ik', context_output + context, attention_matrix)  # [batch_size x h_size]
 
-            # Norm factor as described in the Conv seq2seq paper, however since a batch varies in sentence size, the
-            # average length is used instead.
+            # Norm factor as described in Conv seq2seq paper by  (Gehring et al. 2017), however since a batch varies in
+            # sentence size, the  average length is used instead.
             f = avg_c_length * tf.sqrt(1.0 / avg_c_length)
 
             with tf.name_scope('fc'):
