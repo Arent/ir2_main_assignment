@@ -15,7 +15,7 @@ def main(args):
     tokenizer = MosesTokenizer()
 
     train, val, test, _ = data_utils.load_data(args.task, args.data_dir, args.vocab, 
-                                                   tokenizer, None, prep=False)
+                                                   tokenizer, prep=False)
 
 
     write(train, args.target_dir, args.task, "train")
