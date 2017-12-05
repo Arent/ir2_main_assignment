@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 # source: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def load_data(task_id, data_dir, vocab_file, tokenizer, prep=True, batch_size=10, val_split=True, q_in_context=True):
+def load_data(task_id, data_dir, vocab_file, tokenizer, prep=True, batch_size=10, val_split=0.1, q_in_context=True):
     babi_map = {
         "1": "qa1_single-supporting-fact",
         "2": "qa2_two-supporting-facts",
