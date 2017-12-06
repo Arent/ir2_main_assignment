@@ -87,7 +87,7 @@ misc_utils.print_args(args)
 print("Loading data...")
 tokenizer = MosesTokenizer()
 train, val, test, tf_vocab = data_utils.load_data(args.task, args.data_dir,
-    args.vocab, tokenizer, args.batch_size, args.val_split, q_in_context=True)
+    args.vocab, tokenizer, args.batch_size, val_split=args.val_split, q_in_context=True)
 context, question, answer_input, answer_output, context_length, question_length, answer_length = train.get_next()
 val_context, val_question, val_answer_input, val_answer_output, val_context_length, val_question_length, val_answer_length = val.get_next()
 test_context, test_question, test_answer_input, test_answer_output, test_context_length, test_question_length, test_answer_length = test.get_next()
