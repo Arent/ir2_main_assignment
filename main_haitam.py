@@ -52,6 +52,8 @@ parser.add_argument("--embedding_size", type=int, default=32,
                     help="Size of the word embeddings and conv output")
 parser.add_argument("--num_layers", type=int, default=2,
                     help="Amount of convolutional layer blocks")
+parser.add_argument("--kernel_size", type=int, default=10,
+                    help="Width of the convolutional filter")
 
 np.random.seed(42)
 tf.set_random_seed(42)
@@ -109,7 +111,7 @@ with tf.variable_scope("ABCNN"):
     # Build the training model graph.
     e_context = train_model.create_embedding("context_encoder", context, max_c_length)
     e_question = train_model.create_embedding("question_encoder", question, max_q_length)
-    encoded_context = train_model.create_encoder("context_encoder", e_context, k=10)
+    encoded_context = train_model.create_encoder("context_encoder", e_context, k=args.kernel_size)
     encoded_question = train_model.create_encoder("question_encoder", e_question, k=5)
     attention_matrix = train_model.create_attention_matrix(encoded_context, encoded_question)
     logits = train_model.create_decoder(attention_matrix, encoded_context, e_context, max_c_length, max_q_length,
@@ -136,7 +138,7 @@ with tf.variable_scope("ABCNN", reuse=True):
     # Build the testing model graph.
     test_e_context = test_model.create_embedding("context_encoder", test_context, max_c_length)
     test_e_question = test_model.create_embedding("question_encoder", test_question, max_q_length)
-    test_encoded_context = test_model.create_encoder("context_encoder", test_e_context, k=10)
+    test_encoded_context = test_model.create_encoder("context_encoder", test_e_context, k=args.kernel_size)
     test_encoded_question = test_model.create_encoder("question_encoder", test_e_question, k=5)
     test_attention_matrix = test_model.create_attention_matrix(test_encoded_context, test_encoded_question)
     test_logits = test_model.create_decoder(test_attention_matrix, test_encoded_context, test_e_context, max_c_length,
@@ -184,6 +186,8 @@ with tf.Session() as sess:
     print("Creating summary writers...")
     train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
     test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
+
+    print("Running task {}".format(args.task))
 
     # Bookkeeping stuff.
     total_step = 0
