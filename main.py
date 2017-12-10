@@ -87,10 +87,10 @@ misc_utils.print_args(args)
 print("Loading data...")
 tokenizer = MosesTokenizer()
 train, val, test, tf_vocab = data_utils.load_data(args.task, args.data_dir,
-    args.vocab, tokenizer, args.batch_size, val_split=args.val_split, q_in_context=True)
-context, question, answer_input, answer_output, context_length, question_length, answer_length = train.get_next()
-val_context, val_question, val_answer_input, val_answer_output, val_context_length, val_question_length, val_answer_length = val.get_next()
-test_context, test_question, test_answer_input, test_answer_output, test_context_length, test_question_length, test_answer_length = test.get_next()
+    args.vocab, tokenizer, batch_size=args.batch_size, val_split=args.val_split, q_in_context=True)
+context, sentence_lengths, num_sentences, question, question_length, answer_input, answer_output, answer_length = train.get_next()
+val_context, val_sentence_lengths, val_num_sentences, val_question, val_question_length, val_answer_input, val_answer_output, val_answer_length = val.get_next()
+test_context, test_sentence_lengths, test_num_sentences, test_question, test_question_length, test_answer_input, test_answer_output, test_answer_length = test.get_next()
 print("vocabulary size = %d" % vocab_size)
 
 # Create the training model.
@@ -105,12 +105,12 @@ with tf.variable_scope("QARNN"):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the training model graph.
-  emb_context, emb_matrix = train_model.create_embeddings(context,
-      name="enc_embedding_matrix")
+  emb_context, emb_matrix = train_model.create_sentence_embeddings(context,
+      sentence_lengths, name="enc_embedding_matrix")
   emb_question, _ = train_model.create_embeddings(question,
       embedding_matrix=emb_matrix)
   context_outputs, final_context_state = train_model.create_encoder("context_encoder",
-      emb_context, context_length)
+      emb_context, num_sentences)
   _, final_question_state = train_model.create_encoder("question_encoder",
       emb_question, question_length)
   merged_state = train_model.merge_states(final_context_state,
@@ -142,12 +142,12 @@ with tf.variable_scope("QARNN", reuse=True):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the validation model graph.
-  val_emb_context, val_emb_matrix = val_model.create_embeddings(val_context,
-      name="enc_embedding_matrix")
+  val_emb_context, val_emb_matrix = train_model.create_sentence_embeddings(
+      val_context, val_sentence_lengths, name="enc_embedding_matrix")
   val_emb_question, _ = val_model.create_embeddings(val_question,
       embedding_matrix=val_emb_matrix)
   val_context_outputs, val_final_context_state = val_model.create_encoder("context_encoder",
-      val_emb_context, val_context_length)
+      val_emb_context, val_num_sentences)
   _, val_final_question_state = val_model.create_encoder("question_encoder",
       val_emb_question, val_question_length)
   val_merged_state = val_model.merge_states(val_final_context_state,
@@ -178,12 +178,12 @@ with tf.variable_scope("QARNN", reuse=True):
       max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the testing model graph.
-  test_emb_context, test_emb_matrix = test_model.create_embeddings(test_context,
-      name="enc_embedding_matrix")
+  test_emb_context, test_emb_matrix = train_model.create_sentence_embeddings(
+      test_context, test_sentence_lengths, name="enc_embedding_matrix")
   test_emb_question, _ = test_model.create_embeddings(test_question,
       embedding_matrix=test_emb_matrix)
   test_context_outputs, test_final_context_state = test_model.create_encoder("context_encoder",
-      test_emb_context, test_context_length)
+      test_emb_context, test_num_sentences)
   _, test_final_question_state = test_model.create_encoder("question_encoder",
       test_emb_question, test_question_length)
   test_merged_state = test_model.merge_states(test_final_context_state,
@@ -211,7 +211,7 @@ test_summaries = tf.summary.scalar("test_accuracy", test_acc)
 
 # Parameter saver.
 saver = tf.train.Saver()
-steps_per_stats = 50
+steps_per_stats = 15
 
 # Train the model.
 with tf.Session() as sess:
@@ -221,7 +221,7 @@ with tf.Session() as sess:
   sess.run(train.initializer)
 
   # Create the summary writers.
-  print("Creating summary writers...")
+  # print("Creating summary writers...")
   # train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
   # val_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "val"), sess.graph)
   # test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
@@ -240,7 +240,7 @@ with tf.Session() as sess:
   print("Performing evaluation before training...")
   sess.run(test.initializer)
   contexts, questions, answers, context_lengths, question_lengths, answer_lengths, predictions = sess.run([
-      test_context, test_question, test_answer_output, test_context_length, test_question_length,
+      test_context, test_question, test_answer_output, test_sentence_lengths, test_question_length,
       test_answer_length, test_predictions])
   print("---- Qualitative Analysis")
   eval_utils.qualitative_analysis(contexts, questions, answers, context_lengths, question_lengths,
@@ -277,8 +277,8 @@ with tf.Session() as sess:
 
       # Evaluate the model on the test set.
       sess.run(test.initializer)
-      contexts, questions, answers, context_lengths, question_lengths, answer_lengths, predictions = sess.run([
-          test_context, test_question, test_answer_output, test_context_length, test_question_length,
+      contexts, context_lengths, questions, answers, question_lengths, answer_lengths, predictions = sess.run([
+          test_context, test_sentence_lengths, test_question, test_answer_output, test_question_length,
           test_answer_length, test_predictions])
       test_accuracy = eval_utils.compute_test_accuracy(answers, answer_lengths,
           predictions, w2i["</s>"], args.task != "8")

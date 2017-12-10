@@ -5,16 +5,17 @@ import numpy as np
   Samples k random context-question-answer pairs and print them together
   with the model's predictions.
 """
-def qualitative_analysis(contexts, questions, answers, context_lengths,
+def qualitative_analysis(contexts, questions, answers, sentence_lengths,
                          question_lengths, answer_lengths, predictions, i2w, k=1):
   size = questions.shape[0]
   indices = random.sample(range(size), k)
   for idx in indices:
-    context = contexts[idx][:context_lengths[idx]]
+    context = contexts[idx]
+    sen_lens = sentence_lengths[idx]
     question = questions[idx][:question_lengths[idx]]
     answer = answers[idx][:answer_lengths[idx]]
     prediction = predictions[idx]
-    context_ = " ".join(i2w[word_id] for word_id in context)
+    context_ = " ".join([" ".join([i2w[word_id] for word_id in sent[:sen_lens[sent_id]]]) for sent_id, sent in enumerate(context)])
     question_ = " ".join(i2w[word_id] for word_id in question)
     answer_ = " ".join(i2w[word_id] for word_id in answer)
     prediction_ = " ".join(i2w[word_id] for word_id in prediction)

@@ -30,6 +30,28 @@ class QARNN:
     return tf.nn.embedding_lookup(embedding_matrix,
         sequence), embedding_matrix # [batch, time, emb_size]
 
+  def create_sentence_embeddings(self, sentences, sentence_lengths,
+      name=None, embedding_matrix=None):
+    if embedding_matrix is None:
+      embedding_matrix = tf.get_variable(name,
+          [self.vocab_size, self.embedding_size], dtype=tf.float32)
+    embeddings = tf.nn.embedding_lookup(embedding_matrix,
+        sentences) # [batch, sentence, word, emb_size]
+
+    # Sum out the words axis, to get sentence embeddings, zero-out
+    # end-of-sentence symbols.
+    word_axis = 2
+    max_sentence_length = tf.shape(embeddings)[word_axis]
+    mask = tf.expand_dims(tf.sequence_mask(sentence_lengths,
+        maxlen=max_sentence_length, dtype=tf.float32), -1)
+    embeddings = tf.reduce_sum(embeddings * mask, axis=word_axis)
+
+    # Use an average of the word embeddings as sentence embedding.
+    sentence_lengths = tf.expand_dims(tf.cast(sentence_lengths, tf.float32), -1)
+    embeddings /= (sentence_lengths + 1e-20)
+
+    return embeddings, embedding_matrix
+
   # Creates an encoder on the given sequence, returns the final state of the encoder.
   def create_encoder(self, name, embeddings, sequence_length):
 
