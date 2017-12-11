@@ -8,10 +8,10 @@ import numpy as np
 
 from nltk.tokenize.moses import MosesTokenizer
 
-import data_utils_old as utils
+import data_utils_cnnde as utils
 import misc_utils, eval_utils
 
-from abcnn import ABCNN
+from cnnde import ABCNN
 
 parser = argparse.ArgumentParser()
 
@@ -78,18 +78,26 @@ print("Loading data...")
 tokenizer = MosesTokenizer()
 
 # Load the training / testing data.
-train, test = utils.load_data(args.task, "", "./tasks/en-10k", w2i, tokenizer, args.batch_size, True)
+train_val, test = utils.load_data(args.task, "", "./tasks/en-10k", w2i, tokenizer, args.batch_size, True)
+train, val = train_val
+
 train_context, train_question, train_answer = list(zip(*train))
+val_context, val_question, val_answer = list(zip(*val))
 test_context, test_question, test_answer = list(zip(*test))
 
-max_c_length = max(len(l) for l in train_context + test_context)
-avg_c_length = sum(len(l) for l in train_context + test_context) / len(train_context)
-max_q_length = max(len(l) for l in train_question + test_question)
+print("Len of training set : {}, len of validation set : {}".format(len(train_context), len(val_context)))
+
+max_c_length = max(len(l) for l in train_context + test_context + val_context)
+avg_c_length = sum(len(l) for l in train_context + test_context + val_context) / len(train_context)
+max_q_length = max(len(l) for l in train_question + test_question + val_question)
 
 print("Average amount of words in context (used for normalization): {}".format(avg_c_length))
 
 test_context_padded, test_context_lengths = utils.pad_results(test_context, max_c_length)
 test_question_padded, test_question_lengths = utils.pad_results(test_question, max_q_length)
+
+val_context_padded, val_context_lengths = utils.pad_results(val_context, max_c_length)
+val_question_padded, val_question_lengths = utils.pad_results(val_question, max_q_length)
 
 train_examples_num = len(train)
 
@@ -121,6 +129,31 @@ with tf.variable_scope("ABCNN"):
     global_step = tf.Variable(0, trainable=False)
     train_op = train_model.train_step(train_loss, global_step)
 
+# Create the validation model.
+with tf.variable_scope("ABCNN", reuse=True):
+    val_context = tf.placeholder(tf.int32, shape=[args.t_batch_size, max_c_length])
+    val_question = tf.placeholder(tf.int32, shape=[args.t_batch_size, max_q_length])
+    val_answer_placeholder = tf.placeholder(tf.int32, shape=args.t_batch_size, name="labels")
+
+    val_model = ABCNN(vocab_size,
+                       embedding_size=args.embedding_size,
+                       keep_prob=1.0,
+                       optimizer=optimizer,
+                       learning_rate=args.learning_rate,
+                       num_layers=args.num_layers,
+                       decay_steps=args.decay_steps)
+
+    # Build the testing model graph.
+    val_e_context = val_model.create_embedding("context_encoder", val_context, max_c_length)
+    val_e_question = val_model.create_embedding("question_encoder", val_question, max_q_length)
+    val_encoded_context = val_model.create_encoder("context_encoder", val_e_context, k=args.kernel_size)
+    val_encoded_question = val_model.create_encoder("question_encoder", val_e_question, k=5)
+    val_attention_matrix = val_model.create_attention_matrix(val_encoded_context, val_encoded_question)
+    val_logits = val_model.create_decoder(val_attention_matrix, val_encoded_context, val_e_context, max_c_length,
+                                            max_q_length, avg_c_length)
+    val_loss = val_model.loss(val_logits, val_answer_placeholder)
+    val_acc = val_model.accuracy(val_logits, val_answer_placeholder)
+
 # Create the testing model.
 with tf.variable_scope("ABCNN", reuse=True):
     test_context = tf.placeholder(tf.int32, shape=[args.t_batch_size, max_c_length])
@@ -151,6 +184,7 @@ train_loss_summary = tf.summary.scalar("train_loss", train_loss)
 train_acc_summary = tf.summary.scalar("train_acc", train_acc)
 train_summaries = tf.summary.merge([train_loss_summary, train_acc_summary])
 test_summaries = tf.summary.scalar("test_accuracy", test_acc)
+val_summaries = tf.summary.scalar("val_accuracy", val_acc)
 
 # Parameter saver.
 saver = tf.train.Saver()
@@ -165,6 +199,11 @@ def test_analysis( sess, qualitative=True ):
                                                         test_answer_placeholder:
                                                             np.asarray(test_answer[:args.t_batch_size]).T[0] }
                                             )
+    v_predictions, v_acc, v_l, v_summary = sess.run([tf.argmax(val_logits, axis=-1), val_acc, val_loss, val_summaries],
+                                            feed_dict={ val_context: val_context_padded,
+                                                        val_question: val_question_padded,
+                                                        val_answer_placeholder: np.asarray(val_answer).T[0] }
+                                            )
     if (qualitative):
         print("---- Qualitative Analysis")
         eval_utils.qualitative_analysis(test_context_padded[:args.t_batch_size],
@@ -174,9 +213,11 @@ def test_analysis( sess, qualitative=True ):
                                         test_question_lengths[:args.t_batch_size],
                                         predictions, i2w, k=3)
     print("Test accuracy: {}, Test loss: {}".format(acc, l))
+    print("Val accuracy: {}, Val loss: {}".format(v_acc, v_l))
     test_writer.add_summary(summary, total_step)
+    val_writer.add_summary(summary, total_step)
     print("=========================")
-
+    return v_acc, acc
 
 with tf.Session() as sess:
     print("Running initializers...")
@@ -185,12 +226,17 @@ with tf.Session() as sess:
     # Create the summary writers.
     print("Creating summary writers...")
     train_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "train"), sess.graph)
+    val_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "val"), sess.graph)
     test_writer = tf.summary.FileWriter(os.path.join(args.model_dir, "test"), sess.graph)
 
     print("Running task {}".format(args.task))
 
     # Bookkeeping stuff.
     total_step = 0
+    best_test = 0
+    best_val = 0
+    best_e = 0
+    stop = False
 
     # Evaluate before training.
     test_analysis(sess)
@@ -203,12 +249,10 @@ with tf.Session() as sess:
                                                                                  max_q_length):
             i += args.batch_size
             # Train on all batches for one epoch.
-            _, tr_loss, summary, tr_acc, g = sess.run([train_op, train_loss, train_summaries, train_acc, global_step
-                                                    ],
+            _, tr_loss, summary, tr_acc, g = sess.run([train_op, train_loss, train_summaries, train_acc, global_step],
                                                    feed_dict={ context: context_batch[0],
                                                                question: question_batch[0],
-                                                               answer: np.asarray(answer_batch) }
-                                                   )
+                                                               answer: np.asarray(answer_batch) })
             total_step += 1
             train_writer.add_summary(summary, total_step)
 
@@ -216,9 +260,20 @@ with tf.Session() as sess:
             if i % steps_per_stats == 0:
                 print("Epoch: {}; Step/batch_step: {},{}; Train accuracy: {}; Train loss: {}".format(e, i, g, tr_acc, tr_loss))
 
+            # Save best results and or
             if i % args.eval_steps == 0:
-                test_analysis(sess)
+                current_val_acc, current_test_acc = test_analysis(sess)
 
+                if(current_val_acc >= best_val):
+                    best_test = current_test_acc
+                    best_val = current_val_acc
+                    best_e = e
+                print("The best model is at epoch {} with a test acc of {} and val acc of {}".format(best_e, best_test, best_val))
+
+                if(current_test_acc == 1.0):
+                    sys.exit(1)
+
+        print("The best model is at epoch {} with a test acc of {} and val acc of {}".format(best_e, best_test, best_val))
         print("==== Finshed epoch %d ====" % e)
 
         test_analysis(sess)

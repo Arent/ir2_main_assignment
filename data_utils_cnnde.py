@@ -58,7 +58,7 @@ def load_data( id, test_id, data_dir, w2i, tokenizer, batch_size, seperate_conte
     babi_train_raw = _init_babi(os.path.join(data_dir, '%s_train.txt' % babi_name), seperate_context)
     babi_test_raw = _init_babi(os.path.join(data_dir, '%s_test.txt' % babi_test_name), seperate_context)
 
-    return _process_data(babi_train_raw, tokenizer, w2i), _process_data(babi_test_raw, tokenizer, w2i)
+    return _process_train_data(babi_train_raw, tokenizer, w2i), _process_data(babi_test_raw, tokenizer, w2i)
 
 
 def load_vocab( filename ):
@@ -80,32 +80,6 @@ def _to_index( word, w2i ):
 
 
 # adapted from: https://github.com/YerevaNN/Dynamic-memory-networks-in-Theano
-def _init_babi_old( fname ):
-    tasks = []
-    for i, line in enumerate(open(fname)):
-        id = int(line[0:line.find(' ')])
-        if id == 1:
-            C = ""
-            Q = ""
-            A = ""
-
-        line = line.strip()
-        line = line.replace('.', ' . ')
-        line = line.replace('?', ' ? ')
-        line = line[line.find(' ') + 1:]
-
-        if line.find('?') == -1:
-            C += line.lower()
-        else:
-            idx = line.find('?') + 1
-            tmp = line[idx + 1:].split('\t')
-            Q = C + line[:idx]
-            A = tmp[1].strip()
-
-            tasks.append((Q, A))
-    return tasks
-
-
 def _init_babi( fname, seperate_context ):
     tasks = []
     for i, line in enumerate(open(fname)):
@@ -134,7 +108,6 @@ def _init_babi( fname, seperate_context ):
 
             tmp = line[idx + 1:].split('\t')
             A = tmp[1].strip()
-
             if seperate_context:
                 tasks.append((C, Q, A))
             else:
@@ -149,10 +122,38 @@ def _process_data( data_list, tokenizer, w2i ):
     data_list_ids = []
     for data_tuple in data_list:
         data_tuple_words = [tokenizer.tokenize(element.lower()) for element in list(data_tuple)]
-        new_tuple = [[to_index(word) for word in element] for element in data_tuple_words]
+
+        # NOTE: This turns multiple answers as one answer, so should be present in vocabulary!
+        new_tuple = [[to_index(word) for word in element] for element in data_tuple_words[:-1]]
+        new_tuple.append([to_index("".join(data_tuple_words[-1]))])
         data_list_ids.append(new_tuple)
 
     return data_list_ids
+
+
+def _process_train_data( data_list, tokenizer, w2i, val_frac=0.1 ):
+    def to_index( word ):
+        return w2i[word] if word in w2i else w2i['<unk>']
+
+    data_list_ids_train = []
+    data_list_ids_val = []
+
+    random.shuffle(data_list)
+
+    val_thresh = (1 - val_frac) * len(data_list)
+    for i, data_tuple in enumerate(data_list):
+        data_tuple_words = [tokenizer.tokenize(element.lower()) for element in list(data_tuple)]
+
+        # NOTE: This turns multiple answers as one answer, so should be present in vocabulary!
+        new_tuple = [[to_index(word) for word in element] for element in data_tuple_words[:-1]]
+        new_tuple.append([to_index("".join(data_tuple_words[-1]))])
+
+        if (i < int(val_thresh)):
+            data_list_ids_train.append(new_tuple)
+        else:
+            data_list_ids_val.append(new_tuple)
+
+    return data_list_ids_train, data_list_ids_val
 
 
 def pad_to_k( x, k ):
