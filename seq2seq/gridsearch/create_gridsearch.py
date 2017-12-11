@@ -1,12 +1,12 @@
 import itertools
 
 parameters = {}
-parameters['task'] = [11]
+parameters['task'] = [9]
 parameters['decay_rate'] = [0.9, 1.0]
-parameters['decay_step'] = [6000]
+parameters['decay_step'] = [1000, 5000]
 parameters['learning_rate'] = [0.01, 0.001]
-parameters['keep_rate'] = [1.0, 0.9]
-parameters['embed_sizes'] = [16,64] #num_h, kernel_size
+parameters['keep_rate'] = [0.9]
+parameters['embed_sizes'] = [16,32] #num_h, kernel_size
 parameters['batch_sizes'] = [50]
 parameters['num_layers'] = [2,4,6]
 
@@ -17,7 +17,7 @@ for params in grid_params:
     search = {key: param for (key, param) in zip(id2key, params)}
     search['hidden'] = ",".join([str(search['embed_sizes']) for _ in range(search['num_layers'])])
     
-    file_name = "SEARCH_" + "-".join([key + "_" + str(search[key]) for key in id2key])
+    file_name = "SEARCH_" + ("-".join([key + "_" + str(search[key]) for key in id2key])).replace(".", "_")
 
     header = """#!/bin/bash
 #SBATCH -N 1
@@ -34,7 +34,7 @@ export DATA_PATH=../data""".format(name=file_name)
     content = """
 export DATA_PATH=../data
 
-export TRAIN_STEPS=10000
+export TRAIN_STEPS=15000
 export MIN_EVAL=1000
 export BATCH_SIZE=50
 export LEARNING_RATE={learning_rate}
