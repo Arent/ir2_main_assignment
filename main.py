@@ -24,6 +24,7 @@ parser.add_argument("--vocab", type=str, default=None,
                     help="Vocabulary file")
 parser.add_argument("--model_dir", type=str, default=None,
                     help="Directory to store the model parameters.")
+parser.add_argument("--restore_from_dir", type=str, default=None)
 
 # Training details arguments.
 parser.add_argument("--batch_size", type=int, default=16,
@@ -209,12 +210,16 @@ test_summaries = tf.summary.scalar("test_accuracy", test_acc)
 
 # Parameter saver.
 saver = tf.train.Saver()
-steps_per_stats = 50
+steps_per_stats = 100
 
 # Train the model.
 with tf.Session() as sess:
   print("Running initializers...")
-  sess.run(tf.global_variables_initializer())
+
+  if args.restore_from_dir is not None:
+    saver.restore(sess, tf.train.latest_checkpoint(args.restore_from_dir))
+  else:
+    sess.run(tf.global_variables_initializer())
   sess.run(tf.tables_initializer())
   sess.run(train.initializer)
 
