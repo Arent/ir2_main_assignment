@@ -104,7 +104,7 @@ with tf.variable_scope("QARNN"):
       cell_type=cell_type, num_enc_layers=args.num_enc_layers,
       merge_mode=args.merge_mode, optimizer=optimizer,
       learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm, attention=attention, save_attention=True)
+      max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the training model graph.
   emb_context, emb_matrix = train_model.create_embeddings(context,
@@ -141,7 +141,7 @@ with tf.variable_scope("QARNN", reuse=True):
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
       cell_type=cell_type,num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm, attention=attention, save_attention=True)
+      max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the validation model graph.
   val_emb_context, val_emb_matrix = val_model.create_embeddings(val_context,
@@ -177,7 +177,7 @@ with tf.variable_scope("QARNN", reuse=True):
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
       cell_type=cell_type,  num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm, attention=attention, save_attention=True)
+      max_gradient_norm=args.max_gradient_norm, attention=attention)
 
   # Build the testing model graph.
   test_emb_context, test_emb_matrix = test_model.create_embeddings(test_context,
@@ -266,13 +266,10 @@ with tf.Session() as sess:
     except tf.errors.OutOfRangeError:
       print("==== Finshed epoch %d ====" % epoch_num)
 
-<<<<<<< HEAD
       # Save model parameters. TODO Commented this out because it takes a lot of time and space.
-      save_path = saver.save(sess, os.path.join(args.model_dir, "model_epoch_%d.ckpt" % epoch_num))
-      print("Model checkpoint saved in %s" % save_path)
+     # save_path = saver.save(sess, os.path.join(args.model_dir, "model_epoch_%d.ckpt" % epoch_num))
+     # print("Model checkpoint saved in %s" % save_path)
 
-=======
->>>>>>> 8335a4ccc9344f828c8c8d7fa5824cf84672236b
       # Evaluate on the validation set.
       print("Evaluating model...")
       sess.run(val.initializer)

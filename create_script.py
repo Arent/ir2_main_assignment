@@ -53,12 +53,12 @@ job_file_template = Template('''#!/bin/bash
 #SBATCH -N 1
 #SBATCH -p $nodetype
 #SBATCH -t $hours:$minutes:00
-#SBATCH -o outputs/$name.output
-#SBATCH -e errors/$name.error
+#SBATCH -o ../outputs/$name.output
+#SBATCH -e ../errors/$name.error
 
 module load python/3.5.2 gcc/5.2.0 cuda/8.0.44 cudnn/8.0-v6.0
 
-python3 -u ../../main.py --model_type=$model_type --data_dir=../../data/$data --cell_type=$cell_type --num_units=$num_unit --encoder_type=$encoder_type --vocab ../../data/vocab.txt --model_dir models/dummy --task=$task --num_epochs=50 --dropout_keep_prob=$dropout --num_enc_layers=$num_enc_layers --embedding_size=$embedding_size --batch_size=$batch --learning_rate $lr
+python3 -u ../../../main.py --model_type=$model_type --data_dir=../../../data/$data --cell_type=$cell_type --num_units=$num_unit --encoder_type=$encoder_type --vocab ../../../data/vocab.txt --model_dir models/dummy --task=$task --num_epochs=50 --dropout_keep_prob=$dropout --num_enc_layers=$num_enc_layers --embedding_size=$embedding_size --batch_size=$batch --learning_rate $lr
 ''')
 
 name_template = Template('$data-batch=$batch-lr=$lr-type=$encoder_type-num_rnns=$encoder_units-h_size=$num_unit-emb=$embedding_size-dropout=$dropout-cell_type=$cell_type')
@@ -94,12 +94,6 @@ for model_type in ['normal', 'attention']:
 				
 								num_unit = num_units_optimal[model_type][task]
 								embedding_size = embedding_sizes_optimal[model_type][task]
-								print('model_type', model_type)
-								print('batch', batch)
-								print('learning_rate', lr)
-								print('task', task)
-								print('num_unit', num_unit)
-								print('embedding_size', embedding_size)
 
 								name = name_template.substitute(data=dataset, lr=lr, encoder_type=encoder_type,encoder_units=encoder_units, 
 									num_unit=num_unit, embedding_size=embedding_size, dropout=dropout, cell_type=cell_type, batch=batch)
@@ -112,7 +106,6 @@ for model_type in ['normal', 'attention']:
 									job_file.write(job_file_text)
 
 
-print(job_file_names)
 
 with open('grid_searches_lr_batch_job_files' , 'w') as job_files_script:
 	job_files_script.write('#!/bin/bash\n')
