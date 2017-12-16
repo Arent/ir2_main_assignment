@@ -129,7 +129,7 @@ class QARNN:
         attention_mechanism = tf.contrib.seq2seq.LuongAttention(num_units,
             attention_states, memory_sequence_length=input_length, scale=True)
         cell = tf.contrib.seq2seq.AttentionWrapper(cell,
-            attention_mechanism)
+            attention_mechanism, alignment_history=True)
         batch_size = tf.shape(decoder_emb_inputs)[0]
         initial_state = cell.zero_state(batch_size, initial_state.dtype).clone(cell_state=initial_state)
 
@@ -150,7 +150,7 @@ class QARNN:
           cell, helper, initial_state,
           output_layer=projection_layer)
 
-      outputs, _, _ = tf.contrib.seq2seq.dynamic_decode(decoder,
+      outputs, self.final_dec_state, _ = tf.contrib.seq2seq.dynamic_decode(decoder,
           impute_finished=True, scope=decoder_scope, maximum_iterations=maximum_iterations)
 
       if self.mode != tf.contrib.learn.ModeKeys.INFER:

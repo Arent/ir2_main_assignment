@@ -6,7 +6,7 @@ import glob
 import os
 
 
-filenames = glob.glob("en-10k/*.txt")
+filenames = glob.glob("baBI-tasks/en-10k/*.txt")
 
 tokenizer = MosesTokenizer()
 vocab = defaultdict(int)

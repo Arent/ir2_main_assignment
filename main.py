@@ -86,8 +86,10 @@ misc_utils.print_args(args)
 # Load the training / testing data.
 print("Loading data...")
 tokenizer = MosesTokenizer()
-train, val, test, tf_vocab = data_utils.load_data(args.task, args.data_dir,
-    args.vocab, tokenizer, args.batch_size, args.val_split, q_in_context=True)
+train, val, test, tf_vocab = data_utils.load_data(task_id=args.task, data_dir=args.data_dir,
+    vocab_file=args.vocab, tokenizer=tokenizer, batch_size=args.batch_size, val_split=args.val_split, q_in_context=True)
+
+
 context, question, answer_input, answer_output, context_length, question_length, answer_length = train.get_next()
 val_context, val_question, val_answer_input, val_answer_output, val_context_length, val_question_length, val_answer_length = val.get_next()
 test_context, test_question, test_answer_input, test_answer_output, test_context_length, test_question_length, test_answer_length = test.get_next()
@@ -102,7 +104,7 @@ with tf.variable_scope("QARNN"):
       cell_type=cell_type, num_enc_layers=args.num_enc_layers,
       merge_mode=args.merge_mode, optimizer=optimizer,
       learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm, attention=attention)
+      max_gradient_norm=args.max_gradient_norm, attention=attention, save_attention=True)
 
   # Build the training model graph.
   emb_context, emb_matrix = train_model.create_embeddings(context,
@@ -139,7 +141,7 @@ with tf.variable_scope("QARNN", reuse=True):
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
       cell_type=cell_type,num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm, attention=attention)
+      max_gradient_norm=args.max_gradient_norm, attention=attention, save_attention=True)
 
   # Build the validation model graph.
   val_emb_context, val_emb_matrix = val_model.create_embeddings(val_context,
@@ -175,7 +177,7 @@ with tf.variable_scope("QARNN", reuse=True):
       encoder_type=args.encoder_type, keep_prob=args.dropout_keep_prob,
       cell_type=cell_type,  num_enc_layers=args.num_enc_layers, merge_mode=args.merge_mode,
       optimizer=optimizer, learning_rate=args.learning_rate,
-      max_gradient_norm=args.max_gradient_norm, attention=attention)
+      max_gradient_norm=args.max_gradient_norm, attention=attention, save_attention=True)
 
   # Build the testing model graph.
   test_emb_context, test_emb_matrix = test_model.create_embeddings(test_context,
@@ -196,9 +198,9 @@ with tf.variable_scope("QARNN", reuse=True):
     test_initial_state = test_merged_state
     test_attention_states = None
 
-  test_emb_answer, test_dec_emb_matrix = train_model.create_embeddings(
+  test_emb_answer, test_dec_emb_matrix = test_model.create_embeddings(
       test_answer_input, name="dec_embedding_matrix")
-  test_predictions = test_model.create_rnn_decoder(test_emb_answer, test_answer_length,
+  test_predictions, test_decoder_final_states = test_model.create_rnn_decoder(test_emb_answer, test_answer_length,
       test_initial_state, test_dec_emb_matrix, attention_states=test_attention_states)
   test_acc = tf.placeholder(tf.float32, shape=[])
 
@@ -208,6 +210,7 @@ val_acc_summary = tf.summary.scalar("val_accuracy", val_acc)
 val_ppl_summary = tf.summary.scalar("val_perplexity", val_ppl)
 val_summaries = tf.summary.merge([val_acc_summary, val_ppl_summary])
 test_summaries = tf.summary.scalar("test_accuracy", test_acc)
+
 
 # Parameter saver.
 saver = tf.train.Saver()
@@ -264,8 +267,8 @@ with tf.Session() as sess:
       print("==== Finshed epoch %d ====" % epoch_num)
 
       # Save model parameters. TODO Commented this out because it takes a lot of time and space.
-      # save_path = saver.save(sess, os.path.join(args.model_dir, "model_epoch_%d.ckpt" % epoch_num))
-      # print("Model checkpoint saved in %s" % save_path)
+      save_path = saver.save(sess, os.path.join(args.model_dir, "model_epoch_%d.ckpt" % epoch_num))
+      print("Model checkpoint saved in %s" % save_path)
 
       # Evaluate on the validation set.
       print("Evaluating model...")
