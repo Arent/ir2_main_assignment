@@ -52,10 +52,9 @@ python3 -m bin.train \
       position_embeddings.num_positions: $MAX_LENGTH 
 " \
   --batch_size $BATCH_SIZE \
-  --train_steps $TRAIN_STEPS \
+  --train_steps $TRAIN_STEPS \ 
   --output_dir $MODEL_DIR \
   --eval_every_n_steps $MIN_EVAL \
   --save_checkpoints_steps $TRAIN_STEPS \
   --save_summary_steps $MIN_EVAL \
-  --tf_random_seed 42 \
-  --keep_checkpoint_max 1
+  --tf_random_seed 42

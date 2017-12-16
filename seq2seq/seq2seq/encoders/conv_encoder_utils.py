@@ -30,14 +30,13 @@ def parse_list_or_default(params_str, number, default_val, delimitor=','):
     param_list = [int(x) for x in params_str.strip().split(delimitor)]
   return param_list
 
- 
-def linear_mapping_weightnorm(inputs, out_dim, in_dim=None, dropout=1.0, var_scope_name="linear_mapping"):
+def linear_mapping_weightnorm(inputs, out_dim, in_dim=None, dropout=1.0, var_scope_name="linear_mapping", avg_length=45):
   with tf.variable_scope(var_scope_name):
     input_shape = inputs.get_shape().as_list()    # static shape. may has None
     input_shape_tensor = tf.shape(inputs)  
 
     weight_init = tf.random_normal_initializer(mean=0,
-                                               stddev=tf.sqrt(dropout*1.0/input_shape[-1]))
+                                               stddev=tf.sqrt(dropout*1.0/avg_length))
 
     # use weight normalization (Salimans & Kingma, 2016)  w = g* v/2-norm(v)
     V = tf.get_variable('V', shape=[int(input_shape[-1]), out_dim], 
@@ -54,12 +53,10 @@ def linear_mapping_weightnorm(inputs, out_dim, in_dim=None, dropout=1.0, var_sco
     inputs = tf.reshape(inputs, [-1, input_shape[-1]])
     inputs = tf.matmul(inputs, V)
     inputs = tf.reshape(inputs, [input_shape_tensor[0], -1, out_dim])
-    #inputs = tf.matmul(inputs, V)    # x*v
     
     scaler = tf.div(g, tf.norm(V, axis=0))   # g/2-norm(v)
     inputs = tf.reshape(scaler,[1, out_dim])*inputs + tf.reshape(b,[1, out_dim])   # x*v g/2-norm(v) + b
     
-
     return inputs 
  
 def conv1d_weightnorm(inputs, layer_idx, out_dim, kernel_size, padding="SAME", dropout=1.0,  var_scope_name="conv_layer"):    #padding should take attention
@@ -81,7 +78,6 @@ def conv1d_weightnorm(inputs, layer_idx, out_dim, kernel_size, padding="SAME", d
 
     return inputs
 
-
 def gated_linear_units(inputs):
   input_shape = inputs.get_shape().as_list()
   assert len(input_shape) == 3
@@ -90,7 +86,6 @@ def gated_linear_units(inputs):
   input_gate = tf.sigmoid(input_gate)
   return tf.multiply(input_pass, input_gate)
  
-
 def conv_encoder_stack(inputs, nhids_list, kwidths_list, dropout_dict, mode):
   next_layer = inputs
   for layer_idx in range(len(nhids_list)):
@@ -101,6 +96,7 @@ def conv_encoder_stack(inputs, nhids_list, kwidths_list, dropout_dict, mode):
       res_inputs = linear_mapping_weightnorm(next_layer, nout, dropout=dropout_dict['src'], var_scope_name="linear_mapping_cnn_" + str(layer_idx))    
     else:
       res_inputs = next_layer
+    
     #dropout before input to conv
     next_layer = tf.contrib.layers.dropout(
       inputs=next_layer,
@@ -114,24 +110,26 @@ def conv_encoder_stack(inputs, nhids_list, kwidths_list, dropout_dict, mode):
 
   return next_layer 
 
-
-
 def conv_decoder_stack(target_embed, enc_output, inputs, nhids_list, kwidths_list, dropout_dict, mode):
   next_layer = inputs
   for layer_idx in range(len(nhids_list)):
+    
     nin = nhids_list[layer_idx] if layer_idx == 0 else nhids_list[layer_idx-1]
     nout = nhids_list[layer_idx]
+    
     if nin != nout:
       #mapping for res add
       res_inputs = linear_mapping_weightnorm(next_layer, nout, dropout=dropout_dict['hid'], var_scope_name="linear_mapping_cnn_" + str(layer_idx))      
     else:
       res_inputs = next_layer
+    
     #dropout before input to conv
     next_layer = tf.contrib.layers.dropout(
       inputs=next_layer,
       keep_prob=dropout_dict['hid'],
       is_training=mode == tf.contrib.learn.ModeKeys.TRAIN)
-    # special process here, first padd then conv, because tf does not suport padding other than SAME and VALID
+    
+    # special process here, first padd then conv, because tf does not support padding other than SAME and VALID
     next_layer = tf.pad(next_layer, [[0, 0], [kwidths_list[layer_idx]-1, kwidths_list[layer_idx]-1], [0, 0]], "CONSTANT")
     
     next_layer = conv1d_weightnorm(inputs=next_layer, layer_idx=layer_idx, out_dim=nout*2, kernel_size=kwidths_list[layer_idx], padding="VALID", dropout=dropout_dict['hid'], var_scope_name="conv_layer_"+str(layer_idx)) 
@@ -151,8 +149,8 @@ def conv_decoder_stack(target_embed, enc_output, inputs, nhids_list, kwidths_lis
 
     # add res connections
     next_layer += (next_layer + res_inputs) * tf.sqrt(0.5) 
-  return next_layer
 
+  return next_layer
  
 def make_attention(target_embed, encoder_output, decoder_hidden, layer_idx):
   with tf.variable_scope("attention_layer_" + str(layer_idx)):
@@ -170,6 +168,5 @@ def make_attention(target_embed, encoder_output, decoder_hidden, layer_idx):
     att_out = tf.matmul(att_score, encoder_output_c) * length[1] * tf.sqrt(1.0/length[1])    #M*N1*N2  ** M*N2*K   --> M*N1*k
      
     att_out = linear_mapping_weightnorm(att_out, decoder_hidden.get_shape().as_list()[-1], var_scope_name="linear_mapping_att_out")
+  
   return att_out
-
-
