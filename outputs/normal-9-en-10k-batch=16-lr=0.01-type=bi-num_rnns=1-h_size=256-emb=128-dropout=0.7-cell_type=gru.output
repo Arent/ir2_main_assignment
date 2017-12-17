@@ -1,0 +1,817 @@
+restore_from_dir:         None
+model_dir:                models/dummy
+num_units:                256
+learning_rate:            0.01
+batch_size:               16
+task:                     9
+dropout_keep_prob:        0.7
+encoder_type:             bi
+cell_type:                gru
+num_enc_layers:           1
+max_gradient_norm:        1.0
+embedding_size:           128
+val_split:                0.1
+merge_mode:               concat
+num_epochs:               50
+vocab:                    data/vocab.txt
+model_type:               normal
+data_dir:                 data/en-10k
+optimizer:                adam
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: is mary in the garden ? daniel is in the kitchen . sandra is in the office . daniel is no longer in the kitchen . mary moved to the hallway . mary moved to the kitchen . john went to the office . daniel went back to the office . mary went back to the garden . mary went back to the bedroom . mary is in the garden . is mary in the garden ?
+Question: is mary in the garden ?
+Answer: yes </s>
+Model prediction: 307 73 267 </s> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 100: train_loss = 0.983988, train_acc = 0.437500, train ppl = 1.635574
+Step 200: train_loss = 0.396900, train_acc = 0.875000, train ppl = 1.219511
+Step 300: train_loss = 0.910711, train_acc = 0.312500, train ppl = 1.576734
+Step 400: train_loss = 1.161305, train_acc = 0.187500, train ppl = 1.787204
+Step 500: train_loss = 1.291758, train_acc = 0.187500, train ppl = 1.907663
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.637000 -- validation perplexity = 1.505114
+Epoch 1: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is daniel in the office ? daniel is no longer in the bedroom . john is no longer in the kitchen . daniel is in the garden . sandra went back to the bedroom . sandra moved to the hallway . mary journeyed to the kitchen . daniel travelled to the hallway . mary is not in the kitchen . john journeyed to the kitchen . john went to the office . is daniel in the office ?
+Question: is daniel in the office ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 600: train_loss = 0.772099, train_acc = 0.500000, train ppl = 1.471157
+Step 700: train_loss = 0.717071, train_acc = 0.500000, train ppl = 1.431232
+Step 800: train_loss = 0.819968, train_acc = 0.812500, train ppl = 1.506794
+Step 900: train_loss = 0.987554, train_acc = 0.250000, train ppl = 1.638493
+Step 1000: train_loss = 0.862051, train_acc = 0.437500, train ppl = 1.538835
+Step 1100: train_loss = 1.053170, train_acc = 0.812500, train ppl = 1.693141
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.637000 -- validation perplexity = 1.555966
+Epoch 2: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is john in the kitchen ? sandra is not in the kitchen . sandra is in the kitchen . daniel is in the kitchen . sandra is not in the kitchen . daniel is no longer in the kitchen . john is not in the office . mary went to the bedroom . john is in the kitchen . is john in the kitchen ?
+Question: is john in the kitchen ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 1200: train_loss = 1.641065, train_acc = 0.312500, train ppl = 2.271709
+Step 1300: train_loss = 1.713630, train_acc = 0.375000, train ppl = 2.355646
+Step 1400: train_loss = 1.549932, train_acc = 0.187500, train ppl = 2.170519
+Step 1500: train_loss = 0.760453, train_acc = 0.500000, train ppl = 1.462616
+Step 1600: train_loss = 1.285625, train_acc = 0.312500, train ppl = 1.901822
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.363000 -- validation perplexity = 1.888296
+Epoch 3: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is mary in the garden ? daniel is not in the hallway . daniel journeyed to the kitchen . sandra is in the bathroom . john went to the garden . sandra moved to the hallway . john is in the kitchen . john is not in the kitchen . mary went to the office . mary journeyed to the bedroom . daniel is in the bedroom . is mary in the garden ?
+Question: is mary in the garden ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 1700: train_loss = 0.885068, train_acc = 0.312500, train ppl = 1.556647
+Step 1800: train_loss = 0.919873, train_acc = 0.562500, train ppl = 1.583974
+Step 1900: train_loss = 0.623347, train_acc = 0.687500, train ppl = 1.365709
+Step 2000: train_loss = 0.757315, train_acc = 0.500000, train ppl = 1.460323
+Step 2100: train_loss = 0.796495, train_acc = 0.562500, train ppl = 1.489212
+Step 2200: train_loss = 0.667196, train_acc = 0.437500, train ppl = 1.395982
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.637000 -- validation perplexity = 1.590559
+Epoch 4: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is daniel in the hallway ? john went to the hallway . daniel is in the hallway . is daniel in the hallway ?
+Question: is daniel in the hallway ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 2300: train_loss = 0.716982, train_acc = 0.562500, train ppl = 1.431168
+Step 2400: train_loss = 0.690864, train_acc = 0.625000, train ppl = 1.412600
+Step 2500: train_loss = 1.284522, train_acc = 0.375000, train ppl = 1.900774
+Step 2600: train_loss = 1.010274, train_acc = 0.187500, train ppl = 1.657213
+Step 2700: train_loss = 0.750144, train_acc = 0.437500, train ppl = 1.455096
+Step 2800: train_loss = 0.682505, train_acc = 0.750000, train ppl = 1.406708
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.363000 -- validation perplexity = 1.509133
+Epoch 5: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is mary in the hallway ? mary is no longer in the hallway . sandra moved to the kitchen . is mary in the hallway ?
+Question: is mary in the hallway ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 2900: train_loss = 0.836536, train_acc = 0.312500, train ppl = 1.519328
+Step 3000: train_loss = 0.796700, train_acc = 0.375000, train ppl = 1.489365
+Step 3100: train_loss = 0.714332, train_acc = 0.562500, train ppl = 1.429273
+Step 3200: train_loss = 0.706384, train_acc = 0.562500, train ppl = 1.423605
+Step 3300: train_loss = 0.575510, train_acc = 0.687500, train ppl = 1.333431
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.363000 -- validation perplexity = 1.557382
+Epoch 6: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is sandra in the hallway ? mary moved to the office . john went to the bathroom . daniel journeyed to the hallway . daniel went to the office . sandra moved to the hallway . sandra is in the garden . daniel is in the hallway . sandra went back to the hallway . is sandra in the hallway ?
+Question: is sandra in the hallway ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 3400: train_loss = 1.030292, train_acc = 0.312500, train ppl = 1.673882
+Step 3500: train_loss = 0.576967, train_acc = 0.687500, train ppl = 1.334402
+Step 3600: train_loss = 0.520855, train_acc = 0.750000, train ppl = 1.297485
+Step 3700: train_loss = 0.622274, train_acc = 0.625000, train ppl = 1.364976
+Step 3800: train_loss = 0.891727, train_acc = 0.375000, train ppl = 1.561838
+Step 3900: train_loss = 0.666898, train_acc = 0.625000, train ppl = 1.395774
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.637000 -- validation perplexity = 1.660759
+Epoch 7: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is daniel in the bathroom ? daniel travelled to the bathroom . sandra travelled to the bathroom . is daniel in the bathroom ?
+Question: is daniel in the bathroom ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 4000: train_loss = 1.781502, train_acc = 0.437500, train ppl = 2.436960
+Step 4100: train_loss = 0.531242, train_acc = 0.812500, train ppl = 1.304240
+Step 4200: train_loss = 0.943579, train_acc = 0.562500, train ppl = 1.602860
+Step 4300: train_loss = 2.016124, train_acc = 0.250000, train ppl = 2.740286
+Step 4400: train_loss = 0.710245, train_acc = 0.625000, train ppl = 1.426356
+Step 4500: train_loss = 0.526174, train_acc = 0.750000, train ppl = 1.300940
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.637000 -- validation perplexity = 1.403268
+Epoch 8: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is daniel in the office ? mary travelled to the bathroom . daniel journeyed to the hallway . daniel is not in the hallway . sandra is no longer in the hallway . sandra moved to the hallway . mary journeyed to the kitchen . daniel went back to the office . sandra went back to the kitchen . john is not in the bathroom . mary is in the hallway . is daniel in the office ?
+Question: is daniel in the office ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 4600: train_loss = 1.508299, train_acc = 0.562500, train ppl = 2.125802
+Step 4700: train_loss = 0.551578, train_acc = 0.687500, train ppl = 1.317570
+Step 4800: train_loss = 1.097716, train_acc = 0.312500, train ppl = 1.731275
+Step 4900: train_loss = 0.641950, train_acc = 0.500000, train ppl = 1.378471
+Step 5000: train_loss = 0.823546, train_acc = 0.437500, train ppl = 1.509492
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.641000 -- validation perplexity = 1.381409
+Epoch 9: test accuracy: 0.637000
+---- Qualitative Analysis
+Context: is sandra in the hallway ? sandra went back to the hallway . sandra is not in the hallway . mary is in the hallway . john went back to the bedroom . is sandra in the hallway ?
+Question: is sandra in the hallway ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 5100: train_loss = 0.682184, train_acc = 0.625000, train ppl = 1.406483
+Step 5200: train_loss = 2.478144, train_acc = 0.250000, train ppl = 3.452408
+Step 5300: train_loss = 1.070503, train_acc = 0.375000, train ppl = 1.707878
+Step 5400: train_loss = 0.898540, train_acc = 0.437500, train ppl = 1.567168
+Step 5500: train_loss = 1.111525, train_acc = 0.562500, train ppl = 1.743269
+Step 5600: train_loss = 1.779112, train_acc = 0.312500, train ppl = 2.434049
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.637000 -- validation perplexity = 1.407315
+Epoch 10: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is john in the hallway ? john is no longer in the office . john is no longer in the hallway . john is in the hallway . mary is in the hallway . is john in the hallway ?
+Question: is john in the hallway ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 5700: train_loss = 0.634600, train_acc = 0.687500, train ppl = 1.373415
+Step 5800: train_loss = 0.619157, train_acc = 0.750000, train ppl = 1.362850
+Step 5900: train_loss = 1.081454, train_acc = 0.437500, train ppl = 1.717255
+Step 6000: train_loss = 0.557334, train_acc = 0.812500, train ppl = 1.321367
+Step 6100: train_loss = 0.693855, train_acc = 0.500000, train ppl = 1.414714
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.363000 -- validation perplexity = 2.282948
+Epoch 11: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is sandra in the garden ? john is not in the kitchen . sandra journeyed to the bathroom . is sandra in the garden ?
+Question: is sandra in the garden ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 6200: train_loss = 0.753503, train_acc = 0.437500, train ppl = 1.457542
+Step 6300: train_loss = 0.606533, train_acc = 0.687500, train ppl = 1.354275
+Step 6400: train_loss = 1.021368, train_acc = 0.375000, train ppl = 1.666431
+Step 6500: train_loss = 0.586018, train_acc = 0.750000, train ppl = 1.340455
+Step 6600: train_loss = 1.064224, train_acc = 0.562500, train ppl = 1.702525
+Step 6700: train_loss = 0.604714, train_acc = 0.687500, train ppl = 1.353044
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.637000 -- validation perplexity = 1.400042
+Epoch 12: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is daniel in the bathroom ? john is in the kitchen . mary is not in the garden . daniel moved to the bathroom . john went to the hallway . daniel is in the hallway . sandra is not in the garden . daniel is not in the hallway . daniel went back to the kitchen . john went back to the kitchen . daniel went to the hallway . is daniel in the bathroom ?
+Question: is daniel in the bathroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 6800: train_loss = 1.281163, train_acc = 0.375000, train ppl = 1.897584
+Step 6900: train_loss = 0.714133, train_acc = 0.437500, train ppl = 1.429131
+Step 7000: train_loss = 0.501515, train_acc = 0.812500, train ppl = 1.284999
+Step 7100: train_loss = 0.217434, train_acc = 0.937500, train ppl = 1.114847
+Step 7200: train_loss = 0.636882, train_acc = 0.750000, train ppl = 1.374982
+Step 7300: train_loss = 2.187774, train_acc = 0.437500, train ppl = 2.985857
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.637000 -- validation perplexity = 1.762864
+Epoch 13: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is john in the garden ? daniel is not in the hallway . daniel journeyed to the kitchen . sandra is in the bathroom . john went to the garden . is john in the garden ?
+Question: is john in the garden ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 7400: train_loss = 1.583561, train_acc = 0.312500, train ppl = 2.207323
+Step 7500: train_loss = 0.703544, train_acc = 0.562500, train ppl = 1.421584
+Step 7600: train_loss = 1.284367, train_acc = 0.562500, train ppl = 1.900626
+Step 7700: train_loss = 0.849025, train_acc = 0.250000, train ppl = 1.528845
+Step 7800: train_loss = 1.271835, train_acc = 0.375000, train ppl = 1.888755
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.637000 -- validation perplexity = 1.470154
+Epoch 14: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is mary in the bathroom ? mary journeyed to the kitchen . john is not in the garden . sandra is not in the bathroom . john is no longer in the hallway . mary is in the garden . mary journeyed to the office . daniel moved to the office . mary moved to the hallway . is mary in the bathroom ?
+Question: is mary in the bathroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 7900: train_loss = 0.842592, train_acc = 0.250000, train ppl = 1.523935
+Step 8000: train_loss = 0.682737, train_acc = 0.687500, train ppl = 1.406871
+Step 8100: train_loss = 0.772448, train_acc = 0.312500, train ppl = 1.471414
+Step 8200: train_loss = 0.615238, train_acc = 0.687500, train ppl = 1.360183
+Step 8300: train_loss = 0.702447, train_acc = 0.500000, train ppl = 1.420805
+Step 8400: train_loss = 0.617896, train_acc = 0.687500, train ppl = 1.361992
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.363000 -- validation perplexity = 1.594524
+Epoch 15: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is daniel in the garden ? sandra went back to the bathroom . sandra moved to the office . daniel moved to the kitchen . daniel moved to the garden . john is in the bathroom . mary travelled to the garden . john is in the garden . john is no longer in the garden . mary moved to the office . daniel journeyed to the hallway . is daniel in the garden ?
+Question: is daniel in the garden ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 8500: train_loss = 1.310190, train_acc = 0.437500, train ppl = 1.925326
+Step 8600: train_loss = 0.842422, train_acc = 0.562500, train ppl = 1.523805
+Step 8700: train_loss = 0.387813, train_acc = 0.875000, train ppl = 1.213983
+Step 8800: train_loss = 1.157210, train_acc = 0.312500, train ppl = 1.783549
+Step 8900: train_loss = 0.719502, train_acc = 0.812500, train ppl = 1.432973
+Step 9000: train_loss = 0.909442, train_acc = 0.375000, train ppl = 1.575734
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.634000 -- validation perplexity = 1.395805
+Epoch 16: test accuracy: 0.639000
+---- Qualitative Analysis
+Context: is mary in the bathroom ? daniel went to the hallway . mary moved to the bathroom . sandra travelled to the bedroom . john is in the bathroom . sandra is no longer in the bedroom . daniel journeyed to the bathroom . mary is no longer in the bathroom . sandra moved to the office . mary is in the bathroom . mary went back to the hallway . is mary in the bathroom ?
+Question: is mary in the bathroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 9100: train_loss = 0.692591, train_acc = 0.437500, train ppl = 1.413820
+Step 9200: train_loss = 0.601773, train_acc = 0.687500, train ppl = 1.351056
+Step 9300: train_loss = 0.900896, train_acc = 0.562500, train ppl = 1.569015
+Step 9400: train_loss = 0.943453, train_acc = 0.625000, train ppl = 1.602759
+Step 9500: train_loss = 2.123267, train_acc = 0.437500, train ppl = 2.891090
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.505000 -- validation perplexity = 1.411106
+Epoch 17: test accuracy: 0.489000
+---- Qualitative Analysis
+Context: is john in the hallway ? daniel travelled to the bathroom . sandra travelled to the bathroom . daniel is not in the bathroom . john is not in the hallway . is john in the hallway ?
+Question: is john in the hallway ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 9600: train_loss = 0.709441, train_acc = 0.375000, train ppl = 1.425782
+Step 9700: train_loss = 0.867880, train_acc = 0.375000, train ppl = 1.543326
+Step 9800: train_loss = 1.344752, train_acc = 0.375000, train ppl = 1.958887
+Step 9900: train_loss = 1.659028, train_acc = 0.375000, train ppl = 2.292205
+Step 10000: train_loss = 0.861876, train_acc = 0.312500, train ppl = 1.538700
+Step 10100: train_loss = 1.530513, train_acc = 0.437500, train ppl = 2.149545
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.395000 -- validation perplexity = 1.512231
+Epoch 18: test accuracy: 0.403000
+---- Qualitative Analysis
+Context: is daniel in the bathroom ? john is no longer in the bathroom . daniel is no longer in the bedroom . daniel is no longer in the garden . daniel is no longer in the office . daniel is no longer in the bathroom . sandra is in the garden . is daniel in the bathroom ?
+Question: is daniel in the bathroom ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 10200: train_loss = 0.722375, train_acc = 0.437500, train ppl = 1.435033
+Step 10300: train_loss = 0.605406, train_acc = 0.750000, train ppl = 1.353512
+Step 10400: train_loss = 0.637580, train_acc = 0.687500, train ppl = 1.375462
+Step 10500: train_loss = 0.611064, train_acc = 0.687500, train ppl = 1.357347
+Step 10600: train_loss = 0.773846, train_acc = 0.375000, train ppl = 1.472443
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.408000 -- validation perplexity = 1.476942
+Epoch 19: test accuracy: 0.386000
+---- Qualitative Analysis
+Context: is mary in the bathroom ? john is in the garden . daniel went to the hallway . mary journeyed to the bathroom . mary journeyed to the hallway . sandra travelled to the hallway . mary went to the bathroom . john is not in the garden . mary is not in the bathroom . is mary in the bathroom ?
+Question: is mary in the bathroom ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 10700: train_loss = 0.647446, train_acc = 0.562500, train ppl = 1.382264
+Step 10800: train_loss = 0.740860, train_acc = 0.437500, train ppl = 1.448357
+Step 10900: train_loss = 1.241807, train_acc = 0.437500, train ppl = 1.860608
+Step 11000: train_loss = 0.848232, train_acc = 0.500000, train ppl = 1.528239
+Step 11100: train_loss = 1.432856, train_acc = 0.437500, train ppl = 2.047108
+Step 11200: train_loss = 0.733884, train_acc = 0.437500, train ppl = 1.443314
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.637000 -- validation perplexity = 1.551308
+Epoch 20: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is john in the hallway ? john journeyed to the garden . daniel is no longer in the garden . is john in the hallway ?
+Question: is john in the hallway ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 11300: train_loss = 0.718056, train_acc = 0.500000, train ppl = 1.431937
+Step 11400: train_loss = 0.762037, train_acc = 0.312500, train ppl = 1.463775
+Step 11500: train_loss = 0.892283, train_acc = 0.750000, train ppl = 1.562273
+Step 11600: train_loss = 0.724910, train_acc = 0.750000, train ppl = 1.436853
+Step 11700: train_loss = 0.669720, train_acc = 0.625000, train ppl = 1.397745
+Step 11800: train_loss = 0.719897, train_acc = 0.500000, train ppl = 1.433256
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.637000 -- validation perplexity = 2.182777
+Epoch 21: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is john in the office ? sandra is in the office . daniel travelled to the bedroom . john is in the garden . sandra moved to the kitchen . john is in the bedroom . mary went to the garden . mary journeyed to the kitchen . sandra is no longer in the kitchen . john journeyed to the hallway . mary went back to the office . is john in the office ?
+Question: is john in the office ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 11900: train_loss = 0.630398, train_acc = 0.625000, train ppl = 1.370532
+Step 12000: train_loss = 0.664567, train_acc = 0.562500, train ppl = 1.394148
+Step 12100: train_loss = 2.238472, train_acc = 0.062500, train ppl = 3.062514
+Step 12200: train_loss = 1.200076, train_acc = 0.562500, train ppl = 1.822188
+Step 12300: train_loss = 0.686487, train_acc = 0.437500, train ppl = 1.409512
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.426000 -- validation perplexity = 1.471083
+Epoch 22: test accuracy: 0.432000
+---- Qualitative Analysis
+Context: is sandra in the hallway ? sandra went back to the bathroom . john is not in the office . sandra is not in the bathroom . daniel went back to the kitchen . sandra is no longer in the hallway . john is in the bedroom . is sandra in the hallway ?
+Question: is sandra in the hallway ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 12400: train_loss = 0.900234, train_acc = 0.437500, train ppl = 1.568496
+Step 12500: train_loss = 1.076922, train_acc = 0.625000, train ppl = 1.713368
+Step 12600: train_loss = 0.600350, train_acc = 0.750000, train ppl = 1.350095
+Step 12700: train_loss = 1.450412, train_acc = 0.375000, train ppl = 2.065157
+Step 12800: train_loss = 0.917020, train_acc = 0.437500, train ppl = 1.581716
+Step 12900: train_loss = 0.715607, train_acc = 0.562500, train ppl = 1.430184
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.363000 -- validation perplexity = 2.104604
+Epoch 23: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is john in the bedroom ? mary is no longer in the kitchen . daniel went to the bedroom . daniel went back to the bathroom . sandra journeyed to the hallway . daniel journeyed to the hallway . john is no longer in the bedroom . john is in the kitchen . sandra travelled to the office . daniel is not in the hallway . daniel is no longer in the kitchen . is john in the bedroom ?
+Question: is john in the bedroom ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 13000: train_loss = 0.799637, train_acc = 0.437500, train ppl = 1.491554
+Step 13100: train_loss = 1.770927, train_acc = 0.375000, train ppl = 2.424107
+Step 13200: train_loss = 1.090366, train_acc = 0.687500, train ppl = 1.724924
+Step 13300: train_loss = 1.201164, train_acc = 0.187500, train ppl = 1.823179
+Step 13400: train_loss = 0.739624, train_acc = 0.437500, train ppl = 1.447462
+Step 13500: train_loss = 1.009943, train_acc = 0.500000, train ppl = 1.656939
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.363000 -- validation perplexity = 2.579690
+Epoch 24: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is sandra in the office ? mary is in the garden . sandra travelled to the garden . is sandra in the office ?
+Question: is sandra in the office ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 13600: train_loss = 0.823795, train_acc = 0.187500, train ppl = 1.509680
+Step 13700: train_loss = 0.683504, train_acc = 0.562500, train ppl = 1.407411
+Step 13800: train_loss = 1.455693, train_acc = 0.250000, train ppl = 2.070617
+Step 13900: train_loss = 2.747621, train_acc = 0.625000, train ppl = 3.950375
+Step 14000: train_loss = 1.959262, train_acc = 0.312500, train ppl = 2.663473
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.637000 -- validation perplexity = 1.620801
+Epoch 25: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is john in the garden ? john is in the garden . daniel went to the hallway . is john in the garden ?
+Question: is john in the garden ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 14100: train_loss = 1.563530, train_acc = 0.500000, train ppl = 2.185326
+Step 14200: train_loss = 0.587058, train_acc = 0.812500, train ppl = 1.341152
+Step 14300: train_loss = 0.926585, train_acc = 0.562500, train ppl = 1.589298
+Step 14400: train_loss = 0.617866, train_acc = 0.625000, train ppl = 1.361971
+Step 14500: train_loss = 0.765045, train_acc = 0.375000, train ppl = 1.465978
+Step 14600: train_loss = 0.750540, train_acc = 0.500000, train ppl = 1.455385
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.637000 -- validation perplexity = 1.629750
+Epoch 26: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is john in the office ? sandra is in the office . daniel travelled to the bedroom . john is in the garden . sandra moved to the kitchen . john is in the bedroom . mary went to the garden . mary journeyed to the kitchen . sandra is no longer in the kitchen . john journeyed to the hallway . mary went back to the office . is john in the office ?
+Question: is john in the office ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 14700: train_loss = 1.063326, train_acc = 0.375000, train ppl = 1.701760
+Step 14800: train_loss = 1.108804, train_acc = 0.625000, train ppl = 1.740900
+Step 14900: train_loss = 2.397228, train_acc = 0.250000, train ppl = 3.315519
+Step 15000: train_loss = 0.737453, train_acc = 0.562500, train ppl = 1.445892
+Step 15100: train_loss = 0.739486, train_acc = 0.812500, train ppl = 1.447363
+Step 15200: train_loss = 0.804219, train_acc = 0.375000, train ppl = 1.494975
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.575000 -- validation perplexity = 1.409823
+Epoch 27: test accuracy: 0.588000
+---- Qualitative Analysis
+Context: is john in the hallway ? daniel is no longer in the garden . john went to the hallway . john is not in the hallway . mary is in the bathroom . daniel is in the office . sandra is in the kitchen . is john in the hallway ?
+Question: is john in the hallway ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 15300: train_loss = 0.675541, train_acc = 0.625000, train ppl = 1.401819
+Step 15400: train_loss = 0.648549, train_acc = 0.687500, train ppl = 1.383027
+Step 15500: train_loss = 0.660965, train_acc = 0.750000, train ppl = 1.391639
+Step 15600: train_loss = 0.384849, train_acc = 0.875000, train ppl = 1.212185
+Step 15700: train_loss = 2.278448, train_acc = 0.250000, train ppl = 3.124343
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.637000 -- validation perplexity = 1.894335
+Epoch 28: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is sandra in the hallway ? john is in the bathroom . john is in the garden . john is in the bathroom . john is in the bedroom . daniel is in the bathroom . mary is not in the garden . daniel moved to the kitchen . john moved to the hallway . sandra journeyed to the kitchen . sandra went to the hallway . is sandra in the hallway ?
+Question: is sandra in the hallway ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 15800: train_loss = 1.037604, train_acc = 0.562500, train ppl = 1.680014
+Step 15900: train_loss = 0.723130, train_acc = 0.562500, train ppl = 1.435575
+Step 16000: train_loss = 1.130846, train_acc = 0.750000, train ppl = 1.760192
+Step 16100: train_loss = 1.124380, train_acc = 0.500000, train ppl = 1.754511
+Step 16200: train_loss = 0.950657, train_acc = 0.187500, train ppl = 1.608543
+Step 16300: train_loss = 1.513343, train_acc = 0.500000, train ppl = 2.131171
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.363000 -- validation perplexity = 2.067298
+Epoch 29: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is mary in the kitchen ? mary travelled to the kitchen . mary is no longer in the kitchen . john went back to the bathroom . daniel went back to the office . is mary in the kitchen ?
+Question: is mary in the kitchen ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 16400: train_loss = 0.657357, train_acc = 0.687500, train ppl = 1.389131
+Step 16500: train_loss = 0.978924, train_acc = 0.625000, train ppl = 1.631438
+Step 16600: train_loss = 0.697566, train_acc = 0.562500, train ppl = 1.417342
+Step 16700: train_loss = 1.225730, train_acc = 0.312500, train ppl = 1.845712
+Step 16800: train_loss = 1.716643, train_acc = 0.375000, train ppl = 2.359197
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.643000 -- validation perplexity = 1.439252
+Epoch 30: test accuracy: 0.640000
+---- Qualitative Analysis
+Context: is mary in the kitchen ? daniel moved to the garden . mary is not in the garden . daniel travelled to the hallway . mary is in the garden . daniel went back to the office . mary journeyed to the kitchen . is mary in the kitchen ?
+Question: is mary in the kitchen ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 16900: train_loss = 1.208247, train_acc = 0.687500, train ppl = 1.829648
+Step 17000: train_loss = 0.646179, train_acc = 0.687500, train ppl = 1.381389
+Step 17100: train_loss = 1.369056, train_acc = 0.562500, train ppl = 1.982836
+Step 17200: train_loss = 1.104101, train_acc = 0.312500, train ppl = 1.736810
+Step 17300: train_loss = 1.125612, train_acc = 0.687500, train ppl = 1.755592
+Step 17400: train_loss = 0.574548, train_acc = 0.687500, train ppl = 1.332789
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.363000 -- validation perplexity = 1.814363
+Epoch 31: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is mary in the kitchen ? john is in the kitchen . sandra is in the hallway . mary went back to the office . mary is in the bedroom . sandra is in the bathroom . john is not in the kitchen . sandra is in the kitchen . mary travelled to the garden . is mary in the kitchen ?
+Question: is mary in the kitchen ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 17500: train_loss = 1.139566, train_acc = 0.437500, train ppl = 1.767883
+Step 17600: train_loss = 1.036319, train_acc = 0.625000, train ppl = 1.678934
+Step 17700: train_loss = 0.899111, train_acc = 0.250000, train ppl = 1.567615
+Step 17800: train_loss = 1.031287, train_acc = 0.750000, train ppl = 1.674716
+Step 17900: train_loss = 0.857285, train_acc = 0.375000, train ppl = 1.535172
+Step 18000: train_loss = 1.006165, train_acc = 0.437500, train ppl = 1.653811
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.637000 -- validation perplexity = 1.436347
+Epoch 32: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is daniel in the garden ? daniel went to the kitchen . daniel went back to the garden . is daniel in the garden ?
+Question: is daniel in the garden ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 18100: train_loss = 1.113812, train_acc = 0.312500, train ppl = 1.745265
+Step 18200: train_loss = 0.894601, train_acc = 0.750000, train ppl = 1.564084
+Step 18300: train_loss = 1.869588, train_acc = 0.312500, train ppl = 2.546689
+Step 18400: train_loss = 1.738850, train_acc = 0.187500, train ppl = 2.385539
+Step 18500: train_loss = 0.660432, train_acc = 0.625000, train ppl = 1.391269
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.599000 -- validation perplexity = 1.411901
+Epoch 33: test accuracy: 0.622000
+---- Qualitative Analysis
+Context: is sandra in the office ? john went to the office . sandra journeyed to the office . mary moved to the kitchen . daniel went back to the bathroom . sandra is not in the office . mary travelled to the office . john is no longer in the office . john went back to the bathroom . is sandra in the office ?
+Question: is sandra in the office ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 18600: train_loss = 1.322200, train_acc = 0.562500, train ppl = 1.936921
+Step 18700: train_loss = 1.730221, train_acc = 0.375000, train ppl = 2.375269
+Step 18800: train_loss = 1.593053, train_acc = 0.312500, train ppl = 2.217824
+Step 18900: train_loss = 1.503183, train_acc = 0.312500, train ppl = 2.120372
+Step 19000: train_loss = 1.012536, train_acc = 0.500000, train ppl = 1.659088
+Step 19100: train_loss = 0.622136, train_acc = 0.562500, train ppl = 1.364882
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.394000 -- validation perplexity = 1.506509
+Epoch 34: test accuracy: 0.400000
+---- Qualitative Analysis
+Context: is daniel in the bedroom ? daniel is no longer in the bedroom . john travelled to the bathroom . is daniel in the bedroom ?
+Question: is daniel in the bedroom ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 19200: train_loss = 0.720170, train_acc = 0.500000, train ppl = 1.433451
+Step 19300: train_loss = 0.584573, train_acc = 0.625000, train ppl = 1.339487
+Step 19400: train_loss = 0.774456, train_acc = 0.750000, train ppl = 1.472892
+Step 19500: train_loss = 0.952443, train_acc = 0.375000, train ppl = 1.609980
+Step 19600: train_loss = 0.846451, train_acc = 0.562500, train ppl = 1.526878
+Step 19700: train_loss = 0.662515, train_acc = 0.750000, train ppl = 1.392718
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.376000 -- validation perplexity = 1.867872
+Epoch 35: test accuracy: 0.370000
+---- Qualitative Analysis
+Context: is john in the garden ? mary travelled to the garden . daniel is in the garden . sandra went to the bathroom . john journeyed to the office . john is in the garden . daniel is in the bedroom . mary is no longer in the garden . mary journeyed to the bathroom . john is no longer in the garden . sandra is no longer in the bathroom . is john in the garden ?
+Question: is john in the garden ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 19800: train_loss = 1.259611, train_acc = 0.625000, train ppl = 1.877245
+Step 19900: train_loss = 1.486455, train_acc = 0.437500, train ppl = 2.102711
+Step 20000: train_loss = 0.788121, train_acc = 0.500000, train ppl = 1.482990
+Step 20100: train_loss = 0.827977, train_acc = 0.375000, train ppl = 1.512839
+Step 20200: train_loss = 0.793600, train_acc = 0.500000, train ppl = 1.487059
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.588000 -- validation perplexity = 1.398427
+Epoch 36: test accuracy: 0.581000
+---- Qualitative Analysis
+Context: is john in the bathroom ? mary is in the office . john is in the bathroom . mary went back to the bedroom . john is no longer in the bathroom . mary went back to the hallway . mary is not in the hallway . daniel went to the bathroom . sandra moved to the kitchen . is john in the bathroom ?
+Question: is john in the bathroom ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 20300: train_loss = 0.578091, train_acc = 0.812500, train ppl = 1.335153
+Step 20400: train_loss = 0.869786, train_acc = 0.562500, train ppl = 1.544797
+Step 20500: train_loss = 0.843824, train_acc = 0.750000, train ppl = 1.524875
+Step 20600: train_loss = 0.690270, train_acc = 0.625000, train ppl = 1.412181
+Step 20700: train_loss = 0.840557, train_acc = 0.750000, train ppl = 1.522386
+Step 20800: train_loss = 0.646761, train_acc = 0.750000, train ppl = 1.381791
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.363000 -- validation perplexity = 2.472155
+Epoch 37: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is daniel in the hallway ? john moved to the office . sandra moved to the kitchen . john travelled to the hallway . daniel went back to the bathroom . john moved to the garden . sandra is in the office . daniel went back to the bedroom . john is not in the garden . is daniel in the hallway ?
+Question: is daniel in the hallway ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 20900: train_loss = 0.793242, train_acc = 0.687500, train ppl = 1.486792
+Step 21000: train_loss = 0.714983, train_acc = 0.625000, train ppl = 1.429739
+Step 21100: train_loss = 0.804130, train_acc = 0.375000, train ppl = 1.494909
+Step 21200: train_loss = 0.463875, train_acc = 0.875000, train ppl = 1.261041
+Step 21300: train_loss = 0.631455, train_acc = 0.562500, train ppl = 1.371257
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.639000 -- validation perplexity = 1.518759
+Epoch 38: test accuracy: 0.637000
+---- Qualitative Analysis
+Context: is daniel in the kitchen ? sandra travelled to the office . daniel is not in the kitchen . is daniel in the kitchen ?
+Question: is daniel in the kitchen ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 21400: train_loss = 0.673045, train_acc = 0.500000, train ppl = 1.400070
+Step 21500: train_loss = 0.748850, train_acc = 0.625000, train ppl = 1.454155
+Step 21600: train_loss = 1.303500, train_acc = 0.375000, train ppl = 1.918896
+Step 21700: train_loss = 1.117579, train_acc = 0.375000, train ppl = 1.748554
+Step 21800: train_loss = 3.207110, train_acc = 0.375000, train ppl = 4.970672
+Step 21900: train_loss = 0.561652, train_acc = 0.812500, train ppl = 1.324223
+==== Finshed epoch 39 ====
+Evaluating model...
+Epoch 39: validation accuracy = 0.637000 -- validation perplexity = 1.556168
+Epoch 39: test accuracy: 0.636000
+---- Qualitative Analysis
+Context: is mary in the bathroom ? john moved to the bathroom . daniel moved to the bathroom . sandra went to the kitchen . daniel journeyed to the bedroom . sandra went to the garden . sandra is no longer in the garden . daniel is not in the bedroom . mary is not in the office . sandra is no longer in the bedroom . mary moved to the bathroom . is mary in the bathroom ?
+Question: is mary in the bathroom ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 22000: train_loss = 0.861078, train_acc = 0.437500, train ppl = 1.538086
+Step 22100: train_loss = 0.608264, train_acc = 0.750000, train ppl = 1.355448
+Step 22200: train_loss = 1.169092, train_acc = 0.687500, train ppl = 1.794176
+Step 22300: train_loss = 0.753085, train_acc = 0.687500, train ppl = 1.457237
+Step 22400: train_loss = 0.630190, train_acc = 0.687500, train ppl = 1.370390
+Step 22500: train_loss = 0.813027, train_acc = 0.500000, train ppl = 1.501573
+==== Finshed epoch 40 ====
+Evaluating model...
+Epoch 40: validation accuracy = 0.363000 -- validation perplexity = 3.563843
+Epoch 40: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is daniel in the bedroom ? john moved to the hallway . daniel journeyed to the hallway . mary went back to the bathroom . john is no longer in the hallway . is daniel in the bedroom ?
+Question: is daniel in the bedroom ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 22600: train_loss = 1.302936, train_acc = 0.562500, train ppl = 1.918355
+Step 22700: train_loss = 3.171602, train_acc = 0.062500, train ppl = 4.883201
+Step 22800: train_loss = 1.820981, train_acc = 0.687500, train ppl = 2.485541
+Step 22900: train_loss = 1.440835, train_acc = 0.625000, train ppl = 2.055291
+Step 23000: train_loss = 0.967331, train_acc = 0.500000, train ppl = 1.622009
+==== Finshed epoch 41 ====
+Evaluating model...
+Epoch 41: validation accuracy = 0.632000 -- validation perplexity = 1.477800
+Epoch 41: test accuracy: 0.650000
+---- Qualitative Analysis
+Context: is mary in the bedroom ? john is in the garden . mary moved to the bedroom . is mary in the bedroom ?
+Question: is mary in the bedroom ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 23100: train_loss = 0.873398, train_acc = 0.625000, train ppl = 1.547590
+Step 23200: train_loss = 0.603860, train_acc = 0.687500, train ppl = 1.352467
+Step 23300: train_loss = 1.187488, train_acc = 0.312500, train ppl = 1.810755
+Step 23400: train_loss = 0.481237, train_acc = 0.812500, train ppl = 1.272036
+Step 23500: train_loss = 0.612228, train_acc = 0.687500, train ppl = 1.358137
+Step 23600: train_loss = 1.292902, train_acc = 0.312500, train ppl = 1.908755
+==== Finshed epoch 42 ====
+Evaluating model...
+Epoch 42: validation accuracy = 0.639000 -- validation perplexity = 1.380776
+Epoch 42: test accuracy: 0.648000
+---- Qualitative Analysis
+Context: is mary in the hallway ? daniel is no longer in the bathroom . john is in the kitchen . mary travelled to the hallway . daniel is in the bedroom . is mary in the hallway ?
+Question: is mary in the hallway ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 23700: train_loss = 1.073272, train_acc = 0.437500, train ppl = 1.710244
+Step 23800: train_loss = 0.458190, train_acc = 0.812500, train ppl = 1.257461
+Step 23900: train_loss = 0.864400, train_acc = 0.500000, train ppl = 1.540643
+Step 24000: train_loss = 2.241314, train_acc = 0.500000, train ppl = 3.066868
+Step 24100: train_loss = 0.800976, train_acc = 0.562500, train ppl = 1.492553
+Step 24200: train_loss = 0.718830, train_acc = 0.500000, train ppl = 1.432491
+==== Finshed epoch 43 ====
+Evaluating model...
+Epoch 43: validation accuracy = 0.391000 -- validation perplexity = 1.673249
+Epoch 43: test accuracy: 0.404000
+---- Qualitative Analysis
+Context: is daniel in the garden ? john is not in the bedroom . daniel travelled to the office . is daniel in the garden ?
+Question: is daniel in the garden ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 24300: train_loss = 1.124751, train_acc = 0.625000, train ppl = 1.754836
+Step 24400: train_loss = 1.223767, train_acc = 0.312500, train ppl = 1.843901
+Step 24500: train_loss = 0.689862, train_acc = 0.812500, train ppl = 1.411893
+Step 24600: train_loss = 0.791122, train_acc = 0.625000, train ppl = 1.485217
+Step 24700: train_loss = 0.996044, train_acc = 0.625000, train ppl = 1.645464
+==== Finshed epoch 44 ====
+Evaluating model...
+Epoch 44: validation accuracy = 0.637000 -- validation perplexity = 1.855927
+Epoch 44: test accuracy: 0.638000
+---- Qualitative Analysis
+Context: is daniel in the garden ? sandra is no longer in the kitchen . john is in the hallway . daniel travelled to the kitchen . mary is in the office . daniel travelled to the garden . john is in the kitchen . john is in the garden . daniel is no longer in the garden . is daniel in the garden ?
+Question: is daniel in the garden ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 24800: train_loss = 0.833745, train_acc = 0.437500, train ppl = 1.517209
+Step 24900: train_loss = 1.670372, train_acc = 0.437500, train ppl = 2.305242
+Step 25000: train_loss = 0.794288, train_acc = 0.687500, train ppl = 1.487570
+Step 25100: train_loss = 0.978705, train_acc = 0.562500, train ppl = 1.631260
+Step 25200: train_loss = 2.006709, train_acc = 0.625000, train ppl = 2.727416
+Step 25300: train_loss = 0.513292, train_acc = 0.812500, train ppl = 1.292587
+==== Finshed epoch 45 ====
+Evaluating model...
+Epoch 45: validation accuracy = 0.636000 -- validation perplexity = 1.526786
+Epoch 45: test accuracy: 0.636000
+---- Qualitative Analysis
+Context: is daniel in the garden ? sandra is no longer in the kitchen . john is in the hallway . daniel travelled to the kitchen . mary is in the office . daniel travelled to the garden . john is in the kitchen . is daniel in the garden ?
+Question: is daniel in the garden ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 25400: train_loss = 1.472702, train_acc = 0.625000, train ppl = 2.088302
+Step 25500: train_loss = 2.368414, train_acc = 0.187500, train ppl = 3.268095
+Step 25600: train_loss = 0.632721, train_acc = 0.687500, train ppl = 1.372125
+Step 25700: train_loss = 0.493298, train_acc = 0.812500, train ppl = 1.279730
+Step 25800: train_loss = 1.046856, train_acc = 0.375000, train ppl = 1.687803
+==== Finshed epoch 46 ====
+Evaluating model...
+Epoch 46: validation accuracy = 0.636000 -- validation perplexity = 1.424296
+Epoch 46: test accuracy: 0.640000
+---- Qualitative Analysis
+Context: is daniel in the hallway ? john is no longer in the garden . daniel is in the hallway . mary is not in the kitchen . mary is in the hallway . sandra travelled to the hallway . mary moved to the office . is daniel in the hallway ?
+Question: is daniel in the hallway ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 25900: train_loss = 0.756278, train_acc = 0.437500, train ppl = 1.459565
+Step 26000: train_loss = 1.725563, train_acc = 0.062500, train ppl = 2.369743
+Step 26100: train_loss = 0.658949, train_acc = 0.687500, train ppl = 1.390237
+Step 26200: train_loss = 1.500249, train_acc = 0.437500, train ppl = 2.117264
+Step 26300: train_loss = 0.830597, train_acc = 0.500000, train ppl = 1.514823
+Step 26400: train_loss = 1.663077, train_acc = 0.375000, train ppl = 2.296849
+==== Finshed epoch 47 ====
+Evaluating model...
+Epoch 47: validation accuracy = 0.619000 -- validation perplexity = 1.392473
+Epoch 47: test accuracy: 0.631000
+---- Qualitative Analysis
+Context: is daniel in the bathroom ? john travelled to the bathroom . daniel is in the bathroom . daniel is no longer in the bathroom . sandra went to the garden . daniel is no longer in the office . daniel is in the office . is daniel in the bathroom ?
+Question: is daniel in the bathroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 26500: train_loss = 0.663386, train_acc = 0.750000, train ppl = 1.393325
+Step 26600: train_loss = 1.133116, train_acc = 0.437500, train ppl = 1.762191
+Step 26700: train_loss = 1.427026, train_acc = 0.312500, train ppl = 2.041149
+Step 26800: train_loss = 1.246062, train_acc = 0.750000, train ppl = 1.864571
+Step 26900: train_loss = 1.733993, train_acc = 0.500000, train ppl = 2.379753
+Step 27000: train_loss = 0.589816, train_acc = 0.687500, train ppl = 1.343003
+==== Finshed epoch 48 ====
+Evaluating model...
+Epoch 48: validation accuracy = 0.547000 -- validation perplexity = 1.457125
+Epoch 48: test accuracy: 0.545000
+---- Qualitative Analysis
+Context: is sandra in the kitchen ? john is in the bathroom . john went to the office . daniel journeyed to the bathroom . sandra is no longer in the bathroom . sandra is no longer in the garden . sandra moved to the bedroom . john travelled to the kitchen . daniel went back to the office . sandra journeyed to the kitchen . mary journeyed to the hallway . is sandra in the kitchen ?
+Question: is sandra in the kitchen ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 27100: train_loss = 2.210826, train_acc = 0.500000, train ppl = 3.020472
+Step 27200: train_loss = 1.052452, train_acc = 0.625000, train ppl = 1.692533
+Step 27300: train_loss = 1.217079, train_acc = 0.312500, train ppl = 1.837745
+Step 27400: train_loss = 0.571350, train_acc = 0.812500, train ppl = 1.330660
+Step 27500: train_loss = 1.382331, train_acc = 0.562500, train ppl = 1.996040
+==== Finshed epoch 49 ====
+Evaluating model...
+Epoch 49: validation accuracy = 0.363000 -- validation perplexity = 3.932781
+Epoch 49: test accuracy: 0.362000
+---- Qualitative Analysis
+Context: is mary in the hallway ? john went back to the office . sandra moved to the bathroom . mary travelled to the hallway . sandra is no longer in the bathroom . daniel is in the bathroom . daniel went back to the garden . is mary in the hallway ?
+Question: is mary in the hallway ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 27600: train_loss = 0.772762, train_acc = 0.375000, train ppl = 1.471645
+Step 27700: train_loss = 3.421901, train_acc = 0.437500, train ppl = 5.534220
+Step 27800: train_loss = 1.087268, train_acc = 0.312500, train ppl = 1.722254
+Step 27900: train_loss = 0.690954, train_acc = 0.625000, train ppl = 1.412664
+Step 28000: train_loss = 2.406389, train_acc = 0.375000, train ppl = 3.330740
+Step 28100: train_loss = 0.735175, train_acc = 0.687500, train ppl = 1.444246
+==== Finshed epoch 50 ====
+Evaluating model...
+Epoch 50: validation accuracy = 0.642000 -- validation perplexity = 1.432611
+Epoch 50: test accuracy: 0.641000
+---- Qualitative Analysis
+Context: is daniel in the bathroom ? daniel is in the kitchen . sandra is not in the office . john moved to the hallway . mary is in the kitchen . is daniel in the bathroom ?
+Question: is daniel in the bathroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Best model (acc) at epoch 30 -- validation perplexity = 1.439252 -- validation accuracy = 0.643000 -- test accuracy = 0.640000
+0.643

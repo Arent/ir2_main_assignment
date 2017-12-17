@@ -1,0 +1,223 @@
+dropout_keep_prob:        0.7
+num_enc_layers:           1
+encoder_type:             bi
+merge_mode:               concat
+vocab:                    data/vocab.txt
+batch_size:               16
+model_type:               attention
+val_split:                0.1
+num_units:                256
+restore_from_dir:         None
+learning_rate:            0.01
+data_dir:                 data/en-10k
+num_epochs:               50
+cell_type:                gru
+embedding_size:           256
+model_dir:                models/dummy
+optimizer:                adam
+max_gradient_norm:        1.0
+task:                     5
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: who gave the apple to fred ? jeff travelled to the garden . jeff journeyed to the bedroom . fred journeyed to the office . bill went back to the office . mary travelled to the hallway . fred journeyed to the garden . fred moved to the hallway . bill moved to the hallway . fred went back to the office . jeff travelled to the bathroom . mary took the apple there . fred went back to the hallway . mary handed the apple to fred . mary went back to the kitchen . fred gave the apple to bill . fred took the milk there . mary journeyed to the bathroom . bill took the football there . bill passed the apple to fred . mary travelled to the garden . who gave the apple to fred ?
+Question: who gave the apple to fred ?
+Answer: bill </s>
+Model prediction: e e e e e e e e e e
+=========================
+Step 100: train_loss = 1.362803, train_acc = 0.500000, train ppl = 1.976646
+Step 200: train_loss = 1.669891, train_acc = 0.062500, train ppl = 2.304689
+Step 300: train_loss = 1.139534, train_acc = 0.500000, train ppl = 1.767855
+Step 400: train_loss = 1.252197, train_acc = 0.375000, train ppl = 1.870299
+Step 500: train_loss = 2.040749, train_acc = 0.250000, train ppl = 2.774234
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.328000 -- validation perplexity = 2.519165
+Epoch 1: test accuracy: 0.281000
+---- Qualitative Analysis
+Context: who gave the milk to fred ? mary picked up the apple there . fred travelled to the bedroom . mary handed the apple to fred . mary took the milk there . fred gave the apple to mary . mary gave the apple to fred . fred discarded the apple . mary gave the milk to fred . fred went to the bathroom . jeff travelled to the office . jeff travelled to the kitchen . mary moved to the hallway . who gave the milk to fred ?
+Question: who gave the milk to fred ?
+Answer: mary </s>
+Model prediction: jeff </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 600: train_loss = 1.320661, train_acc = 0.500000, train ppl = 1.935432
+Step 700: train_loss = 2.912116, train_acc = 0.187500, train ppl = 4.289020
+Step 800: train_loss = 2.777043, train_acc = 0.000000, train ppl = 4.008919
+Step 900: train_loss = 2.740558, train_acc = 0.125000, train ppl = 3.936450
+Step 1000: train_loss = 3.134337, train_acc = 0.000000, train ppl = 4.793057
+Step 1100: train_loss = 2.988628, train_acc = 0.000000, train ppl = 4.456278
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.000000 -- validation perplexity = 3.806580
+Epoch 2: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: who gave the milk ? jeff journeyed to the garden . bill picked up the apple there . jeff went to the bathroom . bill dropped the apple there . fred journeyed to the bedroom . bill got the apple there . bill dropped the apple . fred journeyed to the garden . jeff moved to the garden . mary travelled to the bathroom . bill went to the office . bill went to the bathroom . mary went back to the kitchen . jeff went to the bathroom . jeff journeyed to the office . mary took the milk there . bill moved to the garden . jeff went to the bathroom . jeff journeyed to the bedroom . bill travelled to the bathroom . bill went back to the garden . jeff went to the kitchen . mary journeyed to the hallway . bill travelled to the bedroom . fred journeyed to the hallway . mary passed the milk to fred . fred handed the milk to mary . mary gave the milk to fred . who gave the milk ?
+Question: who gave the milk ?
+Answer: mary </s>
+Model prediction: </s>
+=========================
+Step 1200: train_loss = 2.772085, train_acc = 0.000000, train ppl = 3.998992
+Step 1300: train_loss = 2.755859, train_acc = 0.000000, train ppl = 3.966679
+Step 1400: train_loss = 2.611247, train_acc = 0.000000, train ppl = 3.689989
+Step 1500: train_loss = 2.612026, train_acc = 0.125000, train ppl = 3.691427
+Step 1600: train_loss = 3.281435, train_acc = 0.000000, train ppl = 5.158870
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.027000 -- validation perplexity = 4.146429
+Epoch 3: test accuracy: 0.024000
+---- Qualitative Analysis
+Context: who did mary give the apple to ? bill went back to the kitchen . bill took the apple there . bill passed the apple to mary . mary handed the apple to fred . who did mary give the apple to ?
+Question: who did mary give the apple to ?
+Answer: fred </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 1700: train_loss = 3.291830, train_acc = 0.062500, train ppl = 5.185753
+Step 1800: train_loss = 3.111076, train_acc = 0.000000, train ppl = 4.737634
+Step 1900: train_loss = 2.389597, train_acc = 0.000000, train ppl = 3.302892
+Step 2000: train_loss = 2.720872, train_acc = 0.187500, train ppl = 3.897892
+Step 2100: train_loss = 2.994475, train_acc = 0.062500, train ppl = 4.469326
+Step 2200: train_loss = 2.886754, train_acc = 0.062500, train ppl = 4.234974
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.002000 -- validation perplexity = 3.641320
+Epoch 4: test accuracy: 0.003000
+---- Qualitative Analysis
+Context: who did bill give the apple to ? bill went back to the office . jeff went to the bedroom . jeff took the apple there . jeff picked up the milk there . jeff went back to the garden . jeff journeyed to the bathroom . jeff discarded the apple . jeff got the football there . fred went to the hallway . jeff picked up the apple there . jeff put down the apple . jeff grabbed the apple there . mary moved to the office . jeff went back to the garden . jeff journeyed to the bedroom . bill travelled to the bedroom . jeff passed the apple to bill . bill gave the apple to jeff . jeff handed the apple to bill . bill passed the apple to jeff . who did bill give the apple to ?
+Question: who did bill give the apple to ?
+Answer: jeff </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 2300: train_loss = 2.978297, train_acc = 0.000000, train ppl = 4.433319
+Step 2400: train_loss = 2.544436, train_acc = 0.187500, train ppl = 3.568758
+Step 2500: train_loss = 2.351553, train_acc = 0.062500, train ppl = 3.240658
+Step 2600: train_loss = 2.638766, train_acc = 0.125000, train ppl = 3.741112
+Step 2700: train_loss = 2.474679, train_acc = 0.000000, train ppl = 3.446432
+Step 2800: train_loss = 2.212910, train_acc = 0.312500, train ppl = 3.023620
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.256000 -- validation perplexity = 3.844821
+Epoch 5: test accuracy: 0.280000
+---- Qualitative Analysis
+Context: who gave the apple ? fred picked up the apple there . fred gave the apple to bill . bill gave the apple to fred . fred passed the apple to bill . bill handed the apple to fred . fred gave the apple to bill . mary went back to the bathroom . fred journeyed to the kitchen . jeff travelled to the bedroom . mary travelled to the office . who gave the apple ?
+Question: who gave the apple ?
+Answer: fred </s>
+Model prediction: bill bill bill bill bill bill bill bill bill bill
+=========================
+Step 2900: train_loss = 2.369318, train_acc = 0.062500, train ppl = 3.269572
+Step 3000: train_loss = 2.657415, train_acc = 0.312500, train ppl = 3.776159
+Step 3100: train_loss = 2.218182, train_acc = 0.062500, train ppl = 3.031602
+Step 3200: train_loss = 2.399866, train_acc = 0.062500, train ppl = 3.319895
+Step 3300: train_loss = 2.807466, train_acc = 0.000000, train ppl = 4.070366
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.057000 -- validation perplexity = 4.324274
+Epoch 6: test accuracy: 0.048000
+---- Qualitative Analysis
+Context: who received the apple ? fred travelled to the bedroom . jeff travelled to the office . fred went to the hallway . bill moved to the office . mary travelled to the bedroom . bill journeyed to the bedroom . jeff went back to the kitchen . bill picked up the apple there . bill handed the apple to mary . jeff grabbed the milk there . jeff went to the garden . bill went back to the office . who received the apple ?
+Question: who received the apple ?
+Answer: mary </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 3400: train_loss = 2.938825, train_acc = 0.062500, train ppl = 4.346681
+Step 3500: train_loss = 2.849509, train_acc = 0.000000, train ppl = 4.156838
+Step 3600: train_loss = 3.150040, train_acc = 0.187500, train ppl = 4.830839
+Step 3700: train_loss = 2.449632, train_acc = 0.062500, train ppl = 3.403539
+Step 3800: train_loss = 2.736958, train_acc = 0.000000, train ppl = 3.929370
+Step 3900: train_loss = 2.851235, train_acc = 0.062500, train ppl = 4.160426
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.040000 -- validation perplexity = 4.048820
+Epoch 7: test accuracy: 0.073000
+---- Qualitative Analysis
+Context: who gave the apple ? jeff went back to the garden . mary travelled to the office . bill went back to the bedroom . mary moved to the hallway . bill went back to the garden . mary went back to the bedroom . jeff journeyed to the office . mary went to the kitchen . bill travelled to the hallway . mary moved to the hallway . fred went to the hallway . bill picked up the football there . bill picked up the apple there . bill passed the apple to mary . bill discarded the football . mary grabbed the milk there . mary gave the apple to fred . fred gave the apple to mary . who gave the apple ?
+Question: who gave the apple ?
+Answer: fred </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 4000: train_loss = 2.677929, train_acc = 0.187500, train ppl = 3.815092
+Step 4100: train_loss = 2.749817, train_acc = 0.062500, train ppl = 3.954715
+Step 4200: train_loss = 2.550365, train_acc = 0.000000, train ppl = 3.579355
+Step 4300: train_loss = 3.024525, train_acc = 0.000000, train ppl = 4.536983
+Step 4400: train_loss = 3.124734, train_acc = 0.187500, train ppl = 4.770099
+Step 4500: train_loss = 3.074937, train_acc = 0.062500, train ppl = 4.652797
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.159000 -- validation perplexity = 3.642603
+Epoch 8: test accuracy: 0.169000
+---- Qualitative Analysis
+Context: what did fred give to bill ? jeff went to the office . mary took the apple there . bill went to the bathroom . mary left the apple . bill went back to the kitchen . mary travelled to the bedroom . mary journeyed to the hallway . bill journeyed to the bathroom . bill travelled to the kitchen . fred went back to the bathroom . bill travelled to the office . jeff journeyed to the hallway . fred journeyed to the kitchen . fred journeyed to the hallway . fred went to the kitchen . jeff travelled to the kitchen . jeff travelled to the bathroom . jeff went to the kitchen . bill went to the bathroom . fred went back to the bathroom . fred grabbed the milk there . fred passed the milk to bill . bill dropped the milk . fred travelled to the bedroom . bill moved to the bedroom . mary journeyed to the bathroom . what did fred give to bill ?
+Question: what did fred give to bill ?
+Answer: milk </s>
+Model prediction: apple apple apple apple apple apple apple apple apple apple
+=========================
+Step 4600: train_loss = 2.760804, train_acc = 0.000000, train ppl = 3.976500
+Step 4700: train_loss = 2.589155, train_acc = 0.062500, train ppl = 3.649453
+Step 4800: train_loss = 2.235965, train_acc = 0.062500, train ppl = 3.058677
+Step 4900: train_loss = 2.541777, train_acc = 0.250000, train ppl = 3.564018
+Step 5000: train_loss = 2.420915, train_acc = 0.125000, train ppl = 3.355019
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.141000 -- validation perplexity = 3.635151
+Epoch 9: test accuracy: 0.158000
+---- Qualitative Analysis
+Context: who gave the milk ? mary moved to the office . jeff took the apple there . fred went to the hallway . bill grabbed the football there . jeff went back to the kitchen . mary picked up the milk there . bill went to the bedroom . fred travelled to the garden . fred travelled to the bathroom . bill went back to the hallway . mary dropped the milk . bill dropped the football . mary went to the garden . bill went back to the office . jeff moved to the bedroom . bill got the milk there . bill travelled to the bathroom . bill handed the milk to fred . fred gave the milk to bill . jeff travelled to the garden . mary moved to the office . bill gave the milk to fred . fred dropped the milk . mary travelled to the hallway . fred picked up the milk there . fred gave the milk to bill . who gave the milk ?
+Question: who gave the milk ?
+Answer: fred </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 5100: train_loss = 2.094702, train_acc = 0.312500, train ppl = 2.850091
+Step 5200: train_loss = 2.859803, train_acc = 0.000000, train ppl = 4.178288
+Step 5300: train_loss = 2.332634, train_acc = 0.187500, train ppl = 3.210149
+Step 5400: train_loss = 2.667604, train_acc = 0.000000, train ppl = 3.795446
+Step 5500: train_loss = 2.255750, train_acc = 0.187500, train ppl = 3.089086
+Step 5600: train_loss = 2.155155, train_acc = 0.125000, train ppl = 2.937555
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.078000 -- validation perplexity = 3.534539
+Epoch 10: test accuracy: 0.101000
+---- Qualitative Analysis
+Context: who did mary give the apple to ? mary grabbed the apple there . jeff went back to the bedroom . bill went to the office . mary moved to the office . mary gave the apple to bill . mary journeyed to the hallway . fred moved to the kitchen . jeff journeyed to the hallway . who did mary give the apple to ?
+Question: who did mary give the apple to ?
+Answer: bill </s>
+Model prediction: bill bill bill bill bill bill bill bill bill bill
+=========================
+Step 5700: train_loss = 2.259873, train_acc = 0.375000, train ppl = 3.095461
+Step 5800: train_loss = 2.513069, train_acc = 0.125000, train ppl = 3.513225
+Step 5900: train_loss = 2.312295, train_acc = 0.125000, train ppl = 3.177667
+Step 6000: train_loss = 2.289189, train_acc = 0.250000, train ppl = 3.141167
+Step 6100: train_loss = 2.608212, train_acc = 0.187500, train ppl = 3.684394
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.112000 -- validation perplexity = 3.373809
+Epoch 11: test accuracy: 0.132000
+---- Qualitative Analysis
+Context: who gave the football to fred ? jeff grabbed the football there . mary journeyed to the hallway . fred went to the kitchen . jeff handed the football to fred . who gave the football to fred ?
+Question: who gave the football to fred ?
+Answer: jeff </s>
+Model prediction: fred fred fred fred fred fred fred fred fred fred
+=========================
+Step 6200: train_loss = 2.496950, train_acc = 0.250000, train ppl = 3.485024
+Step 6300: train_loss = 2.343221, train_acc = 0.000000, train ppl = 3.227185
+Step 6400: train_loss = 2.128965, train_acc = 0.125000, train ppl = 2.899338
+Step 6500: train_loss = 2.357235, train_acc = 0.062500, train ppl = 3.249878
+Step 6600: train_loss = 2.603508, train_acc = 0.312500, train ppl = 3.675738
+Step 6700: train_loss = 2.086895, train_acc = 0.125000, train ppl = 2.838988
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.127000 -- validation perplexity = 3.815856
+Epoch 12: test accuracy: 0.154000
+---- Qualitative Analysis
+Context: who did fred give the football to ? mary journeyed to the hallway . bill went back to the kitchen . jeff went to the bathroom . mary journeyed to the bathroom . fred travelled to the garden . fred journeyed to the office . jeff travelled to the office . fred travelled to the garden . fred travelled to the bathroom . jeff picked up the milk there . jeff put down the milk . jeff moved to the bathroom . fred went back to the bedroom . bill travelled to the bedroom . bill went to the hallway . bill went back to the bathroom . bill travelled to the garden . bill got the football there . jeff went to the bedroom . jeff went to the hallway . bill discarded the football . mary travelled to the kitchen . fred went to the kitchen . bill went back to the office . bill went back to the kitchen . mary journeyed to the garden . mary took the football there . mary dropped the football . mary grabbed the football there . mary dropped the football . bill travelled to the bathroom . jeff went back to the office . bill went back to the hallway . fred moved to the bedroom . jeff travelled to the bedroom . fred journeyed to the office . bill went to the office . bill went to the bathroom . mary got the football there . fred travelled to the garden . bill moved to the office . mary gave the football to fred . fred went to the kitchen . jeff went back to the kitchen . fred passed the football to jeff . bill got the milk there . who did fred give the football to ?
+Question: who did fred give the football to ?
+Answer: jeff </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 6800: train_loss = 2.004630, train_acc = 0.062500, train ppl = 2.724581
+Step 6900: train_loss = 2.457996, train_acc = 0.125000, train ppl = 3.417804
+Step 7000: train_loss = 2.349662, train_acc = 0.000000, train ppl = 3.237596
+Step 7100: train_loss = 2.713866, train_acc = 0.375000, train ppl = 3.884261

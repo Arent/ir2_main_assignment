@@ -1,0 +1,10 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -p short
+#SBATCH -t 00:50:00
+#SBATCH -o outputs/normal-19-en-10k-batch=32-lr=0.001-type=bi-num_rnns=1-h_size=128-emb=256-dropout=0.7-cell_type=gru.output
+#SBATCH -e errors/normal-19-en-10k-batch=32-lr=0.001-type=bi-num_rnns=1-h_size=128-emb=256-dropout=0.7-cell_type=gru.error
+
+module load python/3.5.2 gcc/5.2.0 cuda/8.0.44 cudnn/8.0-v6.0
+
+python3 -u main.py --model_type=normal --data_dir=data/en-10k --cell_type=gru --num_units=128 --encoder_type=bi --vocab data/vocab.txt --model_dir models/dummy --task=19 --num_epochs=50 --dropout_keep_prob=0.7 --num_enc_layers=1 --embedding_size=256 --batch_size=32 --learning_rate 0.001

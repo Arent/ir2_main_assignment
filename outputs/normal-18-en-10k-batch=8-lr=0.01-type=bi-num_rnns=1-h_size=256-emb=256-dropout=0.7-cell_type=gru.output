@@ -1,0 +1,530 @@
+optimizer:                adam
+encoder_type:             bi
+data_dir:                 data/en-10k
+model_type:               normal
+restore_from_dir:         None
+val_split:                0.1
+embedding_size:           256
+num_units:                256
+num_epochs:               50
+dropout_keep_prob:        0.7
+task:                     18
+vocab:                    data/vocab.txt
+learning_rate:            0.01
+merge_mode:               concat
+batch_size:               8
+cell_type:                gru
+max_gradient_norm:        1.0
+model_dir:                models/dummy
+num_enc_layers:           1
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: is the chocolate bigger than the chest ? the chest is bigger than the box of chocolates . the chest is bigger than the box . the box is bigger than the chocolate . the suitcase fits inside the chest . the chest is bigger than the suitcase . is the chocolate bigger than the chest ?
+Question: is the chocolate bigger than the chest ?
+Answer: no </s>
+Model prediction: 310 310 317 168 168 168 west 19 19 thirsty
+=========================
+Step 100: train_loss = 0.510916, train_acc = 0.750000, train ppl = 1.291053
+Step 200: train_loss = 0.000029, train_acc = 1.000000, train ppl = 1.000014
+Step 300: train_loss = 0.000003, train_acc = 1.000000, train ppl = 1.000001
+Step 400: train_loss = 0.001725, train_acc = 1.000000, train ppl = 1.000863
+Step 500: train_loss = 0.675336, train_acc = 0.875000, train ppl = 1.401675
+Step 600: train_loss = 0.000003, train_acc = 1.000000, train ppl = 1.000001
+Step 700: train_loss = 1.465568, train_acc = 0.875000, train ppl = 2.080865
+Step 800: train_loss = 0.250120, train_acc = 0.875000, train ppl = 1.133216
+Step 900: train_loss = 0.002642, train_acc = 1.000000, train ppl = 1.001322
+Step 1000: train_loss = 0.441565, train_acc = 0.875000, train ppl = 1.247052
+Step 1100: train_loss = 0.000008, train_acc = 1.000000, train ppl = 1.000004
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.919000 -- validation perplexity = 1.073975
+Epoch 1: test accuracy: 0.914000
+---- Qualitative Analysis
+Context: does the box fit in the chest ? the container fits inside the box . the chocolate fits inside the box of chocolates . the box of chocolates fits inside the chest . the suitcase is bigger than the chest . the chest fits inside the container . does the box fit in the chest ?
+Question: does the box fit in the chest ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 1200: train_loss = 0.000009, train_acc = 1.000000, train ppl = 1.000004
+Step 1300: train_loss = 2.364842, train_acc = 0.750000, train ppl = 3.262262
+Step 1400: train_loss = 0.000096, train_acc = 1.000000, train ppl = 1.000048
+Step 1500: train_loss = 0.004272, train_acc = 1.000000, train ppl = 1.002138
+Step 1600: train_loss = 1.573640, train_acc = 0.875000, train ppl = 2.196401
+Step 1700: train_loss = 1.891295, train_acc = 0.625000, train ppl = 2.574479
+Step 1800: train_loss = 1.131959, train_acc = 0.750000, train ppl = 1.761172
+Step 1900: train_loss = 0.557411, train_acc = 0.875000, train ppl = 1.321418
+Step 2000: train_loss = 0.004394, train_acc = 1.000000, train ppl = 1.002199
+Step 2100: train_loss = 0.879042, train_acc = 0.875000, train ppl = 1.551964
+Step 2200: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.919000 -- validation perplexity = 1.522143
+Epoch 2: test accuracy: 0.894000
+---- Qualitative Analysis
+Context: is the chocolate bigger than the box ? the box of chocolates fits inside the box . the box of chocolates fits inside the box . the box of chocolates is bigger than the chocolate . the box of chocolates fits inside the box . the chocolate fits inside the chest . is the chocolate bigger than the box ?
+Question: is the chocolate bigger than the box ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 2300: train_loss = 1.665992, train_acc = 0.875000, train ppl = 2.300200
+Step 2400: train_loss = 1.593423, train_acc = 0.875000, train ppl = 2.218234
+Step 2500: train_loss = 0.045875, train_acc = 1.000000, train ppl = 1.023203
+Step 2600: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 2700: train_loss = 0.000002, train_acc = 1.000000, train ppl = 1.000001
+Step 2800: train_loss = 0.935320, train_acc = 0.875000, train ppl = 1.596255
+Step 2900: train_loss = 0.674412, train_acc = 0.875000, train ppl = 1.401027
+Step 3000: train_loss = 1.744375, train_acc = 0.875000, train ppl = 2.392138
+Step 3100: train_loss = 1.076004, train_acc = 0.875000, train ppl = 1.712581
+Step 3200: train_loss = 0.549614, train_acc = 0.875000, train ppl = 1.316277
+Step 3300: train_loss = 0.196931, train_acc = 0.875000, train ppl = 1.103476
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.919000 -- validation perplexity = 2.123743
+Epoch 3: test accuracy: 0.894000
+---- Qualitative Analysis
+Context: does the container fit in the box of chocolates ? the box is bigger than the box of chocolates . the suitcase is bigger than the box of chocolates . the container is bigger than the box . the chest is bigger than the box of chocolates . the box fits inside the chest . does the container fit in the box of chocolates ?
+Question: does the container fit in the box of chocolates ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 3400: train_loss = 1.639195, train_acc = 0.875000, train ppl = 2.269587
+Step 3500: train_loss = 0.365650, train_acc = 0.750000, train ppl = 1.200604
+Step 3600: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 3700: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 3800: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 3900: train_loss = 1.260140, train_acc = 0.875000, train ppl = 1.877742
+Step 4000: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 4100: train_loss = 0.001674, train_acc = 1.000000, train ppl = 1.000837
+Step 4200: train_loss = 0.009445, train_acc = 1.000000, train ppl = 1.004734
+Step 4300: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 4400: train_loss = 0.626343, train_acc = 0.875000, train ppl = 1.367756
+Step 4500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.926000 -- validation perplexity = 1.179490
+Epoch 4: test accuracy: 0.910000
+---- Qualitative Analysis
+Context: does the chocolate fit in the container ? the box of chocolates is bigger than the chocolate . the box of chocolates is bigger than the chocolate . the chest is bigger than the chocolate . the box of chocolates fits inside the container . the box of chocolates fits inside the suitcase . does the chocolate fit in the container ?
+Question: does the chocolate fit in the container ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 4600: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 4700: train_loss = 2.144860, train_acc = 0.875000, train ppl = 2.922472
+Step 4800: train_loss = 4.936703, train_acc = 0.750000, train ppl = 11.802972
+Step 4900: train_loss = 0.000229, train_acc = 1.000000, train ppl = 1.000115
+Step 5000: train_loss = 0.909821, train_acc = 0.750000, train ppl = 1.576033
+Step 5100: train_loss = 0.044813, train_acc = 1.000000, train ppl = 1.022660
+Step 5200: train_loss = 0.539649, train_acc = 0.875000, train ppl = 1.309734
+Step 5300: train_loss = 1.445698, train_acc = 0.875000, train ppl = 2.060295
+Step 5400: train_loss = 1.552265, train_acc = 0.875000, train ppl = 2.173051
+Step 5500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 5600: train_loss = 0.081956, train_acc = 1.000000, train ppl = 1.041829
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.930000 -- validation perplexity = 1.064000
+Epoch 5: test accuracy: 0.913000
+---- Qualitative Analysis
+Context: is the container bigger than the box of chocolates ? the box of chocolates fits inside the box . the suitcase fits inside the chest . the container is bigger than the box . the container is bigger than the suitcase . the box of chocolates fits inside the box . is the container bigger than the box of chocolates ?
+Question: is the container bigger than the box of chocolates ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 5700: train_loss = 0.014441, train_acc = 1.000000, train ppl = 1.007247
+Step 5800: train_loss = 0.405970, train_acc = 0.875000, train ppl = 1.225054
+Step 5900: train_loss = 0.001102, train_acc = 1.000000, train ppl = 1.000551
+Step 6000: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 6100: train_loss = 0.000001, train_acc = 1.000000, train ppl = 1.000000
+Step 6200: train_loss = 1.289650, train_acc = 0.750000, train ppl = 1.905654
+Step 6300: train_loss = 0.943954, train_acc = 0.875000, train ppl = 1.603161
+Step 6400: train_loss = 0.002480, train_acc = 1.000000, train ppl = 1.001241
+Step 6500: train_loss = 0.459181, train_acc = 0.875000, train ppl = 1.258085
+Step 6600: train_loss = 1.979644, train_acc = 0.875000, train ppl = 2.690755
+Step 6700: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.923000 -- validation perplexity = 1.167922
+Epoch 6: test accuracy: 0.916000
+---- Qualitative Analysis
+Context: does the suitcase fit in the chocolate ? the box is bigger than the chocolate . the chocolate fits inside the suitcase . the box is bigger than the box of chocolates . the box of chocolates fits inside the suitcase . the box is bigger than the box of chocolates . the chocolate fits inside the chest . the chocolate fits inside the box . the box of chocolates fits inside the box . the suitcase is bigger than the chest . the suitcase is bigger than the chocolate . does the suitcase fit in the chocolate ?
+Question: does the suitcase fit in the chocolate ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 6800: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 6900: train_loss = 0.995090, train_acc = 0.875000, train ppl = 1.644678
+Step 7000: train_loss = 0.001732, train_acc = 1.000000, train ppl = 1.000867
+Step 7100: train_loss = 0.264259, train_acc = 0.750000, train ppl = 1.141256
+Step 7200: train_loss = 1.322216, train_acc = 0.875000, train ppl = 1.936937
+Step 7300: train_loss = 1.122255, train_acc = 0.875000, train ppl = 1.752648
+Step 7400: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 7500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 7600: train_loss = 0.358212, train_acc = 0.875000, train ppl = 1.196148
+Step 7700: train_loss = 0.000918, train_acc = 1.000000, train ppl = 1.000459
+Step 7800: train_loss = 0.101810, train_acc = 1.000000, train ppl = 1.052223
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.916000 -- validation perplexity = 1.128083
+Epoch 7: test accuracy: 0.901000
+---- Qualitative Analysis
+Context: does the suitcase fit in the chocolate ? the chocolate fits inside the box of chocolates . the chocolate fits inside the chest . the suitcase is bigger than the box of chocolates . the suitcase is bigger than the chest . the chocolate fits inside the container . does the suitcase fit in the chocolate ?
+Question: does the suitcase fit in the chocolate ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 7900: train_loss = 0.213837, train_acc = 0.875000, train ppl = 1.112843
+Step 8000: train_loss = 5.208811, train_acc = 0.750000, train ppl = 13.523182
+Step 8100: train_loss = 0.000995, train_acc = 1.000000, train ppl = 1.000498
+Step 8200: train_loss = 0.626261, train_acc = 0.875000, train ppl = 1.367700
+Step 8300: train_loss = 0.488483, train_acc = 0.625000, train ppl = 1.276652
+Step 8400: train_loss = 0.847711, train_acc = 0.750000, train ppl = 1.527841
+Step 8500: train_loss = 0.000151, train_acc = 1.000000, train ppl = 1.000075
+Step 8600: train_loss = 0.288186, train_acc = 0.750000, train ppl = 1.154992
+Step 8700: train_loss = 0.532002, train_acc = 0.875000, train ppl = 1.304737
+Step 8800: train_loss = 0.527440, train_acc = 0.875000, train ppl = 1.301764
+Step 8900: train_loss = 0.000002, train_acc = 1.000000, train ppl = 1.000001
+Step 9000: train_loss = 0.000001, train_acc = 1.000000, train ppl = 1.000001
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.919000 -- validation perplexity = 1.936140
+Epoch 8: test accuracy: 0.894000
+---- Qualitative Analysis
+Context: does the container fit in the suitcase ? the box of chocolates fits inside the chest . the box is bigger than the container . the chest is bigger than the container . the chest is bigger than the chocolate . the suitcase is bigger than the box . does the container fit in the suitcase ?
+Question: does the container fit in the suitcase ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 9100: train_loss = 0.023049, train_acc = 1.000000, train ppl = 1.011591
+Step 9200: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 9300: train_loss = 5.127510, train_acc = 0.750000, train ppl = 12.984483
+Step 9400: train_loss = 3.296560, train_acc = 0.875000, train ppl = 5.198032
+Step 9500: train_loss = 0.000755, train_acc = 1.000000, train ppl = 1.000377
+Step 9600: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 9700: train_loss = 1.042181, train_acc = 0.750000, train ppl = 1.683863
+Step 9800: train_loss = 1.057483, train_acc = 0.875000, train ppl = 1.696796
+Step 9900: train_loss = 0.633541, train_acc = 0.875000, train ppl = 1.372688
+Step 10000: train_loss = 0.407040, train_acc = 0.875000, train ppl = 1.225709
+Step 10100: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.919000 -- validation perplexity = 1.651493
+Epoch 9: test accuracy: 0.914000
+---- Qualitative Analysis
+Context: does the container fit in the chocolate ? the chest is bigger than the suitcase . the chest is bigger than the suitcase . the suitcase fits inside the chest . the box of chocolates is bigger than the chocolate . the container is bigger than the box of chocolates . does the container fit in the chocolate ?
+Question: does the container fit in the chocolate ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 10200: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 10300: train_loss = 1.131905, train_acc = 0.875000, train ppl = 1.761124
+Step 10400: train_loss = 0.000008, train_acc = 1.000000, train ppl = 1.000004
+Step 10500: train_loss = 1.340691, train_acc = 0.875000, train ppl = 1.954913
+Step 10600: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 10700: train_loss = 0.193365, train_acc = 0.875000, train ppl = 1.101510
+Step 10800: train_loss = 0.346442, train_acc = 0.875000, train ppl = 1.189129
+Step 10900: train_loss = 0.048849, train_acc = 1.000000, train ppl = 1.024725
+Step 11000: train_loss = 0.007363, train_acc = 1.000000, train ppl = 1.003688
+Step 11100: train_loss = 0.651591, train_acc = 0.875000, train ppl = 1.385132
+Step 11200: train_loss = 1.112616, train_acc = 0.875000, train ppl = 1.744221
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.917000 -- validation perplexity = 1.269952
+Epoch 10: test accuracy: 0.891000
+---- Qualitative Analysis
+Context: is the container bigger than the chocolate ? the box fits inside the container . the suitcase is bigger than the box of chocolates . the box is bigger than the chocolate . the chest is bigger than the box of chocolates . the container is bigger than the chocolate . is the container bigger than the chocolate ?
+Question: is the container bigger than the chocolate ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 11300: train_loss = 0.207421, train_acc = 0.875000, train ppl = 1.109279
+Step 11400: train_loss = 0.615578, train_acc = 0.750000, train ppl = 1.360414
+Step 11500: train_loss = 0.000038, train_acc = 1.000000, train ppl = 1.000019
+Step 11600: train_loss = 0.202159, train_acc = 0.875000, train ppl = 1.106365
+Step 11700: train_loss = 0.000020, train_acc = 1.000000, train ppl = 1.000010
+Step 11800: train_loss = 0.919415, train_acc = 0.875000, train ppl = 1.583611
+Step 11900: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 12000: train_loss = 2.415614, train_acc = 0.875000, train ppl = 3.346138
+Step 12100: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 12200: train_loss = 0.831971, train_acc = 0.875000, train ppl = 1.515864
+Step 12300: train_loss = 0.000024, train_acc = 1.000000, train ppl = 1.000012
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.919000 -- validation perplexity = 3.741553
+Epoch 11: test accuracy: 0.894000
+---- Qualitative Analysis
+Context: is the chest bigger than the chocolate ? the box of chocolates fits inside the chest . the container is bigger than the box . the chest fits inside the suitcase . the container is bigger than the box . the box of chocolates is bigger than the chocolate . is the chest bigger than the chocolate ?
+Question: is the chest bigger than the chocolate ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 12400: train_loss = 0.008285, train_acc = 1.000000, train ppl = 1.004151
+Step 12500: train_loss = 0.000625, train_acc = 1.000000, train ppl = 1.000312
+Step 12600: train_loss = 1.586375, train_acc = 0.875000, train ppl = 2.210431
+Step 12700: train_loss = 1.615363, train_acc = 0.750000, train ppl = 2.242702
+Step 12800: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 12900: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 13000: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 13100: train_loss = 0.000690, train_acc = 1.000000, train ppl = 1.000345
+Step 13200: train_loss = 1.416946, train_acc = 0.875000, train ppl = 2.030888
+Step 13300: train_loss = 0.615312, train_acc = 0.875000, train ppl = 1.360233
+Step 13400: train_loss = 0.587484, train_acc = 0.875000, train ppl = 1.341438
+Step 13500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.924000 -- validation perplexity = 1.116840
+Epoch 12: test accuracy: 0.898000
+---- Qualitative Analysis
+Context: is the suitcase bigger than the chocolate ? the box is bigger than the chocolate . the chocolate fits inside the suitcase . the suitcase is bigger than the box . the chest is bigger than the box of chocolates . the box fits inside the container . is the suitcase bigger than the chocolate ?
+Question: is the suitcase bigger than the chocolate ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 13600: train_loss = 0.358502, train_acc = 0.875000, train ppl = 1.196321
+Step 13700: train_loss = 0.014140, train_acc = 1.000000, train ppl = 1.007095
+Step 13800: train_loss = 1.466536, train_acc = 0.875000, train ppl = 2.081873
+Step 13900: train_loss = 3.538883, train_acc = 0.875000, train ppl = 5.867575
+Step 14000: train_loss = 0.000001, train_acc = 1.000000, train ppl = 1.000000
+Step 14100: train_loss = 0.098492, train_acc = 1.000000, train ppl = 1.050478
+Step 14200: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 14300: train_loss = 0.001569, train_acc = 1.000000, train ppl = 1.000785
+Step 14400: train_loss = 0.010057, train_acc = 1.000000, train ppl = 1.005041
+Step 14500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 14600: train_loss = 1.455454, train_acc = 0.875000, train ppl = 2.070370
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.919000 -- validation perplexity = 1.700366
+Epoch 13: test accuracy: 0.894000
+---- Qualitative Analysis
+Context: does the chest fit in the chocolate ? the chest is bigger than the box . the container is bigger than the box of chocolates . the chest is bigger than the suitcase . the chocolate fits inside the box . the chest is bigger than the box of chocolates . does the chest fit in the chocolate ?
+Question: does the chest fit in the chocolate ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 14700: train_loss = 2.595307, train_acc = 0.750000, train ppl = 3.660696
+Step 14800: train_loss = 0.598940, train_acc = 0.875000, train ppl = 1.349144
+Step 14900: train_loss = 0.000880, train_acc = 1.000000, train ppl = 1.000440
+Step 15000: train_loss = 1.089774, train_acc = 0.875000, train ppl = 1.724414
+Step 15100: train_loss = 0.025778, train_acc = 1.000000, train ppl = 1.012972
+Step 15200: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 15300: train_loss = 1.933734, train_acc = 0.875000, train ppl = 2.629693
+Step 15400: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 15500: train_loss = 0.010699, train_acc = 1.000000, train ppl = 1.005364
+Step 15600: train_loss = 0.201973, train_acc = 0.750000, train ppl = 1.106261
+Step 15700: train_loss = 0.088733, train_acc = 1.000000, train ppl = 1.045365
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.919000 -- validation perplexity = 1.728119
+Epoch 14: test accuracy: 0.914000
+---- Qualitative Analysis
+Context: does the chocolate fit in the container ? the box of chocolates is bigger than the chocolate . the suitcase is bigger than the chest . the container is bigger than the box . the box is bigger than the chocolate . the box fits inside the suitcase . does the chocolate fit in the container ?
+Question: does the chocolate fit in the container ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 15800: train_loss = 0.529969, train_acc = 0.875000, train ppl = 1.303411
+Step 15900: train_loss = 1.918373, train_acc = 0.875000, train ppl = 2.609572
+Step 16000: train_loss = 1.135061, train_acc = 0.875000, train ppl = 1.763906
+Step 16100: train_loss = 0.656888, train_acc = 0.875000, train ppl = 1.388805
+Step 16200: train_loss = 3.231924, train_acc = 0.625000, train ppl = 5.032727
+Step 16300: train_loss = 1.837349, train_acc = 0.625000, train ppl = 2.505967
+Step 16400: train_loss = 0.000015, train_acc = 1.000000, train ppl = 1.000008
+Step 16500: train_loss = 0.730873, train_acc = 0.875000, train ppl = 1.441143
+Step 16600: train_loss = 0.006639, train_acc = 1.000000, train ppl = 1.003325
+Step 16700: train_loss = 0.457646, train_acc = 0.875000, train ppl = 1.257120
+Step 16800: train_loss = 0.825669, train_acc = 0.875000, train ppl = 1.511095
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.919000 -- validation perplexity = 1.409615
+Epoch 15: test accuracy: 0.894000
+---- Qualitative Analysis
+Context: does the box fit in the chocolate ? the chocolate fits inside the suitcase . the container fits inside the chest . the chocolate fits inside the box . the chest is bigger than the chocolate . the suitcase fits inside the box . does the box fit in the chocolate ?
+Question: does the box fit in the chocolate ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 16900: train_loss = 1.079948, train_acc = 0.875000, train ppl = 1.715962
+Step 17000: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 17100: train_loss = 0.000024, train_acc = 1.000000, train ppl = 1.000012
+Step 17200: train_loss = 1.313438, train_acc = 0.875000, train ppl = 1.928455
+Step 17300: train_loss = 2.065353, train_acc = 0.875000, train ppl = 2.808573
+Step 17400: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 17500: train_loss = 0.341092, train_acc = 0.875000, train ppl = 1.185952
+Step 17600: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 17700: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 17800: train_loss = 0.000575, train_acc = 1.000000, train ppl = 1.000288
+Step 17900: train_loss = 0.001566, train_acc = 1.000000, train ppl = 1.000784
+Step 18000: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.914000 -- validation perplexity = 1.157508
+Epoch 16: test accuracy: 0.901000
+---- Qualitative Analysis
+Context: is the chocolate bigger than the box ? the box is bigger than the chocolate . the box of chocolates is bigger than the chocolate . the suitcase fits inside the box . the chocolate fits inside the chest . the box is bigger than the box of chocolates . is the chocolate bigger than the box ?
+Question: is the chocolate bigger than the box ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 18100: train_loss = 0.227007, train_acc = 0.875000, train ppl = 1.120196
+Step 18200: train_loss = 3.506618, train_acc = 0.750000, train ppl = 5.773675
+Step 18300: train_loss = 1.027156, train_acc = 0.875000, train ppl = 1.671260
+Step 18400: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 18500: train_loss = 1.142642, train_acc = 0.875000, train ppl = 1.770605
+Step 18600: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 18700: train_loss = 0.000023, train_acc = 1.000000, train ppl = 1.000011
+Step 18800: train_loss = 0.178319, train_acc = 0.875000, train ppl = 1.093255
+Step 18900: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 19000: train_loss = 1.751686, train_acc = 0.875000, train ppl = 2.400899
+Step 19100: train_loss = 0.001515, train_acc = 1.000000, train ppl = 1.000758
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.919000 -- validation perplexity = 2.511457
+Epoch 17: test accuracy: 0.914000
+---- Qualitative Analysis
+Context: does the chocolate fit in the container ? the container is bigger than the suitcase . the container is bigger than the box . the chocolate fits inside the suitcase . the suitcase is bigger than the chocolate . the chest is bigger than the box of chocolates . does the chocolate fit in the container ?
+Question: does the chocolate fit in the container ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 19200: train_loss = 0.296525, train_acc = 0.875000, train ppl = 1.159817
+Step 19300: train_loss = 3.794788, train_acc = 0.750000, train ppl = 6.668494
+Step 19400: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 19500: train_loss = 0.000026, train_acc = 1.000000, train ppl = 1.000013
+Step 19600: train_loss = 0.429027, train_acc = 0.875000, train ppl = 1.239259
+Step 19700: train_loss = 0.000001, train_acc = 1.000000, train ppl = 1.000000
+Step 19800: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 19900: train_loss = 0.000206, train_acc = 1.000000, train ppl = 1.000103
+Step 20000: train_loss = 0.000323, train_acc = 1.000000, train ppl = 1.000162
+Step 20100: train_loss = 0.000239, train_acc = 1.000000, train ppl = 1.000120
+Step 20200: train_loss = 1.078353, train_acc = 0.875000, train ppl = 1.714594
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.919000 -- validation perplexity = 1.325790
+Epoch 18: test accuracy: 0.910000
+---- Qualitative Analysis
+Context: is the chocolate bigger than the suitcase ? the chocolate fits inside the container . the box of chocolates fits inside the box . the chocolate fits inside the suitcase . the suitcase is bigger than the container . the chest is bigger than the box of chocolates . is the chocolate bigger than the suitcase ?
+Question: is the chocolate bigger than the suitcase ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 20300: train_loss = 0.000025, train_acc = 1.000000, train ppl = 1.000013
+Step 20400: train_loss = 0.000004, train_acc = 1.000000, train ppl = 1.000002
+Step 20500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 20600: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 20700: train_loss = 0.000008, train_acc = 1.000000, train ppl = 1.000004
+Step 20800: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 20900: train_loss = 0.659886, train_acc = 0.875000, train ppl = 1.390889
+Step 21000: train_loss = 3.236695, train_acc = 0.750000, train ppl = 5.044746
+Step 21100: train_loss = 1.080642, train_acc = 0.875000, train ppl = 1.716557
+Step 21200: train_loss = 0.000008, train_acc = 1.000000, train ppl = 1.000004
+Step 21300: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.919000 -- validation perplexity = 1.391156
+Epoch 19: test accuracy: 0.911000
+---- Qualitative Analysis
+Context: does the box fit in the container ? the suitcase fits inside the box . the container fits inside the box . the chocolate fits inside the box of chocolates . the chest is bigger than the suitcase . the container fits inside the chest . the chocolate fits inside the chest . the container fits inside the suitcase . the chocolate fits inside the chest . the chocolate fits inside the box of chocolates . the chest is bigger than the suitcase . does the box fit in the container ?
+Question: does the box fit in the container ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 21400: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 21500: train_loss = 0.000101, train_acc = 1.000000, train ppl = 1.000050
+Step 21600: train_loss = 3.149854, train_acc = 0.875000, train ppl = 4.830388
+Step 21700: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 21800: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 21900: train_loss = 1.333779, train_acc = 0.875000, train ppl = 1.948168
+Step 22000: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 22100: train_loss = 0.057507, train_acc = 1.000000, train ppl = 1.029171
+Step 22200: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 22300: train_loss = 0.243803, train_acc = 0.875000, train ppl = 1.129643
+Step 22400: train_loss = 0.802238, train_acc = 0.875000, train ppl = 1.493495
+Step 22500: train_loss = 0.083171, train_acc = 1.000000, train ppl = 1.042462
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.918000 -- validation perplexity = 1.122579
+Epoch 20: test accuracy: 0.910000
+---- Qualitative Analysis
+Context: is the box of chocolates bigger than the chest ? the chest is bigger than the chocolate . the chocolate fits inside the chest . the chest is bigger than the box . the box of chocolates fits inside the container . the chocolate fits inside the container . the suitcase is bigger than the box of chocolates . the box of chocolates fits inside the suitcase . the box is bigger than the box of chocolates . the suitcase is bigger than the box of chocolates . the chest is bigger than the box . is the box of chocolates bigger than the chest ?
+Question: is the box of chocolates bigger than the chest ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 22600: train_loss = 0.429164, train_acc = 0.875000, train ppl = 1.239344
+Step 22700: train_loss = 2.849377, train_acc = 0.875000, train ppl = 4.156563
+Step 22800: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 22900: train_loss = 2.336689, train_acc = 0.875000, train ppl = 3.216663
+Step 23000: train_loss = 0.996582, train_acc = 0.875000, train ppl = 1.645906
+Step 23100: train_loss = 1.256484, train_acc = 0.625000, train ppl = 1.874312
+Step 23200: train_loss = 0.198282, train_acc = 0.875000, train ppl = 1.104222
+Step 23300: train_loss = 0.000356, train_acc = 1.000000, train ppl = 1.000178
+Step 23400: train_loss = 0.747715, train_acc = 0.875000, train ppl = 1.453330
+Step 23500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 23600: train_loss = 2.490451, train_acc = 0.750000, train ppl = 3.473718
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.918000 -- validation perplexity = 1.311082
+Epoch 21: test accuracy: 0.894000
+---- Qualitative Analysis
+Context: is the suitcase bigger than the box of chocolates ? the suitcase is bigger than the chocolate . the box of chocolates fits inside the chest . the box is bigger than the box of chocolates . the suitcase is bigger than the chest . the suitcase is bigger than the chocolate . is the suitcase bigger than the box of chocolates ?
+Question: is the suitcase bigger than the box of chocolates ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 23700: train_loss = 0.498241, train_acc = 0.875000, train ppl = 1.282897
+Step 23800: train_loss = 0.508731, train_acc = 0.875000, train ppl = 1.289643
+Step 23900: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 24000: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 24100: train_loss = 0.042731, train_acc = 1.000000, train ppl = 1.021595
+Step 24200: train_loss = 2.671369, train_acc = 0.875000, train ppl = 3.802598
+Step 24300: train_loss = 0.454451, train_acc = 0.875000, train ppl = 1.255113
+Step 24400: train_loss = 0.000001, train_acc = 1.000000, train ppl = 1.000000
+Step 24500: train_loss = 2.171498, train_acc = 0.875000, train ppl = 2.961657
+Step 24600: train_loss = 0.324312, train_acc = 0.875000, train ppl = 1.176044
+Step 24700: train_loss = 1.620782, train_acc = 0.875000, train ppl = 2.248787
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.919000 -- validation perplexity = 2.154664
+Epoch 22: test accuracy: 0.914000
+---- Qualitative Analysis
+Context: does the box of chocolates fit in the chest ? the box of chocolates fits inside the box . the chest is bigger than the chocolate . the box fits inside the chest . the container fits inside the suitcase . the suitcase is bigger than the container . does the box of chocolates fit in the chest ?
+Question: does the box of chocolates fit in the chest ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 24800: train_loss = 0.175693, train_acc = 0.875000, train ppl = 1.091821
+Step 24900: train_loss = 0.204305, train_acc = 0.875000, train ppl = 1.107553
+Step 25000: train_loss = 1.753620, train_acc = 0.750000, train ppl = 2.403221
+Step 25100: train_loss = 2.319124, train_acc = 0.750000, train ppl = 3.188536
+Step 25200: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 25300: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 25400: train_loss = 0.848219, train_acc = 0.750000, train ppl = 1.528229
+Step 25500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 25600: train_loss = 0.976252, train_acc = 0.875000, train ppl = 1.629260
+Step 25700: train_loss = 0.051406, train_acc = 1.000000, train ppl = 1.026036
+Step 25800: train_loss = 1.597097, train_acc = 0.875000, train ppl = 2.222313
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.913000 -- validation perplexity = 1.142578
+Epoch 23: test accuracy: 0.903000
+---- Qualitative Analysis
+Context: does the chest fit in the suitcase ? the chest fits inside the container . the box is bigger than the chest . the suitcase is bigger than the chocolate . the container is bigger than the chest . the box fits inside the suitcase . does the chest fit in the suitcase ?
+Question: does the chest fit in the suitcase ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 25900: train_loss = 0.049578, train_acc = 1.000000, train ppl = 1.025099
+Step 26000: train_loss = 0.728229, train_acc = 0.875000, train ppl = 1.439239
+Step 26100: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 26200: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 26300: train_loss = 0.000002, train_acc = 1.000000, train ppl = 1.000001
+Step 26400: train_loss = 1.995158, train_acc = 0.875000, train ppl = 2.711708
+Step 26500: train_loss = 0.615800, train_acc = 0.875000, train ppl = 1.360565
+Step 26600: train_loss = 0.000002, train_acc = 1.000000, train ppl = 1.000001

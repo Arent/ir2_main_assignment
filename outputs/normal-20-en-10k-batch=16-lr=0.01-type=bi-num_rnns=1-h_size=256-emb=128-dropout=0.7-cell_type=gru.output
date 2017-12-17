@@ -1,0 +1,822 @@
+model_type:               normal
+num_enc_layers:           1
+batch_size:               16
+cell_type:                gru
+num_epochs:               50
+restore_from_dir:         None
+dropout_keep_prob:        0.7
+embedding_size:           128
+optimizer:                adam
+max_gradient_norm:        1.0
+merge_mode:               concat
+task:                     20
+vocab:                    data/vocab.txt
+encoder_type:             bi
+num_units:                256
+data_dir:                 data/en-10k
+model_dir:                models/dummy
+val_split:                0.1
+learning_rate:            0.01
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: where will sumit go ? antoine is tired . yann is thirsty . sumit is tired . where will sumit go ?
+Question: where will sumit go ?
+Answer: bedroom </s>
+Model prediction: 173 or or 4 127 201 26 170 rectangle 73
+=========================
+Step 100: train_loss = 0.975533, train_acc = 0.687500, train ppl = 1.628674
+Step 200: train_loss = 0.444362, train_acc = 0.875000, train ppl = 1.248797
+Step 300: train_loss = 1.084204, train_acc = 0.562500, train ppl = 1.719618
+Step 400: train_loss = 1.018285, train_acc = 0.500000, train ppl = 1.663864
+Step 500: train_loss = 0.840420, train_acc = 0.750000, train ppl = 1.522281
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.745000 -- validation perplexity = 1.430506
+Epoch 1: test accuracy: 0.718000
+---- Qualitative Analysis
+Context: where will yann go ? yann is thirsty . where will yann go ?
+Question: where will yann go ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 600: train_loss = 0.808393, train_acc = 0.562500, train ppl = 1.498098
+Step 700: train_loss = 0.536636, train_acc = 0.687500, train ppl = 1.307763
+Step 800: train_loss = 1.342397, train_acc = 0.812500, train ppl = 1.956581
+Step 900: train_loss = 1.452110, train_acc = 0.687500, train ppl = 2.066910
+Step 1000: train_loss = 0.582334, train_acc = 0.687500, train ppl = 1.337988
+Step 1100: train_loss = 0.592418, train_acc = 0.625000, train ppl = 1.344751
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.756000 -- validation perplexity = 1.765691
+Epoch 2: test accuracy: 0.720000
+---- Qualitative Analysis
+Context: where will jason go ? sumit is thirsty . jason is thirsty . where will jason go ?
+Question: where will jason go ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 1200: train_loss = 1.231332, train_acc = 0.500000, train ppl = 1.850889
+Step 1300: train_loss = 0.406498, train_acc = 0.875000, train ppl = 1.225378
+Step 1400: train_loss = 2.035952, train_acc = 0.562500, train ppl = 2.767587
+Step 1500: train_loss = 1.170269, train_acc = 0.500000, train ppl = 1.795232
+Step 1600: train_loss = 0.779627, train_acc = 0.687500, train ppl = 1.476706
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.745000 -- validation perplexity = 1.496896
+Epoch 3: test accuracy: 0.718000
+---- Qualitative Analysis
+Context: why did sumit get the milk ? sumit is thirsty . sumit moved to the kitchen . yann is tired . sumit picked up the milk there . why did sumit get the milk ?
+Question: why did sumit get the milk ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 1700: train_loss = 1.310682, train_acc = 0.687500, train ppl = 1.925799
+Step 1800: train_loss = 0.130095, train_acc = 0.937500, train ppl = 1.067210
+Step 1900: train_loss = 0.616288, train_acc = 0.812500, train ppl = 1.360897
+Step 2000: train_loss = 0.278326, train_acc = 0.875000, train ppl = 1.149311
+Step 2100: train_loss = 0.451524, train_acc = 0.875000, train ppl = 1.253277
+Step 2200: train_loss = 0.689671, train_acc = 0.687500, train ppl = 1.411758
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.779000 -- validation perplexity = 1.395185
+Epoch 4: test accuracy: 0.774000
+---- Qualitative Analysis
+Context: where will antoine go ? sumit is tired . jason is bored . sumit moved to the bedroom . sumit took the pajamas there . antoine is tired . where will antoine go ?
+Question: where will antoine go ?
+Answer: bedroom </s>
+Model prediction: garden </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 2300: train_loss = 1.585340, train_acc = 0.750000, train ppl = 2.209287
+Step 2400: train_loss = 0.845956, train_acc = 0.750000, train ppl = 1.526501
+Step 2500: train_loss = 1.213785, train_acc = 0.687500, train ppl = 1.834721
+Step 2600: train_loss = 0.983346, train_acc = 0.625000, train ppl = 1.635049
+Step 2700: train_loss = 0.647006, train_acc = 0.687500, train ppl = 1.381960
+Step 2800: train_loss = 0.746381, train_acc = 0.812500, train ppl = 1.452361
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.745000 -- validation perplexity = 1.721047
+Epoch 5: test accuracy: 0.718000
+---- Qualitative Analysis
+Context: why did jason go to the kitchen ? sumit is tired . antoine is bored . jason is hungry . antoine journeyed to the garden . yann is tired . sumit travelled to the bedroom . sumit took the pajamas there . jason moved to the kitchen . why did jason go to the kitchen ?
+Question: why did jason go to the kitchen ?
+Answer: hungry </s>
+Model prediction: thirsty </s>
+=========================
+Step 2900: train_loss = 0.827727, train_acc = 0.687500, train ppl = 1.512651
+Step 3000: train_loss = 0.643389, train_acc = 0.937500, train ppl = 1.379463
+Step 3100: train_loss = 0.542939, train_acc = 0.687500, train ppl = 1.311891
+Step 3200: train_loss = 0.706838, train_acc = 0.812500, train ppl = 1.423928
+Step 3300: train_loss = 0.515839, train_acc = 0.812500, train ppl = 1.294235
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.777000 -- validation perplexity = 1.717736
+Epoch 6: test accuracy: 0.767000
+---- Qualitative Analysis
+Context: where will jason go ? antoine is hungry . sumit is tired . sumit moved to the bedroom . sumit took the pajamas there . jason is bored . where will jason go ?
+Question: where will jason go ?
+Answer: garden </s>
+Model prediction: kitchen </s>
+=========================
+Step 3400: train_loss = 1.208785, train_acc = 0.625000, train ppl = 1.830140
+Step 3500: train_loss = 0.987689, train_acc = 0.687500, train ppl = 1.638604
+Step 3600: train_loss = 0.190414, train_acc = 0.875000, train ppl = 1.099886
+Step 3700: train_loss = 0.581624, train_acc = 0.812500, train ppl = 1.337513
+Step 3800: train_loss = 0.793812, train_acc = 0.875000, train ppl = 1.487216
+Step 3900: train_loss = 0.551824, train_acc = 0.812500, train ppl = 1.317732
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.777000 -- validation perplexity = 1.486738
+Epoch 7: test accuracy: 0.767000
+---- Qualitative Analysis
+Context: where will yann go ? sumit is bored . sumit moved to the garden . sumit got the football there . yann is thirsty . where will yann go ?
+Question: where will yann go ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 4000: train_loss = 0.330198, train_acc = 0.937500, train ppl = 1.179510
+Step 4100: train_loss = 1.018014, train_acc = 0.562500, train ppl = 1.663638
+Step 4200: train_loss = 0.260728, train_acc = 0.875000, train ppl = 1.139243
+Step 4300: train_loss = 1.037937, train_acc = 0.687500, train ppl = 1.680293
+Step 4400: train_loss = 0.271339, train_acc = 0.875000, train ppl = 1.145303
+Step 4500: train_loss = 0.117819, train_acc = 0.875000, train ppl = 1.060679
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.790000 -- validation perplexity = 1.320196
+Epoch 8: test accuracy: 0.776000
+---- Qualitative Analysis
+Context: why did antoine get the football ? yann is tired . yann travelled to the bedroom . sumit is tired . sumit went back to the bedroom . antoine is bored . sumit picked up the pajamas there . jason is tired . jason travelled to the bedroom . antoine travelled to the garden . antoine got the football there . why did antoine get the football ?
+Question: why did antoine get the football ?
+Answer: bored </s>
+Model prediction: bored </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 4600: train_loss = 0.685487, train_acc = 0.687500, train ppl = 1.408807
+Step 4700: train_loss = 0.695191, train_acc = 0.750000, train ppl = 1.415659
+Step 4800: train_loss = 0.326581, train_acc = 0.687500, train ppl = 1.177379
+Step 4900: train_loss = 1.086652, train_acc = 0.812500, train ppl = 1.721724
+Step 5000: train_loss = 1.980332, train_acc = 0.562500, train ppl = 2.691681
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.756000 -- validation perplexity = 1.403214
+Epoch 9: test accuracy: 0.720000
+---- Qualitative Analysis
+Context: why did antoine go to the bedroom ? antoine is tired . jason is tired . jason went back to the bedroom . antoine journeyed to the bedroom . why did antoine go to the bedroom ?
+Question: why did antoine go to the bedroom ?
+Answer: tired </s>
+Model prediction: tired </s>
+=========================
+Step 5100: train_loss = 0.753073, train_acc = 0.625000, train ppl = 1.457228
+Step 5200: train_loss = 0.298089, train_acc = 0.875000, train ppl = 1.160725
+Step 5300: train_loss = 1.881466, train_acc = 0.625000, train ppl = 2.561858
+Step 5400: train_loss = 0.306034, train_acc = 0.812500, train ppl = 1.165345
+Step 5500: train_loss = 0.777209, train_acc = 0.875000, train ppl = 1.474921
+Step 5600: train_loss = 0.727117, train_acc = 0.875000, train ppl = 1.438439
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.790000 -- validation perplexity = 1.533218
+Epoch 10: test accuracy: 0.776000
+---- Qualitative Analysis
+Context: where will jason go ? yann is hungry . antoine is tired . antoine travelled to the bedroom . jason is hungry . where will jason go ?
+Question: where will jason go ?
+Answer: kitchen </s>
+Model prediction: bedroom </s>
+=========================
+Step 5700: train_loss = 0.360693, train_acc = 0.812500, train ppl = 1.197632
+Step 5800: train_loss = 0.310927, train_acc = 0.875000, train ppl = 1.168199
+Step 5900: train_loss = 0.384505, train_acc = 0.875000, train ppl = 1.211977
+Step 6000: train_loss = 1.725420, train_acc = 0.812500, train ppl = 2.369573
+Step 6100: train_loss = 0.377287, train_acc = 0.812500, train ppl = 1.207610
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.745000 -- validation perplexity = 1.323667
+Epoch 11: test accuracy: 0.718000
+---- Qualitative Analysis
+Context: why did antoine go to the kitchen ? yann is tired . sumit is thirsty . jason is tired . yann travelled to the bedroom . sumit went to the kitchen . yann took the pajamas there . antoine is thirsty . antoine went to the kitchen . why did antoine go to the kitchen ?
+Question: why did antoine go to the kitchen ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 6200: train_loss = 0.331947, train_acc = 0.875000, train ppl = 1.180542
+Step 6300: train_loss = 0.873354, train_acc = 0.687500, train ppl = 1.547556
+Step 6400: train_loss = 1.046134, train_acc = 0.562500, train ppl = 1.687195
+Step 6500: train_loss = 0.707194, train_acc = 0.625000, train ppl = 1.424181
+Step 6600: train_loss = 0.781165, train_acc = 0.562500, train ppl = 1.477841
+Step 6700: train_loss = 0.983738, train_acc = 0.687500, train ppl = 1.635370
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.680000 -- validation perplexity = 1.702204
+Epoch 12: test accuracy: 0.699000
+---- Qualitative Analysis
+Context: why did sumit get the milk ? jason is bored . antoine is bored . yann is tired . antoine travelled to the garden . yann went to the bedroom . yann took the pajamas there . jason went to the garden . jason took the football there . sumit is thirsty . sumit went to the kitchen . sumit got the milk there . why did sumit get the milk ?
+Question: why did sumit get the milk ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 6800: train_loss = 1.159069, train_acc = 0.687500, train ppl = 1.785207
+Step 6900: train_loss = 1.590161, train_acc = 0.875000, train ppl = 2.214619
+Step 7000: train_loss = 0.832772, train_acc = 0.625000, train ppl = 1.516471
+Step 7100: train_loss = 0.709584, train_acc = 0.812500, train ppl = 1.425884
+Step 7200: train_loss = 0.658222, train_acc = 0.687500, train ppl = 1.389732
+Step 7300: train_loss = 1.014513, train_acc = 0.687500, train ppl = 1.660728
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.680000 -- validation perplexity = 2.181734
+Epoch 13: test accuracy: 0.699000
+---- Qualitative Analysis
+Context: where will sumit go ? sumit is thirsty . where will sumit go ?
+Question: where will sumit go ?
+Answer: kitchen </s>
+Model prediction: garden </s>
+=========================
+Step 7400: train_loss = 1.309742, train_acc = 0.687500, train ppl = 1.924894
+Step 7500: train_loss = 0.622338, train_acc = 0.875000, train ppl = 1.365020
+Step 7600: train_loss = 1.068687, train_acc = 0.687500, train ppl = 1.706328
+Step 7700: train_loss = 0.622184, train_acc = 0.687500, train ppl = 1.364914
+Step 7800: train_loss = 0.431950, train_acc = 0.812500, train ppl = 1.241071
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.691000 -- validation perplexity = 1.406390
+Epoch 14: test accuracy: 0.701000
+---- Qualitative Analysis
+Context: why did sumit get the apple ? jason is tired . yann is tired . sumit is hungry . sumit went to the kitchen . yann journeyed to the bedroom . antoine is thirsty . sumit picked up the apple there . why did sumit get the apple ?
+Question: why did sumit get the apple ?
+Answer: hungry </s>
+Model prediction: hungry </s>
+=========================
+Step 7900: train_loss = 0.730217, train_acc = 0.750000, train ppl = 1.440670
+Step 8000: train_loss = 0.841359, train_acc = 0.750000, train ppl = 1.522996
+Step 8100: train_loss = 1.160310, train_acc = 0.625000, train ppl = 1.786315
+Step 8200: train_loss = 0.924890, train_acc = 0.562500, train ppl = 1.587952
+Step 8300: train_loss = 0.697172, train_acc = 0.562500, train ppl = 1.417062
+Step 8400: train_loss = 0.443537, train_acc = 0.625000, train ppl = 1.248282
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.760000 -- validation perplexity = 1.236531
+Epoch 15: test accuracy: 0.737000
+---- Qualitative Analysis
+Context: why did sumit go to the garden ? yann is tired . antoine is thirsty . sumit is bored . yann travelled to the bedroom . sumit moved to the garden . why did sumit go to the garden ?
+Question: why did sumit go to the garden ?
+Answer: bored </s>
+Model prediction: bored </s>
+=========================
+Step 8500: train_loss = 0.815977, train_acc = 0.750000, train ppl = 1.503790
+Step 8600: train_loss = 0.795076, train_acc = 0.562500, train ppl = 1.488156
+Step 8700: train_loss = 0.838456, train_acc = 0.750000, train ppl = 1.520787
+Step 8800: train_loss = 0.290253, train_acc = 0.875000, train ppl = 1.156186
+Step 8900: train_loss = 0.964128, train_acc = 0.750000, train ppl = 1.619413
+Step 9000: train_loss = 0.814829, train_acc = 0.687500, train ppl = 1.502927
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.752000 -- validation perplexity = 1.278746
+Epoch 16: test accuracy: 0.755000
+---- Qualitative Analysis
+Context: why did yann go to the kitchen ? yann is thirsty . yann journeyed to the kitchen . why did yann go to the kitchen ?
+Question: why did yann go to the kitchen ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 9100: train_loss = 0.590255, train_acc = 0.687500, train ppl = 1.343298
+Step 9200: train_loss = 0.383384, train_acc = 0.875000, train ppl = 1.211298
+Step 9300: train_loss = 1.211306, train_acc = 0.750000, train ppl = 1.832449
+Step 9400: train_loss = 0.879525, train_acc = 0.625000, train ppl = 1.552338
+Step 9500: train_loss = 0.944897, train_acc = 0.625000, train ppl = 1.603916
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.758000 -- validation perplexity = 1.337569
+Epoch 17: test accuracy: 0.734000
+---- Qualitative Analysis
+Context: why did jason go to the kitchen ? jason is thirsty . sumit is bored . yann is hungry . sumit journeyed to the garden . sumit picked up the football there . jason went back to the kitchen . why did jason go to the kitchen ?
+Question: why did jason go to the kitchen ?
+Answer: thirsty </s>
+Model prediction: hungry </s>
+=========================
+Step 9600: train_loss = 0.790963, train_acc = 0.687500, train ppl = 1.485099
+Step 9700: train_loss = 1.255612, train_acc = 0.437500, train ppl = 1.873496
+Step 9800: train_loss = 1.277590, train_acc = 0.750000, train ppl = 1.894197
+Step 9900: train_loss = 1.161070, train_acc = 0.687500, train ppl = 1.786994
+Step 10000: train_loss = 0.746759, train_acc = 0.750000, train ppl = 1.452636
+Step 10100: train_loss = 3.038041, train_acc = 0.625000, train ppl = 4.567749
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.750000 -- validation perplexity = 1.917199
+Epoch 18: test accuracy: 0.741000
+---- Qualitative Analysis
+Context: why did jason get the pajamas ? yann is thirsty . yann moved to the kitchen . antoine is bored . sumit is hungry . sumit went back to the kitchen . antoine went back to the garden . yann took the milk there . antoine picked up the football there . sumit got the apple there . jason is tired . jason went to the bedroom . jason picked up the pajamas there . why did jason get the pajamas ?
+Question: why did jason get the pajamas ?
+Answer: tired </s>
+Model prediction: tired </s>
+=========================
+Step 10200: train_loss = 0.646280, train_acc = 0.750000, train ppl = 1.381459
+Step 10300: train_loss = 0.137298, train_acc = 0.937500, train ppl = 1.071060
+Step 10400: train_loss = 1.647946, train_acc = 0.687500, train ppl = 2.279539
+Step 10500: train_loss = 0.060682, train_acc = 0.937500, train ppl = 1.030806
+Step 10600: train_loss = 0.533175, train_acc = 0.687500, train ppl = 1.305502
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.691000 -- validation perplexity = 1.709940
+Epoch 19: test accuracy: 0.672000
+---- Qualitative Analysis
+Context: where will antoine go ? antoine is bored . where will antoine go ?
+Question: where will antoine go ?
+Answer: garden </s>
+Model prediction: garden </s>
+=========================
+Step 10700: train_loss = 0.946107, train_acc = 0.687500, train ppl = 1.604887
+Step 10800: train_loss = 0.786715, train_acc = 0.562500, train ppl = 1.481948
+Step 10900: train_loss = 0.605033, train_acc = 0.687500, train ppl = 1.353260
+Step 11000: train_loss = 0.541950, train_acc = 0.687500, train ppl = 1.311242
+Step 11100: train_loss = 0.062496, train_acc = 1.000000, train ppl = 1.031741
+Step 11200: train_loss = 0.479537, train_acc = 0.875000, train ppl = 1.270955
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.903000 -- validation perplexity = 1.908233
+Epoch 20: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did antoine go to the kitchen ? sumit is thirsty . antoine is thirsty . yann is bored . antoine journeyed to the kitchen . why did antoine go to the kitchen ?
+Question: why did antoine go to the kitchen ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 11300: train_loss = 0.308563, train_acc = 0.812500, train ppl = 1.166819
+Step 11400: train_loss = 0.692582, train_acc = 0.875000, train ppl = 1.413814
+Step 11500: train_loss = 0.152510, train_acc = 0.875000, train ppl = 1.079238
+Step 11600: train_loss = 0.448781, train_acc = 0.875000, train ppl = 1.251559
+Step 11700: train_loss = 0.271696, train_acc = 0.812500, train ppl = 1.145508
+Step 11800: train_loss = 1.500582, train_acc = 0.750000, train ppl = 2.117616
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.914000 -- validation perplexity = 1.127856
+Epoch 21: test accuracy: 0.911000
+---- Qualitative Analysis
+Context: why did antoine get the football ? antoine is bored . jason is bored . yann is hungry . antoine moved to the garden . jason travelled to the garden . antoine picked up the football there . why did antoine get the football ?
+Question: why did antoine get the football ?
+Answer: bored </s>
+Model prediction: bored </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 11900: train_loss = 0.483239, train_acc = 0.750000, train ppl = 1.273310
+Step 12000: train_loss = 0.295548, train_acc = 0.937500, train ppl = 1.159251
+Step 12100: train_loss = 0.202013, train_acc = 0.937500, train ppl = 1.106284
+Step 12200: train_loss = 0.176680, train_acc = 0.937500, train ppl = 1.092360
+Step 12300: train_loss = 0.154484, train_acc = 0.937500, train ppl = 1.080303
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.903000 -- validation perplexity = 1.347269
+Epoch 22: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did jason go to the garden ? sumit is tired . jason is bored . sumit moved to the bedroom . sumit took the pajamas there . antoine is tired . antoine journeyed to the bedroom . yann is hungry . jason journeyed to the garden . why did jason go to the garden ?
+Question: why did jason go to the garden ?
+Answer: bored </s>
+Model prediction: bored </s>
+=========================
+Step 12400: train_loss = 0.174309, train_acc = 0.937500, train ppl = 1.091065
+Step 12500: train_loss = 0.003213, train_acc = 1.000000, train ppl = 1.001608
+Step 12600: train_loss = 0.705893, train_acc = 0.875000, train ppl = 1.423255
+Step 12700: train_loss = 0.033545, train_acc = 1.000000, train ppl = 1.016914
+Step 12800: train_loss = 1.247370, train_acc = 0.750000, train ppl = 1.865791
+Step 12900: train_loss = 0.284033, train_acc = 0.937500, train ppl = 1.152596
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.901000 -- validation perplexity = 1.081194
+Epoch 23: test accuracy: 0.908000
+---- Qualitative Analysis
+Context: why did antoine go to the bedroom ? jason is hungry . antoine is tired . antoine journeyed to the bedroom . why did antoine go to the bedroom ?
+Question: why did antoine go to the bedroom ?
+Answer: tired </s>
+Model prediction: tired </s>
+=========================
+Step 13000: train_loss = 0.205142, train_acc = 0.937500, train ppl = 1.108016
+Step 13100: train_loss = 1.001111, train_acc = 0.812500, train ppl = 1.649637
+Step 13200: train_loss = 0.007067, train_acc = 1.000000, train ppl = 1.003540
+Step 13300: train_loss = 0.327029, train_acc = 0.812500, train ppl = 1.177643
+Step 13400: train_loss = 0.251575, train_acc = 0.875000, train ppl = 1.134041
+Step 13500: train_loss = 0.287461, train_acc = 0.937500, train ppl = 1.154573
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.828000 -- validation perplexity = 1.411420
+Epoch 24: test accuracy: 0.811000
+---- Qualitative Analysis
+Context: where will jason go ? sumit is hungry . sumit journeyed to the kitchen . antoine is thirsty . yann is tired . jason is hungry . where will jason go ?
+Question: where will jason go ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 13600: train_loss = 0.169158, train_acc = 0.875000, train ppl = 1.088259
+Step 13700: train_loss = 0.095732, train_acc = 0.937500, train ppl = 1.049030
+Step 13800: train_loss = 0.012263, train_acc = 1.000000, train ppl = 1.006150
+Step 13900: train_loss = 1.554613, train_acc = 0.875000, train ppl = 2.175604
+Step 14000: train_loss = 0.110622, train_acc = 0.937500, train ppl = 1.056869
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.903000 -- validation perplexity = 1.128104
+Epoch 25: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: where will antoine go ? sumit is thirsty . jason is bored . antoine is tired . where will antoine go ?
+Question: where will antoine go ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 14100: train_loss = 0.379878, train_acc = 0.875000, train ppl = 1.209176
+Step 14200: train_loss = 0.004951, train_acc = 1.000000, train ppl = 1.002478
+Step 14300: train_loss = 0.530774, train_acc = 0.937500, train ppl = 1.303936
+Step 14400: train_loss = 0.633257, train_acc = 0.875000, train ppl = 1.372493
+Step 14500: train_loss = 0.303948, train_acc = 0.875000, train ppl = 1.164130
+Step 14600: train_loss = 0.060667, train_acc = 1.000000, train ppl = 1.030798
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.903000 -- validation perplexity = 1.437668
+Epoch 26: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did yann get the apple ? sumit is thirsty . jason is thirsty . yann is hungry . sumit went to the kitchen . yann travelled to the kitchen . antoine is thirsty . jason travelled to the kitchen . sumit picked up the milk there . antoine travelled to the kitchen . yann got the apple there . why did yann get the apple ?
+Question: why did yann get the apple ?
+Answer: hungry </s>
+Model prediction: hungry </s>
+=========================
+Step 14700: train_loss = 0.174823, train_acc = 0.875000, train ppl = 1.091346
+Step 14800: train_loss = 0.899521, train_acc = 0.937500, train ppl = 1.567937
+Step 14900: train_loss = 2.444618, train_acc = 0.750000, train ppl = 3.395018
+Step 15000: train_loss = 0.477129, train_acc = 0.750000, train ppl = 1.269426
+Step 15100: train_loss = 0.000035, train_acc = 1.000000, train ppl = 1.000018
+Step 15200: train_loss = 0.524537, train_acc = 0.875000, train ppl = 1.299875
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.903000 -- validation perplexity = 1.420611
+Epoch 27: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did sumit get the apple ? sumit is hungry . antoine is thirsty . sumit went back to the kitchen . antoine moved to the kitchen . antoine picked up the milk there . sumit picked up the apple there . why did sumit get the apple ?
+Question: why did sumit get the apple ?
+Answer: hungry </s>
+Model prediction: hungry </s>
+=========================
+Step 15300: train_loss = 0.326649, train_acc = 0.875000, train ppl = 1.177419
+Step 15400: train_loss = 0.517255, train_acc = 0.875000, train ppl = 1.295151
+Step 15500: train_loss = 0.307219, train_acc = 0.812500, train ppl = 1.166035
+Step 15600: train_loss = 0.506228, train_acc = 0.875000, train ppl = 1.288030
+Step 15700: train_loss = 0.513755, train_acc = 0.875000, train ppl = 1.292887
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.903000 -- validation perplexity = 1.191352
+Epoch 28: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did yann get the milk ? jason is tired . yann is thirsty . sumit is hungry . yann travelled to the kitchen . jason went to the bedroom . sumit went to the kitchen . antoine is hungry . antoine went to the kitchen . jason got the pajamas there . antoine got the apple there . yann got the milk there . why did yann get the milk ?
+Question: why did yann get the milk ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 15800: train_loss = 0.376423, train_acc = 0.875000, train ppl = 1.207089
+Step 15900: train_loss = 0.167284, train_acc = 0.937500, train ppl = 1.087240
+Step 16000: train_loss = 0.283174, train_acc = 0.812500, train ppl = 1.152101
+Step 16100: train_loss = 0.479833, train_acc = 0.875000, train ppl = 1.271143
+Step 16200: train_loss = 0.181098, train_acc = 0.937500, train ppl = 1.094775
+Step 16300: train_loss = 0.054270, train_acc = 1.000000, train ppl = 1.027506
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.914000 -- validation perplexity = 1.092675
+Epoch 29: test accuracy: 0.911000
+---- Qualitative Analysis
+Context: why did sumit go to the garden ? antoine is tired . jason is bored . sumit is bored . yann is bored . yann journeyed to the garden . jason went to the garden . jason picked up the football there . sumit went back to the garden . why did sumit go to the garden ?
+Question: why did sumit go to the garden ?
+Answer: bored </s>
+Model prediction: bored </s>
+=========================
+Step 16400: train_loss = 0.629606, train_acc = 0.875000, train ppl = 1.369989
+Step 16500: train_loss = 0.378024, train_acc = 0.812500, train ppl = 1.208055
+Step 16600: train_loss = 0.282537, train_acc = 0.937500, train ppl = 1.151734
+Step 16700: train_loss = 0.251949, train_acc = 0.937500, train ppl = 1.134253
+Step 16800: train_loss = 1.453069, train_acc = 0.812500, train ppl = 2.067902
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.914000 -- validation perplexity = 1.309686
+Epoch 30: test accuracy: 0.911000
+---- Qualitative Analysis
+Context: where will jason go ? antoine is tired . sumit is thirsty . jason is thirsty . where will jason go ?
+Question: where will jason go ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 16900: train_loss = 0.236350, train_acc = 0.875000, train ppl = 1.125441
+Step 17000: train_loss = 0.335938, train_acc = 0.875000, train ppl = 1.182900
+Step 17100: train_loss = 0.093777, train_acc = 0.937500, train ppl = 1.048005
+Step 17200: train_loss = 0.742487, train_acc = 0.937500, train ppl = 1.449536
+Step 17300: train_loss = 0.161839, train_acc = 0.937500, train ppl = 1.084284
+Step 17400: train_loss = 0.351874, train_acc = 0.937500, train ppl = 1.192363
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.914000 -- validation perplexity = 1.254120
+Epoch 31: test accuracy: 0.911000
+---- Qualitative Analysis
+Context: where will jason go ? yann is hungry . yann journeyed to the kitchen . sumit is tired . sumit travelled to the bedroom . sumit got the pajamas there . yann got the apple there . jason is tired . where will jason go ?
+Question: where will jason go ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 17500: train_loss = 0.260568, train_acc = 0.937500, train ppl = 1.139152
+Step 17600: train_loss = 0.414978, train_acc = 0.875000, train ppl = 1.230584
+Step 17700: train_loss = 0.262836, train_acc = 0.937500, train ppl = 1.140444
+Step 17800: train_loss = 0.067110, train_acc = 0.937500, train ppl = 1.034124
+Step 17900: train_loss = 0.089079, train_acc = 0.937500, train ppl = 1.045546
+Step 18000: train_loss = 0.339383, train_acc = 0.937500, train ppl = 1.184939
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.903000 -- validation perplexity = 1.351453
+Epoch 32: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did yann get the milk ? antoine is tired . yann is thirsty . sumit is tired . antoine travelled to the bedroom . sumit moved to the bedroom . yann travelled to the kitchen . antoine grabbed the pajamas there . jason is bored . jason went back to the garden . jason grabbed the football there . yann took the milk there . why did yann get the milk ?
+Question: why did yann get the milk ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 18100: train_loss = 2.216565, train_acc = 0.812500, train ppl = 3.029151
+Step 18200: train_loss = 3.002974, train_acc = 0.812500, train ppl = 4.488358
+Step 18300: train_loss = 0.000046, train_acc = 1.000000, train ppl = 1.000023
+Step 18400: train_loss = 0.056897, train_acc = 1.000000, train ppl = 1.028857
+Step 18500: train_loss = 0.188531, train_acc = 0.875000, train ppl = 1.098852
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.903000 -- validation perplexity = 1.163600
+Epoch 33: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did sumit go to the kitchen ? antoine is bored . sumit is thirsty . sumit went to the kitchen . why did sumit go to the kitchen ?
+Question: why did sumit go to the kitchen ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 18600: train_loss = 1.207820, train_acc = 0.812500, train ppl = 1.829257
+Step 18700: train_loss = 0.098263, train_acc = 0.937500, train ppl = 1.050358
+Step 18800: train_loss = 0.151027, train_acc = 0.937500, train ppl = 1.078438
+Step 18900: train_loss = 0.092983, train_acc = 0.937500, train ppl = 1.047589
+Step 19000: train_loss = 0.000312, train_acc = 1.000000, train ppl = 1.000156
+Step 19100: train_loss = 0.842426, train_acc = 0.875000, train ppl = 1.523809
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.903000 -- validation perplexity = 1.279974
+Epoch 34: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: where will antoine go ? jason is bored . antoine is tired . where will antoine go ?
+Question: where will antoine go ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 19200: train_loss = 0.267368, train_acc = 0.937500, train ppl = 1.143031
+Step 19300: train_loss = 0.315244, train_acc = 0.937500, train ppl = 1.170724
+Step 19400: train_loss = 0.290157, train_acc = 0.937500, train ppl = 1.156130
+Step 19500: train_loss = 0.182471, train_acc = 0.937500, train ppl = 1.095527
+Step 19600: train_loss = 0.577273, train_acc = 0.875000, train ppl = 1.334606
+Step 19700: train_loss = 0.005076, train_acc = 1.000000, train ppl = 1.002541
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.914000 -- validation perplexity = 1.088005
+Epoch 35: test accuracy: 0.911000
+---- Qualitative Analysis
+Context: where will antoine go ? sumit is tired . jason is thirsty . sumit went back to the bedroom . jason moved to the kitchen . sumit got the pajamas there . antoine is tired . where will antoine go ?
+Question: where will antoine go ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 19800: train_loss = 1.123667, train_acc = 0.750000, train ppl = 1.753885
+Step 19900: train_loss = 0.031393, train_acc = 1.000000, train ppl = 1.015821
+Step 20000: train_loss = 2.185619, train_acc = 0.812500, train ppl = 2.982643
+Step 20100: train_loss = 0.384201, train_acc = 0.812500, train ppl = 1.211792
+Step 20200: train_loss = 0.606156, train_acc = 0.875000, train ppl = 1.354020
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.903000 -- validation perplexity = 1.309575
+Epoch 36: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did jason get the football ? antoine is bored . jason is bored . jason travelled to the garden . yann is hungry . yann journeyed to the kitchen . sumit is hungry . sumit journeyed to the kitchen . yann grabbed the apple there . antoine journeyed to the garden . jason picked up the football there . why did jason get the football ?
+Question: why did jason get the football ?
+Answer: bored </s>
+Model prediction: bored </s>
+=========================
+Step 20300: train_loss = 0.001582, train_acc = 1.000000, train ppl = 1.000791
+Step 20400: train_loss = 0.464030, train_acc = 0.937500, train ppl = 1.261139
+Step 20500: train_loss = 0.173190, train_acc = 0.937500, train ppl = 1.090455
+Step 20600: train_loss = 0.521153, train_acc = 0.937500, train ppl = 1.297678
+Step 20700: train_loss = 0.006226, train_acc = 1.000000, train ppl = 1.003118
+Step 20800: train_loss = 0.263789, train_acc = 0.875000, train ppl = 1.140988
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.903000 -- validation perplexity = 1.094173
+Epoch 37: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: where will jason go ? yann is thirsty . yann journeyed to the kitchen . sumit is thirsty . yann picked up the milk there . antoine is tired . jason is tired . where will jason go ?
+Question: where will jason go ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 20900: train_loss = 0.000253, train_acc = 1.000000, train ppl = 1.000127
+Step 21000: train_loss = 0.562151, train_acc = 0.875000, train ppl = 1.324553
+Step 21100: train_loss = 0.298223, train_acc = 0.937500, train ppl = 1.160802
+Step 21200: train_loss = 0.496061, train_acc = 0.687500, train ppl = 1.281499
+Step 21300: train_loss = 0.173172, train_acc = 0.937500, train ppl = 1.090445
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.914000 -- validation perplexity = 1.174522
+Epoch 38: test accuracy: 0.911000
+---- Qualitative Analysis
+Context: why did yann get the apple ? antoine is bored . jason is bored . jason travelled to the garden . yann is hungry . yann journeyed to the kitchen . sumit is hungry . sumit journeyed to the kitchen . yann grabbed the apple there . why did yann get the apple ?
+Question: why did yann get the apple ?
+Answer: hungry </s>
+Model prediction: hungry </s>
+=========================
+Step 21400: train_loss = 0.010179, train_acc = 1.000000, train ppl = 1.005102
+Step 21500: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 21600: train_loss = 0.912810, train_acc = 0.875000, train ppl = 1.578390
+Step 21700: train_loss = 0.002332, train_acc = 1.000000, train ppl = 1.001167
+Step 21800: train_loss = 0.118081, train_acc = 0.937500, train ppl = 1.060818
+Step 21900: train_loss = 0.011950, train_acc = 1.000000, train ppl = 1.005993
+==== Finshed epoch 39 ====
+Evaluating model...
+Epoch 39: validation accuracy = 0.903000 -- validation perplexity = 1.119832
+Epoch 39: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: where will sumit go ? yann is thirsty . yann moved to the kitchen . antoine is bored . sumit is hungry . where will sumit go ?
+Question: where will sumit go ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 22000: train_loss = 0.035264, train_acc = 1.000000, train ppl = 1.017789
+Step 22100: train_loss = 0.202602, train_acc = 0.812500, train ppl = 1.106610
+Step 22200: train_loss = 0.109467, train_acc = 0.937500, train ppl = 1.056259
+Step 22300: train_loss = 1.991991, train_acc = 0.875000, train ppl = 2.707418
+Step 22400: train_loss = 0.195419, train_acc = 0.875000, train ppl = 1.102642
+Step 22500: train_loss = 0.082700, train_acc = 0.937500, train ppl = 1.042217
+==== Finshed epoch 40 ====
+Evaluating model...
+Epoch 40: validation accuracy = 0.733000 -- validation perplexity = 2.666783
+Epoch 40: test accuracy: 0.707000
+---- Qualitative Analysis
+Context: why did sumit get the milk ? antoine is thirsty . antoine went back to the kitchen . sumit is thirsty . sumit travelled to the kitchen . sumit got the milk there . why did sumit get the milk ?
+Question: why did sumit get the milk ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 22600: train_loss = 1.582482, train_acc = 0.750000, train ppl = 2.206132
+Step 22700: train_loss = 0.135624, train_acc = 0.875000, train ppl = 1.070164
+Step 22800: train_loss = 0.053186, train_acc = 1.000000, train ppl = 1.026950
+Step 22900: train_loss = 0.149477, train_acc = 0.875000, train ppl = 1.077603
+Step 23000: train_loss = 0.193889, train_acc = 0.875000, train ppl = 1.101799
+==== Finshed epoch 41 ====
+Evaluating model...
+Epoch 41: validation accuracy = 0.903000 -- validation perplexity = 1.250054
+Epoch 41: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did jason get the milk ? sumit is hungry . yann is thirsty . antoine is thirsty . sumit went to the kitchen . jason is thirsty . sumit got the apple there . jason journeyed to the kitchen . yann moved to the kitchen . jason got the milk there . why did jason get the milk ?
+Question: why did jason get the milk ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 23100: train_loss = 0.193696, train_acc = 0.875000, train ppl = 1.101693
+Step 23200: train_loss = 0.002139, train_acc = 1.000000, train ppl = 1.001070
+Step 23300: train_loss = 0.434228, train_acc = 0.937500, train ppl = 1.242486
+Step 23400: train_loss = 0.293626, train_acc = 0.937500, train ppl = 1.158137
+Step 23500: train_loss = 0.019533, train_acc = 1.000000, train ppl = 1.009814
+Step 23600: train_loss = 0.373980, train_acc = 0.750000, train ppl = 1.205615
+==== Finshed epoch 42 ====
+Evaluating model...
+Epoch 42: validation accuracy = 0.903000 -- validation perplexity = 1.125183
+Epoch 42: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: where will yann go ? jason is thirsty . antoine is bored . jason went to the kitchen . antoine journeyed to the garden . sumit is hungry . antoine grabbed the football there . sumit went to the kitchen . jason took the milk there . sumit took the apple there . yann is thirsty . where will yann go ?
+Question: where will yann go ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 23700: train_loss = 1.571839, train_acc = 0.750000, train ppl = 2.194424
+Step 23800: train_loss = 0.006031, train_acc = 1.000000, train ppl = 1.003020
+Step 23900: train_loss = 0.209099, train_acc = 0.875000, train ppl = 1.110210
+Step 24000: train_loss = 0.220651, train_acc = 0.937500, train ppl = 1.116642
+Step 24100: train_loss = 1.473444, train_acc = 0.875000, train ppl = 2.089076
+Step 24200: train_loss = 0.057513, train_acc = 1.000000, train ppl = 1.029174
+==== Finshed epoch 43 ====
+Evaluating model...
+Epoch 43: validation accuracy = 0.903000 -- validation perplexity = 1.158059
+Epoch 43: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: why did yann get the pajamas ? jason is bored . antoine is bored . yann is tired . antoine travelled to the garden . yann went to the bedroom . yann took the pajamas there . why did yann get the pajamas ?
+Question: why did yann get the pajamas ?
+Answer: tired </s>
+Model prediction: tired </s>
+=========================
+Step 24300: train_loss = 0.135169, train_acc = 0.937500, train ppl = 1.069921
+Step 24400: train_loss = 0.289896, train_acc = 0.937500, train ppl = 1.155979
+Step 24500: train_loss = 0.128136, train_acc = 0.937500, train ppl = 1.066165
+Step 24600: train_loss = 0.433781, train_acc = 0.937500, train ppl = 1.242208
+Step 24700: train_loss = 0.480740, train_acc = 0.937500, train ppl = 1.271719
+==== Finshed epoch 44 ====
+Evaluating model...
+Epoch 44: validation accuracy = 0.914000 -- validation perplexity = 1.122664
+Epoch 44: test accuracy: 0.911000
+---- Qualitative Analysis
+Context: why did jason get the milk ? antoine is bored . jason is thirsty . antoine journeyed to the garden . jason went back to the kitchen . sumit is hungry . jason grabbed the milk there . why did jason get the milk ?
+Question: why did jason get the milk ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 24800: train_loss = 0.148458, train_acc = 0.937500, train ppl = 1.077053
+Step 24900: train_loss = 0.875834, train_acc = 0.750000, train ppl = 1.549477
+Step 25000: train_loss = 0.000552, train_acc = 1.000000, train ppl = 1.000276
+Step 25100: train_loss = 0.212985, train_acc = 0.812500, train ppl = 1.112370
+Step 25200: train_loss = 0.262783, train_acc = 0.875000, train ppl = 1.140414
+Step 25300: train_loss = 0.361623, train_acc = 0.937500, train ppl = 1.198189
+==== Finshed epoch 45 ====
+Evaluating model...
+Epoch 45: validation accuracy = 0.903000 -- validation perplexity = 1.195885
+Epoch 45: test accuracy: 0.909000
+---- Qualitative Analysis
+Context: where will sumit go ? antoine is bored . sumit is thirsty . where will sumit go ?
+Question: where will sumit go ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 25400: train_loss = 0.168397, train_acc = 0.937500, train ppl = 1.087845
+Step 25500: train_loss = 0.262204, train_acc = 0.937500, train ppl = 1.140084
+Step 25600: train_loss = 0.256666, train_acc = 0.750000, train ppl = 1.136932
+Step 25700: train_loss = 0.287128, train_acc = 0.937500, train ppl = 1.154381
+Step 25800: train_loss = 1.196406, train_acc = 0.937500, train ppl = 1.818848
+==== Finshed epoch 46 ====
+Evaluating model...
+Epoch 46: validation accuracy = 0.819000 -- validation perplexity = 1.893205
+Epoch 46: test accuracy: 0.815000
+---- Qualitative Analysis
+Context: why did antoine get the apple ? yann is bored . yann went back to the garden . antoine is hungry . sumit is bored . sumit went to the garden . sumit took the football there . jason is tired . jason journeyed to the bedroom . antoine went to the kitchen . jason picked up the pajamas there . antoine took the apple there . why did antoine get the apple ?
+Question: why did antoine get the apple ?
+Answer: hungry </s>
+Model prediction: hungry </s>
+=========================
+Step 25900: train_loss = 0.877686, train_acc = 0.875000, train ppl = 1.550912
+Step 26000: train_loss = 0.448526, train_acc = 0.750000, train ppl = 1.251400
+Step 26100: train_loss = 0.136645, train_acc = 0.937500, train ppl = 1.070711
+Step 26200: train_loss = 0.002872, train_acc = 1.000000, train ppl = 1.001437
+Step 26300: train_loss = 0.997178, train_acc = 0.750000, train ppl = 1.646397
+Step 26400: train_loss = 0.482648, train_acc = 0.875000, train ppl = 1.272933
+==== Finshed epoch 47 ====
+Evaluating model...
+Epoch 47: validation accuracy = 0.912000 -- validation perplexity = 1.088318
+Epoch 47: test accuracy: 0.921000
+---- Qualitative Analysis
+Context: why did sumit get the milk ? jason is tired . yann is bored . sumit is thirsty . antoine is hungry . sumit travelled to the kitchen . yann moved to the garden . yann grabbed the football there . sumit took the milk there . why did sumit get the milk ?
+Question: why did sumit get the milk ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Step 26500: train_loss = 0.199724, train_acc = 0.875000, train ppl = 1.105019
+Step 26600: train_loss = 0.001885, train_acc = 1.000000, train ppl = 1.000943
+Step 26700: train_loss = 0.000152, train_acc = 1.000000, train ppl = 1.000076
+Step 26800: train_loss = 0.000009, train_acc = 1.000000, train ppl = 1.000004
+Step 26900: train_loss = 0.000000, train_acc = 1.000000, train ppl = 1.000000
+Step 27000: train_loss = 0.393475, train_acc = 0.812500, train ppl = 1.217424
+==== Finshed epoch 48 ====
+Evaluating model...
+Epoch 48: validation accuracy = 0.925000 -- validation perplexity = 1.110578
+Epoch 48: test accuracy: 0.924000
+---- Qualitative Analysis
+Context: why did jason go to the kitchen ? antoine is tired . sumit is thirsty . jason is hungry . jason moved to the kitchen . why did jason go to the kitchen ?
+Question: why did jason go to the kitchen ?
+Answer: hungry </s>
+Model prediction: hungry </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 27100: train_loss = 0.496485, train_acc = 0.937500, train ppl = 1.281771
+Step 27200: train_loss = 0.000487, train_acc = 1.000000, train ppl = 1.000243
+Step 27300: train_loss = 0.005083, train_acc = 1.000000, train ppl = 1.002545
+Step 27400: train_loss = 0.059279, train_acc = 1.000000, train ppl = 1.030083
+Step 27500: train_loss = 0.000054, train_acc = 1.000000, train ppl = 1.000027
+==== Finshed epoch 49 ====
+Evaluating model...
+Epoch 49: validation accuracy = 0.928000 -- validation perplexity = 1.078046
+Epoch 49: test accuracy: 0.931000
+---- Qualitative Analysis
+Context: why did antoine go to the bedroom ? antoine is tired . antoine went back to the bedroom . why did antoine go to the bedroom ?
+Question: why did antoine go to the bedroom ?
+Answer: tired </s>
+Model prediction: tired </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 27600: train_loss = 0.143314, train_acc = 0.937500, train ppl = 1.074287
+Step 27700: train_loss = 0.467830, train_acc = 0.937500, train ppl = 1.263537
+Step 27800: train_loss = 0.705190, train_acc = 0.937500, train ppl = 1.422755
+Step 27900: train_loss = 0.385112, train_acc = 0.875000, train ppl = 1.212345
+Step 28000: train_loss = 0.344554, train_acc = 0.937500, train ppl = 1.188007
+Step 28100: train_loss = 0.193582, train_acc = 0.937500, train ppl = 1.101630
+==== Finshed epoch 50 ====
+Evaluating model...
+Epoch 50: validation accuracy = 0.909000 -- validation perplexity = 1.163207
+Epoch 50: test accuracy: 0.917000
+---- Qualitative Analysis
+Context: why did jason go to the kitchen ? yann is bored . jason is thirsty . sumit is hungry . antoine is hungry . yann journeyed to the garden . yann got the football there . antoine went back to the kitchen . jason travelled to the kitchen . why did jason go to the kitchen ?
+Question: why did jason go to the kitchen ?
+Answer: thirsty </s>
+Model prediction: thirsty </s>
+=========================
+Best model (acc) at epoch 49 -- validation perplexity = 1.078046 -- validation accuracy = 0.928000 -- test accuracy = 0.931000
+0.928

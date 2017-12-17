@@ -1,0 +1,514 @@
+embedding_size:           128
+encoder_type:             bi
+task:                     8
+cell_type:                gru
+num_units:                256
+batch_size:               8
+dropout_keep_prob:        0.7
+data_dir:                 data/en-10k
+model_type:               attention
+learning_rate:            0.001
+num_enc_layers:           1
+vocab:                    data/vocab.txt
+merge_mode:               concat
+max_gradient_norm:        1.0
+val_split:                0.1
+model_dir:                models/dummy
+restore_from_dir:         None
+num_epochs:               50
+optimizer:                adam
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: what is daniel carrying ? daniel got the football there . sandra travelled to the hallway . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: football </s>
+Model prediction: 101 101 101 101 101 101 101 101 101 101
+=========================
+Step 100: train_loss = 1.369511, train_acc = 0.375000, train ppl = 1.983287
+Step 200: train_loss = 1.586820, train_acc = 0.125000, train ppl = 2.210922
+Step 300: train_loss = 1.329580, train_acc = 0.375000, train ppl = 1.944082
+Step 400: train_loss = 1.311473, train_acc = 0.500000, train ppl = 1.926561
+Step 500: train_loss = 1.182550, train_acc = 0.500000, train ppl = 1.806290
+Step 600: train_loss = 1.082453, train_acc = 0.625000, train ppl = 1.718113
+Step 700: train_loss = 3.725779, train_acc = 0.500000, train ppl = 4.800639
+Step 800: train_loss = 2.027270, train_acc = 0.625000, train ppl = 2.462085
+Step 900: train_loss = 1.462064, train_acc = 0.750000, train ppl = 1.989792
+Step 1000: train_loss = 0.937440, train_acc = 0.750000, train ppl = 1.597947
+Step 1100: train_loss = 1.787374, train_acc = 0.750000, train ppl = 2.213087
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.767833 -- validation perplexity = 1.602326
+Epoch 1: test accuracy: 0.782667
+---- Qualitative Analysis
+Context: what is mary carrying ? john went back to the office . john went back to the kitchen . daniel travelled to the bedroom . sandra travelled to the garden . john moved to the office . sandra travelled to the office . mary travelled to the hallway . mary journeyed to the office . mary went back to the bathroom . sandra journeyed to the garden . mary got the milk there . mary took the football there . daniel went back to the garden . mary moved to the kitchen . john journeyed to the hallway . mary put down the milk . what is mary carrying ?
+Question: what is mary carrying ?
+Answer: football </s>
+Model prediction: nothing </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 1200: train_loss = 2.880835, train_acc = 0.625000, train ppl = 3.363503
+Step 1300: train_loss = 0.489220, train_acc = 0.750000, train ppl = 1.277123
+Step 1400: train_loss = 1.677026, train_acc = 0.375000, train ppl = 2.201610
+Step 1500: train_loss = 0.714981, train_acc = 0.750000, train ppl = 1.429737
+Step 1600: train_loss = 1.101851, train_acc = 0.625000, train ppl = 1.734857
+Step 1700: train_loss = 0.277258, train_acc = 0.875000, train ppl = 1.148698
+Step 1800: train_loss = 0.511428, train_acc = 0.875000, train ppl = 1.291384
+Step 1900: train_loss = 0.507341, train_acc = 0.875000, train ppl = 1.288747
+Step 2000: train_loss = 0.368567, train_acc = 0.875000, train ppl = 1.202357
+Step 2100: train_loss = 0.446435, train_acc = 0.875000, train ppl = 1.250092
+Step 2200: train_loss = 0.400979, train_acc = 0.875000, train ppl = 1.222001
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.770500 -- validation perplexity = 1.431195
+Epoch 2: test accuracy: 0.769000
+---- Qualitative Analysis
+Context: what is sandra carrying ? sandra grabbed the milk there . sandra dropped the milk there . mary went back to the garden . daniel picked up the apple there . sandra picked up the milk there . sandra left the milk . what is sandra carrying ?
+Question: what is sandra carrying ?
+Answer: nothing </s>
+Model prediction: apple </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 2300: train_loss = 0.156148, train_acc = 1.000000, train ppl = 1.081203
+Step 2400: train_loss = 0.250687, train_acc = 0.875000, train ppl = 1.133538
+Step 2500: train_loss = 0.991176, train_acc = 0.875000, train ppl = 1.594301
+Step 2600: train_loss = 0.789678, train_acc = 0.812500, train ppl = 1.450072
+Step 2700: train_loss = 0.280264, train_acc = 0.875000, train ppl = 1.150426
+Step 2800: train_loss = 0.137493, train_acc = 1.000000, train ppl = 1.071164
+Step 2900: train_loss = 0.417100, train_acc = 0.875000, train ppl = 1.231890
+Step 3000: train_loss = 0.860021, train_acc = 0.812500, train ppl = 1.465551
+Step 3100: train_loss = 0.951381, train_acc = 0.875000, train ppl = 1.564723
+Step 3200: train_loss = 0.283982, train_acc = 0.875000, train ppl = 1.152567
+Step 3300: train_loss = 0.634183, train_acc = 0.750000, train ppl = 1.347754
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.778667 -- validation perplexity = 1.406297
+Epoch 3: test accuracy: 0.781333
+---- Qualitative Analysis
+Context: what is daniel carrying ? john journeyed to the hallway . daniel picked up the milk there . mary took the football there . mary left the football . mary went to the bedroom . mary went to the kitchen . daniel discarded the milk there . daniel got the milk there . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: milk </s>
+Model prediction: milk </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 3400: train_loss = 0.828812, train_acc = 0.750000, train ppl = 1.477024
+Step 3500: train_loss = 1.122793, train_acc = 0.500000, train ppl = 1.696170
+Step 3600: train_loss = 0.275501, train_acc = 0.875000, train ppl = 1.147689
+Step 3700: train_loss = 0.475221, train_acc = 0.750000, train ppl = 1.268215
+Step 3800: train_loss = 1.275366, train_acc = 0.562500, train ppl = 1.822433
+Step 3900: train_loss = 1.066344, train_acc = 0.687500, train ppl = 1.606296
+Step 4000: train_loss = 0.774693, train_acc = 0.750000, train ppl = 1.439882
+Step 4100: train_loss = 0.950558, train_acc = 0.750000, train ppl = 1.564117
+Step 4200: train_loss = 0.540884, train_acc = 0.875000, train ppl = 1.310544
+Step 4300: train_loss = 0.648961, train_acc = 0.875000, train ppl = 1.383312
+Step 4400: train_loss = 0.893650, train_acc = 0.875000, train ppl = 1.522785
+Step 4500: train_loss = 0.212710, train_acc = 0.875000, train ppl = 1.112216
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.784000 -- validation perplexity = 1.372114
+Epoch 4: test accuracy: 0.776333
+---- Qualitative Analysis
+Context: what is daniel carrying ? daniel went back to the garden . sandra travelled to the hallway . daniel moved to the bathroom . daniel took the football there . john travelled to the bathroom . daniel took the milk there . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: football milk </s>
+Model prediction: milk </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 4600: train_loss = 1.075909, train_acc = 0.750000, train ppl = 1.613138
+Step 4700: train_loss = 1.562763, train_acc = 0.687500, train ppl = 1.930937
+Step 4800: train_loss = 0.185859, train_acc = 1.000000, train ppl = 1.097385
+Step 4900: train_loss = 0.726382, train_acc = 0.687500, train ppl = 1.407516
+Step 5000: train_loss = 1.027060, train_acc = 0.687500, train ppl = 1.578494
+Step 5100: train_loss = 0.377415, train_acc = 0.875000, train ppl = 1.207687
+Step 5200: train_loss = 0.187234, train_acc = 1.000000, train ppl = 1.098139
+Step 5300: train_loss = 1.060708, train_acc = 0.375000, train ppl = 1.699534
+Step 5400: train_loss = 0.497671, train_acc = 0.937500, train ppl = 1.263895
+Step 5500: train_loss = 0.515102, train_acc = 0.625000, train ppl = 1.293758
+Step 5600: train_loss = 1.472601, train_acc = 0.625000, train ppl = 1.924160
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.778167 -- validation perplexity = 1.361923
+Epoch 5: test accuracy: 0.779333
+---- Qualitative Analysis
+Context: what is mary carrying ? daniel travelled to the bedroom . sandra got the apple there . sandra put down the apple there . sandra moved to the kitchen . mary went back to the bathroom . john picked up the apple there . mary picked up the football there . john dropped the apple . mary journeyed to the garden . sandra went back to the garden . what is mary carrying ?
+Question: what is mary carrying ?
+Answer: football </s>
+Model prediction: nothing </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 5700: train_loss = 0.669185, train_acc = 0.750000, train ppl = 1.397371
+Step 5800: train_loss = 0.676967, train_acc = 0.750000, train ppl = 1.375164
+Step 5900: train_loss = 0.646667, train_acc = 0.750000, train ppl = 1.381726
+Step 6000: train_loss = 0.881607, train_acc = 0.500000, train ppl = 1.553955
+Step 6100: train_loss = 0.101704, train_acc = 1.000000, train ppl = 1.052167
+Step 6200: train_loss = 0.168247, train_acc = 1.000000, train ppl = 1.087763
+Step 6300: train_loss = 0.685109, train_acc = 0.812500, train ppl = 1.380443
+Step 6400: train_loss = 0.914850, train_acc = 0.750000, train ppl = 1.501704
+Step 6500: train_loss = 1.358850, train_acc = 0.687500, train ppl = 1.829300
+Step 6600: train_loss = 0.202143, train_acc = 0.875000, train ppl = 1.106356
+Step 6700: train_loss = 0.652411, train_acc = 0.875000, train ppl = 1.359364
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.784333 -- validation perplexity = 1.355031
+Epoch 6: test accuracy: 0.759833
+---- Qualitative Analysis
+Context: what is john carrying ? john moved to the kitchen . daniel went back to the office . john went to the garden . john travelled to the hallway . john picked up the milk there . daniel went to the bedroom . sandra went back to the office . john moved to the bedroom . sandra travelled to the hallway . mary went to the bedroom . john journeyed to the bathroom . john put down the milk there . mary went to the garden . sandra travelled to the bathroom . john grabbed the football there . sandra picked up the milk there . what is john carrying ?
+Question: what is john carrying ?
+Answer: football </s>
+Model prediction: milk </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 6800: train_loss = 0.360194, train_acc = 0.875000, train ppl = 1.197334
+Step 6900: train_loss = 0.376332, train_acc = 0.875000, train ppl = 1.207034
+Step 7000: train_loss = 1.158693, train_acc = 0.791667, train ppl = 1.673596
+Step 7100: train_loss = 0.315561, train_acc = 1.000000, train ppl = 1.170909
+Step 7200: train_loss = 0.883596, train_acc = 0.687500, train ppl = 1.515598
+Step 7300: train_loss = 0.343440, train_acc = 0.875000, train ppl = 1.187346
+Step 7400: train_loss = 0.392890, train_acc = 0.750000, train ppl = 1.217068
+Step 7500: train_loss = 0.365104, train_acc = 0.937500, train ppl = 1.187457
+Step 7600: train_loss = 0.020833, train_acc = 1.000000, train ppl = 1.010471
+Step 7700: train_loss = 0.512345, train_acc = 0.625000, train ppl = 1.291976
+Step 7800: train_loss = 0.092361, train_acc = 1.000000, train ppl = 1.047263
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.772167 -- validation perplexity = 1.341618
+Epoch 7: test accuracy: 0.762167
+---- Qualitative Analysis
+Context: what is mary carrying ? mary grabbed the milk there . mary moved to the kitchen . mary put down the milk . john took the milk there . mary got the football there . john journeyed to the office . mary left the football . john left the milk . sandra grabbed the football there . john moved to the bathroom . what is mary carrying ?
+Question: what is mary carrying ?
+Answer: nothing </s>
+Model prediction: nothing </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 7900: train_loss = 0.844838, train_acc = 0.625000, train ppl = 1.488205
+Step 8000: train_loss = 0.635165, train_acc = 0.750000, train ppl = 1.348377
+Step 8100: train_loss = 0.146634, train_acc = 1.000000, train ppl = 1.076072
+Step 8200: train_loss = 0.317666, train_acc = 0.875000, train ppl = 1.172142
+Step 8300: train_loss = 0.645471, train_acc = 0.625000, train ppl = 1.380900
+Step 8400: train_loss = 0.277007, train_acc = 0.875000, train ppl = 1.148554
+Step 8500: train_loss = 0.353163, train_acc = 0.750000, train ppl = 1.193131
+Step 8600: train_loss = 0.620056, train_acc = 0.937500, train ppl = 1.338823
+Step 8700: train_loss = 0.507379, train_acc = 0.875000, train ppl = 1.269682
+Step 8800: train_loss = 0.425473, train_acc = 0.937500, train ppl = 1.221675
+Step 8900: train_loss = 0.882280, train_acc = 0.750000, train ppl = 1.554479
+Step 9000: train_loss = 0.321271, train_acc = 0.750000, train ppl = 1.174257
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.781333 -- validation perplexity = 1.359054
+Epoch 8: test accuracy: 0.754833
+---- Qualitative Analysis
+Context: what is sandra carrying ? daniel travelled to the bathroom . sandra journeyed to the kitchen . sandra went to the office . daniel moved to the kitchen . sandra grabbed the milk there . sandra dropped the milk . sandra grabbed the milk there . sandra took the apple there . sandra dropped the milk . john moved to the garden . sandra journeyed to the bathroom . john journeyed to the hallway . what is sandra carrying ?
+Question: what is sandra carrying ?
+Answer: apple </s>
+Model prediction: nothing </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 9100: train_loss = 1.169834, train_acc = 0.750000, train ppl = 1.681904
+Step 9200: train_loss = 0.836543, train_acc = 0.812500, train ppl = 1.482407
+Step 9300: train_loss = 0.320030, train_acc = 0.875000, train ppl = 1.173528
+Step 9400: train_loss = 0.620251, train_acc = 0.937500, train ppl = 1.338946
+Step 9500: train_loss = 0.244725, train_acc = 1.000000, train ppl = 1.130164
+Step 9600: train_loss = 1.233014, train_acc = 0.437500, train ppl = 1.786471
+Step 9700: train_loss = 0.772960, train_acc = 0.875000, train ppl = 1.409927
+Step 9800: train_loss = 0.376573, train_acc = 0.625000, train ppl = 1.207179
+Step 9900: train_loss = 0.875390, train_acc = 0.812500, train ppl = 1.509756
+Step 10000: train_loss = 0.218310, train_acc = 0.875000, train ppl = 1.115335
+Step 10100: train_loss = 0.734376, train_acc = 0.625000, train ppl = 1.443670
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.777000 -- validation perplexity = 1.360251
+Epoch 9: test accuracy: 0.749833
+---- Qualitative Analysis
+Context: what is mary carrying ? sandra went back to the kitchen . mary got the milk there . sandra moved to the hallway . daniel travelled to the hallway . daniel travelled to the kitchen . mary took the football there . sandra journeyed to the bedroom . sandra moved to the garden . mary dropped the milk . mary moved to the bedroom . what is mary carrying ?
+Question: what is mary carrying ?
+Answer: football </s>
+Model prediction: nothing </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 10200: train_loss = 0.117964, train_acc = 1.000000, train ppl = 1.060756
+Step 10300: train_loss = 0.305659, train_acc = 0.875000, train ppl = 1.165127
+Step 10400: train_loss = 0.277109, train_acc = 0.875000, train ppl = 1.148612
+Step 10500: train_loss = 0.398502, train_acc = 0.750000, train ppl = 1.220488
+Step 10600: train_loss = 1.728963, train_acc = 0.250000, train ppl = 2.256082
+Step 10700: train_loss = 0.208191, train_acc = 0.875000, train ppl = 1.109707
+Step 10800: train_loss = 0.113611, train_acc = 1.000000, train ppl = 1.058450
+Step 10900: train_loss = 0.729350, train_acc = 0.750000, train ppl = 1.440046
+Step 11000: train_loss = 0.515023, train_acc = 0.750000, train ppl = 1.293707
+Step 11100: train_loss = 0.997994, train_acc = 0.750000, train ppl = 1.599425
+Step 11200: train_loss = 0.749265, train_acc = 0.562500, train ppl = 1.422755
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.795667 -- validation perplexity = 1.345138
+Epoch 10: test accuracy: 0.764833
+---- Qualitative Analysis
+Context: what is john carrying ? john got the milk there . john left the milk . daniel went to the garden . john got the milk there . daniel travelled to the bedroom . john discarded the milk . what is john carrying ?
+Question: what is john carrying ?
+Answer: nothing </s>
+Model prediction: nothing </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 11300: train_loss = 0.579146, train_acc = 0.750000, train ppl = 1.335857
+Step 11400: train_loss = 0.847885, train_acc = 0.812500, train ppl = 1.490340
+Step 11500: train_loss = 0.064747, train_acc = 1.000000, train ppl = 1.032903
+Step 11600: train_loss = 0.243868, train_acc = 0.875000, train ppl = 1.129680
+Step 11700: train_loss = 0.383997, train_acc = 0.750000, train ppl = 1.211669
+Step 11800: train_loss = 0.272970, train_acc = 0.875000, train ppl = 1.146238
+Step 11900: train_loss = 0.130135, train_acc = 1.000000, train ppl = 1.063154
+Step 12000: train_loss = 0.161229, train_acc = 1.000000, train ppl = 1.083953
+Step 12100: train_loss = 0.344782, train_acc = 0.875000, train ppl = 1.176155
+Step 12200: train_loss = 0.575632, train_acc = 0.625000, train ppl = 1.333512
+Step 12300: train_loss = 0.469711, train_acc = 0.812500, train ppl = 1.247374
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.814500 -- validation perplexity = 1.258487
+Epoch 11: test accuracy: 0.805333
+---- Qualitative Analysis
+Context: what is mary carrying ? mary went to the bedroom . daniel went to the bedroom . daniel went to the bathroom . mary travelled to the garden . daniel journeyed to the kitchen . mary took the apple there . sandra travelled to the hallway . mary dropped the apple . what is mary carrying ?
+Question: what is mary carrying ?
+Answer: nothing </s>
+Model prediction: nothing </s> <unk>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 12400: train_loss = 0.344425, train_acc = 0.875000, train ppl = 1.187930
+Step 12500: train_loss = 0.443521, train_acc = 0.812500, train ppl = 1.205321
+Step 12600: train_loss = 0.032164, train_acc = 1.000000, train ppl = 1.016212
+Step 12700: train_loss = 0.256122, train_acc = 0.875000, train ppl = 1.128092
+Step 12800: train_loss = 0.448103, train_acc = 0.750000, train ppl = 1.234754
+Step 12900: train_loss = 0.298958, train_acc = 0.875000, train ppl = 1.161229
+Step 13000: train_loss = 0.348857, train_acc = 0.750000, train ppl = 1.178412
+Step 13100: train_loss = 0.928604, train_acc = 0.750000, train ppl = 1.510911
+Step 13200: train_loss = 0.530403, train_acc = 0.875000, train ppl = 1.283514
+Step 13300: train_loss = 0.127089, train_acc = 1.000000, train ppl = 1.065607
+Step 13400: train_loss = 0.181202, train_acc = 1.000000, train ppl = 1.094832
+Step 13500: train_loss = 0.256371, train_acc = 1.000000, train ppl = 1.136764
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.831167 -- validation perplexity = 1.228881
+Epoch 12: test accuracy: 0.821667
+---- Qualitative Analysis
+Context: what is daniel carrying ? john went to the hallway . daniel travelled to the hallway . mary went to the bathroom . daniel got the football there . mary journeyed to the office . daniel grabbed the apple there . mary journeyed to the kitchen . daniel went to the bedroom . daniel dropped the football there . daniel grabbed the football there . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: football apple </s>
+Model prediction: football football </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 13600: train_loss = 0.574607, train_acc = 0.750000, train ppl = 1.332829
+Step 13700: train_loss = 0.611999, train_acc = 0.750000, train ppl = 1.357982
+Step 13800: train_loss = 0.000391, train_acc = 1.000000, train ppl = 1.000196
+Step 13900: train_loss = 0.836370, train_acc = 0.937500, train ppl = 1.482286
+Step 14000: train_loss = 0.897946, train_acc = 0.875000, train ppl = 1.490463
+Step 14100: train_loss = 0.070164, train_acc = 1.000000, train ppl = 1.033570
+Step 14200: train_loss = 0.496728, train_acc = 0.812500, train ppl = 1.263334
+Step 14300: train_loss = 0.539179, train_acc = 0.937500, train ppl = 1.288825
+Step 14400: train_loss = 0.603521, train_acc = 0.875000, train ppl = 1.307650
+Step 14500: train_loss = 0.204003, train_acc = 0.937500, train ppl = 1.100761
+Step 14600: train_loss = 0.022161, train_acc = 1.000000, train ppl = 1.011142
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.878833 -- validation perplexity = 1.182673
+Epoch 13: test accuracy: 0.863167
+---- Qualitative Analysis
+Context: what is daniel carrying ? john went back to the kitchen . sandra journeyed to the bedroom . sandra went to the kitchen . john went back to the garden . john moved to the kitchen . mary went to the hallway . daniel went back to the garden . mary went back to the bathroom . mary went back to the office . sandra went to the garden . sandra went to the bedroom . daniel picked up the football there . sandra grabbed the apple there . john went back to the hallway . daniel took the milk there . daniel went back to the bedroom . daniel travelled to the garden . mary went back to the hallway . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: football milk </s>
+Model prediction: football milk </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 14700: train_loss = 0.266015, train_acc = 0.875000, train ppl = 1.142259
+Step 14800: train_loss = 0.161989, train_acc = 0.875000, train ppl = 1.084365
+Step 14900: train_loss = 0.295732, train_acc = 0.875000, train ppl = 1.159358
+Step 15000: train_loss = 0.302772, train_acc = 0.937500, train ppl = 1.153131
+Step 15100: train_loss = 0.086017, train_acc = 1.000000, train ppl = 1.043947
+Step 15200: train_loss = 0.330614, train_acc = 0.875000, train ppl = 1.168339
+Step 15300: train_loss = 0.002541, train_acc = 1.000000, train ppl = 1.001272
+Step 15400: train_loss = 0.018651, train_acc = 1.000000, train ppl = 1.009369
+Step 15500: train_loss = 0.130264, train_acc = 1.000000, train ppl = 1.059604
+Step 15600: train_loss = 0.097644, train_acc = 1.000000, train ppl = 1.050033
+Step 15700: train_loss = 0.102827, train_acc = 1.000000, train ppl = 1.052758
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.939333 -- validation perplexity = 1.114115
+Epoch 14: test accuracy: 0.918333
+---- Qualitative Analysis
+Context: what is john carrying ? john grabbed the football there . mary went to the kitchen . what is john carrying ?
+Question: what is john carrying ?
+Answer: football </s>
+Model prediction: football </s> <unk>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 15800: train_loss = 0.305145, train_acc = 0.875000, train ppl = 1.164827
+Step 15900: train_loss = 0.129238, train_acc = 0.937500, train ppl = 1.062705
+Step 16000: train_loss = 0.001064, train_acc = 1.000000, train ppl = 1.000532
+Step 16100: train_loss = 0.176104, train_acc = 0.875000, train ppl = 1.092045
+Step 16200: train_loss = 0.067044, train_acc = 1.000000, train ppl = 1.034090
+Step 16300: train_loss = 0.054695, train_acc = 1.000000, train ppl = 1.026073
+Step 16400: train_loss = 0.126021, train_acc = 0.937500, train ppl = 1.061098
+Step 16500: train_loss = 0.006934, train_acc = 1.000000, train ppl = 1.003269
+Step 16600: train_loss = 0.050642, train_acc = 1.000000, train ppl = 1.025644
+Step 16700: train_loss = 0.071649, train_acc = 1.000000, train ppl = 1.036474
+Step 16800: train_loss = 0.032629, train_acc = 1.000000, train ppl = 1.015473
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.965500 -- validation perplexity = 1.072861
+Epoch 15: test accuracy: 0.945833
+---- Qualitative Analysis
+Context: what is daniel carrying ? mary went back to the bathroom . daniel picked up the football there . mary went back to the garden . mary went back to the bedroom . daniel grabbed the milk there . daniel left the milk . john journeyed to the kitchen . john went to the bathroom . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: football </s>
+Model prediction: football </s> <unk>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 16900: train_loss = 0.000139, train_acc = 1.000000, train ppl = 1.000069
+Step 17000: train_loss = 0.001775, train_acc = 1.000000, train ppl = 1.000888
+Step 17100: train_loss = 0.005049, train_acc = 1.000000, train ppl = 1.002528
+Step 17200: train_loss = 0.003159, train_acc = 1.000000, train ppl = 1.001581
+Step 17300: train_loss = 0.026067, train_acc = 1.000000, train ppl = 1.011653
+Step 17400: train_loss = 0.000166, train_acc = 1.000000, train ppl = 1.000083
+Step 17500: train_loss = 0.000517, train_acc = 1.000000, train ppl = 1.000258
+Step 17600: train_loss = 1.541858, train_acc = 1.000000, train ppl = 1.984308
+Step 17700: train_loss = 0.011524, train_acc = 1.000000, train ppl = 1.005779
+Step 17800: train_loss = 0.029202, train_acc = 1.000000, train ppl = 1.014708
+Step 17900: train_loss = 0.009167, train_acc = 1.000000, train ppl = 1.004594
+Step 18000: train_loss = 0.001536, train_acc = 1.000000, train ppl = 1.000768
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.980000 -- validation perplexity = 1.056151
+Epoch 16: test accuracy: 0.983333
+---- Qualitative Analysis
+Context: what is john carrying ? john picked up the milk there . john discarded the milk there . what is john carrying ?
+Question: what is john carrying ?
+Answer: nothing </s>
+Model prediction: nothing </s> <unk>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 18100: train_loss = 0.041510, train_acc = 1.000000, train ppl = 1.019726
+Step 18200: train_loss = 0.000492, train_acc = 1.000000, train ppl = 1.000246
+Step 18300: train_loss = 0.007641, train_acc = 1.000000, train ppl = 1.003828
+Step 18400: train_loss = 0.310962, train_acc = 0.875000, train ppl = 1.168220
+Step 18500: train_loss = 0.001239, train_acc = 1.000000, train ppl = 1.000620
+Step 18600: train_loss = 0.020223, train_acc = 1.000000, train ppl = 1.009562
+Step 18700: train_loss = 0.208625, train_acc = 0.875000, train ppl = 1.109947
+Step 18800: train_loss = 0.000460, train_acc = 1.000000, train ppl = 1.000230
+Step 18900: train_loss = 0.000172, train_acc = 1.000000, train ppl = 1.000086
+Step 19000: train_loss = 0.006451, train_acc = 1.000000, train ppl = 1.003040
+Step 19100: train_loss = 0.002554, train_acc = 1.000000, train ppl = 1.001203
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.980667 -- validation perplexity = 1.063839
+Epoch 17: test accuracy: 0.986667
+---- Qualitative Analysis
+Context: what is daniel carrying ? sandra went to the garden . daniel went back to the office . john journeyed to the bathroom . sandra moved to the bathroom . sandra journeyed to the bedroom . john went to the hallway . daniel grabbed the apple there . sandra travelled to the bathroom . john went to the kitchen . sandra journeyed to the bedroom . daniel went to the kitchen . daniel moved to the bedroom . mary went to the office . daniel moved to the garden . daniel grabbed the milk there . mary went to the kitchen . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: apple milk </s>
+Model prediction: apple milk </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 19200: train_loss = 0.000433, train_acc = 1.000000, train ppl = 1.000216
+Step 19300: train_loss = 0.000627, train_acc = 1.000000, train ppl = 1.000314
+Step 19400: train_loss = 0.002062, train_acc = 1.000000, train ppl = 1.001031
+Step 19500: train_loss = 0.004711, train_acc = 1.000000, train ppl = 1.002358
+Step 19600: train_loss = 0.000490, train_acc = 1.000000, train ppl = 1.000245
+Step 19700: train_loss = 0.013522, train_acc = 1.000000, train ppl = 1.006384
+Step 19800: train_loss = 0.000088, train_acc = 1.000000, train ppl = 1.000044
+Step 19900: train_loss = 0.002308, train_acc = 1.000000, train ppl = 1.001086
+Step 20000: train_loss = 0.003754, train_acc = 1.000000, train ppl = 1.001879
+Step 20100: train_loss = 0.000110, train_acc = 1.000000, train ppl = 1.000055
+Step 20200: train_loss = 0.001551, train_acc = 1.000000, train ppl = 1.000776
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.984667 -- validation perplexity = 1.044235
+Epoch 18: test accuracy: 0.984833
+---- Qualitative Analysis
+Context: what is daniel carrying ? daniel journeyed to the hallway . daniel got the football there . mary travelled to the kitchen . john travelled to the bathroom . mary went back to the bathroom . daniel went back to the office . daniel grabbed the apple there . daniel travelled to the hallway . daniel went back to the bedroom . john went back to the bedroom . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: football apple </s>
+Model prediction: football apple </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 20300: train_loss = 0.001015, train_acc = 1.000000, train ppl = 1.000508
+Step 20400: train_loss = 0.000096, train_acc = 1.000000, train ppl = 1.000048
+Step 20500: train_loss = 0.000043, train_acc = 1.000000, train ppl = 1.000022
+Step 20600: train_loss = 0.001239, train_acc = 1.000000, train ppl = 1.000583
+Step 20700: train_loss = 0.000049, train_acc = 1.000000, train ppl = 1.000025
+Step 20800: train_loss = 0.009612, train_acc = 1.000000, train ppl = 1.004533
+Step 20900: train_loss = 0.001254, train_acc = 1.000000, train ppl = 1.000627
+Step 21000: train_loss = 0.002390, train_acc = 1.000000, train ppl = 1.001196
+Step 21100: train_loss = 0.000040, train_acc = 1.000000, train ppl = 1.000020
+Step 21200: train_loss = 0.000050, train_acc = 1.000000, train ppl = 1.000025
+Step 21300: train_loss = 0.003329, train_acc = 1.000000, train ppl = 1.001568
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.981500 -- validation perplexity = 1.066682
+Epoch 19: test accuracy: 0.990167
+---- Qualitative Analysis
+Context: what is daniel carrying ? sandra got the milk there . daniel journeyed to the kitchen . sandra travelled to the bathroom . sandra put down the milk . daniel got the football there . daniel left the football . sandra went to the kitchen . sandra grabbed the football there . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: nothing </s>
+Model prediction: nothing </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 21400: train_loss = 0.006399, train_acc = 1.000000, train ppl = 1.003016
+Step 21500: train_loss = 0.000175, train_acc = 1.000000, train ppl = 1.000087
+Step 21600: train_loss = 0.000032, train_acc = 1.000000, train ppl = 1.000016
+Step 21700: train_loss = 0.000023, train_acc = 1.000000, train ppl = 1.000012
+Step 21800: train_loss = 0.032518, train_acc = 1.000000, train ppl = 1.015420
+Step 21900: train_loss = 0.002265, train_acc = 1.000000, train ppl = 1.001067
+Step 22000: train_loss = 0.000063, train_acc = 1.000000, train ppl = 1.000032
+Step 22100: train_loss = 0.003192, train_acc = 1.000000, train ppl = 1.001597
+Step 22200: train_loss = 0.000331, train_acc = 1.000000, train ppl = 1.000166
+Step 22300: train_loss = 0.001515, train_acc = 1.000000, train ppl = 1.000713
+Step 22400: train_loss = 0.000043, train_acc = 1.000000, train ppl = 1.000022
+Step 22500: train_loss = 0.000020, train_acc = 1.000000, train ppl = 1.000010
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.983667 -- validation perplexity = 1.060094
+Epoch 20: test accuracy: 0.986333
+---- Qualitative Analysis
+Context: what is daniel carrying ? mary went back to the office . john got the milk there . mary journeyed to the hallway . daniel grabbed the football there . sandra moved to the hallway . john went back to the hallway . what is daniel carrying ?
+Question: what is daniel carrying ?
+Answer: football </s>
+Model prediction: football </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 22600: train_loss = 0.000267, train_acc = 1.000000, train ppl = 1.000134
+Step 22700: train_loss = 0.000516, train_acc = 1.000000, train ppl = 1.000243
+Step 22800: train_loss = 0.559594, train_acc = 0.875000, train ppl = 1.301267
+Step 22900: train_loss = 0.001208, train_acc = 1.000000, train ppl = 1.000537
+Step 23000: train_loss = 0.000019, train_acc = 1.000000, train ppl = 1.000009
+Step 23100: train_loss = 0.000266, train_acc = 1.000000, train ppl = 1.000125
+Step 23200: train_loss = 0.000020, train_acc = 1.000000, train ppl = 1.000010
+Step 23300: train_loss = 0.000080, train_acc = 1.000000, train ppl = 1.000040
+Step 23400: train_loss = 0.000082, train_acc = 1.000000, train ppl = 1.000041
+Step 23500: train_loss = 0.001169, train_acc = 1.000000, train ppl = 1.000584
+Step 23600: train_loss = 0.013095, train_acc = 1.000000, train ppl = 1.006569
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.984167 -- validation perplexity = 1.074477
+Epoch 21: test accuracy: 0.977833
+---- Qualitative Analysis
+Context: what is john carrying ? john picked up the milk there . john discarded the milk there . what is john carrying ?
+Question: what is john carrying ?
+Answer: nothing </s>
+Model prediction: nothing </s> <unk>
+=========================
+Step 23700: train_loss = 0.000088, train_acc = 1.000000, train ppl = 1.000044
+Step 23800: train_loss = 0.000054, train_acc = 1.000000, train ppl = 1.000027
+Step 23900: train_loss = 0.000800, train_acc = 1.000000, train ppl = 1.000376
+Step 24000: train_loss = 0.003160, train_acc = 1.000000, train ppl = 1.001488
+Step 24100: train_loss = 0.000110, train_acc = 1.000000, train ppl = 1.000055
+Step 24200: train_loss = 0.475823, train_acc = 0.916667, train ppl = 1.235501
+Step 24300: train_loss = 0.000330, train_acc = 1.000000, train ppl = 1.000165
+Step 24400: train_loss = 0.000130, train_acc = 1.000000, train ppl = 1.000065
+Step 24500: train_loss = 0.000010, train_acc = 1.000000, train ppl = 1.000005
+Step 24600: train_loss = 0.000335, train_acc = 1.000000, train ppl = 1.000158
+Step 24700: train_loss = 0.000015, train_acc = 1.000000, train ppl = 1.000007
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.985667 -- validation perplexity = 1.061249
+Epoch 22: test accuracy: 0.989667
+---- Qualitative Analysis
+Context: what is sandra carrying ? daniel went to the bathroom . sandra journeyed to the garden . daniel went back to the hallway . daniel picked up the apple there . daniel moved to the office . sandra grabbed the milk there . john went to the bathroom . sandra dropped the milk . daniel put down the apple . sandra grabbed the milk there . what is sandra carrying ?
+Question: what is sandra carrying ?
+Answer: milk </s>
+Model prediction: milk </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 24800: train_loss = 0.000033, train_acc = 1.000000, train ppl = 1.000016

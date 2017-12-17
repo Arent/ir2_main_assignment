@@ -1,0 +1,677 @@
+merge_mode:               concat
+cell_type:                gru
+learning_rate:            0.01
+max_gradient_norm:        1.0
+encoder_type:             bi
+vocab:                    data/vocab.txt
+val_split:                0.1
+num_epochs:               50
+data_dir:                 data/en-10k
+optimizer:                adam
+model_dir:                models/dummy
+dropout_keep_prob:        0.7
+embedding_size:           256
+task:                     15
+num_units:                256
+num_enc_layers:           1
+restore_from_dir:         None
+model_type:               normal
+batch_size:               32
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: what is winona afraid of ? mice are afraid of cats . cats are afraid of sheep . wolves are afraid of sheep . gertrude is a mouse . emily is a cat . sheep are afraid of cats . jessica is a cat . winona is a wolf . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: sheep </s>
+Model prediction: 176 287 287 220 sheep 272 155 18 18 white
+=========================
+Step 100: train_loss = 1.390095, train_acc = 0.343750, train ppl = 2.003804
+Step 200: train_loss = 1.600470, train_acc = 0.343750, train ppl = 2.226064
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.411000 -- validation perplexity = 1.939328
+Epoch 1: test accuracy: 0.516000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? wolves are afraid of cats . mice are afraid of sheep . sheep are afraid of mice . cats are afraid of sheep . jessica is a sheep . gertrude is a sheep . winona is a cat . emily is a mouse . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: mouse </s>
+Model prediction: sheep </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 300: train_loss = 1.128267, train_acc = 0.468750, train ppl = 1.757924
+Step 400: train_loss = 1.003396, train_acc = 0.531250, train ppl = 1.651523
+Step 500: train_loss = 1.187656, train_acc = 0.437500, train ppl = 1.810907
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.473000 -- validation perplexity = 1.858032
+Epoch 2: test accuracy: 0.487000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? sheep are afraid of mice . cats are afraid of wolves . wolves are afraid of sheep . emily is a cat . mice are afraid of sheep . jessica is a wolf . winona is a sheep . gertrude is a cat . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: sheep </s>
+Model prediction: sheep </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 600: train_loss = 1.564299, train_acc = 0.281250, train ppl = 2.186166
+Step 700: train_loss = 1.067985, train_acc = 0.375000, train ppl = 1.705729
+Step 800: train_loss = 1.097538, train_acc = 0.468750, train ppl = 1.731120
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.386000 -- validation perplexity = 2.022169
+Epoch 3: test accuracy: 0.471000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? mice are afraid of sheep . emily is a mouse . cats are afraid of wolves . sheep are afraid of wolves . winona is a mouse . wolves are afraid of sheep . jessica is a wolf . gertrude is a cat . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: sheep </s>
+Model prediction: wolf </s>
+=========================
+Step 900: train_loss = 1.416785, train_acc = 0.468750, train ppl = 2.030725
+Step 1000: train_loss = 1.349296, train_acc = 0.406250, train ppl = 1.963342
+Step 1100: train_loss = 1.189788, train_acc = 0.437500, train ppl = 1.812838
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.457000 -- validation perplexity = 2.134144
+Epoch 4: test accuracy: 0.386000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? sheep are afraid of wolves . mice are afraid of wolves . cats are afraid of wolves . jessica is a sheep . gertrude is a cat . winona is a sheep . emily is a cat . wolves are afraid of mice . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: wolf </s>
+Model prediction: mouse </s>
+=========================
+Step 1200: train_loss = 1.107417, train_acc = 0.468750, train ppl = 1.739692
+Step 1300: train_loss = 0.895166, train_acc = 0.593750, train ppl = 1.564526
+Step 1400: train_loss = 1.341652, train_acc = 0.406250, train ppl = 1.955852
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.460000 -- validation perplexity = 2.081597
+Epoch 5: test accuracy: 0.439000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? wolves are afraid of mice . mice are afraid of sheep . sheep are afraid of wolves . emily is a mouse . jessica is a sheep . gertrude is a sheep . cats are afraid of sheep . winona is a wolf . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: wolf </s>
+Model prediction: mouse </s>
+=========================
+Step 1500: train_loss = 1.340199, train_acc = 0.437500, train ppl = 1.954431
+Step 1600: train_loss = 1.186649, train_acc = 0.406250, train ppl = 1.809996
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.403000 -- validation perplexity = 1.961940
+Epoch 6: test accuracy: 0.415000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? cats are afraid of mice . winona is a cat . mice are afraid of wolves . sheep are afraid of wolves . jessica is a sheep . emily is a cat . wolves are afraid of cats . gertrude is a wolf . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: cat </s>
+Model prediction: wolf </s>
+=========================
+Step 1700: train_loss = 1.115225, train_acc = 0.531250, train ppl = 1.746498
+Step 1800: train_loss = 0.968772, train_acc = 0.500000, train ppl = 1.623178
+Step 1900: train_loss = 1.431422, train_acc = 0.312500, train ppl = 2.045640
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.451000 -- validation perplexity = 1.890715
+Epoch 7: test accuracy: 0.504000
+---- Qualitative Analysis
+Context: what is winona afraid of ? cats are afraid of mice . mice are afraid of wolves . wolves are afraid of cats . winona is a wolf . gertrude is a wolf . jessica is a cat . emily is a cat . sheep are afraid of cats . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: cat </s>
+Model prediction: wolf </s>
+=========================
+Step 2000: train_loss = 1.114889, train_acc = 0.531250, train ppl = 1.746204
+Step 2100: train_loss = 1.203960, train_acc = 0.375000, train ppl = 1.825730
+Step 2200: train_loss = 0.962344, train_acc = 0.625000, train ppl = 1.617969
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.470000 -- validation perplexity = 1.835368
+Epoch 8: test accuracy: 0.511000
+---- Qualitative Analysis
+Context: what is emily afraid of ? sheep are afraid of wolves . cats are afraid of mice . winona is a sheep . emily is a sheep . gertrude is a cat . wolves are afraid of sheep . mice are afraid of wolves . jessica is a mouse . what is emily afraid of ?
+Question: what is emily afraid of ?
+Answer: wolf </s>
+Model prediction: wolf </s>
+=========================
+Step 2300: train_loss = 0.745015, train_acc = 0.687500, train ppl = 1.451369
+Step 2400: train_loss = 1.096079, train_acc = 0.500000, train ppl = 1.729858
+Step 2500: train_loss = 1.119398, train_acc = 0.468750, train ppl = 1.750146
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.442000 -- validation perplexity = 1.790015
+Epoch 9: test accuracy: 0.490000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? wolves are afraid of mice . sheep are afraid of wolves . mice are afraid of wolves . winona is a wolf . cats are afraid of wolves . emily is a sheep . jessica is a sheep . gertrude is a cat . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: wolf </s>
+Model prediction: wolf </s>
+=========================
+Step 2600: train_loss = 0.897588, train_acc = 0.593750, train ppl = 1.566422
+Step 2700: train_loss = 1.292557, train_acc = 0.406250, train ppl = 1.908425
+Step 2800: train_loss = 1.765591, train_acc = 0.312500, train ppl = 2.417649
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.460000 -- validation perplexity = 2.024205
+Epoch 10: test accuracy: 0.452000
+---- Qualitative Analysis
+Context: what is winona afraid of ? sheep are afraid of wolves . mice are afraid of sheep . winona is a sheep . gertrude is a mouse . cats are afraid of wolves . jessica is a sheep . wolves are afraid of mice . emily is a mouse . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: wolf </s>
+Model prediction: sheep </s>
+=========================
+Step 2900: train_loss = 1.466415, train_acc = 0.250000, train ppl = 2.081747
+Step 3000: train_loss = 1.632134, train_acc = 0.343750, train ppl = 2.261587
+Step 3100: train_loss = 1.796323, train_acc = 0.406250, train ppl = 2.455085
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.498000 -- validation perplexity = 1.646760
+Epoch 11: test accuracy: 0.548000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? sheep are afraid of cats . jessica is a sheep . mice are afraid of sheep . cats are afraid of sheep . wolves are afraid of mice . emily is a sheep . gertrude is a sheep . winona is a mouse . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: cat </s>
+Model prediction: cat </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 3200: train_loss = 0.836564, train_acc = 0.687500, train ppl = 1.519349
+Step 3300: train_loss = 1.083160, train_acc = 0.500000, train ppl = 1.718721
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.485000 -- validation perplexity = 1.650317
+Epoch 12: test accuracy: 0.518000
+---- Qualitative Analysis
+Context: what is emily afraid of ? cats are afraid of wolves . sheep are afraid of mice . gertrude is a cat . mice are afraid of wolves . winona is a sheep . emily is a sheep . wolves are afraid of sheep . jessica is a cat . what is emily afraid of ?
+Question: what is emily afraid of ?
+Answer: mouse </s>
+Model prediction: mouse </s>
+=========================
+Step 3400: train_loss = 1.522165, train_acc = 0.312500, train ppl = 2.140593
+Step 3500: train_loss = 1.073151, train_acc = 0.437500, train ppl = 1.710140
+Step 3600: train_loss = 1.071962, train_acc = 0.406250, train ppl = 1.709124
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.294000 -- validation perplexity = 2.219884
+Epoch 13: test accuracy: 0.244000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? sheep are afraid of wolves . mice are afraid of sheep . cats are afraid of mice . winona is a mouse . gertrude is a mouse . emily is a mouse . wolves are afraid of sheep . jessica is a sheep . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: wolf </s>
+Model prediction: sheep </s>
+=========================
+Step 3700: train_loss = 1.348731, train_acc = 0.468750, train ppl = 1.962787
+Step 3800: train_loss = 1.387930, train_acc = 0.375000, train ppl = 2.001636
+Step 3900: train_loss = 1.043839, train_acc = 0.531250, train ppl = 1.685259
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.465000 -- validation perplexity = 1.842521
+Epoch 14: test accuracy: 0.528000
+---- Qualitative Analysis
+Context: what is winona afraid of ? sheep are afraid of mice . cats are afraid of wolves . gertrude is a cat . jessica is a cat . wolves are afraid of sheep . mice are afraid of cats . winona is a wolf . emily is a mouse . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: sheep </s>
+Model prediction: mouse </s>
+=========================
+Step 4000: train_loss = 1.015345, train_acc = 0.625000, train ppl = 1.661420
+Step 4100: train_loss = 1.401749, train_acc = 0.437500, train ppl = 2.015515
+Step 4200: train_loss = 0.900802, train_acc = 0.531250, train ppl = 1.568941
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.451000 -- validation perplexity = 2.099391
+Epoch 15: test accuracy: 0.430000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? mice are afraid of cats . cats are afraid of wolves . emily is a cat . wolves are afraid of cats . jessica is a mouse . gertrude is a wolf . sheep are afraid of mice . winona is a wolf . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: cat </s>
+Model prediction: cat </s>
+=========================
+Step 4300: train_loss = 0.924049, train_acc = 0.562500, train ppl = 1.587284
+Step 4400: train_loss = 1.001493, train_acc = 0.593750, train ppl = 1.649952
+Step 4500: train_loss = 0.922668, train_acc = 0.468750, train ppl = 1.586189
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.403000 -- validation perplexity = 1.905217
+Epoch 16: test accuracy: 0.402000
+---- Qualitative Analysis
+Context: what is emily afraid of ? wolves are afraid of mice . sheep are afraid of cats . mice are afraid of sheep . gertrude is a wolf . jessica is a wolf . cats are afraid of sheep . emily is a wolf . winona is a cat . what is emily afraid of ?
+Question: what is emily afraid of ?
+Answer: mouse </s>
+Model prediction: cat </s>
+=========================
+Step 4600: train_loss = 1.018651, train_acc = 0.406250, train ppl = 1.664168
+Step 4700: train_loss = 1.779628, train_acc = 0.312500, train ppl = 2.434676
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.398000 -- validation perplexity = 2.111689
+Epoch 17: test accuracy: 0.374000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? sheep are afraid of wolves . jessica is a sheep . cats are afraid of sheep . mice are afraid of cats . wolves are afraid of mice . gertrude is a mouse . emily is a cat . winona is a cat . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: wolf </s>
+Model prediction: cat </s>
+=========================
+Step 4800: train_loss = 2.138786, train_acc = 0.343750, train ppl = 2.913611
+Step 4900: train_loss = 1.431693, train_acc = 0.500000, train ppl = 2.045918
+Step 5000: train_loss = 1.234016, train_acc = 0.281250, train ppl = 1.853375
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.458000 -- validation perplexity = 1.953162
+Epoch 18: test accuracy: 0.424000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? sheep are afraid of cats . mice are afraid of wolves . wolves are afraid of sheep . winona is a mouse . gertrude is a sheep . emily is a sheep . jessica is a wolf . cats are afraid of mice . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: cat </s>
+Model prediction: cat </s>
+=========================
+Step 5100: train_loss = 2.145394, train_acc = 0.250000, train ppl = 2.923253
+Step 5200: train_loss = 1.047125, train_acc = 0.343750, train ppl = 1.688030
+Step 5300: train_loss = 1.054648, train_acc = 0.437500, train ppl = 1.694392
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.460000 -- validation perplexity = 1.768483
+Epoch 19: test accuracy: 0.441000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? wolves are afraid of cats . mice are afraid of cats . winona is a mouse . cats are afraid of wolves . emily is a wolf . jessica is a wolf . sheep are afraid of mice . gertrude is a mouse . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: cat </s>
+Model prediction: cat </s>
+=========================
+Step 5400: train_loss = 1.505261, train_acc = 0.343750, train ppl = 2.122576
+Step 5500: train_loss = 0.863499, train_acc = 0.593750, train ppl = 1.539949
+Step 5600: train_loss = 0.858647, train_acc = 0.593750, train ppl = 1.536218
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.477000 -- validation perplexity = 1.728157
+Epoch 20: test accuracy: 0.365000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? sheep are afraid of wolves . wolves are afraid of cats . gertrude is a sheep . cats are afraid of mice . winona is a sheep . mice are afraid of cats . emily is a wolf . jessica is a cat . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: wolf </s>
+Model prediction: cat </s>
+=========================
+Step 5700: train_loss = 1.030223, train_acc = 0.593750, train ppl = 1.673825
+Step 5800: train_loss = 1.720433, train_acc = 0.187500, train ppl = 2.363672
+Step 5900: train_loss = 1.345013, train_acc = 0.218750, train ppl = 1.959141
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.399000 -- validation perplexity = 1.976612
+Epoch 21: test accuracy: 0.410000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? mice are afraid of sheep . cats are afraid of mice . gertrude is a mouse . sheep are afraid of cats . emily is a cat . winona is a cat . jessica is a cat . wolves are afraid of mice . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: mouse </s>
+Model prediction: sheep </s>
+=========================
+Step 6000: train_loss = 1.229778, train_acc = 0.375000, train ppl = 1.849451
+Step 6100: train_loss = 0.907025, train_acc = 0.531250, train ppl = 1.573830
+Step 6200: train_loss = 1.119314, train_acc = 0.343750, train ppl = 1.750072
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.401000 -- validation perplexity = 1.772665
+Epoch 22: test accuracy: 0.422000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? mice are afraid of sheep . sheep are afraid of mice . cats are afraid of wolves . wolves are afraid of cats . emily is a sheep . winona is a sheep . jessica is a wolf . gertrude is a wolf . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: cat </s>
+Model prediction: cat </s>
+=========================
+Step 6300: train_loss = 1.014912, train_acc = 0.562500, train ppl = 1.661060
+Step 6400: train_loss = 1.317785, train_acc = 0.250000, train ppl = 1.932651
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.460000 -- validation perplexity = 1.663902
+Epoch 23: test accuracy: 0.428000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? cats are afraid of wolves . sheep are afraid of wolves . winona is a sheep . emily is a sheep . gertrude is a cat . wolves are afraid of mice . mice are afraid of wolves . jessica is a mouse . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: wolf </s>
+Model prediction: wolf </s>
+=========================
+Step 6500: train_loss = 1.546919, train_acc = 0.375000, train ppl = 2.167250
+Step 6600: train_loss = 1.051683, train_acc = 0.250000, train ppl = 1.691882
+Step 6700: train_loss = 1.398734, train_acc = 0.500000, train ppl = 2.012479
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.423000 -- validation perplexity = 1.786228
+Epoch 24: test accuracy: 0.453000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? sheep are afraid of mice . cats are afraid of wolves . mice are afraid of sheep . jessica is a sheep . emily is a cat . wolves are afraid of mice . winona is a sheep . gertrude is a cat . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: mouse </s>
+Model prediction: wolf </s>
+=========================
+Step 6800: train_loss = 1.036120, train_acc = 0.437500, train ppl = 1.678768
+Step 6900: train_loss = 1.154450, train_acc = 0.375000, train ppl = 1.781089
+Step 7000: train_loss = 0.849271, train_acc = 0.562500, train ppl = 1.529033
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.457000 -- validation perplexity = 1.658435
+Epoch 25: test accuracy: 0.430000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? sheep are afraid of cats . jessica is a sheep . mice are afraid of sheep . cats are afraid of sheep . wolves are afraid of mice . emily is a sheep . gertrude is a sheep . winona is a mouse . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: cat </s>
+Model prediction: cat </s>
+=========================
+Step 7100: train_loss = 1.085611, train_acc = 0.468750, train ppl = 1.720828
+Step 7200: train_loss = 1.092818, train_acc = 0.562500, train ppl = 1.727041
+Step 7300: train_loss = 1.448033, train_acc = 0.343750, train ppl = 2.062702
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.307000 -- validation perplexity = 1.954893
+Epoch 26: test accuracy: 0.256000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? sheep are afraid of cats . wolves are afraid of mice . mice are afraid of cats . gertrude is a sheep . jessica is a sheep . cats are afraid of wolves . emily is a sheep . winona is a sheep . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: cat </s>
+Model prediction: cat </s>
+=========================
+Step 7400: train_loss = 1.524126, train_acc = 0.250000, train ppl = 2.142692
+Step 7500: train_loss = 1.424025, train_acc = 0.375000, train ppl = 2.038089
+Step 7600: train_loss = 1.565857, train_acc = 0.406250, train ppl = 2.187871
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.430000 -- validation perplexity = 1.908436
+Epoch 27: test accuracy: 0.451000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? sheep are afraid of wolves . mice are afraid of wolves . wolves are afraid of cats . emily is a mouse . cats are afraid of sheep . gertrude is a wolf . jessica is a wolf . winona is a cat . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: cat </s>
+Model prediction: wolf </s>
+=========================
+Step 7700: train_loss = 1.482780, train_acc = 0.312500, train ppl = 2.098851
+Step 7800: train_loss = 1.528178, train_acc = 0.156250, train ppl = 2.147038
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.338000 -- validation perplexity = 2.064117
+Epoch 28: test accuracy: 0.377000
+---- Qualitative Analysis
+Context: what is winona afraid of ? wolves are afraid of mice . cats are afraid of sheep . sheep are afraid of wolves . gertrude is a wolf . winona is a wolf . emily is a sheep . mice are afraid of sheep . jessica is a sheep . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: mouse </s>
+Model prediction: mouse </s>
+=========================
+Step 7900: train_loss = 1.218284, train_acc = 0.375000, train ppl = 1.838853
+Step 8000: train_loss = 1.227480, train_acc = 0.468750, train ppl = 1.847327
+Step 8100: train_loss = 1.188663, train_acc = 0.406250, train ppl = 1.811820
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.394000 -- validation perplexity = 1.876003
+Epoch 29: test accuracy: 0.372000
+---- Qualitative Analysis
+Context: what is winona afraid of ? cats are afraid of wolves . wolves are afraid of mice . sheep are afraid of mice . mice are afraid of wolves . emily is a wolf . winona is a cat . gertrude is a cat . jessica is a sheep . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: wolf </s>
+Model prediction: mouse </s>
+=========================
+Step 8200: train_loss = 1.182348, train_acc = 0.468750, train ppl = 1.806108
+Step 8300: train_loss = 1.366452, train_acc = 0.406250, train ppl = 1.980256
+Step 8400: train_loss = 1.255795, train_acc = 0.468750, train ppl = 1.873667
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.390000 -- validation perplexity = 1.926739
+Epoch 30: test accuracy: 0.332000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? wolves are afraid of cats . cats are afraid of mice . sheep are afraid of wolves . emily is a cat . gertrude is a wolf . winona is a wolf . jessica is a sheep . mice are afraid of cats . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: wolf </s>
+Model prediction: mouse </s>
+=========================
+Step 8500: train_loss = 1.390955, train_acc = 0.312500, train ppl = 2.004666
+Step 8600: train_loss = 1.021627, train_acc = 0.593750, train ppl = 1.666647
+Step 8700: train_loss = 1.143823, train_acc = 0.406250, train ppl = 1.771650
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.399000 -- validation perplexity = 2.188152
+Epoch 31: test accuracy: 0.442000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? sheep are afraid of cats . wolves are afraid of mice . mice are afraid of cats . gertrude is a sheep . jessica is a sheep . cats are afraid of wolves . emily is a sheep . winona is a sheep . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: cat </s>
+Model prediction: wolf </s>
+=========================
+Step 8800: train_loss = 1.396613, train_acc = 0.406250, train ppl = 2.010345
+Step 8900: train_loss = 1.501725, train_acc = 0.218750, train ppl = 2.118827
+Step 9000: train_loss = 1.941066, train_acc = 0.343750, train ppl = 2.639350
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.288000 -- validation perplexity = 1.958993
+Epoch 32: test accuracy: 0.279000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? cats are afraid of mice . wolves are afraid of sheep . mice are afraid of wolves . sheep are afraid of mice . winona is a mouse . emily is a wolf . jessica is a mouse . gertrude is a cat . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: wolf </s>
+Model prediction: sheep </s>
+=========================
+Step 9100: train_loss = 1.269675, train_acc = 0.375000, train ppl = 1.886716
+Step 9200: train_loss = 1.531548, train_acc = 0.375000, train ppl = 2.150659
+Step 9300: train_loss = 1.137773, train_acc = 0.406250, train ppl = 1.766299
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.386000 -- validation perplexity = 1.968968
+Epoch 33: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? cats are afraid of sheep . wolves are afraid of mice . mice are afraid of sheep . emily is a wolf . jessica is a wolf . winona is a cat . gertrude is a mouse . sheep are afraid of cats . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: sheep </s>
+Model prediction: cat </s>
+=========================
+Step 9400: train_loss = 1.276375, train_acc = 0.343750, train ppl = 1.893046
+Step 9500: train_loss = 1.257596, train_acc = 0.406250, train ppl = 1.875355
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.280000 -- validation perplexity = 2.003248
+Epoch 34: test accuracy: 0.230000
+---- Qualitative Analysis
+Context: what is winona afraid of ? cats are afraid of mice . mice are afraid of cats . wolves are afraid of sheep . sheep are afraid of mice . gertrude is a mouse . winona is a cat . emily is a cat . jessica is a sheep . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: mouse </s>
+Model prediction: sheep </s>
+=========================
+Step 9600: train_loss = 1.471361, train_acc = 0.500000, train ppl = 2.086901
+Step 9700: train_loss = 1.189635, train_acc = 0.375000, train ppl = 1.812700
+Step 9800: train_loss = 1.206426, train_acc = 0.343750, train ppl = 1.827983
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.357000 -- validation perplexity = 2.088919
+Epoch 35: test accuracy: 0.439000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? mice are afraid of sheep . cats are afraid of sheep . wolves are afraid of mice . jessica is a cat . emily is a wolf . sheep are afraid of wolves . winona is a cat . gertrude is a wolf . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: sheep </s>
+Model prediction: wolf </s>
+=========================
+Step 9900: train_loss = 1.829646, train_acc = 0.468750, train ppl = 2.496333
+Step 10000: train_loss = 1.297929, train_acc = 0.343750, train ppl = 1.913558
+Step 10100: train_loss = 1.301529, train_acc = 0.437500, train ppl = 1.917006
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.373000 -- validation perplexity = 1.842586
+Epoch 36: test accuracy: 0.340000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? sheep are afraid of cats . wolves are afraid of mice . mice are afraid of cats . gertrude is a sheep . jessica is a sheep . cats are afraid of wolves . emily is a sheep . winona is a sheep . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: cat </s>
+Model prediction: cat </s>
+=========================
+Step 10200: train_loss = 1.627431, train_acc = 0.312500, train ppl = 2.256276
+Step 10300: train_loss = 1.596331, train_acc = 0.312500, train ppl = 2.221462
+Step 10400: train_loss = 1.277482, train_acc = 0.343750, train ppl = 1.894095
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.250000 -- validation perplexity = 2.226535
+Epoch 37: test accuracy: 0.210000
+---- Qualitative Analysis
+Context: what is emily afraid of ? wolves are afraid of mice . mice are afraid of sheep . cats are afraid of mice . jessica is a cat . gertrude is a wolf . sheep are afraid of mice . emily is a sheep . winona is a cat . what is emily afraid of ?
+Question: what is emily afraid of ?
+Answer: mouse </s>
+Model prediction: sheep </s>
+=========================
+Step 10500: train_loss = 1.213919, train_acc = 0.281250, train ppl = 1.834844
+Step 10600: train_loss = 1.522015, train_acc = 0.281250, train ppl = 2.140432
+Step 10700: train_loss = 1.207100, train_acc = 0.468750, train ppl = 1.828599
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.392000 -- validation perplexity = 1.837824
+Epoch 38: test accuracy: 0.401000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? cats are afraid of mice . emily is a cat . wolves are afraid of sheep . mice are afraid of cats . jessica is a wolf . sheep are afraid of cats . winona is a sheep . gertrude is a sheep . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: sheep </s>
+Model prediction: mouse </s>
+=========================
+Step 10800: train_loss = 1.314439, train_acc = 0.468750, train ppl = 1.929420
+Step 10900: train_loss = 1.176728, train_acc = 0.375000, train ppl = 1.801039
+==== Finshed epoch 39 ====
+Evaluating model...
+Epoch 39: validation accuracy = 0.337000 -- validation perplexity = 2.191564
+Epoch 39: test accuracy: 0.380000
+---- Qualitative Analysis
+Context: what is emily afraid of ? cats are afraid of wolves . mice are afraid of cats . jessica is a mouse . sheep are afraid of wolves . winona is a sheep . emily is a sheep . wolves are afraid of sheep . gertrude is a sheep . what is emily afraid of ?
+Question: what is emily afraid of ?
+Answer: wolf </s>
+Model prediction: cat </s>
+=========================
+Step 11000: train_loss = 1.297275, train_acc = 0.406250, train ppl = 1.912933
+Step 11100: train_loss = 1.340994, train_acc = 0.281250, train ppl = 1.955209
+Step 11200: train_loss = 1.147253, train_acc = 0.468750, train ppl = 1.774692
+==== Finshed epoch 40 ====
+Evaluating model...
+Epoch 40: validation accuracy = 0.408000 -- validation perplexity = 3.000633
+Epoch 40: test accuracy: 0.374000
+---- Qualitative Analysis
+Context: what is winona afraid of ? mice are afraid of wolves . wolves are afraid of mice . sheep are afraid of mice . emily is a wolf . winona is a wolf . cats are afraid of mice . gertrude is a wolf . jessica is a mouse . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: mouse </s>
+Model prediction: mouse </s>
+=========================
+Step 11300: train_loss = 1.655337, train_acc = 0.468750, train ppl = 2.287979
+Step 11400: train_loss = 1.800103, train_acc = 0.281250, train ppl = 2.459730
+Step 11500: train_loss = 1.077109, train_acc = 0.500000, train ppl = 1.713529
+==== Finshed epoch 41 ====
+Evaluating model...
+Epoch 41: validation accuracy = 0.302000 -- validation perplexity = 2.507604
+Epoch 41: test accuracy: 0.285000
+---- Qualitative Analysis
+Context: what is winona afraid of ? cats are afraid of mice . gertrude is a cat . jessica is a cat . wolves are afraid of mice . winona is a wolf . sheep are afraid of wolves . mice are afraid of wolves . emily is a sheep . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: mouse </s>
+Model prediction: mouse </s>
+=========================
+Step 11600: train_loss = 1.711753, train_acc = 0.125000, train ppl = 2.353436
+Step 11700: train_loss = 1.374214, train_acc = 0.375000, train ppl = 1.987956
+Step 11800: train_loss = 2.211427, train_acc = 0.187500, train ppl = 3.021379
+==== Finshed epoch 42 ====
+Evaluating model...
+Epoch 42: validation accuracy = 0.376000 -- validation perplexity = 1.951791
+Epoch 42: test accuracy: 0.355000
+---- Qualitative Analysis
+Context: what is emily afraid of ? wolves are afraid of mice . mice are afraid of wolves . cats are afraid of sheep . winona is a wolf . gertrude is a cat . emily is a mouse . jessica is a cat . sheep are afraid of mice . what is emily afraid of ?
+Question: what is emily afraid of ?
+Answer: wolf </s>
+Model prediction: mouse </s>
+=========================
+Step 11900: train_loss = 1.472997, train_acc = 0.312500, train ppl = 2.088610
+Step 12000: train_loss = 1.640174, train_acc = 0.250000, train ppl = 2.270697
+Step 12100: train_loss = 1.484604, train_acc = 0.531250, train ppl = 2.100766
+==== Finshed epoch 43 ====
+Evaluating model...
+Epoch 43: validation accuracy = 0.384000 -- validation perplexity = 2.031979
+Epoch 43: test accuracy: 0.361000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? sheep are afraid of wolves . mice are afraid of wolves . cats are afraid of wolves . jessica is a sheep . gertrude is a cat . winona is a sheep . emily is a cat . wolves are afraid of mice . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: wolf </s>
+Model prediction: sheep </s>
+=========================
+Step 12200: train_loss = 1.411702, train_acc = 0.218750, train ppl = 2.025570
+Step 12300: train_loss = 1.335909, train_acc = 0.468750, train ppl = 1.950244
+Step 12400: train_loss = 1.412249, train_acc = 0.343750, train ppl = 2.026124
+==== Finshed epoch 44 ====
+Evaluating model...
+Epoch 44: validation accuracy = 0.271000 -- validation perplexity = 2.207540
+Epoch 44: test accuracy: 0.350000
+---- Qualitative Analysis
+Context: what is emily afraid of ? mice are afraid of wolves . jessica is a mouse . winona is a mouse . sheep are afraid of cats . wolves are afraid of cats . cats are afraid of sheep . gertrude is a wolf . emily is a mouse . what is emily afraid of ?
+Question: what is emily afraid of ?
+Answer: wolf </s>
+Model prediction: cat </s>
+=========================
+Step 12500: train_loss = 1.701676, train_acc = 0.406250, train ppl = 2.341609
+Step 12600: train_loss = 1.722909, train_acc = 0.218750, train ppl = 2.366600
+==== Finshed epoch 45 ====
+Evaluating model...
+Epoch 45: validation accuracy = 0.243000 -- validation perplexity = 2.684800
+Epoch 45: test accuracy: 0.207000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? mice are afraid of sheep . wolves are afraid of mice . sheep are afraid of wolves . jessica is a sheep . cats are afraid of wolves . gertrude is a sheep . winona is a wolf . emily is a sheep . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: wolf </s>
+Model prediction: sheep </s>
+=========================
+Step 12700: train_loss = 1.658682, train_acc = 0.343750, train ppl = 2.291808
+Step 12800: train_loss = 1.720055, train_acc = 0.218750, train ppl = 2.363225
+Step 12900: train_loss = 1.906989, train_acc = 0.312500, train ppl = 2.594761
+==== Finshed epoch 46 ====
+Evaluating model...
+Epoch 46: validation accuracy = 0.307000 -- validation perplexity = 2.212731
+Epoch 46: test accuracy: 0.372000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? wolves are afraid of cats . cats are afraid of sheep . mice are afraid of wolves . sheep are afraid of wolves . gertrude is a sheep . emily is a cat . jessica is a wolf . winona is a mouse . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: cat </s>
+Model prediction: wolf </s>
+=========================
+Step 13000: train_loss = 1.790680, train_acc = 0.343750, train ppl = 2.448168
+Step 13100: train_loss = 1.720974, train_acc = 0.406250, train ppl = 2.364312
+Step 13200: train_loss = 1.535501, train_acc = 0.375000, train ppl = 2.154913
+==== Finshed epoch 47 ====
+Evaluating model...
+Epoch 47: validation accuracy = 0.284000 -- validation perplexity = 2.111309
+Epoch 47: test accuracy: 0.346000
+---- Qualitative Analysis
+Context: what is emily afraid of ? cats are afraid of sheep . mice are afraid of cats . sheep are afraid of cats . jessica is a sheep . emily is a mouse . wolves are afraid of sheep . winona is a mouse . gertrude is a mouse . what is emily afraid of ?
+Question: what is emily afraid of ?
+Answer: cat </s>
+Model prediction: wolf </s>
+=========================
+Step 13300: train_loss = 1.299789, train_acc = 0.437500, train ppl = 1.915339
+Step 13400: train_loss = 1.232646, train_acc = 0.343750, train ppl = 1.852105
+Step 13500: train_loss = 1.430962, train_acc = 0.343750, train ppl = 2.045170
+==== Finshed epoch 48 ====
+Evaluating model...
+Epoch 48: validation accuracy = 0.369000 -- validation perplexity = 1.902808
+Epoch 48: test accuracy: 0.372000
+---- Qualitative Analysis
+Context: what is winona afraid of ? cats are afraid of sheep . winona is a cat . mice are afraid of sheep . emily is a cat . wolves are afraid of sheep . gertrude is a cat . sheep are afraid of mice . jessica is a cat . what is winona afraid of ?
+Question: what is winona afraid of ?
+Answer: sheep </s>
+Model prediction: mouse </s>
+=========================
+Step 13600: train_loss = 1.580625, train_acc = 0.343750, train ppl = 2.204085
+Step 13700: train_loss = 1.779389, train_acc = 0.250000, train ppl = 2.434386
+Step 13800: train_loss = 1.948280, train_acc = 0.218750, train ppl = 2.648888
+==== Finshed epoch 49 ====
+Evaluating model...
+Epoch 49: validation accuracy = 0.342000 -- validation perplexity = 2.128138
+Epoch 49: test accuracy: 0.397000
+---- Qualitative Analysis
+Context: what is jessica afraid of ? cats are afraid of sheep . mice are afraid of wolves . emily is a cat . sheep are afraid of mice . jessica is a cat . wolves are afraid of cats . gertrude is a wolf . winona is a cat . what is jessica afraid of ?
+Question: what is jessica afraid of ?
+Answer: sheep </s>
+Model prediction: cat </s>
+=========================
+Step 13900: train_loss = 1.604812, train_acc = 0.281250, train ppl = 2.230902
+Step 14000: train_loss = 1.340805, train_acc = 0.437500, train ppl = 1.955024
+Step 14100: train_loss = 0.940550, train_acc = 0.500000, train ppl = 1.600434
+==== Finshed epoch 50 ====
+Evaluating model...
+Epoch 50: validation accuracy = 0.369000 -- validation perplexity = 2.707891
+Epoch 50: test accuracy: 0.391000
+---- Qualitative Analysis
+Context: what is gertrude afraid of ? wolves are afraid of sheep . gertrude is a wolf . winona is a wolf . sheep are afraid of mice . mice are afraid of cats . cats are afraid of sheep . emily is a cat . jessica is a wolf . what is gertrude afraid of ?
+Question: what is gertrude afraid of ?
+Answer: sheep </s>
+Model prediction: cat </s>
+=========================
+Best model (acc) at epoch 11 -- validation perplexity = 1.646760 -- validation accuracy = 0.498000 -- test accuracy = 0.548000
+0.498

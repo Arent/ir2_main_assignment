@@ -1,0 +1,828 @@
+num_epochs:               50
+encoder_type:             bi
+num_units:                256
+restore_from_dir:         None
+vocab:                    ../data/vocab.txt
+learning_rate:            0.001
+model_dir:                ../models/task_2
+model_type:               attention
+val_split:                0.1
+cell_type:                gru
+optimizer:                adam
+task:                     2
+embedding_size:           256
+data_dir:                 ../data/en-10k
+dropout_keep_prob:        0.7
+batch_size:               16
+num_enc_layers:           1
+max_gradient_norm:        1.0
+merge_mode:               concat
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: where is the football ? sandra travelled to the office . john journeyed to the bedroom . john travelled to the hallway . mary moved to the bathroom . john journeyed to the kitchen . mary picked up the football there . mary left the football . mary picked up the football there . mary went back to the hallway . daniel journeyed to the hallway . john took the milk there . john discarded the milk . mary put down the football . daniel got the football there . daniel travelled to the bedroom . daniel left the football . sandra moved to the bathroom . sandra got the apple there . where is the football ?
+Question: where is the football ?
+Answer: bedroom </s>
+Model prediction: 223 223 223 223 223 223 223 223 223 223
+=========================
+Step 100: train_loss = 1.972287, train_acc = 0.062500, train ppl = 2.680876
+Step 200: train_loss = 1.866698, train_acc = 0.250000, train ppl = 2.543011
+Step 300: train_loss = 1.809552, train_acc = 0.250000, train ppl = 2.471378
+Step 400: train_loss = 1.816462, train_acc = 0.125000, train ppl = 2.479932
+Step 500: train_loss = 1.872607, train_acc = 0.187500, train ppl = 2.550536
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.166000 -- validation perplexity = 2.457112
+Epoch 1: test accuracy: 0.165000
+---- Qualitative Analysis
+Context: where is the milk ? john went back to the hallway . daniel went back to the garden . john moved to the bedroom . daniel moved to the kitchen . sandra travelled to the garden . daniel picked up the football there . sandra took the milk there . sandra left the milk . mary moved to the office . sandra took the milk there . daniel moved to the garden . sandra discarded the milk . sandra journeyed to the bedroom . mary journeyed to the kitchen . mary journeyed to the garden . daniel went back to the bathroom . john travelled to the hallway . mary picked up the milk there . sandra travelled to the kitchen . mary left the milk . where is the milk ?
+Question: where is the milk ?
+Answer: garden </s>
+Model prediction: kitchen </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 600: train_loss = 1.882321, train_acc = 0.125000, train ppl = 2.562954
+Step 700: train_loss = 1.807725, train_acc = 0.187500, train ppl = 2.469122
+Step 800: train_loss = 1.797971, train_acc = 0.250000, train ppl = 2.457109
+Step 900: train_loss = 1.871645, train_acc = 0.187500, train ppl = 2.549309
+Step 1000: train_loss = 1.843484, train_acc = 0.125000, train ppl = 2.513666
+Step 1100: train_loss = 1.781298, train_acc = 0.062500, train ppl = 2.436710
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.176000 -- validation perplexity = 2.496609
+Epoch 2: test accuracy: 0.160000
+---- Qualitative Analysis
+Context: where is the football ? daniel took the milk there . john journeyed to the garden . daniel went back to the hallway . daniel journeyed to the bathroom . daniel dropped the milk . daniel took the milk there . john grabbed the apple there . sandra journeyed to the kitchen . john went to the hallway . sandra went back to the garden . daniel journeyed to the kitchen . sandra journeyed to the bedroom . daniel went back to the hallway . sandra went back to the kitchen . sandra went back to the bathroom . john went to the kitchen . sandra got the football there . sandra went to the kitchen . where is the football ?
+Question: where is the football ?
+Answer: kitchen </s>
+Model prediction: hallway </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 1200: train_loss = 13.288229, train_acc = 0.000000, train ppl = 768.249451
+Step 1300: train_loss = 1.655603, train_acc = 0.312500, train ppl = 2.288282
+Step 1400: train_loss = 1.505676, train_acc = 0.375000, train ppl = 2.123017
+Step 1500: train_loss = 1.529397, train_acc = 0.312500, train ppl = 2.148346
+Step 1600: train_loss = 1.259374, train_acc = 0.437500, train ppl = 1.877023
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.412000 -- validation perplexity = 2.004597
+Epoch 3: test accuracy: 0.389000
+---- Qualitative Analysis
+Context: where is the apple ? sandra moved to the garden . daniel took the apple there . daniel dropped the apple . sandra travelled to the office . john moved to the kitchen . sandra moved to the garden . daniel went back to the bathroom . mary travelled to the hallway . sandra went to the bathroom . john went back to the bedroom . mary moved to the garden . john picked up the apple there . john went back to the kitchen . john went back to the garden . mary went to the office . daniel went to the bedroom . john went to the bathroom . john dropped the apple . mary journeyed to the bedroom . sandra grabbed the apple there . daniel moved to the kitchen . sandra left the apple . where is the apple ?
+Question: where is the apple ?
+Answer: bathroom </s>
+Model prediction: bedroom </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 1700: train_loss = 1.385169, train_acc = 0.375000, train ppl = 1.998875
+Step 1800: train_loss = 1.384339, train_acc = 0.562500, train ppl = 1.998046
+Step 1900: train_loss = 1.412823, train_acc = 0.375000, train ppl = 2.026706
+Step 2000: train_loss = 1.398191, train_acc = 0.437500, train ppl = 2.011932
+Step 2100: train_loss = 1.219961, train_acc = 0.562500, train ppl = 1.840395
+Step 2200: train_loss = 1.265930, train_acc = 0.437500, train ppl = 1.883186
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.430000 -- validation perplexity = 1.934427
+Epoch 4: test accuracy: 0.436000
+---- Qualitative Analysis
+Context: where is the milk ? sandra journeyed to the garden . sandra travelled to the bathroom . daniel went back to the garden . sandra got the apple there . mary travelled to the bedroom . john went to the hallway . sandra travelled to the office . mary grabbed the milk there . john went to the kitchen . mary moved to the hallway . sandra discarded the apple . mary left the milk . mary took the milk there . mary left the milk . john got the football there . john moved to the hallway . where is the milk ?
+Question: where is the milk ?
+Answer: hallway </s>
+Model prediction: hallway </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 2300: train_loss = 1.486104, train_acc = 0.375000, train ppl = 2.102342
+Step 2400: train_loss = 1.611560, train_acc = 0.250000, train ppl = 2.238442
+Step 2500: train_loss = 1.608600, train_acc = 0.250000, train ppl = 2.235132
+Step 2600: train_loss = 1.129986, train_acc = 0.437500, train ppl = 1.759435
+Step 2700: train_loss = 1.113411, train_acc = 0.625000, train ppl = 1.744914
+Step 2800: train_loss = 1.366036, train_acc = 0.375000, train ppl = 1.979844
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.470000 -- validation perplexity = 1.857243
+Epoch 5: test accuracy: 0.425000
+---- Qualitative Analysis
+Context: where is the football ? mary went back to the kitchen . daniel travelled to the office . mary moved to the hallway . john went to the kitchen . daniel went back to the bathroom . john travelled to the bathroom . daniel moved to the kitchen . sandra moved to the kitchen . john grabbed the football there . sandra journeyed to the bathroom . john discarded the football . john grabbed the football there . john went back to the bedroom . sandra went to the office . mary moved to the garden . daniel went to the bathroom . john moved to the office . mary picked up the milk there . sandra got the apple there . sandra travelled to the bedroom . daniel moved to the office . sandra left the apple . john moved to the bedroom . john discarded the football there . where is the football ?
+Question: where is the football ?
+Answer: bedroom </s>
+Model prediction: office </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 2900: train_loss = 1.530903, train_acc = 0.312500, train ppl = 2.149965
+Step 3000: train_loss = 1.219348, train_acc = 0.562500, train ppl = 1.839831
+Step 3100: train_loss = 0.994446, train_acc = 0.625000, train ppl = 1.644149
+Step 3200: train_loss = 1.109789, train_acc = 0.562500, train ppl = 1.741757
+Step 3300: train_loss = 0.893505, train_acc = 0.562500, train ppl = 1.563227
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.471000 -- validation perplexity = 1.822900
+Epoch 6: test accuracy: 0.450000
+---- Qualitative Analysis
+Context: where is the milk ? mary moved to the office . daniel went to the garden . sandra went back to the hallway . mary journeyed to the bathroom . mary went back to the garden . mary travelled to the hallway . john went to the garden . sandra travelled to the garden . daniel went to the office . daniel travelled to the bedroom . john took the football there . daniel grabbed the milk there . john discarded the football . sandra went to the kitchen . john went to the office . sandra travelled to the bedroom . sandra moved to the bathroom . mary journeyed to the bathroom . daniel moved to the garden . daniel dropped the milk . mary travelled to the hallway . daniel journeyed to the bedroom . where is the milk ?
+Question: where is the milk ?
+Answer: garden </s>
+Model prediction: bedroom </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 3400: train_loss = 1.079454, train_acc = 0.562500, train ppl = 1.715539
+Step 3500: train_loss = 1.027449, train_acc = 0.500000, train ppl = 1.671506
+Step 3600: train_loss = 1.075638, train_acc = 0.562500, train ppl = 1.712269
+Step 3700: train_loss = 1.342235, train_acc = 0.375000, train ppl = 1.956422
+Step 3800: train_loss = 1.471455, train_acc = 0.375000, train ppl = 2.087000
+Step 3900: train_loss = 0.801722, train_acc = 0.625000, train ppl = 1.493109
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.507000 -- validation perplexity = 1.822915
+Epoch 7: test accuracy: 0.446000
+---- Qualitative Analysis
+Context: where is the apple ? sandra moved to the bathroom . mary journeyed to the office . daniel took the apple there . mary journeyed to the garden . mary got the football there . john went to the bathroom . sandra journeyed to the office . daniel travelled to the bedroom . daniel discarded the apple . daniel moved to the bathroom . where is the apple ?
+Question: where is the apple ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 4000: train_loss = 0.890882, train_acc = 0.625000, train ppl = 1.561178
+Step 4100: train_loss = 1.210430, train_acc = 0.562500, train ppl = 1.831646
+Step 4200: train_loss = 0.886552, train_acc = 0.625000, train ppl = 1.557802
+Step 4300: train_loss = 0.843407, train_acc = 0.687500, train ppl = 1.524556
+Step 4400: train_loss = 1.091766, train_acc = 0.625000, train ppl = 1.726132
+Step 4500: train_loss = 1.324743, train_acc = 0.500000, train ppl = 1.939386
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.480000 -- validation perplexity = 1.843908
+Epoch 8: test accuracy: 0.450000
+---- Qualitative Analysis
+Context: where is the milk ? daniel went to the office . mary took the football there . sandra journeyed to the garden . sandra went to the bedroom . john took the apple there . john put down the apple . mary put down the football . john took the apple there . mary went back to the bedroom . john put down the apple . mary journeyed to the kitchen . daniel moved to the garden . sandra moved to the kitchen . daniel picked up the milk there . john went to the hallway . john journeyed to the bedroom . sandra picked up the apple there . mary travelled to the bedroom . mary went back to the bathroom . sandra journeyed to the office . john went back to the kitchen . john moved to the garden . sandra left the apple . sandra took the apple there . sandra put down the apple . john went back to the bathroom . sandra travelled to the garden . daniel went to the bathroom . daniel left the milk . mary took the milk there . mary put down the milk . mary journeyed to the kitchen . mary moved to the bedroom . john went to the garden . where is the milk ?
+Question: where is the milk ?
+Answer: bathroom </s>
+Model prediction: garden </s>
+=========================
+Step 4600: train_loss = 0.656549, train_acc = 0.875000, train ppl = 1.388570
+Step 4700: train_loss = 0.881330, train_acc = 0.500000, train ppl = 1.553740
+Step 4800: train_loss = 0.914781, train_acc = 0.625000, train ppl = 1.579946
+Step 4900: train_loss = 1.324507, train_acc = 0.437500, train ppl = 1.939158
+Step 5000: train_loss = 0.793836, train_acc = 0.750000, train ppl = 1.487234
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.507000 -- validation perplexity = 1.823427
+Epoch 9: test accuracy: 0.445000
+---- Qualitative Analysis
+Context: where is the football ? john moved to the bathroom . daniel moved to the bedroom . mary went back to the bedroom . mary moved to the office . sandra moved to the garden . john travelled to the garden . sandra went back to the hallway . mary took the football there . sandra journeyed to the kitchen . mary went to the bedroom . daniel went to the garden . john travelled to the office . where is the football ?
+Question: where is the football ?
+Answer: bedroom </s>
+Model prediction: garden </s>
+=========================
+Step 5100: train_loss = 1.482665, train_acc = 0.437500, train ppl = 2.098731
+Step 5200: train_loss = 0.958785, train_acc = 0.562500, train ppl = 1.615093
+Step 5300: train_loss = 0.544842, train_acc = 0.937500, train ppl = 1.313139
+Step 5400: train_loss = 0.931699, train_acc = 0.562500, train ppl = 1.593367
+Step 5500: train_loss = 0.778810, train_acc = 0.562500, train ppl = 1.476103
+Step 5600: train_loss = 0.978207, train_acc = 0.500000, train ppl = 1.630853
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.503000 -- validation perplexity = 1.854065
+Epoch 10: test accuracy: 0.436000
+---- Qualitative Analysis
+Context: where is the apple ? john moved to the bedroom . sandra journeyed to the office . sandra moved to the kitchen . daniel travelled to the bedroom . john went back to the office . mary travelled to the garden . sandra moved to the hallway . sandra went to the garden . john went back to the kitchen . daniel went to the office . sandra moved to the hallway . daniel picked up the apple there . mary went to the bedroom . daniel went back to the garden . daniel left the apple . daniel grabbed the apple there . sandra took the football there . daniel discarded the apple . where is the apple ?
+Question: where is the apple ?
+Answer: garden </s>
+Model prediction: bedroom </s>
+=========================
+Step 5700: train_loss = 0.940745, train_acc = 0.625000, train ppl = 1.600590
+Step 5800: train_loss = 1.174898, train_acc = 0.562500, train ppl = 1.799393
+Step 5900: train_loss = 0.821760, train_acc = 0.750000, train ppl = 1.508145
+Step 6000: train_loss = 1.071056, train_acc = 0.500000, train ppl = 1.708350
+Step 6100: train_loss = 1.026900, train_acc = 0.625000, train ppl = 1.671046
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.532000 -- validation perplexity = 1.846841
+Epoch 11: test accuracy: 0.406000
+---- Qualitative Analysis
+Context: where is the milk ? daniel got the football there . sandra travelled to the bedroom . mary went back to the kitchen . sandra went to the bathroom . mary went back to the bedroom . daniel left the football . mary journeyed to the hallway . sandra moved to the hallway . daniel got the football there . mary travelled to the bedroom . daniel went back to the bathroom . sandra moved to the kitchen . daniel journeyed to the hallway . daniel dropped the football . daniel grabbed the football there . john went back to the hallway . daniel dropped the football . mary went to the bathroom . john journeyed to the office . sandra travelled to the office . daniel travelled to the garden . sandra got the apple there . daniel grabbed the milk there . daniel moved to the kitchen . where is the milk ?
+Question: where is the milk ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 6200: train_loss = 0.712427, train_acc = 0.687500, train ppl = 1.427912
+Step 6300: train_loss = 0.631163, train_acc = 0.750000, train ppl = 1.371056
+Step 6400: train_loss = 0.612808, train_acc = 0.875000, train ppl = 1.358531
+Step 6500: train_loss = 0.703741, train_acc = 0.750000, train ppl = 1.421725
+Step 6600: train_loss = 0.398402, train_acc = 0.875000, train ppl = 1.220427
+Step 6700: train_loss = 0.666856, train_acc = 0.750000, train ppl = 1.395744
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.556000 -- validation perplexity = 1.840366
+Epoch 12: test accuracy: 0.424000
+---- Qualitative Analysis
+Context: where is the milk ? sandra journeyed to the garden . daniel got the football there . mary went back to the kitchen . sandra went back to the hallway . daniel put down the football there . daniel journeyed to the kitchen . sandra moved to the garden . mary went back to the office . mary moved to the kitchen . john travelled to the bathroom . mary moved to the office . mary got the apple there . daniel moved to the office . daniel got the milk there . mary went back to the garden . daniel left the milk . john travelled to the office . mary put down the apple . where is the milk ?
+Question: where is the milk ?
+Answer: office </s>
+Model prediction: garden </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 6800: train_loss = 0.644801, train_acc = 0.750000, train ppl = 1.380437
+Step 6900: train_loss = 0.397730, train_acc = 0.812500, train ppl = 1.220017
+Step 7000: train_loss = 0.254445, train_acc = 0.937500, train ppl = 1.135669
+Step 7100: train_loss = 0.509094, train_acc = 0.750000, train ppl = 1.289877
+Step 7200: train_loss = 0.414852, train_acc = 0.875000, train ppl = 1.230507
+Step 7300: train_loss = 0.305923, train_acc = 0.937500, train ppl = 1.165280
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.569000 -- validation perplexity = 1.888761
+Epoch 13: test accuracy: 0.430000
+---- Qualitative Analysis
+Context: where is the milk ? mary travelled to the office . daniel grabbed the football there . mary journeyed to the garden . daniel dropped the football . sandra moved to the office . daniel grabbed the football there . daniel travelled to the office . john went to the garden . john grabbed the apple there . john discarded the apple . mary took the apple there . mary went back to the kitchen . sandra went to the bedroom . daniel left the football there . daniel took the football there . sandra grabbed the milk there . mary dropped the apple . mary got the apple there . daniel went to the garden . sandra left the milk . where is the milk ?
+Question: where is the milk ?
+Answer: bedroom </s>
+Model prediction: garden </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 7400: train_loss = 0.730304, train_acc = 0.562500, train ppl = 1.440733
+Step 7500: train_loss = 0.441461, train_acc = 0.875000, train ppl = 1.246987
+Step 7600: train_loss = 0.350241, train_acc = 0.937500, train ppl = 1.191390
+Step 7700: train_loss = 0.343142, train_acc = 0.937500, train ppl = 1.187169
+Step 7800: train_loss = 0.449931, train_acc = 0.875000, train ppl = 1.252279
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.555000 -- validation perplexity = 1.951017
+Epoch 14: test accuracy: 0.434000
+---- Qualitative Analysis
+Context: where is the apple ? daniel moved to the kitchen . john grabbed the football there . john left the football there . mary journeyed to the hallway . john grabbed the milk there . john travelled to the kitchen . mary journeyed to the kitchen . sandra went to the office . daniel went to the bathroom . daniel picked up the apple there . sandra travelled to the garden . daniel dropped the apple there . sandra went back to the office . daniel journeyed to the kitchen . where is the apple ?
+Question: where is the apple ?
+Answer: bathroom </s>
+Model prediction: bathroom </s>
+=========================
+Step 7900: train_loss = 0.379888, train_acc = 0.875000, train ppl = 1.209182
+Step 8000: train_loss = 0.616522, train_acc = 0.812500, train ppl = 1.361056
+Step 8100: train_loss = 0.484635, train_acc = 0.812500, train ppl = 1.274199
+Step 8200: train_loss = 0.465791, train_acc = 0.812500, train ppl = 1.262249
+Step 8300: train_loss = 0.189565, train_acc = 0.937500, train ppl = 1.099420
+Step 8400: train_loss = 0.511670, train_acc = 0.750000, train ppl = 1.291539
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.555000 -- validation perplexity = 2.034333
+Epoch 15: test accuracy: 0.418000
+---- Qualitative Analysis
+Context: where is the apple ? john took the football there . john left the football . mary went back to the bathroom . sandra got the football there . daniel journeyed to the kitchen . john journeyed to the bedroom . sandra dropped the football . mary moved to the kitchen . daniel grabbed the apple there . mary went to the bathroom . mary moved to the bedroom . john went back to the bathroom . daniel discarded the apple there . mary travelled to the kitchen . sandra picked up the football there . sandra left the football there . mary went to the hallway . daniel got the apple there . daniel travelled to the hallway . mary took the football there . where is the apple ?
+Question: where is the apple ?
+Answer: hallway </s>
+Model prediction: hallway </s>
+=========================
+Step 8500: train_loss = 0.497941, train_acc = 0.687500, train ppl = 1.282704
+Step 8600: train_loss = 0.395578, train_acc = 0.812500, train ppl = 1.218706
+Step 8700: train_loss = 0.370450, train_acc = 0.875000, train ppl = 1.203490
+Step 8800: train_loss = 0.114212, train_acc = 1.000000, train ppl = 1.058768
+Step 8900: train_loss = 0.206248, train_acc = 0.937500, train ppl = 1.108629
+Step 9000: train_loss = 0.588104, train_acc = 0.812500, train ppl = 1.341854
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.553000 -- validation perplexity = 2.156435
+Epoch 16: test accuracy: 0.407000
+---- Qualitative Analysis
+Context: where is the apple ? sandra went back to the garden . daniel took the football there . john went back to the kitchen . sandra journeyed to the hallway . sandra went to the bathroom . sandra went to the bedroom . sandra went to the kitchen . john travelled to the bathroom . daniel went to the garden . mary went to the garden . mary grabbed the apple there . mary travelled to the bathroom . where is the apple ?
+Question: where is the apple ?
+Answer: bathroom </s>
+Model prediction: garden </s>
+=========================
+Step 9100: train_loss = 0.131769, train_acc = 0.937500, train ppl = 1.068104
+Step 9200: train_loss = 0.629858, train_acc = 0.875000, train ppl = 1.370162
+Step 9300: train_loss = 0.084220, train_acc = 1.000000, train ppl = 1.043009
+Step 9400: train_loss = 0.141977, train_acc = 0.937500, train ppl = 1.073569
+Step 9500: train_loss = 0.383849, train_acc = 0.812500, train ppl = 1.211579
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.555000 -- validation perplexity = 2.317535
+Epoch 17: test accuracy: 0.417000
+---- Qualitative Analysis
+Context: where is the football ? daniel grabbed the football there . sandra picked up the apple there . daniel dropped the football . sandra discarded the apple . john got the football there . sandra got the apple there . john went to the bathroom . mary journeyed to the garden . where is the football ?
+Question: where is the football ?
+Answer: bathroom </s>
+Model prediction: garden </s>
+=========================
+Step 9600: train_loss = 0.111776, train_acc = 1.000000, train ppl = 1.057479
+Step 9700: train_loss = 0.395841, train_acc = 0.812500, train ppl = 1.218865
+Step 9800: train_loss = 0.123945, train_acc = 1.000000, train ppl = 1.063933
+Step 9900: train_loss = 0.139241, train_acc = 0.937500, train ppl = 1.072101
+Step 10000: train_loss = 0.192755, train_acc = 0.937500, train ppl = 1.101175
+Step 10100: train_loss = 0.172792, train_acc = 0.937500, train ppl = 1.090238
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.559000 -- validation perplexity = 2.440883
+Epoch 18: test accuracy: 0.441000
+---- Qualitative Analysis
+Context: where is the milk ? daniel moved to the bedroom . daniel took the milk there . daniel left the milk . john went to the bedroom . where is the milk ?
+Question: where is the milk ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 10200: train_loss = 0.084797, train_acc = 1.000000, train ppl = 1.043310
+Step 10300: train_loss = 0.360577, train_acc = 0.875000, train ppl = 1.197563
+Step 10400: train_loss = 0.358221, train_acc = 0.812500, train ppl = 1.196153
+Step 10500: train_loss = 0.067470, train_acc = 1.000000, train ppl = 1.034310
+Step 10600: train_loss = 0.149324, train_acc = 0.937500, train ppl = 1.077520
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.578000 -- validation perplexity = 2.503492
+Epoch 19: test accuracy: 0.422000
+---- Qualitative Analysis
+Context: where is the milk ? john went back to the hallway . daniel went back to the garden . john moved to the bedroom . daniel moved to the kitchen . sandra travelled to the garden . daniel picked up the football there . sandra took the milk there . sandra left the milk . mary moved to the office . sandra took the milk there . daniel moved to the garden . sandra discarded the milk . sandra journeyed to the bedroom . mary journeyed to the kitchen . where is the milk ?
+Question: where is the milk ?
+Answer: garden </s>
+Model prediction: garden </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 10700: train_loss = 0.077306, train_acc = 0.937500, train ppl = 1.039410
+Step 10800: train_loss = 0.363881, train_acc = 0.875000, train ppl = 1.199543
+Step 10900: train_loss = 0.263521, train_acc = 0.937500, train ppl = 1.140835
+Step 11000: train_loss = 0.147425, train_acc = 0.875000, train ppl = 1.076497
+Step 11100: train_loss = 0.249601, train_acc = 0.937500, train ppl = 1.132923
+Step 11200: train_loss = 0.060654, train_acc = 1.000000, train ppl = 1.030791
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.579000 -- validation perplexity = 2.655696
+Epoch 20: test accuracy: 0.414000
+---- Qualitative Analysis
+Context: where is the football ? mary went back to the kitchen . mary travelled to the hallway . john journeyed to the bedroom . john moved to the garden . daniel went to the hallway . john moved to the hallway . daniel journeyed to the bathroom . mary travelled to the garden . daniel went to the hallway . john travelled to the office . john travelled to the bedroom . mary journeyed to the bedroom . john picked up the football there . john dropped the football . sandra travelled to the office . mary travelled to the hallway . sandra grabbed the apple there . john grabbed the football there . mary went back to the bathroom . john discarded the football . where is the football ?
+Question: where is the football ?
+Answer: bedroom </s>
+Model prediction: bathroom </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 11300: train_loss = 0.048664, train_acc = 1.000000, train ppl = 1.024630
+Step 11400: train_loss = 0.117312, train_acc = 1.000000, train ppl = 1.060410
+Step 11500: train_loss = 0.493635, train_acc = 0.875000, train ppl = 1.279945
+Step 11600: train_loss = 0.045561, train_acc = 1.000000, train ppl = 1.023042
+Step 11700: train_loss = 0.028519, train_acc = 1.000000, train ppl = 1.014362
+Step 11800: train_loss = 0.117622, train_acc = 0.937500, train ppl = 1.060575
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.575000 -- validation perplexity = 2.804622
+Epoch 21: test accuracy: 0.427000
+---- Qualitative Analysis
+Context: where is the milk ? daniel journeyed to the office . sandra went to the bathroom . mary journeyed to the kitchen . mary got the football there . mary dropped the football . john went to the hallway . john moved to the bedroom . mary travelled to the bathroom . sandra moved to the office . daniel journeyed to the bedroom . daniel journeyed to the kitchen . daniel picked up the football there . daniel dropped the football . sandra went to the bathroom . mary travelled to the office . daniel grabbed the football there . sandra moved to the hallway . mary moved to the bedroom . mary went back to the hallway . john went to the office . sandra went back to the kitchen . daniel went back to the hallway . john journeyed to the kitchen . mary went to the garden . mary picked up the milk there . daniel went back to the garden . mary travelled to the office . mary journeyed to the kitchen . where is the milk ?
+Question: where is the milk ?
+Answer: kitchen </s>
+Model prediction: garden </s>
+=========================
+Step 11900: train_loss = 0.033231, train_acc = 1.000000, train ppl = 1.016754
+Step 12000: train_loss = 0.068087, train_acc = 1.000000, train ppl = 1.034629
+Step 12100: train_loss = 0.144729, train_acc = 0.937500, train ppl = 1.075047
+Step 12200: train_loss = 0.106627, train_acc = 0.937500, train ppl = 1.054760
+Step 12300: train_loss = 0.108731, train_acc = 0.937500, train ppl = 1.055870
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.578000 -- validation perplexity = 2.903031
+Epoch 22: test accuracy: 0.426000
+---- Qualitative Analysis
+Context: where is the apple ? mary picked up the football there . mary dropped the football . sandra journeyed to the hallway . mary moved to the bathroom . daniel travelled to the kitchen . sandra journeyed to the bedroom . daniel went back to the office . sandra picked up the apple there . john moved to the garden . sandra moved to the kitchen . mary moved to the hallway . sandra travelled to the office . where is the apple ?
+Question: where is the apple ?
+Answer: office </s>
+Model prediction: hallway </s>
+=========================
+Step 12400: train_loss = 0.150401, train_acc = 0.937500, train ppl = 1.078100
+Step 12500: train_loss = 0.011244, train_acc = 1.000000, train ppl = 1.005638
+Step 12600: train_loss = 0.075814, train_acc = 1.000000, train ppl = 1.038635
+Step 12700: train_loss = 0.097638, train_acc = 1.000000, train ppl = 1.050030
+Step 12800: train_loss = 0.015054, train_acc = 1.000000, train ppl = 1.007555
+Step 12900: train_loss = 0.095022, train_acc = 0.937500, train ppl = 1.048658
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.564000 -- validation perplexity = 2.987964
+Epoch 23: test accuracy: 0.449000
+---- Qualitative Analysis
+Context: where is the football ? mary went to the office . john took the football there . john journeyed to the bedroom . sandra went to the bedroom . where is the football ?
+Question: where is the football ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 13000: train_loss = 0.140193, train_acc = 0.937500, train ppl = 1.072612
+Step 13100: train_loss = 0.033212, train_acc = 1.000000, train ppl = 1.016745
+Step 13200: train_loss = 0.083495, train_acc = 1.000000, train ppl = 1.042631
+Step 13300: train_loss = 0.246808, train_acc = 0.875000, train ppl = 1.131342
+Step 13400: train_loss = 0.021930, train_acc = 1.000000, train ppl = 1.011025
+Step 13500: train_loss = 0.052638, train_acc = 1.000000, train ppl = 1.026668
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.592000 -- validation perplexity = 3.062703
+Epoch 24: test accuracy: 0.440000
+---- Qualitative Analysis
+Context: where is the milk ? daniel went to the office . mary took the football there . sandra journeyed to the garden . sandra went to the bedroom . john took the apple there . john put down the apple . mary put down the football . john took the apple there . mary went back to the bedroom . john put down the apple . mary journeyed to the kitchen . daniel moved to the garden . sandra moved to the kitchen . daniel picked up the milk there . john went to the hallway . john journeyed to the bedroom . sandra picked up the apple there . mary travelled to the bedroom . mary went back to the bathroom . sandra journeyed to the office . john went back to the kitchen . john moved to the garden . sandra left the apple . sandra took the apple there . sandra put down the apple . john went back to the bathroom . sandra travelled to the garden . daniel went to the bathroom . daniel left the milk . mary took the milk there . mary put down the milk . mary journeyed to the kitchen . where is the milk ?
+Question: where is the milk ?
+Answer: bathroom </s>
+Model prediction: garden </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 13600: train_loss = 0.021072, train_acc = 1.000000, train ppl = 1.010592
+Step 13700: train_loss = 0.044220, train_acc = 1.000000, train ppl = 1.022356
+Step 13800: train_loss = 0.024529, train_acc = 1.000000, train ppl = 1.012340
+Step 13900: train_loss = 0.227104, train_acc = 0.937500, train ppl = 1.120250
+Step 14000: train_loss = 0.013379, train_acc = 1.000000, train ppl = 1.006712
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.571000 -- validation perplexity = 3.374460
+Epoch 25: test accuracy: 0.431000
+---- Qualitative Analysis
+Context: where is the milk ? john took the apple there . sandra travelled to the bathroom . mary grabbed the milk there . sandra went to the kitchen . mary went to the hallway . mary went to the bathroom . where is the milk ?
+Question: where is the milk ?
+Answer: bathroom </s>
+Model prediction: hallway </s>
+=========================
+Step 14100: train_loss = 0.051770, train_acc = 1.000000, train ppl = 1.026223
+Step 14200: train_loss = 0.251427, train_acc = 0.937500, train ppl = 1.133957
+Step 14300: train_loss = 0.084207, train_acc = 0.937500, train ppl = 1.043002
+Step 14400: train_loss = 0.153964, train_acc = 0.937500, train ppl = 1.080023
+Step 14500: train_loss = 0.080979, train_acc = 0.937500, train ppl = 1.041321
+Step 14600: train_loss = 0.031970, train_acc = 1.000000, train ppl = 1.016114
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.566000 -- validation perplexity = 3.421772
+Epoch 26: test accuracy: 0.429000
+---- Qualitative Analysis
+Context: where is the apple ? daniel moved to the office . sandra went back to the office . sandra travelled to the garden . sandra travelled to the hallway . john journeyed to the office . mary went back to the hallway . mary moved to the bathroom . john journeyed to the bathroom . daniel picked up the football there . daniel left the football . daniel moved to the bathroom . sandra took the apple there . mary travelled to the bedroom . sandra left the apple . where is the apple ?
+Question: where is the apple ?
+Answer: hallway </s>
+Model prediction: bathroom </s>
+=========================
+Step 14700: train_loss = 0.258254, train_acc = 0.937500, train ppl = 1.137834
+Step 14800: train_loss = 0.057241, train_acc = 1.000000, train ppl = 1.029034
+Step 14900: train_loss = 0.056582, train_acc = 0.937500, train ppl = 1.028695
+Step 15000: train_loss = 0.039508, train_acc = 1.000000, train ppl = 1.019951
+Step 15100: train_loss = 0.123793, train_acc = 0.937500, train ppl = 1.063852
+Step 15200: train_loss = 0.211576, train_acc = 0.875000, train ppl = 1.111586
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.573000 -- validation perplexity = 3.638021
+Epoch 27: test accuracy: 0.419000
+---- Qualitative Analysis
+Context: where is the apple ? sandra took the football there . sandra left the football . sandra went to the bathroom . daniel went back to the kitchen . daniel travelled to the hallway . john went to the hallway . john journeyed to the bedroom . john picked up the milk there . daniel took the apple there . mary went back to the office . daniel moved to the office . sandra went back to the hallway . where is the apple ?
+Question: where is the apple ?
+Answer: office </s>
+Model prediction: office </s>
+=========================
+Step 15300: train_loss = 0.039028, train_acc = 1.000000, train ppl = 1.019706
+Step 15400: train_loss = 0.004909, train_acc = 1.000000, train ppl = 1.002458
+Step 15500: train_loss = 0.116196, train_acc = 0.937500, train ppl = 1.059819
+Step 15600: train_loss = 0.021929, train_acc = 1.000000, train ppl = 1.011025
+Step 15700: train_loss = 0.008898, train_acc = 1.000000, train ppl = 1.004459
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.565000 -- validation perplexity = 3.700219
+Epoch 28: test accuracy: 0.431000
+---- Qualitative Analysis
+Context: where is the apple ? sandra travelled to the garden . sandra journeyed to the bedroom . john moved to the office . mary moved to the office . mary picked up the milk there . mary took the apple there . john went back to the garden . daniel took the football there . mary went back to the kitchen . daniel put down the football there . where is the apple ?
+Question: where is the apple ?
+Answer: kitchen </s>
+Model prediction: garden </s>
+=========================
+Step 15800: train_loss = 0.010318, train_acc = 1.000000, train ppl = 1.005172
+Step 15900: train_loss = 0.004238, train_acc = 1.000000, train ppl = 1.002121
+Step 16000: train_loss = 0.049229, train_acc = 1.000000, train ppl = 1.024920
+Step 16100: train_loss = 0.104841, train_acc = 0.937500, train ppl = 1.053819
+Step 16200: train_loss = 0.024572, train_acc = 1.000000, train ppl = 1.012362
+Step 16300: train_loss = 0.115612, train_acc = 0.937500, train ppl = 1.059510
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.592000 -- validation perplexity = 3.869270
+Epoch 29: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: where is the football ? mary moved to the office . daniel went to the garden . sandra went back to the hallway . mary journeyed to the bathroom . mary went back to the garden . mary travelled to the hallway . john went to the garden . sandra travelled to the garden . daniel went to the office . daniel travelled to the bedroom . john took the football there . daniel grabbed the milk there . john discarded the football . sandra went to the kitchen . where is the football ?
+Question: where is the football ?
+Answer: garden </s>
+Model prediction: bedroom </s>
+=========================
+Step 16400: train_loss = 0.140165, train_acc = 0.937500, train ppl = 1.072597
+Step 16500: train_loss = 0.043127, train_acc = 1.000000, train ppl = 1.021797
+Step 16600: train_loss = 0.096204, train_acc = 0.937500, train ppl = 1.049278
+Step 16700: train_loss = 0.306076, train_acc = 0.937500, train ppl = 1.165369
+Step 16800: train_loss = 0.104363, train_acc = 0.937500, train ppl = 1.053567
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.586000 -- validation perplexity = 3.814791
+Epoch 30: test accuracy: 0.435000
+---- Qualitative Analysis
+Context: where is the milk ? mary went to the hallway . daniel went back to the bedroom . sandra went back to the garden . mary went to the office . mary journeyed to the kitchen . sandra moved to the office . sandra journeyed to the hallway . daniel journeyed to the garden . mary journeyed to the bathroom . john went back to the bathroom . sandra travelled to the garden . john moved to the office . daniel went back to the kitchen . mary moved to the kitchen . mary moved to the hallway . mary went to the kitchen . sandra went back to the bedroom . sandra travelled to the hallway . sandra travelled to the kitchen . sandra moved to the garden . daniel went to the garden . sandra went back to the bathroom . john moved to the garden . mary went to the bathroom . daniel travelled to the kitchen . john went back to the hallway . sandra went back to the hallway . mary went to the hallway . daniel went back to the garden . sandra went back to the office . sandra moved to the kitchen . mary travelled to the garden . sandra went to the garden . daniel journeyed to the hallway . mary went back to the hallway . daniel travelled to the garden . john journeyed to the bathroom . daniel travelled to the hallway . daniel travelled to the bedroom . mary went back to the kitchen . daniel went to the office . john journeyed to the hallway . john went to the kitchen . daniel travelled to the hallway . sandra went back to the kitchen . mary moved to the office . sandra went back to the garden . sandra went back to the kitchen . sandra moved to the garden . sandra moved to the office . john went back to the hallway . daniel went to the garden . sandra travelled to the kitchen . sandra moved to the bathroom . john journeyed to the garden . mary moved to the hallway . john went back to the office . mary went back to the office . daniel travelled to the bathroom . sandra travelled to the hallway . sandra journeyed to the bathroom . sandra travelled to the bedroom . mary went back to the hallway . sandra travelled to the kitchen . daniel travelled to the garden . daniel journeyed to the bedroom . mary journeyed to the office . sandra went back to the office . john travelled to the hallway . daniel picked up the milk there . daniel picked up the apple there . sandra moved to the hallway . john journeyed to the bedroom . john went back to the garden . sandra journeyed to the office . sandra moved to the bedroom . mary moved to the kitchen . mary went to the office . sandra grabbed the football there . sandra discarded the football . daniel took the football there . daniel put down the apple there . daniel took the apple there . daniel travelled to the hallway . sandra journeyed to the bathroom . daniel left the milk there . daniel went to the kitchen . daniel went back to the bathroom . where is the milk ?
+Question: where is the milk ?
+Answer: hallway </s>
+Model prediction: bathroom </s>
+=========================
+Step 16900: train_loss = 0.005395, train_acc = 1.000000, train ppl = 1.002701
+Step 17000: train_loss = 0.010452, train_acc = 1.000000, train ppl = 1.005240
+Step 17100: train_loss = 0.029843, train_acc = 1.000000, train ppl = 1.015033
+Step 17200: train_loss = 0.018211, train_acc = 1.000000, train ppl = 1.009147
+Step 17300: train_loss = 0.057352, train_acc = 0.937500, train ppl = 1.029091
+Step 17400: train_loss = 0.046004, train_acc = 1.000000, train ppl = 1.023269
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.578000 -- validation perplexity = 3.947125
+Epoch 31: test accuracy: 0.417000
+---- Qualitative Analysis
+Context: where is the football ? sandra went back to the kitchen . john picked up the milk there . john left the milk . sandra went to the garden . mary went to the bathroom . daniel journeyed to the garden . sandra took the football there . daniel moved to the kitchen . john took the milk there . john put down the milk there . john went to the bathroom . sandra put down the football . daniel journeyed to the bedroom . sandra travelled to the bathroom . where is the football ?
+Question: where is the football ?
+Answer: garden </s>
+Model prediction: bathroom </s>
+=========================
+Step 17500: train_loss = 0.193880, train_acc = 0.875000, train ppl = 1.101794
+Step 17600: train_loss = 0.025311, train_acc = 1.000000, train ppl = 1.012736
+Step 17700: train_loss = 0.071707, train_acc = 1.000000, train ppl = 1.036504
+Step 17800: train_loss = 0.222224, train_acc = 0.937500, train ppl = 1.117520
+Step 17900: train_loss = 0.146432, train_acc = 0.937500, train ppl = 1.075963
+Step 18000: train_loss = 0.013238, train_acc = 1.000000, train ppl = 1.006641
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.568000 -- validation perplexity = 4.006097
+Epoch 32: test accuracy: 0.440000
+---- Qualitative Analysis
+Context: where is the milk ? john went to the office . mary went to the bathroom . sandra moved to the kitchen . john went to the bathroom . daniel went back to the hallway . daniel picked up the milk there . sandra grabbed the football there . john travelled to the garden . daniel journeyed to the bedroom . mary picked up the apple there . where is the milk ?
+Question: where is the milk ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 18100: train_loss = 0.012837, train_acc = 1.000000, train ppl = 1.006439
+Step 18200: train_loss = 0.012935, train_acc = 1.000000, train ppl = 1.006489
+Step 18300: train_loss = 0.013539, train_acc = 1.000000, train ppl = 1.006793
+Step 18400: train_loss = 0.068452, train_acc = 0.937500, train ppl = 1.034818
+Step 18500: train_loss = 0.026462, train_acc = 1.000000, train ppl = 1.013319
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.585000 -- validation perplexity = 4.030171
+Epoch 33: test accuracy: 0.431000
+---- Qualitative Analysis
+Context: where is the football ? john journeyed to the kitchen . sandra went back to the office . mary went back to the bathroom . daniel went back to the kitchen . daniel went to the garden . daniel took the apple there . daniel went back to the kitchen . daniel went back to the bedroom . john went back to the bedroom . sandra moved to the garden . mary grabbed the milk there . mary got the football there . mary moved to the office . sandra went back to the hallway . where is the football ?
+Question: where is the football ?
+Answer: office </s>
+Model prediction: hallway </s>
+=========================
+Step 18600: train_loss = 0.029161, train_acc = 1.000000, train ppl = 1.014688
+Step 18700: train_loss = 0.006022, train_acc = 1.000000, train ppl = 1.003016
+Step 18800: train_loss = 0.009038, train_acc = 1.000000, train ppl = 1.004529
+Step 18900: train_loss = 0.053471, train_acc = 0.937500, train ppl = 1.027096
+Step 19000: train_loss = 0.320632, train_acc = 0.937500, train ppl = 1.173882
+Step 19100: train_loss = 0.142587, train_acc = 0.875000, train ppl = 1.073896
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.579000 -- validation perplexity = 4.489895
+Epoch 34: test accuracy: 0.425000
+---- Qualitative Analysis
+Context: where is the apple ? daniel grabbed the apple there . daniel dropped the apple . john moved to the hallway . daniel took the apple there . daniel left the apple . daniel went back to the bathroom . john travelled to the garden . daniel travelled to the kitchen . daniel went back to the hallway . john picked up the apple there . john picked up the football there . mary went to the garden . john left the apple . mary travelled to the bathroom . where is the apple ?
+Question: where is the apple ?
+Answer: garden </s>
+Model prediction: garden </s>
+=========================
+Step 19200: train_loss = 0.009422, train_acc = 1.000000, train ppl = 1.004722
+Step 19300: train_loss = 0.462847, train_acc = 0.937500, train ppl = 1.260393
+Step 19400: train_loss = 0.004403, train_acc = 1.000000, train ppl = 1.002204
+Step 19500: train_loss = 0.503482, train_acc = 0.937500, train ppl = 1.286263
+Step 19600: train_loss = 0.089225, train_acc = 0.937500, train ppl = 1.045623
+Step 19700: train_loss = 0.022673, train_acc = 1.000000, train ppl = 1.011401
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.593000 -- validation perplexity = 4.177667
+Epoch 35: test accuracy: 0.427000
+---- Qualitative Analysis
+Context: where is the football ? john moved to the kitchen . sandra grabbed the apple there . mary moved to the garden . mary journeyed to the kitchen . john journeyed to the garden . sandra left the apple . sandra moved to the bedroom . sandra picked up the milk there . sandra dropped the milk . daniel took the milk there . john grabbed the football there . daniel went to the kitchen . daniel went to the hallway . john discarded the football . john got the football there . john dropped the football . mary travelled to the hallway . daniel went to the office . where is the football ?
+Question: where is the football ?
+Answer: garden </s>
+Model prediction: hallway </s>
+=========================
+Model checkpoint saved in ../models/task_2/best_model.ckpt
+Step 19800: train_loss = 0.026207, train_acc = 1.000000, train ppl = 1.013190
+Step 19900: train_loss = 0.452129, train_acc = 0.812500, train ppl = 1.253657
+Step 20000: train_loss = 0.016736, train_acc = 1.000000, train ppl = 1.008403
+Step 20100: train_loss = 0.016349, train_acc = 1.000000, train ppl = 1.008208
+Step 20200: train_loss = 0.025320, train_acc = 1.000000, train ppl = 1.012741
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.585000 -- validation perplexity = 4.384799
+Epoch 36: test accuracy: 0.438000
+---- Qualitative Analysis
+Context: where is the apple ? john went back to the bedroom . daniel took the apple there . mary journeyed to the bedroom . mary journeyed to the bathroom . john journeyed to the hallway . sandra went back to the bedroom . sandra went back to the hallway . sandra travelled to the kitchen . john journeyed to the kitchen . john travelled to the bedroom . sandra picked up the milk there . daniel left the apple . daniel got the apple there . john travelled to the office . sandra discarded the milk . sandra grabbed the milk there . sandra went back to the hallway . sandra got the football there . daniel put down the apple . daniel went back to the kitchen . mary moved to the bedroom . mary grabbed the apple there . mary put down the apple . sandra moved to the garden . where is the apple ?
+Question: where is the apple ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 20300: train_loss = 0.463789, train_acc = 0.937500, train ppl = 1.260987
+Step 20400: train_loss = 0.120475, train_acc = 0.937500, train ppl = 1.062089
+Step 20500: train_loss = 0.235669, train_acc = 0.937500, train ppl = 1.125058
+Step 20600: train_loss = 0.000732, train_acc = 1.000000, train ppl = 1.000366
+Step 20700: train_loss = 0.125135, train_acc = 0.937500, train ppl = 1.064566
+Step 20800: train_loss = 0.142259, train_acc = 0.937500, train ppl = 1.073720
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.586000 -- validation perplexity = 4.540707
+Epoch 37: test accuracy: 0.446000
+---- Qualitative Analysis
+Context: where is the milk ? daniel went to the bathroom . mary took the milk there . sandra travelled to the garden . john journeyed to the garden . john grabbed the football there . john put down the football there . sandra went to the office . sandra travelled to the hallway . sandra went to the kitchen . john moved to the office . mary went back to the bedroom . mary moved to the office . john went back to the hallway . daniel went to the bedroom . sandra journeyed to the hallway . daniel journeyed to the bathroom . daniel moved to the office . daniel travelled to the bathroom . daniel went back to the kitchen . daniel went back to the hallway . mary discarded the milk . mary got the milk there . mary went to the bathroom . sandra moved to the garden . daniel moved to the bedroom . john travelled to the kitchen . where is the milk ?
+Question: where is the milk ?
+Answer: bathroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 20900: train_loss = 0.052081, train_acc = 0.937500, train ppl = 1.026383
+Step 21000: train_loss = 0.011317, train_acc = 1.000000, train ppl = 1.005674
+Step 21100: train_loss = 0.436916, train_acc = 0.937500, train ppl = 1.244157
+Step 21200: train_loss = 0.002756, train_acc = 1.000000, train ppl = 1.001379
+Step 21300: train_loss = 0.033973, train_acc = 1.000000, train ppl = 1.017132
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.570000 -- validation perplexity = 4.882483
+Epoch 38: test accuracy: 0.436000
+---- Qualitative Analysis
+Context: where is the football ? john took the football there . john moved to the bedroom . john discarded the football . sandra went to the bedroom . john took the football there . john dropped the football . sandra took the football there . sandra left the football . sandra journeyed to the kitchen . mary went back to the office . where is the football ?
+Question: where is the football ?
+Answer: bedroom </s>
+Model prediction: bedroom </s>
+=========================
+Step 21400: train_loss = 0.004546, train_acc = 1.000000, train ppl = 1.002276
+Step 21500: train_loss = 0.045751, train_acc = 1.000000, train ppl = 1.023139
+Step 21600: train_loss = 0.059012, train_acc = 1.000000, train ppl = 1.029946
+Step 21700: train_loss = 0.000848, train_acc = 1.000000, train ppl = 1.000424
+Step 21800: train_loss = 0.164601, train_acc = 0.937500, train ppl = 1.085782
+Step 21900: train_loss = 0.449956, train_acc = 0.937500, train ppl = 1.252295
+==== Finshed epoch 39 ====
+Evaluating model...
+Epoch 39: validation accuracy = 0.588000 -- validation perplexity = 4.610781
+Epoch 39: test accuracy: 0.430000
+---- Qualitative Analysis
+Context: where is the milk ? sandra went back to the bathroom . sandra went to the office . john went to the bedroom . mary went to the bathroom . mary journeyed to the bedroom . john moved to the bathroom . mary picked up the milk there . john went to the bedroom . john went back to the bathroom . sandra went to the garden . mary discarded the milk . daniel journeyed to the hallway . sandra journeyed to the kitchen . daniel travelled to the kitchen . sandra went back to the bedroom . mary journeyed to the garden . daniel picked up the apple there . mary journeyed to the bathroom . mary journeyed to the garden . daniel travelled to the bathroom . sandra got the milk there . sandra went back to the office . where is the milk ?
+Question: where is the milk ?
+Answer: office </s>
+Model prediction: office </s>
+=========================
+Step 22000: train_loss = 0.000748, train_acc = 1.000000, train ppl = 1.000374
+Step 22100: train_loss = 0.211897, train_acc = 0.937500, train ppl = 1.111765
+Step 22200: train_loss = 0.175766, train_acc = 0.937500, train ppl = 1.091860
+Step 22300: train_loss = 0.406629, train_acc = 0.812500, train ppl = 1.225458
+Step 22400: train_loss = 0.001614, train_acc = 1.000000, train ppl = 1.000807
+Step 22500: train_loss = 0.008527, train_acc = 1.000000, train ppl = 1.004273
+==== Finshed epoch 40 ====
+Evaluating model...
+Epoch 40: validation accuracy = 0.583000 -- validation perplexity = 4.630416
+Epoch 40: test accuracy: 0.415000
+---- Qualitative Analysis
+Context: where is the milk ? daniel moved to the hallway . sandra journeyed to the garden . sandra journeyed to the bedroom . daniel went back to the kitchen . daniel got the milk there . mary travelled to the bathroom . daniel discarded the milk there . sandra travelled to the hallway . where is the milk ?
+Question: where is the milk ?
+Answer: kitchen </s>
+Model prediction: bathroom </s>
+=========================
+Step 22600: train_loss = 0.095213, train_acc = 0.937500, train ppl = 1.048758
+Step 22700: train_loss = 0.029277, train_acc = 1.000000, train ppl = 1.014746
+Step 22800: train_loss = 0.046877, train_acc = 0.937500, train ppl = 1.023715
+Step 22900: train_loss = 0.047733, train_acc = 0.937500, train ppl = 1.024154
+Step 23000: train_loss = 0.103339, train_acc = 0.937500, train ppl = 1.053028
+==== Finshed epoch 41 ====
+Evaluating model...
+Epoch 41: validation accuracy = 0.561000 -- validation perplexity = 4.988474
+Epoch 41: test accuracy: 0.444000
+---- Qualitative Analysis
+Context: where is the apple ? sandra moved to the hallway . john travelled to the office . sandra took the milk there . sandra put down the milk . mary went to the bedroom . sandra went back to the kitchen . mary went to the kitchen . sandra got the apple there . sandra dropped the apple . daniel went back to the office . mary grabbed the apple there . daniel journeyed to the hallway . daniel moved to the kitchen . daniel travelled to the office . sandra journeyed to the bathroom . mary left the apple . where is the apple ?
+Question: where is the apple ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 23100: train_loss = 0.095749, train_acc = 0.937500, train ppl = 1.049039
+Step 23200: train_loss = 0.001297, train_acc = 1.000000, train ppl = 1.000649
+Step 23300: train_loss = 0.001971, train_acc = 1.000000, train ppl = 1.000986
+Step 23400: train_loss = 0.036437, train_acc = 1.000000, train ppl = 1.018386
+Step 23500: train_loss = 0.019416, train_acc = 1.000000, train ppl = 1.009755
+Step 23600: train_loss = 0.010633, train_acc = 1.000000, train ppl = 1.005331
+==== Finshed epoch 42 ====
+Evaluating model...
+Epoch 42: validation accuracy = 0.573000 -- validation perplexity = 4.676008
+Epoch 42: test accuracy: 0.440000
+---- Qualitative Analysis
+Context: where is the milk ? daniel went back to the hallway . mary went back to the garden . sandra went to the kitchen . mary moved to the bedroom . sandra travelled to the bathroom . mary journeyed to the garden . daniel went back to the office . john went back to the garden . john travelled to the office . sandra got the milk there . john went back to the kitchen . sandra left the milk . sandra took the milk there . mary travelled to the bedroom . sandra left the milk there . john moved to the garden . sandra grabbed the milk there . sandra went back to the kitchen . where is the milk ?
+Question: where is the milk ?
+Answer: kitchen </s>
+Model prediction: bedroom </s>
+=========================
+Step 23700: train_loss = 0.016360, train_acc = 1.000000, train ppl = 1.008214
+Step 23800: train_loss = 0.037937, train_acc = 1.000000, train ppl = 1.019149
+Step 23900: train_loss = 0.012381, train_acc = 1.000000, train ppl = 1.006210
+Step 24000: train_loss = 0.002533, train_acc = 1.000000, train ppl = 1.001267
+Step 24100: train_loss = 0.223986, train_acc = 0.937500, train ppl = 1.118505
+Step 24200: train_loss = 0.013838, train_acc = 1.000000, train ppl = 1.006943
+==== Finshed epoch 43 ====
+Evaluating model...
+Epoch 43: validation accuracy = 0.565000 -- validation perplexity = 4.946050
+Epoch 43: test accuracy: 0.434000
+---- Qualitative Analysis
+Context: where is the milk ? daniel picked up the apple there . daniel dropped the apple . john moved to the bedroom . john grabbed the apple there . daniel went to the hallway . sandra grabbed the football there . sandra went back to the kitchen . john left the apple . sandra dropped the football . mary journeyed to the bedroom . mary went back to the hallway . sandra went to the bedroom . sandra travelled to the kitchen . sandra travelled to the garden . mary went to the bedroom . sandra grabbed the milk there . daniel went back to the bedroom . daniel picked up the apple there . daniel travelled to the office . daniel put down the apple . sandra dropped the milk . daniel grabbed the apple there . where is the milk ?
+Question: where is the milk ?
+Answer: garden </s>
+Model prediction: office </s>
+=========================
+Step 24300: train_loss = 0.017380, train_acc = 1.000000, train ppl = 1.008728
+Step 24400: train_loss = 0.104458, train_acc = 0.937500, train ppl = 1.053617
+Step 24500: train_loss = 0.004291, train_acc = 1.000000, train ppl = 1.002148
+Step 24600: train_loss = 0.233898, train_acc = 0.937500, train ppl = 1.124062
+Step 24700: train_loss = 0.013760, train_acc = 1.000000, train ppl = 1.006904
+==== Finshed epoch 44 ====
+Evaluating model...
+Epoch 44: validation accuracy = 0.583000 -- validation perplexity = 5.041001
+Epoch 44: test accuracy: 0.435000
+---- Qualitative Analysis
+Context: where is the football ? daniel got the apple there . daniel dropped the apple . mary moved to the bedroom . daniel journeyed to the hallway . mary travelled to the hallway . sandra moved to the bedroom . mary went back to the bathroom . daniel moved to the kitchen . mary went to the kitchen . daniel moved to the office . mary picked up the football there . mary put down the football . john travelled to the office . daniel went to the bathroom . where is the football ?
+Question: where is the football ?
+Answer: kitchen </s>
+Model prediction: office </s>
+=========================
+Step 24800: train_loss = 0.093626, train_acc = 0.937500, train ppl = 1.047926
+Step 24900: train_loss = 0.132870, train_acc = 0.937500, train ppl = 1.068691
+Step 25000: train_loss = 0.258270, train_acc = 0.937500, train ppl = 1.137844
+Step 25100: train_loss = 0.138480, train_acc = 0.937500, train ppl = 1.071694
+Step 25200: train_loss = 0.255891, train_acc = 0.875000, train ppl = 1.136491
+Step 25300: train_loss = 0.024921, train_acc = 1.000000, train ppl = 1.012538
+==== Finshed epoch 45 ====
+Evaluating model...
+Epoch 45: validation accuracy = 0.588000 -- validation perplexity = 4.833716
+Epoch 45: test accuracy: 0.432000
+---- Qualitative Analysis
+Context: where is the milk ? mary went to the office . john went to the garden . mary journeyed to the bedroom . daniel got the milk there . daniel journeyed to the bedroom . john moved to the kitchen . sandra went to the bathroom . mary travelled to the office . sandra went back to the office . mary went to the kitchen . mary went back to the hallway . daniel discarded the milk . where is the milk ?
+Question: where is the milk ?
+Answer: bedroom </s>
+Model prediction: office </s>
+=========================
+Step 25400: train_loss = 0.071361, train_acc = 0.937500, train ppl = 1.036325
+Step 25500: train_loss = 0.063010, train_acc = 0.937500, train ppl = 1.032007
+Step 25600: train_loss = 0.008482, train_acc = 1.000000, train ppl = 1.004250
+Step 25700: train_loss = 0.001096, train_acc = 1.000000, train ppl = 1.000548
+Step 25800: train_loss = 0.027259, train_acc = 1.000000, train ppl = 1.013723
+==== Finshed epoch 46 ====
+Evaluating model...
+Epoch 46: validation accuracy = 0.590000 -- validation perplexity = 4.808450
+Epoch 46: test accuracy: 0.440000
+---- Qualitative Analysis
+Context: where is the apple ? daniel took the milk there . john journeyed to the garden . daniel went back to the hallway . daniel journeyed to the bathroom . daniel dropped the milk . daniel took the milk there . john grabbed the apple there . sandra journeyed to the kitchen . john went to the hallway . sandra went back to the garden . where is the apple ?
+Question: where is the apple ?
+Answer: hallway </s>
+Model prediction: garden </s>
+=========================
+Step 25900: train_loss = 0.455012, train_acc = 0.875000, train ppl = 1.255465
+Step 26000: train_loss = 0.028849, train_acc = 1.000000, train ppl = 1.014529
+Step 26100: train_loss = 0.022743, train_acc = 1.000000, train ppl = 1.011436
+Step 26200: train_loss = 0.012750, train_acc = 1.000000, train ppl = 1.006395
+Step 26300: train_loss = 0.146946, train_acc = 0.937500, train ppl = 1.076239
+Step 26400: train_loss = 0.000108, train_acc = 1.000000, train ppl = 1.000054
+==== Finshed epoch 47 ====
+Evaluating model...
+Epoch 47: validation accuracy = 0.593000 -- validation perplexity = 5.042866
+Epoch 47: test accuracy: 0.428000
+---- Qualitative Analysis
+Context: where is the apple ? daniel journeyed to the garden . mary moved to the hallway . daniel journeyed to the bedroom . john picked up the football there . john discarded the football . daniel went to the hallway . sandra went back to the bathroom . john picked up the football there . john journeyed to the garden . sandra went back to the bedroom . john journeyed to the bathroom . daniel journeyed to the bedroom . sandra moved to the garden . daniel moved to the garden . john journeyed to the office . daniel went to the kitchen . mary travelled to the kitchen . john travelled to the bathroom . mary went to the bedroom . john picked up the apple there . sandra went back to the kitchen . daniel moved to the bathroom . sandra travelled to the office . daniel travelled to the kitchen . sandra went back to the bathroom . sandra travelled to the kitchen . daniel picked up the milk there . daniel moved to the office . daniel dropped the milk . john dropped the apple . where is the apple ?
+Question: where is the apple ?
+Answer: bathroom </s>
+Model prediction: office </s>
+=========================
+Step 26500: train_loss = 0.063071, train_acc = 1.000000, train ppl = 1.032038
+Step 26600: train_loss = 0.001295, train_acc = 1.000000, train ppl = 1.000648
+Step 26700: train_loss = 0.015619, train_acc = 1.000000, train ppl = 1.007840
+Step 26800: train_loss = 0.000851, train_acc = 1.000000, train ppl = 1.000426
+Step 26900: train_loss = 0.002282, train_acc = 1.000000, train ppl = 1.001142
+Step 27000: train_loss = 0.015288, train_acc = 1.000000, train ppl = 1.007674
+==== Finshed epoch 48 ====
+Evaluating model...
+Epoch 48: validation accuracy = 0.580000 -- validation perplexity = 5.008802
+Epoch 48: test accuracy: 0.427000
+---- Qualitative Analysis
+Context: where is the apple ? sandra moved to the garden . sandra picked up the apple there . john journeyed to the office . daniel travelled to the hallway . mary took the football there . mary discarded the football . mary grabbed the football there . john got the milk there . mary left the football there . daniel moved to the bedroom . john travelled to the garden . daniel went to the hallway . mary picked up the football there . sandra left the apple . where is the apple ?
+Question: where is the apple ?
+Answer: garden </s>
+Model prediction: garden </s>
+=========================
+Step 27100: train_loss = 0.001432, train_acc = 1.000000, train ppl = 1.000716
+Step 27200: train_loss = 0.005733, train_acc = 1.000000, train ppl = 1.002870
+Step 27300: train_loss = 0.000450, train_acc = 1.000000, train ppl = 1.000225
+Step 27400: train_loss = 0.024877, train_acc = 1.000000, train ppl = 1.012516
+Step 27500: train_loss = 0.005609, train_acc = 1.000000, train ppl = 1.002808
+==== Finshed epoch 49 ====
+Evaluating model...
+Epoch 49: validation accuracy = 0.593000 -- validation perplexity = 5.006204
+Epoch 49: test accuracy: 0.423000
+---- Qualitative Analysis
+Context: where is the apple ? john went back to the office . daniel travelled to the garden . daniel grabbed the football there . john journeyed to the garden . mary went to the garden . sandra moved to the bathroom . sandra got the milk there . daniel journeyed to the office . john moved to the office . daniel picked up the apple there . mary went back to the bathroom . sandra travelled to the office . sandra went back to the bedroom . john moved to the garden . sandra dropped the milk there . daniel left the football . daniel travelled to the kitchen . daniel travelled to the hallway . daniel discarded the apple . sandra took the milk there . daniel took the apple there . daniel went to the office . where is the apple ?
+Question: where is the apple ?
+Answer: office </s>
+Model prediction: garden </s>
+=========================
+Step 27600: train_loss = 0.029713, train_acc = 1.000000, train ppl = 1.014967
+Step 27700: train_loss = 0.414513, train_acc = 0.937500, train ppl = 1.230298
+Step 27800: train_loss = 0.001036, train_acc = 1.000000, train ppl = 1.000518
+Step 27900: train_loss = 0.007701, train_acc = 1.000000, train ppl = 1.003858
+Step 28000: train_loss = 0.015042, train_acc = 1.000000, train ppl = 1.007550
+Step 28100: train_loss = 0.002199, train_acc = 1.000000, train ppl = 1.001100
+==== Finshed epoch 50 ====
+Evaluating model...
+Epoch 50: validation accuracy = 0.571000 -- validation perplexity = 5.365378
+Epoch 50: test accuracy: 0.411000
+---- Qualitative Analysis
+Context: where is the milk ? sandra picked up the milk there . sandra journeyed to the kitchen . daniel moved to the bathroom . daniel got the apple there . daniel left the apple . john travelled to the hallway . john moved to the bathroom . sandra dropped the milk . mary journeyed to the kitchen . sandra got the milk there . john went to the office . daniel got the apple there . sandra put down the milk . daniel went back to the bedroom . where is the milk ?
+Question: where is the milk ?
+Answer: kitchen </s>
+Model prediction: office </s>
+=========================
+Best model (acc) at epoch 35 -- validation perplexity = 4.177667 -- validation accuracy = 0.593000 -- test accuracy = 0.427000
+0.593

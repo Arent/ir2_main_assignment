@@ -1,0 +1,676 @@
+model_type:               normal
+max_gradient_norm:        1.0
+num_epochs:               50
+cell_type:                gru
+model_dir:                models/dummy
+val_split:                0.1
+batch_size:               32
+num_units:                256
+dropout_keep_prob:        0.7
+embedding_size:           64
+optimizer:                adam
+vocab:                    data/vocab.txt
+num_enc_layers:           1
+learning_rate:            0.01
+restore_from_dir:         None
+merge_mode:               concat
+task:                     10
+data_dir:                 data/en-10k
+encoder_type:             bi
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: is fred in the office ? fred is either in the kitchen or the kitchen . mary is either in the cinema or the school . julie is either in the office or the school . fred went back to the school . bill is either in the kitchen or the park . mary is either in the bedroom or the park . mary travelled to the school . fred went back to the office . bill went back to the office . bill went to the kitchen . is fred in the office ?
+Question: is fred in the office ?
+Answer: yes </s>
+Model prediction: a a 7 86 86 either either 211 118 57
+=========================
+Step 100: train_loss = 1.169595, train_acc = 0.562500, train ppl = 1.794628
+Step 200: train_loss = 2.549309, train_acc = 0.187500, train ppl = 3.577464
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.444000 -- validation perplexity = 1.734204
+Epoch 1: test accuracy: 0.439000
+---- Qualitative Analysis
+Context: is fred in the school ? bill went back to the office . fred is either in the cinema or the cinema . julie is either in the cinema or the bedroom . bill travelled to the kitchen . mary is either in the park or the kitchen . julie is in the office . fred is in the park . mary is in the bedroom . bill is either in the school or the cinema . fred is in the office . is fred in the school ?
+Question: is fred in the school ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 300: train_loss = 1.580550, train_acc = 0.437500, train ppl = 2.204003
+Step 400: train_loss = 1.183682, train_acc = 0.437500, train ppl = 1.807313
+Step 500: train_loss = 0.976477, train_acc = 0.500000, train ppl = 1.629443
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.367000 -- validation perplexity = 2.742141
+Epoch 2: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is bill in the kitchen ? fred is in the kitchen . bill travelled to the kitchen . mary is in the office . fred is either in the cinema or the park . is bill in the kitchen ?
+Question: is bill in the kitchen ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 600: train_loss = 1.324917, train_acc = 0.406250, train ppl = 1.939555
+Step 700: train_loss = 1.233052, train_acc = 0.343750, train ppl = 1.852481
+Step 800: train_loss = 1.020410, train_acc = 0.437500, train ppl = 1.665633
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.485000 -- validation perplexity = 1.665779
+Epoch 3: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is julie in the bedroom ? bill is in the kitchen . mary is in the school . fred travelled to the kitchen . fred went to the office . julie travelled to the park . bill is either in the park or the kitchen . julie travelled to the bedroom . bill is either in the kitchen or the office . is julie in the bedroom ?
+Question: is julie in the bedroom ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 900: train_loss = 1.025906, train_acc = 0.437500, train ppl = 1.670216
+Step 1000: train_loss = 1.295281, train_acc = 0.281250, train ppl = 1.911026
+Step 1100: train_loss = 1.203066, train_acc = 0.312500, train ppl = 1.824915
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.268000 -- validation perplexity = 1.778641
+Epoch 4: test accuracy: 0.276000
+---- Qualitative Analysis
+Context: is julie in the park ? julie is either in the park or the school . fred went back to the school . is julie in the park ?
+Question: is julie in the park ?
+Answer: maybe </s>
+Model prediction: maybe </s>
+=========================
+Step 1200: train_loss = 0.999831, train_acc = 0.500000, train ppl = 1.648582
+Step 1300: train_loss = 1.072087, train_acc = 0.343750, train ppl = 1.709231
+Step 1400: train_loss = 0.999211, train_acc = 0.468750, train ppl = 1.648071
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.367000 -- validation perplexity = 1.922426
+Epoch 5: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is fred in the office ? fred is in the office . fred journeyed to the kitchen . fred is in the office . fred is in the school . bill travelled to the park . mary travelled to the kitchen . is fred in the office ?
+Question: is fred in the office ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 1500: train_loss = 1.744333, train_acc = 0.343750, train ppl = 2.392088
+Step 1600: train_loss = 0.968406, train_acc = 0.531250, train ppl = 1.622881
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.485000 -- validation perplexity = 1.855085
+Epoch 6: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is bill in the office ? bill is either in the bedroom or the office . fred went back to the office . bill went back to the kitchen . bill is either in the park or the office . is bill in the office ?
+Question: is bill in the office ?
+Answer: maybe </s>
+Model prediction: no </s>
+=========================
+Step 1700: train_loss = 1.480333, train_acc = 0.437500, train ppl = 2.096284
+Step 1800: train_loss = 1.668676, train_acc = 0.406250, train ppl = 2.303289
+Step 1900: train_loss = 1.283656, train_acc = 0.218750, train ppl = 1.899951
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.485000 -- validation perplexity = 1.827496
+Epoch 7: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is bill in the school ? fred is either in the cinema or the school . julie travelled to the school . fred moved to the school . bill travelled to the cinema . julie is in the bedroom . bill is in the school . is bill in the school ?
+Question: is bill in the school ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 2000: train_loss = 1.434307, train_acc = 0.375000, train ppl = 2.048594
+Step 2100: train_loss = 0.974903, train_acc = 0.531250, train ppl = 1.628162
+Step 2200: train_loss = 1.013079, train_acc = 0.406250, train ppl = 1.659538
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.367000 -- validation perplexity = 1.693355
+Epoch 8: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is fred in the cinema ? bill is either in the park or the cinema . julie is in the cinema . julie is in the kitchen . mary is in the school . julie is in the office . fred journeyed to the bedroom . fred journeyed to the kitchen . bill is in the school . fred moved to the school . fred moved to the cinema . is fred in the cinema ?
+Question: is fred in the cinema ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 2300: train_loss = 0.995963, train_acc = 0.406250, train ppl = 1.645396
+Step 2400: train_loss = 1.241605, train_acc = 0.468750, train ppl = 1.860420
+Step 2500: train_loss = 1.115978, train_acc = 0.437500, train ppl = 1.747155
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.262000 -- validation perplexity = 1.708938
+Epoch 9: test accuracy: 0.296000
+---- Qualitative Analysis
+Context: is mary in the cinema ? fred is in the bedroom . bill is in the office . julie is in the park . bill is in the cinema . julie moved to the school . fred is either in the kitchen or the kitchen . mary moved to the cinema . mary is either in the park or the school . is mary in the cinema ?
+Question: is mary in the cinema ?
+Answer: no </s>
+Model prediction: maybe </s>
+=========================
+Step 2600: train_loss = 1.105770, train_acc = 0.343750, train ppl = 1.738261
+Step 2700: train_loss = 0.929373, train_acc = 0.531250, train ppl = 1.591515
+Step 2800: train_loss = 1.899459, train_acc = 0.187500, train ppl = 2.585011
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.268000 -- validation perplexity = 1.996429
+Epoch 10: test accuracy: 0.276000
+---- Qualitative Analysis
+Context: is mary in the cinema ? julie is in the kitchen . mary is in the cinema . mary is in the bedroom . mary is either in the school or the park . mary went back to the kitchen . mary journeyed to the cinema . is mary in the cinema ?
+Question: is mary in the cinema ?
+Answer: yes </s>
+Model prediction: maybe </s>
+=========================
+Step 2900: train_loss = 1.111077, train_acc = 0.343750, train ppl = 1.742880
+Step 3000: train_loss = 1.071791, train_acc = 0.343750, train ppl = 1.708978
+Step 3100: train_loss = 1.659586, train_acc = 0.531250, train ppl = 2.292844
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.367000 -- validation perplexity = 2.439468
+Epoch 11: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is fred in the school ? julie is in the park . bill went to the kitchen . mary is either in the cinema or the school . fred is either in the school or the park . is fred in the school ?
+Question: is fred in the school ?
+Answer: maybe </s>
+Model prediction: yes </s>
+=========================
+Step 3200: train_loss = 1.064732, train_acc = 0.375000, train ppl = 1.702957
+Step 3300: train_loss = 1.437927, train_acc = 0.343750, train ppl = 2.052305
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.485000 -- validation perplexity = 1.697145
+Epoch 12: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is fred in the office ? mary is in the school . julie went to the bedroom . julie is in the school . fred went to the park . fred went to the office . fred is either in the school or the cinema . julie moved to the park . fred is in the kitchen . bill went back to the bedroom . fred is either in the office or the office . is fred in the office ?
+Question: is fred in the office ?
+Answer: maybe </s>
+Model prediction: no </s>
+=========================
+Step 3400: train_loss = 1.030791, train_acc = 0.375000, train ppl = 1.674301
+Step 3500: train_loss = 1.381022, train_acc = 0.500000, train ppl = 1.994734
+Step 3600: train_loss = 1.125023, train_acc = 0.437500, train ppl = 1.755075
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.485000 -- validation perplexity = 1.712057
+Epoch 13: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is fred in the kitchen ? fred went to the kitchen . bill went to the park . is fred in the kitchen ?
+Question: is fred in the kitchen ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 3700: train_loss = 1.297326, train_acc = 0.406250, train ppl = 1.912981
+Step 3800: train_loss = 1.291941, train_acc = 0.343750, train ppl = 1.907837
+Step 3900: train_loss = 0.912080, train_acc = 0.718750, train ppl = 1.577814
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.485000 -- validation perplexity = 1.744298
+Epoch 14: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is mary in the bedroom ? bill went back to the office . fred is either in the cinema or the cinema . julie is either in the cinema or the bedroom . bill travelled to the kitchen . mary is either in the park or the kitchen . julie is in the office . fred is in the park . mary is in the bedroom . is mary in the bedroom ?
+Question: is mary in the bedroom ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 4000: train_loss = 1.068237, train_acc = 0.500000, train ppl = 1.705944
+Step 4100: train_loss = 0.835700, train_acc = 0.562500, train ppl = 1.518693
+Step 4200: train_loss = 1.196694, train_acc = 0.343750, train ppl = 1.819110
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.367000 -- validation perplexity = 1.960425
+Epoch 15: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is mary in the office ? fred travelled to the kitchen . bill is either in the office or the school . mary journeyed to the office . bill is either in the school or the office . is mary in the office ?
+Question: is mary in the office ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 4300: train_loss = 1.235130, train_acc = 0.375000, train ppl = 1.854407
+Step 4400: train_loss = 1.516652, train_acc = 0.250000, train ppl = 2.134700
+Step 4500: train_loss = 1.159410, train_acc = 0.437500, train ppl = 1.785512
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.261000 -- validation perplexity = 1.803272
+Epoch 16: test accuracy: 0.309000
+---- Qualitative Analysis
+Context: is bill in the kitchen ? fred is in the school . bill went back to the kitchen . is bill in the kitchen ?
+Question: is bill in the kitchen ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 4600: train_loss = 1.106103, train_acc = 0.468750, train ppl = 1.738550
+Step 4700: train_loss = 1.266518, train_acc = 0.468750, train ppl = 1.883740
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.367000 -- validation perplexity = 2.244536
+Epoch 17: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is fred in the park ? bill went to the kitchen . fred is either in the office or the park . is fred in the park ?
+Question: is fred in the park ?
+Answer: maybe </s>
+Model prediction: yes </s>
+=========================
+Step 4800: train_loss = 1.134731, train_acc = 0.343750, train ppl = 1.763614
+Step 4900: train_loss = 1.106690, train_acc = 0.187500, train ppl = 1.739061
+Step 5000: train_loss = 1.208247, train_acc = 0.343750, train ppl = 1.829648
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.485000 -- validation perplexity = 1.631286
+Epoch 18: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is fred in the office ? bill moved to the park . julie is in the school . mary went back to the school . fred is either in the bedroom or the park . bill is either in the park or the cinema . fred went back to the office . is fred in the office ?
+Question: is fred in the office ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 5100: train_loss = 1.245659, train_acc = 0.312500, train ppl = 1.864195
+Step 5200: train_loss = 0.997770, train_acc = 0.625000, train ppl = 1.646884
+Step 5300: train_loss = 1.411050, train_acc = 0.437500, train ppl = 2.024909
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.485000 -- validation perplexity = 1.670900
+Epoch 19: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is mary in the office ? mary is either in the kitchen or the office . bill moved to the kitchen . is mary in the office ?
+Question: is mary in the office ?
+Answer: maybe </s>
+Model prediction: no </s>
+=========================
+Step 5400: train_loss = 1.338660, train_acc = 0.343750, train ppl = 1.952928
+Step 5500: train_loss = 0.825897, train_acc = 0.468750, train ppl = 1.511267
+Step 5600: train_loss = 1.268380, train_acc = 0.500000, train ppl = 1.885495
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.367000 -- validation perplexity = 1.668801
+Epoch 20: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is fred in the park ? julie moved to the cinema . fred is either in the kitchen or the kitchen . fred went to the cinema . fred travelled to the kitchen . fred is in the office . mary is either in the kitchen or the cinema . is fred in the park ?
+Question: is fred in the park ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 5700: train_loss = 1.049937, train_acc = 0.656250, train ppl = 1.690405
+Step 5800: train_loss = 1.032311, train_acc = 0.500000, train ppl = 1.675574
+Step 5900: train_loss = 1.323716, train_acc = 0.343750, train ppl = 1.938390
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.261000 -- validation perplexity = 1.875947
+Epoch 21: test accuracy: 0.309000
+---- Qualitative Analysis
+Context: is fred in the office ? fred is in the cinema . bill is in the office . mary went back to the school . bill is in the kitchen . julie is either in the office or the park . fred went back to the park . bill went to the cinema . fred is either in the school or the office . bill is either in the park or the kitchen . mary is either in the kitchen or the bedroom . is fred in the office ?
+Question: is fred in the office ?
+Answer: maybe </s>
+Model prediction: maybe </s>
+=========================
+Step 6000: train_loss = 0.924484, train_acc = 0.437500, train ppl = 1.587629
+Step 6100: train_loss = 1.154366, train_acc = 0.531250, train ppl = 1.781014
+Step 6200: train_loss = 1.256868, train_acc = 0.406250, train ppl = 1.874672
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.485000 -- validation perplexity = 1.615066
+Epoch 22: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is bill in the bedroom ? fred moved to the office . julie journeyed to the park . mary is either in the office or the bedroom . mary is either in the office or the cinema . fred is in the park . bill is in the cinema . is bill in the bedroom ?
+Question: is bill in the bedroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 6300: train_loss = 1.260109, train_acc = 0.343750, train ppl = 1.877713
+Step 6400: train_loss = 1.240761, train_acc = 0.125000, train ppl = 1.859636
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.367000 -- validation perplexity = 2.199537
+Epoch 23: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is julie in the cinema ? fred is in the park . julie is in the bedroom . is julie in the cinema ?
+Question: is julie in the cinema ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 6500: train_loss = 1.952759, train_acc = 0.562500, train ppl = 2.654826
+Step 6600: train_loss = 1.072179, train_acc = 0.093750, train ppl = 1.709310
+Step 6700: train_loss = 1.812112, train_acc = 0.375000, train ppl = 2.474544
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.485000 -- validation perplexity = 1.699973
+Epoch 24: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is bill in the bedroom ? bill journeyed to the bedroom . julie went back to the cinema . is bill in the bedroom ?
+Question: is bill in the bedroom ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 6800: train_loss = 0.983101, train_acc = 0.625000, train ppl = 1.634849
+Step 6900: train_loss = 1.295398, train_acc = 0.218750, train ppl = 1.911138
+Step 7000: train_loss = 1.080552, train_acc = 0.468750, train ppl = 1.716480
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.367000 -- validation perplexity = 1.752995
+Epoch 25: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is bill in the park ? julie went to the school . fred is in the school . fred went to the park . julie went to the office . julie is either in the kitchen or the cinema . bill went back to the kitchen . fred is in the cinema . bill moved to the park . is bill in the park ?
+Question: is bill in the park ?
+Answer: yes </s>
+Model prediction: yes </s>
+=========================
+Step 7100: train_loss = 0.935094, train_acc = 0.625000, train ppl = 1.596074
+Step 7200: train_loss = 1.281591, train_acc = 0.281250, train ppl = 1.897990
+Step 7300: train_loss = 0.968167, train_acc = 0.468750, train ppl = 1.622687
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.485000 -- validation perplexity = 2.000526
+Epoch 26: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is mary in the school ? mary moved to the school . bill journeyed to the office . fred is either in the office or the bedroom . fred is either in the school or the cinema . is mary in the school ?
+Question: is mary in the school ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 7400: train_loss = 1.202756, train_acc = 0.250000, train ppl = 1.824632
+Step 7500: train_loss = 1.046138, train_acc = 0.500000, train ppl = 1.687198
+Step 7600: train_loss = 1.037643, train_acc = 0.531250, train ppl = 1.680046
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.485000 -- validation perplexity = 1.776696
+Epoch 27: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is julie in the park ? fred went back to the office . mary moved to the cinema . julie journeyed to the park . julie is in the kitchen . mary travelled to the park . fred moved to the park . julie moved to the bedroom . julie is in the kitchen . julie moved to the bedroom . julie is in the park . is julie in the park ?
+Question: is julie in the park ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 7700: train_loss = 1.111096, train_acc = 0.500000, train ppl = 1.742896
+Step 7800: train_loss = 1.307967, train_acc = 0.281250, train ppl = 1.923187
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.485000 -- validation perplexity = 1.730605
+Epoch 28: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is bill in the kitchen ? fred is in the bedroom . fred is in the cinema . bill moved to the school . bill is in the cinema . is bill in the kitchen ?
+Question: is bill in the kitchen ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 7900: train_loss = 1.171454, train_acc = 0.187500, train ppl = 1.796297
+Step 8000: train_loss = 1.205709, train_acc = 0.406250, train ppl = 1.827327
+Step 8100: train_loss = 1.427639, train_acc = 0.406250, train ppl = 2.041775
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.478000 -- validation perplexity = 1.671447
+Epoch 29: test accuracy: 0.470000
+---- Qualitative Analysis
+Context: is fred in the cinema ? julie journeyed to the cinema . fred is in the bedroom . julie moved to the kitchen . mary travelled to the park . mary is in the bedroom . fred is either in the kitchen or the kitchen . julie is either in the cinema or the park . bill is either in the office or the office . bill is either in the park or the park . julie is either in the bedroom or the school . is fred in the cinema ?
+Question: is fred in the cinema ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 8200: train_loss = 1.265011, train_acc = 0.375000, train ppl = 1.882321
+Step 8300: train_loss = 2.943969, train_acc = 0.312500, train ppl = 4.357876
+Step 8400: train_loss = 1.713603, train_acc = 0.406250, train ppl = 2.355614
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.485000 -- validation perplexity = 1.752398
+Epoch 30: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is mary in the bedroom ? mary travelled to the school . mary is either in the park or the bedroom . mary went back to the office . julie moved to the kitchen . is mary in the bedroom ?
+Question: is mary in the bedroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 8500: train_loss = 1.269054, train_acc = 0.187500, train ppl = 1.886130
+Step 8600: train_loss = 0.983693, train_acc = 0.343750, train ppl = 1.635333
+Step 8700: train_loss = 1.668601, train_acc = 0.406250, train ppl = 2.303202
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.485000 -- validation perplexity = 1.813016
+Epoch 31: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is mary in the office ? julie is in the office . mary went back to the school . is mary in the office ?
+Question: is mary in the office ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 8800: train_loss = 1.181970, train_acc = 0.468750, train ppl = 1.805766
+Step 8900: train_loss = 1.101271, train_acc = 0.468750, train ppl = 1.734355
+Step 9000: train_loss = 1.153635, train_acc = 0.468750, train ppl = 1.780363
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.485000 -- validation perplexity = 1.726418
+Epoch 32: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is bill in the park ? julie went to the school . bill journeyed to the bedroom . fred moved to the kitchen . mary is in the cinema . is bill in the park ?
+Question: is bill in the park ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 9100: train_loss = 1.186058, train_acc = 0.343750, train ppl = 1.809461
+Step 9200: train_loss = 1.116430, train_acc = 0.687500, train ppl = 1.747551
+Step 9300: train_loss = 1.113354, train_acc = 0.468750, train ppl = 1.744865
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.485000 -- validation perplexity = 1.661605
+Epoch 33: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is fred in the bedroom ? fred is in the cinema . bill is in the office . mary went back to the school . bill is in the kitchen . is fred in the bedroom ?
+Question: is fred in the bedroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 9400: train_loss = 2.131919, train_acc = 0.375000, train ppl = 2.903624
+Step 9500: train_loss = 1.162273, train_acc = 0.468750, train ppl = 1.788069
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.485000 -- validation perplexity = 1.971795
+Epoch 34: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is julie in the kitchen ? mary moved to the school . bill went to the cinema . julie went back to the park . julie is in the cinema . bill is either in the school or the kitchen . julie is in the office . bill went back to the office . julie is either in the kitchen or the bedroom . fred is either in the office or the cinema . mary is either in the kitchen or the cinema . is julie in the kitchen ?
+Question: is julie in the kitchen ?
+Answer: maybe </s>
+Model prediction: no </s>
+=========================
+Step 9600: train_loss = 2.123536, train_acc = 0.531250, train ppl = 2.891479
+Step 9700: train_loss = 0.944061, train_acc = 0.406250, train ppl = 1.603246
+Step 9800: train_loss = 0.969819, train_acc = 0.406250, train ppl = 1.624028
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.478000 -- validation perplexity = 1.623526
+Epoch 35: test accuracy: 0.470000
+---- Qualitative Analysis
+Context: is fred in the school ? fred went back to the kitchen . fred travelled to the office . fred is in the kitchen . julie is either in the office or the park . bill went to the bedroom . bill travelled to the office . is fred in the school ?
+Question: is fred in the school ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 9900: train_loss = 1.086876, train_acc = 0.531250, train ppl = 1.721917
+Step 10000: train_loss = 1.544657, train_acc = 0.093750, train ppl = 2.164801
+Step 10100: train_loss = 2.040008, train_acc = 0.437500, train ppl = 2.773206
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.485000 -- validation perplexity = 2.093238
+Epoch 36: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is mary in the school ? fred journeyed to the school . bill is in the cinema . julie went back to the office . julie travelled to the park . fred travelled to the office . julie moved to the school . bill went to the school . bill is either in the cinema or the school . fred went back to the bedroom . mary travelled to the school . is mary in the school ?
+Question: is mary in the school ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 10200: train_loss = 1.010989, train_acc = 0.500000, train ppl = 1.657805
+Step 10300: train_loss = 1.228662, train_acc = 0.281250, train ppl = 1.848419
+Step 10400: train_loss = 0.994551, train_acc = 0.437500, train ppl = 1.644235
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.485000 -- validation perplexity = 1.825729
+Epoch 37: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is julie in the cinema ? julie is in the school . bill moved to the school . fred is in the cinema . julie went to the kitchen . mary is either in the bedroom or the office . fred is either in the bedroom or the office . mary went to the bedroom . julie is in the cinema . is julie in the cinema ?
+Question: is julie in the cinema ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 10500: train_loss = 1.664333, train_acc = 0.437500, train ppl = 2.298292
+Step 10600: train_loss = 0.876325, train_acc = 0.625000, train ppl = 1.549856
+Step 10700: train_loss = 1.589097, train_acc = 0.500000, train ppl = 2.213441
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.485000 -- validation perplexity = 2.041811
+Epoch 38: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is mary in the school ? mary moved to the kitchen . fred moved to the kitchen . mary travelled to the cinema . bill is either in the bedroom or the cinema . mary is in the office . mary travelled to the school . bill travelled to the bedroom . fred is either in the cinema or the cinema . fred is either in the cinema or the school . bill is in the cinema . is mary in the school ?
+Question: is mary in the school ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 10800: train_loss = 1.085558, train_acc = 0.468750, train ppl = 1.720783
+Step 10900: train_loss = 1.073655, train_acc = 0.312500, train ppl = 1.710571
+==== Finshed epoch 39 ====
+Evaluating model...
+Epoch 39: validation accuracy = 0.367000 -- validation perplexity = 2.028467
+Epoch 39: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is mary in the bedroom ? fred is either in the kitchen or the kitchen . mary is either in the cinema or the school . julie is either in the office or the school . fred went back to the school . bill is either in the kitchen or the park . mary is either in the bedroom or the park . is mary in the bedroom ?
+Question: is mary in the bedroom ?
+Answer: maybe </s>
+Model prediction: yes </s>
+=========================
+Step 11000: train_loss = 1.546222, train_acc = 0.375000, train ppl = 2.166496
+Step 11100: train_loss = 1.059169, train_acc = 0.343750, train ppl = 1.698227
+Step 11200: train_loss = 1.283560, train_acc = 0.218750, train ppl = 1.899859
+==== Finshed epoch 40 ====
+Evaluating model...
+Epoch 40: validation accuracy = 0.261000 -- validation perplexity = 1.751801
+Epoch 40: test accuracy: 0.309000
+---- Qualitative Analysis
+Context: is bill in the school ? julie travelled to the park . bill went back to the cinema . bill journeyed to the school . julie went to the kitchen . bill journeyed to the office . fred went back to the cinema . bill travelled to the kitchen . mary moved to the bedroom . mary is in the park . julie is in the office . is bill in the school ?
+Question: is bill in the school ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 11300: train_loss = 0.768643, train_acc = 0.750000, train ppl = 1.468618
+Step 11400: train_loss = 1.968310, train_acc = 0.281250, train ppl = 2.675550
+Step 11500: train_loss = 1.233770, train_acc = 0.468750, train ppl = 1.853146
+==== Finshed epoch 41 ====
+Evaluating model...
+Epoch 41: validation accuracy = 0.478000 -- validation perplexity = 1.621801
+Epoch 41: test accuracy: 0.470000
+---- Qualitative Analysis
+Context: is bill in the bedroom ? julie is either in the school or the bedroom . bill journeyed to the cinema . bill went to the kitchen . fred journeyed to the school . fred is in the bedroom . bill journeyed to the bedroom . is bill in the bedroom ?
+Question: is bill in the bedroom ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 11600: train_loss = 1.225812, train_acc = 0.375000, train ppl = 1.845788
+Step 11700: train_loss = 1.341137, train_acc = 0.156250, train ppl = 1.955348
+Step 11800: train_loss = 1.653128, train_acc = 0.250000, train ppl = 2.285452
+==== Finshed epoch 42 ====
+Evaluating model...
+Epoch 42: validation accuracy = 0.485000 -- validation perplexity = 1.823250
+Epoch 42: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is fred in the bedroom ? mary journeyed to the cinema . mary moved to the park . julie moved to the kitchen . mary travelled to the school . bill is either in the kitchen or the office . fred travelled to the bedroom . is fred in the bedroom ?
+Question: is fred in the bedroom ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 11900: train_loss = 1.250460, train_acc = 0.375000, train ppl = 1.868676
+Step 12000: train_loss = 1.020304, train_acc = 0.500000, train ppl = 1.665545
+Step 12100: train_loss = 1.192178, train_acc = 0.406250, train ppl = 1.815006
+==== Finshed epoch 43 ====
+Evaluating model...
+Epoch 43: validation accuracy = 0.485000 -- validation perplexity = 1.963684
+Epoch 43: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is fred in the bedroom ? mary went to the cinema . fred is in the office . is fred in the bedroom ?
+Question: is fred in the bedroom ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 12200: train_loss = 2.332119, train_acc = 0.437500, train ppl = 3.209322
+Step 12300: train_loss = 0.964530, train_acc = 0.468750, train ppl = 1.619739
+Step 12400: train_loss = 0.920184, train_acc = 0.656250, train ppl = 1.584220
+==== Finshed epoch 44 ====
+Evaluating model...
+Epoch 44: validation accuracy = 0.485000 -- validation perplexity = 1.672238
+Epoch 44: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is bill in the cinema ? fred travelled to the kitchen . mary travelled to the school . bill went back to the bedroom . bill is either in the park or the school . bill moved to the kitchen . fred journeyed to the bedroom . julie is either in the park or the bedroom . bill is in the park . is bill in the cinema ?
+Question: is bill in the cinema ?
+Answer: no </s>
+Model prediction: no </s>
+=========================
+Step 12500: train_loss = 1.261567, train_acc = 0.562500, train ppl = 1.879082
+Step 12600: train_loss = 1.034265, train_acc = 0.500000, train ppl = 1.677211
+==== Finshed epoch 45 ====
+Evaluating model...
+Epoch 45: validation accuracy = 0.485000 -- validation perplexity = 1.845409
+Epoch 45: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is mary in the school ? mary is either in the school or the office . julie is either in the school or the office . is mary in the school ?
+Question: is mary in the school ?
+Answer: maybe </s>
+Model prediction: no </s>
+=========================
+Step 12700: train_loss = 0.909323, train_acc = 0.562500, train ppl = 1.575640
+Step 12800: train_loss = 0.954991, train_acc = 0.562500, train ppl = 1.612032
+Step 12900: train_loss = 1.107693, train_acc = 0.312500, train ppl = 1.739933
+==== Finshed epoch 46 ====
+Evaluating model...
+Epoch 46: validation accuracy = 0.485000 -- validation perplexity = 1.719109
+Epoch 46: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is bill in the office ? bill journeyed to the park . fred is in the park . bill journeyed to the cinema . mary is either in the park or the park . mary is either in the school or the cinema . fred is either in the bedroom or the office . bill is in the bedroom . bill is in the office . is bill in the office ?
+Question: is bill in the office ?
+Answer: yes </s>
+Model prediction: no </s>
+=========================
+Step 13000: train_loss = 1.383942, train_acc = 0.218750, train ppl = 1.997649
+Step 13100: train_loss = 1.373241, train_acc = 0.187500, train ppl = 1.986989
+Step 13200: train_loss = 1.250888, train_acc = 0.468750, train ppl = 1.869075
+==== Finshed epoch 47 ====
+Evaluating model...
+Epoch 47: validation accuracy = 0.268000 -- validation perplexity = 3.033236
+Epoch 47: test accuracy: 0.276000
+---- Qualitative Analysis
+Context: is fred in the cinema ? fred is either in the school or the cinema . mary moved to the school . julie travelled to the office . fred journeyed to the office . julie is in the school . bill went back to the school . julie is either in the cinema or the cinema . mary is either in the park or the kitchen . fred travelled to the kitchen . fred is either in the cinema or the bedroom . is fred in the cinema ?
+Question: is fred in the cinema ?
+Answer: maybe </s>
+Model prediction: maybe </s>
+=========================
+Step 13300: train_loss = 1.257525, train_acc = 0.375000, train ppl = 1.875289
+Step 13400: train_loss = 1.053318, train_acc = 0.281250, train ppl = 1.693265
+Step 13500: train_loss = 0.962404, train_acc = 0.437500, train ppl = 1.618018
+==== Finshed epoch 48 ====
+Evaluating model...
+Epoch 48: validation accuracy = 0.485000 -- validation perplexity = 1.653275
+Epoch 48: test accuracy: 0.437000
+---- Qualitative Analysis
+Context: is julie in the school ? mary is in the park . julie is either in the school or the office . mary went to the kitchen . fred is either in the park or the office . is julie in the school ?
+Question: is julie in the school ?
+Answer: maybe </s>
+Model prediction: no </s>
+=========================
+Step 13600: train_loss = 0.956159, train_acc = 0.500000, train ppl = 1.612974
+Step 13700: train_loss = 1.305181, train_acc = 0.437500, train ppl = 1.920509
+Step 13800: train_loss = 1.271113, train_acc = 0.343750, train ppl = 1.888072
+==== Finshed epoch 49 ====
+Evaluating model...
+Epoch 49: validation accuracy = 0.367000 -- validation perplexity = 2.082000
+Epoch 49: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is mary in the bedroom ? mary is in the cinema . fred is either in the school or the kitchen . bill is in the school . bill is either in the bedroom or the kitchen . bill is in the school . fred is either in the cinema or the bedroom . mary moved to the office . mary is in the kitchen . julie moved to the kitchen . fred is either in the park or the park . is mary in the bedroom ?
+Question: is mary in the bedroom ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Step 13900: train_loss = 1.146660, train_acc = 0.468750, train ppl = 1.774165
+Step 14000: train_loss = 1.200868, train_acc = 0.343750, train ppl = 1.822910
+Step 14100: train_loss = 1.213754, train_acc = 0.250000, train ppl = 1.834693
+==== Finshed epoch 50 ====
+Evaluating model...
+Epoch 50: validation accuracy = 0.367000 -- validation perplexity = 1.824461
+Epoch 50: test accuracy: 0.413000
+---- Qualitative Analysis
+Context: is julie in the school ? fred travelled to the kitchen . bill is either in the office or the school . mary journeyed to the office . bill is either in the school or the office . julie moved to the cinema . julie is in the park . fred is in the park . mary went back to the park . is julie in the school ?
+Question: is julie in the school ?
+Answer: no </s>
+Model prediction: yes </s>
+=========================
+Best model (acc) at epoch 3 -- validation perplexity = 1.665779 -- validation accuracy = 0.485000 -- test accuracy = 0.437000
+0.485

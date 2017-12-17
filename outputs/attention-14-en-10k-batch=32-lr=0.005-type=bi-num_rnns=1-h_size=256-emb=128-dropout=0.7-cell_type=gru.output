@@ -1,0 +1,679 @@
+num_units:                256
+model_type:               attention
+dropout_keep_prob:        0.7
+task:                     14
+vocab:                    data/vocab.txt
+val_split:                0.1
+cell_type:                gru
+embedding_size:           128
+restore_from_dir:         None
+learning_rate:            0.005
+batch_size:               32
+max_gradient_norm:        1.0
+data_dir:                 data/en-10k
+encoder_type:             bi
+num_enc_layers:           1
+model_dir:                models/dummy
+num_epochs:               50
+optimizer:                adam
+merge_mode:               concat
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: where was mary before the school ? yesterday mary went to the cinema . this morning fred travelled to the kitchen . julie journeyed to the school yesterday . fred went to the bedroom yesterday . this evening fred travelled to the office . this afternoon fred journeyed to the park . julie moved to the park this afternoon . julie went to the cinema this morning . julie went to the cinema this evening . mary journeyed to the school this morning . mary moved to the cinema this evening . this afternoon mary moved to the office . where was mary before the school ?
+Question: where was mary before the school ?
+Answer: cinema </s>
+Model prediction: 169 169 169 169 169 169 169 169 169 169
+=========================
+Step 100: train_loss = 1.911600, train_acc = 0.187500, train ppl = 2.600750
+Step 200: train_loss = 1.730709, train_acc = 0.250000, train ppl = 2.375848
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.210000 -- validation perplexity = 2.530911
+Epoch 1: test accuracy: 0.203000
+---- Qualitative Analysis
+Context: where was bill before the kitchen ? yesterday mary went to the cinema . bill went back to the school yesterday . fred went to the school this morning . fred went to the bedroom yesterday . mary went to the office this morning . yesterday julie journeyed to the park . this morning bill went back to the kitchen . julie travelled to the office this morning . where was bill before the kitchen ?
+Question: where was bill before the kitchen ?
+Answer: school </s>
+Model prediction: cinema </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 300: train_loss = 1.738551, train_acc = 0.250000, train ppl = 2.385182
+Step 400: train_loss = 1.901157, train_acc = 0.312500, train ppl = 2.587205
+Step 500: train_loss = 1.810468, train_acc = 0.156250, train ppl = 2.472510
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.191000 -- validation perplexity = 2.403818
+Epoch 2: test accuracy: 0.210000
+---- Qualitative Analysis
+Context: where was julie before the office ? this morning fred moved to the kitchen . yesterday mary went back to the kitchen . julie moved to the park yesterday . fred moved to the cinema yesterday . bill moved to the office yesterday . this morning mary travelled to the cinema . julie journeyed to the office this morning . mary went to the kitchen this afternoon . fred went back to the school this afternoon . bill went to the park this morning . where was julie before the office ?
+Question: where was julie before the office ?
+Answer: park </s>
+Model prediction: school </s>
+=========================
+Step 600: train_loss = 1.851955, train_acc = 0.187500, train ppl = 2.524334
+Step 700: train_loss = 1.588774, train_acc = 0.250000, train ppl = 2.213084
+Step 800: train_loss = 1.604522, train_acc = 0.250000, train ppl = 2.230579
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.174000 -- validation perplexity = 2.300737
+Epoch 3: test accuracy: 0.219000
+---- Qualitative Analysis
+Context: where was mary before the cinema ? julie travelled to the school this morning . julie went back to the park yesterday . julie journeyed to the cinema this afternoon . yesterday mary went to the school . fred moved to the bedroom yesterday . julie travelled to the office this evening . bill moved to the bedroom yesterday . mary journeyed to the cinema this morning . where was mary before the cinema ?
+Question: where was mary before the cinema ?
+Answer: school </s>
+Model prediction: kitchen </s>
+=========================
+Step 900: train_loss = 1.671754, train_acc = 0.250000, train ppl = 2.306836
+Step 1000: train_loss = 1.684446, train_acc = 0.281250, train ppl = 2.321522
+Step 1100: train_loss = 1.722625, train_acc = 0.125000, train ppl = 2.366264
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.202000 -- validation perplexity = 2.251700
+Epoch 4: test accuracy: 0.197000
+---- Qualitative Analysis
+Context: where was mary before the kitchen ? julie journeyed to the school this morning . julie went to the kitchen yesterday . this evening julie journeyed to the office . this afternoon julie travelled to the cinema . this morning mary went to the park . yesterday mary journeyed to the bedroom . this evening mary went back to the cinema . this afternoon mary travelled to the kitchen . this morning fred journeyed to the cinema . fred moved to the school yesterday . where was mary before the kitchen ?
+Question: where was mary before the kitchen ?
+Answer: park </s>
+Model prediction: school </s>
+=========================
+Step 1200: train_loss = 1.758746, train_acc = 0.125000, train ppl = 2.409388
+Step 1300: train_loss = 1.820369, train_acc = 0.156250, train ppl = 2.484781
+Step 1400: train_loss = 1.827331, train_acc = 0.125000, train ppl = 2.493445
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.205000 -- validation perplexity = 2.325376
+Epoch 5: test accuracy: 0.213000
+---- Qualitative Analysis
+Context: where was mary before the office ? this afternoon julie went to the bedroom . this morning julie moved to the cinema . fred journeyed to the bedroom yesterday . julie travelled to the kitchen yesterday . mary journeyed to the office this morning . mary travelled to the bedroom yesterday . where was mary before the office ?
+Question: where was mary before the office ?
+Answer: bedroom </s>
+Model prediction: park </s>
+=========================
+Step 1500: train_loss = 1.759214, train_acc = 0.156250, train ppl = 2.409953
+Step 1600: train_loss = 1.630859, train_acc = 0.218750, train ppl = 2.260146
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.197000 -- validation perplexity = 2.394981
+Epoch 6: test accuracy: 0.197000
+---- Qualitative Analysis
+Context: where was bill before the bedroom ? this morning bill travelled to the bedroom . bill moved to the park yesterday . julie went back to the cinema yesterday . fred travelled to the cinema yesterday . mary travelled to the bedroom this morning . yesterday mary went to the school . where was bill before the bedroom ?
+Question: where was bill before the bedroom ?
+Answer: park </s>
+Model prediction: cinema </s>
+=========================
+Step 1700: train_loss = 1.654710, train_acc = 0.281250, train ppl = 2.287261
+Step 1800: train_loss = 1.862329, train_acc = 0.125000, train ppl = 2.537462
+Step 1900: train_loss = 1.783346, train_acc = 0.093750, train ppl = 2.439207
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.209000 -- validation perplexity = 2.474387
+Epoch 7: test accuracy: 0.210000
+---- Qualitative Analysis
+Context: where was julie before the bedroom ? julie went back to the office yesterday . this morning julie moved to the bedroom . yesterday bill journeyed to the school . fred went back to the office yesterday . fred moved to the park this morning . yesterday mary went to the kitchen . where was julie before the bedroom ?
+Question: where was julie before the bedroom ?
+Answer: office </s>
+Model prediction: office </s>
+=========================
+Step 2000: train_loss = 1.822218, train_acc = 0.156250, train ppl = 2.487079
+Step 2100: train_loss = 1.803707, train_acc = 0.125000, train ppl = 2.464167
+Step 2200: train_loss = 1.866771, train_acc = 0.125000, train ppl = 2.543104
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.203000 -- validation perplexity = 2.573133
+Epoch 8: test accuracy: 0.207000
+---- Qualitative Analysis
+Context: where was julie before the office ? yesterday mary went to the cinema . this morning julie journeyed to the bedroom . this afternoon julie moved to the school . julie went back to the office yesterday . this evening julie went back to the office . mary went back to the bedroom this morning . where was julie before the office ?
+Question: where was julie before the office ?
+Answer: school </s>
+Model prediction: cinema </s>
+=========================
+Step 2300: train_loss = 1.736497, train_acc = 0.218750, train ppl = 2.382734
+Step 2400: train_loss = 1.628785, train_acc = 0.125000, train ppl = 2.257804
+Step 2500: train_loss = 1.636245, train_acc = 0.187500, train ppl = 2.266242
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.189000 -- validation perplexity = 2.320715
+Epoch 9: test accuracy: 0.207000
+---- Qualitative Analysis
+Context: where was fred before the kitchen ? yesterday julie travelled to the bedroom . this morning mary went back to the park . yesterday fred moved to the kitchen . yesterday mary went back to the kitchen . bill journeyed to the bedroom yesterday . this morning fred moved to the park . this morning bill travelled to the office . mary travelled to the office this afternoon . this afternoon fred moved to the kitchen . this morning julie travelled to the school . this evening bill went to the bedroom . bill went back to the cinema this afternoon . where was fred before the kitchen ?
+Question: where was fred before the kitchen ?
+Answer: park </s>
+Model prediction: office </s>
+=========================
+Step 2600: train_loss = 1.681114, train_acc = 0.187500, train ppl = 2.317657
+Step 2700: train_loss = 1.673277, train_acc = 0.218750, train ppl = 2.308594
+Step 2800: train_loss = 1.546370, train_acc = 0.343750, train ppl = 2.166656
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.200000 -- validation perplexity = 2.336020
+Epoch 10: test accuracy: 0.205000
+---- Qualitative Analysis
+Context: where was fred before the kitchen ? this afternoon julie went to the bedroom . this morning julie moved to the cinema . fred journeyed to the bedroom yesterday . julie travelled to the kitchen yesterday . mary journeyed to the office this morning . mary travelled to the bedroom yesterday . yesterday bill travelled to the bedroom . this evening julie went back to the kitchen . fred journeyed to the kitchen this morning . this afternoon mary went to the kitchen . where was fred before the kitchen ?
+Question: where was fred before the kitchen ?
+Answer: bedroom </s>
+Model prediction: school </s>
+=========================
+Step 2900: train_loss = 1.813329, train_acc = 0.156250, train ppl = 2.476050
+Step 3000: train_loss = 1.671475, train_acc = 0.156250, train ppl = 2.306514
+Step 3100: train_loss = 1.807490, train_acc = 0.125000, train ppl = 2.468832
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.183000 -- validation perplexity = 2.346901
+Epoch 11: test accuracy: 0.206000
+---- Qualitative Analysis
+Context: where was fred before the park ? this morning fred went to the park . yesterday fred went to the cinema . yesterday julie travelled to the school . yesterday bill journeyed to the bedroom . yesterday mary travelled to the bedroom . this morning julie moved to the kitchen . where was fred before the park ?
+Question: where was fred before the park ?
+Answer: cinema </s>
+Model prediction: kitchen </s>
+=========================
+Step 3200: train_loss = 1.909757, train_acc = 0.218750, train ppl = 2.598355
+Step 3300: train_loss = 1.823768, train_acc = 0.281250, train ppl = 2.489008
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.210000 -- validation perplexity = 2.340683
+Epoch 12: test accuracy: 0.203000
+---- Qualitative Analysis
+Context: where was julie before the office ? this morning julie went back to the school . mary journeyed to the park yesterday . yesterday bill journeyed to the office . yesterday julie journeyed to the cinema . fred went to the kitchen yesterday . julie went back to the office this afternoon . where was julie before the office ?
+Question: where was julie before the office ?
+Answer: school </s>
+Model prediction: cinema </s>
+=========================
+Step 3400: train_loss = 1.696533, train_acc = 0.218750, train ppl = 2.335595
+Step 3500: train_loss = 1.702520, train_acc = 0.156250, train ppl = 2.342597
+Step 3600: train_loss = 1.626841, train_acc = 0.281250, train ppl = 2.255610
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.188000 -- validation perplexity = 2.358445
+Epoch 13: test accuracy: 0.218000
+---- Qualitative Analysis
+Context: where was bill before the school ? bill moved to the cinema yesterday . this morning mary journeyed to the cinema . mary journeyed to the kitchen this afternoon . yesterday mary went to the bedroom . julie went to the cinema yesterday . this morning bill went back to the office . bill travelled to the school this afternoon . yesterday fred went to the cinema . where was bill before the school ?
+Question: where was bill before the school ?
+Answer: office </s>
+Model prediction: cinema </s>
+=========================
+Step 3700: train_loss = 1.731544, train_acc = 0.250000, train ppl = 2.376840
+Step 3800: train_loss = 1.832653, train_acc = 0.250000, train ppl = 2.500090
+Step 3900: train_loss = 1.501371, train_acc = 0.375000, train ppl = 2.118451
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.285000 -- validation perplexity = 2.370152
+Epoch 14: test accuracy: 0.271000
+---- Qualitative Analysis
+Context: where was bill before the bedroom ? bill went to the park this morning . bill travelled to the office yesterday . fred went to the cinema yesterday . mary travelled to the park yesterday . julie journeyed to the cinema yesterday . this afternoon bill went to the bedroom . where was bill before the bedroom ?
+Question: where was bill before the bedroom ?
+Answer: park </s>
+Model prediction: office </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 4000: train_loss = 1.655705, train_acc = 0.343750, train ppl = 2.288399
+Step 4100: train_loss = 1.478115, train_acc = 0.250000, train ppl = 2.093961
+Step 4200: train_loss = 1.794401, train_acc = 0.156250, train ppl = 2.452727
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.320000 -- validation perplexity = 2.236707
+Epoch 15: test accuracy: 0.302000
+---- Qualitative Analysis
+Context: where was fred before the office ? yesterday mary moved to the kitchen . julie moved to the kitchen this morning . yesterday fred journeyed to the office . julie went back to the bedroom yesterday . mary moved to the bedroom this morning . this afternoon julie journeyed to the park . this afternoon fred moved to the office . fred travelled to the cinema this morning . this afternoon mary went back to the cinema . this evening julie went back to the bedroom . yesterday bill went to the cinema . this evening mary travelled to the kitchen . where was fred before the office ?
+Question: where was fred before the office ?
+Answer: cinema </s>
+Model prediction: cinema </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 4300: train_loss = 1.522583, train_acc = 0.312500, train ppl = 2.141039
+Step 4400: train_loss = 1.521863, train_acc = 0.250000, train ppl = 2.140270
+Step 4500: train_loss = 1.578148, train_acc = 0.187500, train ppl = 2.201358
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.226000 -- validation perplexity = 2.203660
+Epoch 16: test accuracy: 0.207000
+---- Qualitative Analysis
+Context: where was bill before the park ? bill went back to the park this morning . yesterday fred travelled to the park . yesterday bill journeyed to the kitchen . mary went to the bedroom yesterday . where was bill before the park ?
+Question: where was bill before the park ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 4600: train_loss = 1.583249, train_acc = 0.250000, train ppl = 2.206979
+Step 4700: train_loss = 1.358546, train_acc = 0.437500, train ppl = 1.972443
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.265000 -- validation perplexity = 2.180478
+Epoch 17: test accuracy: 0.277000
+---- Qualitative Analysis
+Context: where was mary before the cinema ? julie moved to the park this morning . yesterday bill travelled to the school . yesterday mary moved to the school . fred journeyed to the kitchen yesterday . this morning mary moved to the kitchen . yesterday julie went back to the kitchen . bill went back to the office this morning . mary moved to the cinema this afternoon . where was mary before the cinema ?
+Question: where was mary before the cinema ?
+Answer: kitchen </s>
+Model prediction: office </s>
+=========================
+Step 4800: train_loss = 1.569026, train_acc = 0.281250, train ppl = 2.191339
+Step 4900: train_loss = 1.537042, train_acc = 0.281250, train ppl = 2.156575
+Step 5000: train_loss = 1.669627, train_acc = 0.218750, train ppl = 2.304384
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.233000 -- validation perplexity = 2.168966
+Epoch 18: test accuracy: 0.222000
+---- Qualitative Analysis
+Context: where was fred before the office ? julie went back to the bedroom yesterday . julie journeyed to the kitchen this morning . fred travelled to the kitchen yesterday . bill travelled to the office yesterday . julie journeyed to the cinema this afternoon . yesterday mary travelled to the kitchen . fred moved to the park this morning . this morning mary journeyed to the bedroom . this afternoon fred journeyed to the office . this evening julie journeyed to the bedroom . this afternoon mary travelled to the cinema . this morning bill went to the park . bill went back to the bedroom this afternoon . this evening fred went back to the cinema . where was fred before the office ?
+Question: where was fred before the office ?
+Answer: park </s>
+Model prediction: bedroom </s>
+=========================
+Step 5100: train_loss = 1.500391, train_acc = 0.250000, train ppl = 2.117414
+Step 5200: train_loss = 1.460878, train_acc = 0.406250, train ppl = 2.075992
+Step 5300: train_loss = 1.384961, train_acc = 0.375000, train ppl = 1.998668
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.304000 -- validation perplexity = 2.091094
+Epoch 19: test accuracy: 0.302000
+---- Qualitative Analysis
+Context: where was bill before the office ? yesterday julie went back to the office . bill went back to the office this morning . yesterday mary went to the school . yesterday bill went to the park . fred travelled to the office yesterday . mary moved to the kitchen this morning . where was bill before the office ?
+Question: where was bill before the office ?
+Answer: park </s>
+Model prediction: school </s>
+=========================
+Step 5400: train_loss = 1.762069, train_acc = 0.281250, train ppl = 2.413395
+Step 5500: train_loss = 1.335949, train_acc = 0.500000, train ppl = 1.950283
+Step 5600: train_loss = 1.549744, train_acc = 0.312500, train ppl = 2.170314
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.319000 -- validation perplexity = 2.076473
+Epoch 20: test accuracy: 0.277000
+---- Qualitative Analysis
+Context: where was fred before the park ? mary journeyed to the kitchen this morning . yesterday mary moved to the office . this afternoon mary moved to the park . yesterday julie journeyed to the school . fred moved to the park yesterday . mary journeyed to the school this evening . fred moved to the cinema this afternoon . fred moved to the bedroom this morning . julie moved to the cinema this morning . fred moved to the park this evening . where was fred before the park ?
+Question: where was fred before the park ?
+Answer: cinema </s>
+Model prediction: kitchen </s>
+=========================
+Step 5700: train_loss = 1.515777, train_acc = 0.375000, train ppl = 2.133765
+Step 5800: train_loss = 1.530859, train_acc = 0.218750, train ppl = 2.149918
+Step 5900: train_loss = 1.543977, train_acc = 0.343750, train ppl = 2.164065
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.236000 -- validation perplexity = 2.288606
+Epoch 21: test accuracy: 0.252000
+---- Qualitative Analysis
+Context: where was fred before the park ? this morning julie travelled to the kitchen . yesterday fred journeyed to the office . yesterday bill travelled to the kitchen . mary went back to the park yesterday . fred went back to the cinema this morning . julie went to the cinema yesterday . mary went back to the kitchen this morning . this morning bill moved to the park . this evening julie went to the school . julie travelled to the park this afternoon . this afternoon bill journeyed to the bedroom . this afternoon mary moved to the office . fred went back to the park this evening . this afternoon fred went back to the office . where was fred before the park ?
+Question: where was fred before the park ?
+Answer: office </s>
+Model prediction: kitchen </s>
+=========================
+Step 6000: train_loss = 1.497840, train_acc = 0.281250, train ppl = 2.114715
+Step 6100: train_loss = 1.365720, train_acc = 0.343750, train ppl = 1.979531
+Step 6200: train_loss = 1.493385, train_acc = 0.343750, train ppl = 2.110009
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.212000 -- validation perplexity = 2.236879
+Epoch 22: test accuracy: 0.203000
+---- Qualitative Analysis
+Context: where was fred before the cinema ? this morning fred went to the school . yesterday mary journeyed to the kitchen . fred journeyed to the office yesterday . bill went back to the park yesterday . julie went back to the school yesterday . this morning mary journeyed to the park . bill went back to the kitchen this morning . mary journeyed to the cinema this afternoon . julie went back to the bedroom this morning . fred went back to the cinema this afternoon . this evening mary journeyed to the kitchen . bill went to the park this afternoon . where was fred before the cinema ?
+Question: where was fred before the cinema ?
+Answer: school </s>
+Model prediction: park </s>
+=========================
+Step 6300: train_loss = 1.353812, train_acc = 0.468750, train ppl = 1.967780
+Step 6400: train_loss = 1.520607, train_acc = 0.343750, train ppl = 2.138925
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.338000 -- validation perplexity = 2.053555
+Epoch 23: test accuracy: 0.323000
+---- Qualitative Analysis
+Context: where was bill before the kitchen ? julie moved to the park yesterday . bill travelled to the school this morning . mary went to the school yesterday . bill moved to the kitchen yesterday . this morning julie moved to the kitchen . yesterday fred went back to the school . this afternoon bill journeyed to the kitchen . mary went back to the office this morning . where was bill before the kitchen ?
+Question: where was bill before the kitchen ?
+Answer: school </s>
+Model prediction: school </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 6500: train_loss = 1.450698, train_acc = 0.250000, train ppl = 2.065452
+Step 6600: train_loss = 1.530195, train_acc = 0.437500, train ppl = 2.149204
+Step 6700: train_loss = 1.294734, train_acc = 0.406250, train ppl = 1.910504
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.331000 -- validation perplexity = 2.106170
+Epoch 24: test accuracy: 0.292000
+---- Qualitative Analysis
+Context: where was julie before the school ? julie travelled to the office this morning . julie went to the kitchen yesterday . fred moved to the bedroom yesterday . mary moved to the kitchen yesterday . julie journeyed to the cinema this evening . julie travelled to the school this afternoon . where was julie before the school ?
+Question: where was julie before the school ?
+Answer: office </s>
+Model prediction: cinema </s>
+=========================
+Step 6800: train_loss = 1.466279, train_acc = 0.281250, train ppl = 2.081605
+Step 6900: train_loss = 1.369407, train_acc = 0.406250, train ppl = 1.983184
+Step 7000: train_loss = 1.534225, train_acc = 0.312500, train ppl = 2.153539
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.317000 -- validation perplexity = 2.024769
+Epoch 25: test accuracy: 0.314000
+---- Qualitative Analysis
+Context: where was mary before the park ? mary journeyed to the park this morning . yesterday julie moved to the bedroom . bill went back to the school yesterday . yesterday mary went back to the office . where was mary before the park ?
+Question: where was mary before the park ?
+Answer: office </s>
+Model prediction: school </s>
+=========================
+Step 7100: train_loss = 1.254375, train_acc = 0.500000, train ppl = 1.872337
+Step 7200: train_loss = 1.340315, train_acc = 0.437500, train ppl = 1.954545
+Step 7300: train_loss = 1.494560, train_acc = 0.250000, train ppl = 2.111249
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.227000 -- validation perplexity = 2.253789
+Epoch 26: test accuracy: 0.238000
+---- Qualitative Analysis
+Context: where was mary before the school ? mary travelled to the school this morning . yesterday mary journeyed to the park . this morning fred journeyed to the cinema . fred moved to the kitchen yesterday . where was mary before the school ?
+Question: where was mary before the school ?
+Answer: park </s>
+Model prediction: cinema </s>
+=========================
+Step 7400: train_loss = 1.345565, train_acc = 0.406250, train ppl = 1.959683
+Step 7500: train_loss = 1.358283, train_acc = 0.375000, train ppl = 1.972184
+Step 7600: train_loss = 1.432481, train_acc = 0.343750, train ppl = 2.046724
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.335000 -- validation perplexity = 2.036527
+Epoch 27: test accuracy: 0.312000
+---- Qualitative Analysis
+Context: where was fred before the bedroom ? bill went to the cinema yesterday . this morning fred journeyed to the bedroom . yesterday julie went back to the cinema . yesterday fred journeyed to the office . yesterday mary journeyed to the park . this morning bill journeyed to the park . where was fred before the bedroom ?
+Question: where was fred before the bedroom ?
+Answer: office </s>
+Model prediction: cinema </s>
+=========================
+Step 7700: train_loss = 1.672300, train_acc = 0.125000, train ppl = 2.307466
+Step 7800: train_loss = 1.479059, train_acc = 0.250000, train ppl = 2.094949
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.328000 -- validation perplexity = 2.059865
+Epoch 28: test accuracy: 0.307000
+---- Qualitative Analysis
+Context: where was julie before the kitchen ? fred went to the office yesterday . julie went back to the school this morning . yesterday julie travelled to the bedroom . yesterday mary journeyed to the park . mary journeyed to the school this morning . julie went to the office this afternoon . this morning fred travelled to the kitchen . this evening julie went back to the kitchen . this evening mary journeyed to the kitchen . this afternoon mary went back to the cinema . where was julie before the kitchen ?
+Question: where was julie before the kitchen ?
+Answer: office </s>
+Model prediction: cinema </s>
+=========================
+Step 7900: train_loss = 1.395235, train_acc = 0.468750, train ppl = 2.008960
+Step 8000: train_loss = 1.403215, train_acc = 0.343750, train ppl = 2.016993
+Step 8100: train_loss = 1.390255, train_acc = 0.437500, train ppl = 2.003965
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.307000 -- validation perplexity = 2.144714
+Epoch 29: test accuracy: 0.298000
+---- Qualitative Analysis
+Context: where was julie before the cinema ? mary went back to the school this morning . yesterday julie journeyed to the kitchen . mary moved to the bedroom yesterday . yesterday fred travelled to the bedroom . this afternoon mary went back to the bedroom . julie journeyed to the park this morning . mary journeyed to the cinema this evening . yesterday bill went back to the office . julie moved to the office this evening . julie travelled to the cinema this afternoon . where was julie before the cinema ?
+Question: where was julie before the cinema ?
+Answer: park </s>
+Model prediction: office </s>
+=========================
+Step 8200: train_loss = 1.722296, train_acc = 0.156250, train ppl = 2.365875
+Step 8300: train_loss = 1.432302, train_acc = 0.375000, train ppl = 2.046540
+Step 8400: train_loss = 1.319731, train_acc = 0.437500, train ppl = 1.934532
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.222000 -- validation perplexity = 2.119742
+Epoch 30: test accuracy: 0.234000
+---- Qualitative Analysis
+Context: where was julie before the kitchen ? julie went back to the bedroom yesterday . julie journeyed to the kitchen this morning . fred travelled to the kitchen yesterday . bill travelled to the office yesterday . julie journeyed to the cinema this afternoon . yesterday mary travelled to the kitchen . where was julie before the kitchen ?
+Question: where was julie before the kitchen ?
+Answer: bedroom </s>
+Model prediction: office </s>
+=========================
+Step 8500: train_loss = 1.472371, train_acc = 0.281250, train ppl = 2.087956
+Step 8600: train_loss = 1.377565, train_acc = 0.406250, train ppl = 1.991290
+Step 8700: train_loss = 1.691236, train_acc = 0.187500, train ppl = 2.329417
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.206000 -- validation perplexity = 2.102264
+Epoch 31: test accuracy: 0.217000
+---- Qualitative Analysis
+Context: where was mary before the cinema ? fred journeyed to the school yesterday . fred travelled to the office this morning . yesterday bill went back to the cinema . yesterday mary journeyed to the school . yesterday julie travelled to the office . mary journeyed to the cinema this morning . where was mary before the cinema ?
+Question: where was mary before the cinema ?
+Answer: school </s>
+Model prediction: kitchen </s>
+=========================
+Step 8800: train_loss = 1.505102, train_acc = 0.281250, train ppl = 2.122407
+Step 8900: train_loss = 1.431482, train_acc = 0.218750, train ppl = 2.045702
+Step 9000: train_loss = 1.570682, train_acc = 0.187500, train ppl = 2.193154
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.306000 -- validation perplexity = 2.059827
+Epoch 32: test accuracy: 0.270000
+---- Qualitative Analysis
+Context: where was bill before the cinema ? this morning bill went to the cinema . yesterday fred travelled to the bedroom . yesterday julie travelled to the bedroom . yesterday bill went back to the kitchen . where was bill before the cinema ?
+Question: where was bill before the cinema ?
+Answer: kitchen </s>
+Model prediction: bedroom </s>
+=========================
+Step 9100: train_loss = 1.394931, train_acc = 0.312500, train ppl = 2.008655
+Step 9200: train_loss = 1.411240, train_acc = 0.437500, train ppl = 2.025102
+Step 9300: train_loss = 1.476464, train_acc = 0.312500, train ppl = 2.092233
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.230000 -- validation perplexity = 2.109428
+Epoch 33: test accuracy: 0.211000
+---- Qualitative Analysis
+Context: where was mary before the park ? yesterday mary went back to the kitchen . yesterday julie went to the school . julie moved to the office this morning . yesterday bill went back to the bedroom . mary journeyed to the park this morning . bill travelled to the kitchen this morning . fred went back to the bedroom yesterday . this afternoon mary travelled to the school . where was mary before the park ?
+Question: where was mary before the park ?
+Answer: kitchen </s>
+Model prediction: kitchen </s>
+=========================
+Step 9400: train_loss = 1.652114, train_acc = 0.031250, train ppl = 2.284294
+Step 9500: train_loss = 1.428543, train_acc = 0.312500, train ppl = 2.042698
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.274000 -- validation perplexity = 2.147734
+Epoch 34: test accuracy: 0.242000
+---- Qualitative Analysis
+Context: where was fred before the school ? yesterday fred travelled to the bedroom . bill travelled to the bedroom yesterday . yesterday julie went to the cinema . this morning fred went to the school . this morning julie moved to the bedroom . fred moved to the office this afternoon . mary travelled to the kitchen yesterday . this evening fred went back to the school . where was fred before the school ?
+Question: where was fred before the school ?
+Answer: office </s>
+Model prediction: bedroom </s>
+=========================
+Step 9600: train_loss = 1.284083, train_acc = 0.437500, train ppl = 1.900356
+Step 9700: train_loss = 1.362155, train_acc = 0.281250, train ppl = 1.976005
+Step 9800: train_loss = 1.417241, train_acc = 0.343750, train ppl = 2.031188
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.253000 -- validation perplexity = 2.073598
+Epoch 35: test accuracy: 0.244000
+---- Qualitative Analysis
+Context: where was julie before the bedroom ? this morning mary went to the kitchen . mary went back to the office yesterday . this afternoon mary went to the cinema . fred journeyed to the office yesterday . this morning bill went back to the park . bill went back to the kitchen yesterday . mary went back to the park this evening . bill moved to the kitchen this afternoon . julie went back to the office yesterday . this evening bill journeyed to the bedroom . julie moved to the bedroom this afternoon . this morning julie travelled to the cinema . where was julie before the bedroom ?
+Question: where was julie before the bedroom ?
+Answer: cinema </s>
+Model prediction: office </s>
+=========================
+Step 9900: train_loss = 1.566281, train_acc = 0.281250, train ppl = 2.188334
+Step 10000: train_loss = 1.541785, train_acc = 0.343750, train ppl = 2.161695
+Step 10100: train_loss = 1.240077, train_acc = 0.468750, train ppl = 1.858999
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.232000 -- validation perplexity = 2.132665
+Epoch 36: test accuracy: 0.224000
+---- Qualitative Analysis
+Context: where was mary before the cinema ? julie went back to the school yesterday . fred journeyed to the cinema yesterday . bill went back to the school this morning . yesterday bill travelled to the bedroom . mary travelled to the cinema this morning . yesterday mary moved to the office . where was mary before the cinema ?
+Question: where was mary before the cinema ?
+Answer: office </s>
+Model prediction: kitchen </s>
+=========================
+Step 10200: train_loss = 1.439880, train_acc = 0.281250, train ppl = 2.054310
+Step 10300: train_loss = 1.353447, train_acc = 0.437500, train ppl = 1.967420
+Step 10400: train_loss = 1.310441, train_acc = 0.437500, train ppl = 1.925567
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.327000 -- validation perplexity = 2.129697
+Epoch 37: test accuracy: 0.298000
+---- Qualitative Analysis
+Context: where was bill before the school ? this morning bill travelled to the school . fred went to the cinema yesterday . yesterday bill journeyed to the bedroom . fred went back to the school this morning . where was bill before the school ?
+Question: where was bill before the school ?
+Answer: bedroom </s>
+Model prediction: cinema </s>
+=========================
+Step 10500: train_loss = 1.335704, train_acc = 0.343750, train ppl = 1.950044
+Step 10600: train_loss = 1.688468, train_acc = 0.187500, train ppl = 2.326195
+Step 10700: train_loss = 1.297945, train_acc = 0.500000, train ppl = 1.913574
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.295000 -- validation perplexity = 2.277756
+Epoch 38: test accuracy: 0.267000
+---- Qualitative Analysis
+Context: where was mary before the park ? this morning fred travelled to the park . julie went back to the cinema yesterday . this afternoon fred moved to the cinema . yesterday fred moved to the cinema . mary went to the park this morning . yesterday mary went back to the school . where was mary before the park ?
+Question: where was mary before the park ?
+Answer: school </s>
+Model prediction: cinema </s>
+=========================
+Step 10800: train_loss = 1.452925, train_acc = 0.281250, train ppl = 2.067753
+Step 10900: train_loss = 1.457737, train_acc = 0.281250, train ppl = 2.072734
+==== Finshed epoch 39 ====
+Evaluating model...
+Epoch 39: validation accuracy = 0.303000 -- validation perplexity = 2.152742
+Epoch 39: test accuracy: 0.288000
+---- Qualitative Analysis
+Context: where was mary before the office ? this morning bill went back to the school . bill went back to the kitchen yesterday . mary journeyed to the bedroom yesterday . yesterday fred went to the kitchen . mary journeyed to the office this afternoon . mary moved to the park this morning . bill moved to the office this afternoon . yesterday julie went to the bedroom . this morning julie went to the school . bill journeyed to the kitchen this evening . where was mary before the office ?
+Question: where was mary before the office ?
+Answer: park </s>
+Model prediction: school </s>
+=========================
+Step 11000: train_loss = 1.420648, train_acc = 0.156250, train ppl = 2.034650
+Step 11100: train_loss = 1.368415, train_acc = 0.406250, train ppl = 1.982201
+Step 11200: train_loss = 1.587003, train_acc = 0.156250, train ppl = 2.211125
+==== Finshed epoch 40 ====
+Evaluating model...
+Epoch 40: validation accuracy = 0.342000 -- validation perplexity = 2.272394
+Epoch 40: test accuracy: 0.308000
+---- Qualitative Analysis
+Context: where was julie before the office ? yesterday bill journeyed to the cinema . mary went to the office this afternoon . mary went to the kitchen yesterday . this morning mary went back to the bedroom . julie moved to the bedroom yesterday . fred went back to the office yesterday . this morning julie went to the office . this morning bill journeyed to the bedroom . where was julie before the office ?
+Question: where was julie before the office ?
+Answer: bedroom </s>
+Model prediction: cinema </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 11300: train_loss = 1.441186, train_acc = 0.250000, train ppl = 2.055652
+Step 11400: train_loss = 1.447003, train_acc = 0.375000, train ppl = 2.061640
+Step 11500: train_loss = 1.495916, train_acc = 0.343750, train ppl = 2.112681
+==== Finshed epoch 41 ====
+Evaluating model...
+Epoch 41: validation accuracy = 0.293000 -- validation perplexity = 2.117651
+Epoch 41: test accuracy: 0.249000
+---- Qualitative Analysis
+Context: where was bill before the park ? bill moved to the cinema this morning . bill went to the office yesterday . mary journeyed to the cinema yesterday . bill journeyed to the park this afternoon . yesterday julie went back to the park . yesterday fred moved to the cinema . where was bill before the park ?
+Question: where was bill before the park ?
+Answer: cinema </s>
+Model prediction: cinema </s>
+=========================
+Step 11600: train_loss = 1.491719, train_acc = 0.343750, train ppl = 2.108252
+Step 11700: train_loss = 1.681326, train_acc = 0.343750, train ppl = 2.317904
+Step 11800: train_loss = 1.554960, train_acc = 0.250000, train ppl = 2.175982
+==== Finshed epoch 42 ====
+Evaluating model...
+Epoch 42: validation accuracy = 0.279000 -- validation perplexity = 2.091500
+Epoch 42: test accuracy: 0.262000
+---- Qualitative Analysis
+Context: where was bill before the school ? this morning bill moved to the office . bill journeyed to the bedroom yesterday . fred journeyed to the kitchen yesterday . this afternoon bill moved to the school . where was bill before the school ?
+Question: where was bill before the school ?
+Answer: office </s>
+Model prediction: park </s>
+=========================
+Step 11900: train_loss = 1.408060, train_acc = 0.281250, train ppl = 2.021885
+Step 12000: train_loss = 1.204005, train_acc = 0.531250, train ppl = 1.825771
+Step 12100: train_loss = 1.400091, train_acc = 0.375000, train ppl = 2.013844
+==== Finshed epoch 43 ====
+Evaluating model...
+Epoch 43: validation accuracy = 0.308000 -- validation perplexity = 2.144504
+Epoch 43: test accuracy: 0.281000
+---- Qualitative Analysis
+Context: where was bill before the park ? fred went back to the school yesterday . yesterday bill went back to the cinema . this morning fred moved to the bedroom . yesterday julie moved to the park . bill travelled to the park this afternoon . bill journeyed to the office this morning . bill journeyed to the office this evening . mary travelled to the kitchen yesterday . where was bill before the park ?
+Question: where was bill before the park ?
+Answer: office </s>
+Model prediction: bedroom </s>
+=========================
+Step 12200: train_loss = 1.430459, train_acc = 0.343750, train ppl = 2.044656
+Step 12300: train_loss = 1.543525, train_acc = 0.312500, train ppl = 2.163576
+Step 12400: train_loss = 1.482706, train_acc = 0.281250, train ppl = 2.098773
+==== Finshed epoch 44 ====
+Evaluating model...
+Epoch 44: validation accuracy = 0.283000 -- validation perplexity = 2.092597
+Epoch 44: test accuracy: 0.277000
+---- Qualitative Analysis
+Context: where was fred before the school ? yesterday mary travelled to the kitchen . this morning fred travelled to the school . julie moved to the cinema yesterday . fred travelled to the park yesterday . bill journeyed to the park yesterday . julie journeyed to the bedroom this morning . this afternoon julie went back to the kitchen . this morning mary went back to the office . where was fred before the school ?
+Question: where was fred before the school ?
+Answer: park </s>
+Model prediction: office </s>
+=========================
+Step 12500: train_loss = 1.399339, train_acc = 0.281250, train ppl = 2.013087
+Step 12600: train_loss = 1.454514, train_acc = 0.250000, train ppl = 2.069397
+==== Finshed epoch 45 ====
+Evaluating model...
+Epoch 45: validation accuracy = 0.241000 -- validation perplexity = 2.101887
+Epoch 45: test accuracy: 0.217000
+---- Qualitative Analysis
+Context: where was mary before the park ? mary travelled to the kitchen yesterday . this morning mary travelled to the cinema . this afternoon mary went to the park . yesterday bill went back to the cinema . where was mary before the park ?
+Question: where was mary before the park ?
+Answer: cinema </s>
+Model prediction: cinema </s>
+=========================
+Step 12700: train_loss = 1.641739, train_acc = 0.218750, train ppl = 2.272475
+Step 12800: train_loss = 1.436416, train_acc = 0.343750, train ppl = 2.050755
+Step 12900: train_loss = 1.327285, train_acc = 0.437500, train ppl = 1.941853
+==== Finshed epoch 46 ====
+Evaluating model...
+Epoch 46: validation accuracy = 0.218000 -- validation perplexity = 2.159674
+Epoch 46: test accuracy: 0.215000
+---- Qualitative Analysis
+Context: where was bill before the park ? mary went back to the school yesterday . this morning mary moved to the office . this morning bill travelled to the school . yesterday bill went back to the office . this morning fred moved to the kitchen . fred moved to the office yesterday . yesterday julie journeyed to the cinema . mary went back to the kitchen this afternoon . fred went back to the cinema this afternoon . bill moved to the park this afternoon . julie journeyed to the cinema this afternoon . julie went to the park this morning . where was bill before the park ?
+Question: where was bill before the park ?
+Answer: school </s>
+Model prediction: kitchen </s>
+=========================
+Step 13000: train_loss = 1.507753, train_acc = 0.250000, train ppl = 2.125223
+Step 13100: train_loss = 1.430382, train_acc = 0.281250, train ppl = 2.044577
+Step 13200: train_loss = 1.488027, train_acc = 0.312500, train ppl = 2.104365
+==== Finshed epoch 47 ====
+Evaluating model...
+Epoch 47: validation accuracy = 0.328000 -- validation perplexity = 2.161270
+Epoch 47: test accuracy: 0.316000
+---- Qualitative Analysis
+Context: where was mary before the cinema ? yesterday mary went to the cinema . this morning julie journeyed to the bedroom . this afternoon julie moved to the school . julie went back to the office yesterday . this evening julie went back to the office . mary went back to the bedroom this morning . this afternoon mary moved to the cinema . bill journeyed to the cinema yesterday . bill journeyed to the park this morning . yesterday fred moved to the bedroom . this morning fred journeyed to the school . bill moved to the office this afternoon . where was mary before the cinema ?
+Question: where was mary before the cinema ?
+Answer: bedroom </s>
+Model prediction: school </s>
+=========================
+Step 13300: train_loss = 1.685161, train_acc = 0.281250, train ppl = 2.322352
+Step 13400: train_loss = 1.527042, train_acc = 0.312500, train ppl = 2.145818
+Step 13500: train_loss = 1.437362, train_acc = 0.312500, train ppl = 2.051725
+==== Finshed epoch 48 ====
+Evaluating model...
+Epoch 48: validation accuracy = 0.253000 -- validation perplexity = 2.165991
+Epoch 48: test accuracy: 0.235000
+---- Qualitative Analysis
+Context: where was bill before the park ? mary went back to the kitchen this morning . mary travelled to the school yesterday . yesterday fred travelled to the bedroom . yesterday bill moved to the park . this afternoon bill went back to the park . bill went to the school this morning . bill travelled to the office this evening . this afternoon mary journeyed to the cinema . where was bill before the park ?
+Question: where was bill before the park ?
+Answer: school </s>
+Model prediction: cinema </s>
+=========================
+Step 13600: train_loss = 1.572056, train_acc = 0.156250, train ppl = 2.194662
+Step 13700: train_loss = 1.656348, train_acc = 0.125000, train ppl = 2.289135
+Step 13800: train_loss = 1.658318, train_acc = 0.250000, train ppl = 2.291391
+==== Finshed epoch 49 ====
+Evaluating model...
+Epoch 49: validation accuracy = 0.226000 -- validation perplexity = 2.113395
+Epoch 49: test accuracy: 0.212000
+---- Qualitative Analysis
+Context: where was bill before the park ? julie travelled to the school yesterday . this morning bill went to the park . mary went back to the bedroom yesterday . yesterday bill travelled to the school . this afternoon bill went to the cinema . fred journeyed to the school yesterday . this evening bill moved to the park . fred went back to the kitchen this morning . where was bill before the park ?
+Question: where was bill before the park ?
+Answer: cinema </s>
+Model prediction: school </s>
+=========================
+Step 13900: train_loss = 1.310501, train_acc = 0.343750, train ppl = 1.925624
+Step 14000: train_loss = 1.676146, train_acc = 0.156250, train ppl = 2.311908
+Step 14100: train_loss = 1.446686, train_acc = 0.250000, train ppl = 2.061313
+==== Finshed epoch 50 ====
+Evaluating model...
+Epoch 50: validation accuracy = 0.326000 -- validation perplexity = 2.059239
+Epoch 50: test accuracy: 0.298000
+---- Qualitative Analysis
+Context: where was julie before the bedroom ? mary travelled to the bedroom yesterday . this morning julie travelled to the park . yesterday julie moved to the bedroom . yesterday fred travelled to the park . this morning mary went to the school . julie went to the office this afternoon . this afternoon mary went back to the office . bill travelled to the bedroom yesterday . this evening mary journeyed to the cinema . this morning fred went to the kitchen . this evening julie travelled to the bedroom . this morning bill journeyed to the office . where was julie before the bedroom ?
+Question: where was julie before the bedroom ?
+Answer: office </s>
+Model prediction: school </s>
+=========================
+Best model (acc) at epoch 40 -- validation perplexity = 2.272394 -- validation accuracy = 0.342000 -- test accuracy = 0.308000
+0.342

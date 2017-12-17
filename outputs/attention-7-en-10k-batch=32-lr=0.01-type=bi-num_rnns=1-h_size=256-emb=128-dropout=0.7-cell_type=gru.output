@@ -1,0 +1,522 @@
+model_type:               attention
+optimizer:                adam
+encoder_type:             bi
+batch_size:               32
+restore_from_dir:         None
+learning_rate:            0.01
+data_dir:                 data/en-10k
+dropout_keep_prob:        0.7
+embedding_size:           128
+cell_type:                gru
+model_dir:                models/dummy
+task:                     7
+num_units:                256
+val_split:                0.1
+num_epochs:               50
+merge_mode:               concat
+num_enc_layers:           1
+vocab:                    data/vocab.txt
+max_gradient_norm:        1.0
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: how many objects is john carrying ? mary journeyed to the office . john picked up the football there . john discarded the football . sandra went to the bathroom . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: none </s>
+Model prediction: frog frog frog frog frog frog frog frog frog frog
+=========================
+Step 100: train_loss = 0.902862, train_acc = 0.531250, train ppl = 1.570558
+Step 200: train_loss = 1.311275, train_acc = 0.406250, train ppl = 1.926370
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.452000 -- validation perplexity = 2.046039
+Epoch 1: test accuracy: 0.468000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? john went back to the bathroom . john went back to the hallway . mary moved to the hallway . daniel went back to the bathroom . john grabbed the football there . mary went to the bathroom . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: none </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 300: train_loss = 0.845285, train_acc = 0.312500, train ppl = 1.525989
+Step 400: train_loss = 0.882741, train_acc = 0.437500, train ppl = 1.554836
+Step 500: train_loss = 0.787635, train_acc = 0.593750, train ppl = 1.482630
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.452000 -- validation perplexity = 1.649394
+Epoch 2: test accuracy: 0.468000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? sandra grabbed the milk there . sandra put down the milk . daniel moved to the garden . mary grabbed the football there . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: none </s>
+Model prediction: none </s>
+=========================
+Step 600: train_loss = 1.233989, train_acc = 0.406250, train ppl = 1.853350
+Step 700: train_loss = 0.809792, train_acc = 0.562500, train ppl = 1.499147
+Step 800: train_loss = 0.911024, train_acc = 0.406250, train ppl = 1.576981
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.452000 -- validation perplexity = 1.678631
+Epoch 3: test accuracy: 0.468000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? sandra moved to the kitchen . john travelled to the bedroom . sandra moved to the garden . sandra picked up the football there . sandra went to the bedroom . sandra passed the football to john . john passed the football to sandra . sandra handed the football to john . john discarded the football there . john picked up the football there . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: none </s>
+=========================
+Step 900: train_loss = 1.306501, train_acc = 0.343750, train ppl = 1.921777
+Step 1000: train_loss = 0.811742, train_acc = 0.500000, train ppl = 1.500609
+Step 1100: train_loss = 1.073533, train_acc = 0.468750, train ppl = 1.710467
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.497000 -- validation perplexity = 1.628050
+Epoch 4: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? mary travelled to the garden . mary went back to the bathroom . john grabbed the football there . john took the milk there . mary journeyed to the hallway . mary went back to the bathroom . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: two </s>
+Model prediction: one </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 1200: train_loss = 0.962392, train_acc = 0.468750, train ppl = 1.618008
+Step 1300: train_loss = 1.006521, train_acc = 0.531250, train ppl = 1.654105
+Step 1400: train_loss = 0.752348, train_acc = 0.687500, train ppl = 1.456701
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.497000 -- validation perplexity = 1.549646
+Epoch 5: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? sandra moved to the hallway . daniel went back to the hallway . daniel moved to the kitchen . john picked up the apple there . john handed the apple to mary . mary put down the apple . mary grabbed the apple there . sandra got the football there . john moved to the bathroom . john went back to the bedroom . mary left the apple there . sandra left the football there . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: none </s>
+Model prediction: one </s>
+=========================
+Step 1500: train_loss = 0.660860, train_acc = 0.750000, train ppl = 1.391567
+Step 1600: train_loss = 0.621105, train_acc = 0.750000, train ppl = 1.364179
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.694000 -- validation perplexity = 1.472530
+Epoch 6: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? sandra got the milk there . john went to the bathroom . sandra discarded the milk . sandra got the milk there . john took the apple there . sandra put down the milk . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: none </s>
+Model prediction: none </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 1700: train_loss = 0.817249, train_acc = 0.656250, train ppl = 1.504747
+Step 1800: train_loss = 2.448914, train_acc = 0.750000, train ppl = 3.402317
+Step 1900: train_loss = 2.208883, train_acc = 0.593750, train ppl = 3.017539
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.000000 -- validation perplexity = 2.903404
+Epoch 7: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: how many objects is daniel carrying ? daniel picked up the apple there . john went to the hallway . how many objects is daniel carrying ?
+Question: how many objects is daniel carrying ?
+Answer: one </s>
+Model prediction: </s>
+=========================
+Step 2000: train_loss = 2.278970, train_acc = 0.000000, train ppl = 3.125159
+Step 2100: train_loss = 2.259661, train_acc = 0.312500, train ppl = 3.095131
+Step 2200: train_loss = 2.205985, train_acc = 0.000000, train ppl = 3.013170
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.270000 -- validation perplexity = 2.944195
+Epoch 8: test accuracy: 0.269000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? mary travelled to the bedroom . sandra took the milk there . sandra dropped the milk there . mary went to the kitchen . daniel journeyed to the bathroom . john moved to the office . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: none </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 2300: train_loss = 2.853604, train_acc = 0.406250, train ppl = 4.165357
+Step 2400: train_loss = 2.221807, train_acc = 0.000000, train ppl = 3.037102
+Step 2500: train_loss = 2.166016, train_acc = 0.406250, train ppl = 2.953550
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.270000 -- validation perplexity = 3.043727
+Epoch 9: test accuracy: 0.269000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? mary got the milk there . john moved to the bedroom . sandra went back to the bathroom . john got the football there . mary journeyed to the bathroom . mary gave the milk to sandra . john went back to the bathroom . john left the football . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: none </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 2600: train_loss = 2.556515, train_acc = 0.000000, train ppl = 3.590379
+Step 2700: train_loss = 2.165855, train_acc = 0.000000, train ppl = 2.953313
+Step 2800: train_loss = 2.323781, train_acc = 0.250000, train ppl = 3.195970
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.000000 -- validation perplexity = 3.079672
+Epoch 10: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? sandra went to the hallway . john grabbed the apple there . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: </s>
+=========================
+Step 2900: train_loss = 2.277815, train_acc = 0.250000, train ppl = 3.123355
+Step 3000: train_loss = 2.018471, train_acc = 0.000000, train ppl = 2.743503
+Step 3100: train_loss = 2.117759, train_acc = 0.000000, train ppl = 2.883139
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.000000 -- validation perplexity = 2.978979
+Epoch 11: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? john journeyed to the office . john got the milk there . daniel grabbed the apple there . john dropped the milk . sandra travelled to the bedroom . daniel journeyed to the bathroom . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: none </s>
+Model prediction: </s>
+=========================
+Step 3200: train_loss = 2.058756, train_acc = 0.343750, train ppl = 2.799324
+Step 3300: train_loss = 2.122419, train_acc = 0.218750, train ppl = 2.889864
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.000000 -- validation perplexity = 2.907517
+Epoch 12: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? mary travelled to the bedroom . john went back to the office . john picked up the football there . daniel went back to the garden . sandra moved to the kitchen . mary got the apple there . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: </s>
+=========================
+Step 3400: train_loss = 1.966293, train_acc = 0.000000, train ppl = 2.672853
+Step 3500: train_loss = 2.078417, train_acc = 0.406250, train ppl = 2.826978
+Step 3600: train_loss = 2.024295, train_acc = 0.000000, train ppl = 2.751503
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.000000 -- validation perplexity = 3.018689
+Epoch 13: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? sandra took the apple there . sandra discarded the apple . sandra picked up the apple there . sandra discarded the apple . daniel moved to the garden . john went to the hallway . sandra took the apple there . sandra left the apple . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: none </s>
+Model prediction: </s>
+=========================
+Step 3700: train_loss = 1.975244, train_acc = 0.000000, train ppl = 2.684843
+Step 3800: train_loss = 2.019879, train_acc = 0.218750, train ppl = 2.745435
+Step 3900: train_loss = 2.405551, train_acc = 0.375000, train ppl = 3.329345
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.270000 -- validation perplexity = 3.213887
+Epoch 14: test accuracy: 0.269000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? sandra travelled to the office . sandra picked up the apple there . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: one </s>
+Model prediction: one one one one one one one one one one
+=========================
+Step 4000: train_loss = 2.296046, train_acc = 0.250000, train ppl = 3.151955
+Step 4100: train_loss = 1.959684, train_acc = 0.000000, train ppl = 2.664035
+Step 4200: train_loss = 2.046185, train_acc = 0.000000, train ppl = 2.781785
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.270000 -- validation perplexity = 2.896291
+Epoch 15: test accuracy: 0.269000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? sandra moved to the garden . daniel grabbed the football there . daniel journeyed to the garden . daniel handed the football to sandra . sandra passed the football to daniel . daniel gave the football to sandra . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: one </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 4300: train_loss = 1.980269, train_acc = 0.000000, train ppl = 2.691596
+Step 4400: train_loss = 2.145736, train_acc = 0.000000, train ppl = 2.923753
+Step 4500: train_loss = 2.107581, train_acc = 0.312500, train ppl = 2.868504
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.000000 -- validation perplexity = 3.120186
+Epoch 16: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? john grabbed the football there . john handed the football to daniel . daniel handed the football to john . john passed the football to daniel . daniel gave the football to john . john handed the football to daniel . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: none </s>
+Model prediction: </s>
+=========================
+Step 4600: train_loss = 2.264706, train_acc = 0.000000, train ppl = 3.102949
+Step 4700: train_loss = 2.190630, train_acc = 0.000000, train ppl = 2.990124
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.270000 -- validation perplexity = 2.946368
+Epoch 17: test accuracy: 0.269000
+---- Qualitative Analysis
+Context: how many objects is mary carrying ? john took the milk there . daniel travelled to the garden . john went to the office . john dropped the milk . mary grabbed the apple there . mary put down the apple . mary went back to the hallway . mary grabbed the football there . john got the milk there . mary put down the football . how many objects is mary carrying ?
+Question: how many objects is mary carrying ?
+Answer: none </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 4800: train_loss = 2.471996, train_acc = 0.406250, train ppl = 3.441812
+Step 4900: train_loss = 2.308060, train_acc = 0.281250, train ppl = 3.170946
+Step 5000: train_loss = 2.107305, train_acc = 0.000000, train ppl = 2.868107
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.424000 -- validation perplexity = 3.480020
+Epoch 18: test accuracy: 0.434000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? sandra travelled to the bathroom . daniel journeyed to the bedroom . daniel went to the hallway . sandra journeyed to the hallway . daniel went back to the bedroom . john moved to the garden . daniel journeyed to the hallway . john grabbed the apple there . john gave the apple to mary . mary passed the apple to john . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: none none none none none none none none none none
+=========================
+Step 5100: train_loss = 2.185087, train_acc = 0.468750, train ppl = 2.981849
+Step 5200: train_loss = 2.429521, train_acc = 0.000000, train ppl = 3.369487
+Step 5300: train_loss = 2.340953, train_acc = 0.000000, train ppl = 3.223528
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.270000 -- validation perplexity = 2.932205
+Epoch 19: test accuracy: 0.269000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? john went back to the office . daniel went to the kitchen . sandra travelled to the bathroom . sandra moved to the kitchen . mary journeyed to the office . sandra went to the bathroom . john moved to the garden . john went back to the bathroom . john picked up the football there . daniel picked up the apple there . john journeyed to the bedroom . daniel journeyed to the hallway . daniel travelled to the bathroom . john took the milk there . daniel journeyed to the garden . daniel discarded the apple . john went to the garden . john passed the football to daniel . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: </s> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk> <unk>
+=========================
+Step 5400: train_loss = 2.191441, train_acc = 0.437500, train ppl = 2.991337
+Step 5500: train_loss = 1.988206, train_acc = 0.187500, train ppl = 2.702299
+Step 5600: train_loss = 2.264770, train_acc = 0.250000, train ppl = 3.103048
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.000000 -- validation perplexity = 3.213336
+Epoch 20: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: how many objects is daniel carrying ? daniel grabbed the milk there . john moved to the bedroom . how many objects is daniel carrying ?
+Question: how many objects is daniel carrying ?
+Answer: one </s>
+Model prediction: </s>
+=========================
+Step 5700: train_loss = 2.129870, train_acc = 0.000000, train ppl = 2.900650
+Step 5800: train_loss = 2.595217, train_acc = 0.000000, train ppl = 3.660531
+Step 5900: train_loss = 2.173404, train_acc = 0.000000, train ppl = 2.964480
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.000000 -- validation perplexity = 3.105685
+Epoch 21: test accuracy: 0.000000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? john grabbed the milk there . john put down the milk . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: none </s>
+Model prediction: </s>
+=========================
+Step 6000: train_loss = 2.136337, train_acc = 0.000000, train ppl = 2.910045
+Step 6100: train_loss = 2.075284, train_acc = 0.406250, train ppl = 2.822554
+Step 6200: train_loss = 2.114093, train_acc = 0.218750, train ppl = 2.877859
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.533000 -- validation perplexity = 2.547317
+Epoch 22: test accuracy: 0.549000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? john went back to the bathroom . john went back to the hallway . mary moved to the hallway . daniel went back to the bathroom . john grabbed the football there . mary went to the bathroom . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: one </s>
+=========================
+Step 6300: train_loss = 0.879051, train_acc = 0.562500, train ppl = 1.551971
+Step 6400: train_loss = 0.671860, train_acc = 0.750000, train ppl = 1.399241
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.694000 -- validation perplexity = 1.612822
+Epoch 23: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? sandra got the milk there . john went to the bathroom . sandra discarded the milk . sandra got the milk there . john took the apple there . sandra put down the milk . sandra grabbed the football there . john handed the apple to daniel . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: none </s>
+Model prediction: none </s>
+=========================
+Step 6500: train_loss = 0.762361, train_acc = 0.718750, train ppl = 1.464012
+Step 6600: train_loss = 0.729022, train_acc = 0.718750, train ppl = 1.439810
+Step 6700: train_loss = 1.017161, train_acc = 0.593750, train ppl = 1.662929
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.497000 -- validation perplexity = 1.647344
+Epoch 24: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? sandra moved to the garden . john grabbed the milk there . daniel grabbed the apple there . mary moved to the garden . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: one </s>
+=========================
+Step 6800: train_loss = 0.820470, train_acc = 0.687500, train ppl = 1.507172
+Step 6900: train_loss = 0.766305, train_acc = 0.718750, train ppl = 1.466902
+Step 7000: train_loss = 0.763332, train_acc = 0.500000, train ppl = 1.464723
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.694000 -- validation perplexity = 1.535690
+Epoch 25: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? daniel travelled to the bedroom . sandra went to the kitchen . sandra went back to the garden . mary went back to the kitchen . daniel went to the kitchen . mary picked up the apple there . daniel journeyed to the bathroom . sandra went to the kitchen . sandra took the football there . sandra travelled to the bathroom . sandra put down the football . daniel moved to the office . mary journeyed to the bathroom . mary handed the apple to sandra . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: one </s>
+Model prediction: none </s>
+=========================
+Step 7100: train_loss = 0.887284, train_acc = 0.500000, train ppl = 1.558373
+Step 7200: train_loss = 0.785822, train_acc = 0.750000, train ppl = 1.481287
+Step 7300: train_loss = 0.885013, train_acc = 0.625000, train ppl = 1.556604
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.694000 -- validation perplexity = 1.506818
+Epoch 26: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is daniel carrying ? daniel took the milk there . john moved to the hallway . how many objects is daniel carrying ?
+Question: how many objects is daniel carrying ?
+Answer: one </s>
+Model prediction: one </s>
+=========================
+Step 7400: train_loss = 0.686529, train_acc = 0.750000, train ppl = 1.409542
+Step 7500: train_loss = 0.663543, train_acc = 0.406250, train ppl = 1.393434
+Step 7600: train_loss = 0.789661, train_acc = 0.531250, train ppl = 1.484133
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.694000 -- validation perplexity = 1.527662
+Epoch 27: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is mary carrying ? john journeyed to the bathroom . mary journeyed to the bedroom . daniel went to the office . mary took the apple there . sandra moved to the garden . mary left the apple . how many objects is mary carrying ?
+Question: how many objects is mary carrying ?
+Answer: none </s>
+Model prediction: none </s>
+=========================
+Step 7700: train_loss = 0.875825, train_acc = 0.437500, train ppl = 1.549469
+Step 7800: train_loss = 0.705255, train_acc = 0.500000, train ppl = 1.422801
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.694000 -- validation perplexity = 1.650524
+Epoch 28: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is mary carrying ? mary moved to the bathroom . sandra took the apple there . sandra discarded the apple there . mary went to the hallway . mary picked up the apple there . mary handed the apple to sandra . how many objects is mary carrying ?
+Question: how many objects is mary carrying ?
+Answer: none </s>
+Model prediction: none </s>
+=========================
+Step 7900: train_loss = 0.964534, train_acc = 0.687500, train ppl = 1.619742
+Step 8000: train_loss = 0.918868, train_acc = 0.625000, train ppl = 1.583177
+Step 8100: train_loss = 0.478185, train_acc = 0.875000, train ppl = 1.270096
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.694000 -- validation perplexity = 1.519806
+Epoch 29: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? sandra travelled to the bathroom . daniel journeyed to the bedroom . daniel went to the hallway . sandra journeyed to the hallway . daniel went back to the bedroom . john moved to the garden . daniel journeyed to the hallway . john grabbed the apple there . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: one </s>
+=========================
+Step 8200: train_loss = 0.754056, train_acc = 0.718750, train ppl = 1.457945
+Step 8300: train_loss = 1.010000, train_acc = 0.718750, train ppl = 1.656986
+Step 8400: train_loss = 0.719159, train_acc = 0.718750, train ppl = 1.432727
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.497000 -- validation perplexity = 1.606085
+Epoch 30: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? mary journeyed to the bathroom . daniel travelled to the bathroom . john got the football there . john discarded the football . sandra went to the hallway . john got the football there . john grabbed the apple there . sandra moved to the garden . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: two </s>
+Model prediction: one </s>
+=========================
+Step 8500: train_loss = 0.644568, train_acc = 0.718750, train ppl = 1.380276
+Step 8600: train_loss = 0.453175, train_acc = 0.812500, train ppl = 1.254313
+Step 8700: train_loss = 0.839030, train_acc = 0.656250, train ppl = 1.521224
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.694000 -- validation perplexity = 1.467077
+Epoch 31: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? mary went to the kitchen . john journeyed to the garden . sandra went back to the kitchen . sandra moved to the bathroom . daniel moved to the hallway . daniel travelled to the garden . john got the milk there . mary journeyed to the garden . john put down the milk there . daniel got the milk there . daniel gave the milk to john . sandra journeyed to the hallway . john passed the milk to mary . mary passed the milk to john . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: none </s>
+=========================
+Step 8800: train_loss = 0.858298, train_acc = 0.406250, train ppl = 1.535950
+Step 8900: train_loss = 1.068341, train_acc = 0.437500, train ppl = 1.706033
+Step 9000: train_loss = 1.020893, train_acc = 0.468750, train ppl = 1.666035
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.497000 -- validation perplexity = 1.582410
+Epoch 32: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? john grabbed the apple there . john gave the apple to mary . mary passed the apple to john . john discarded the apple . john went back to the office . daniel journeyed to the hallway . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: none </s>
+Model prediction: one </s>
+=========================
+Step 9100: train_loss = 0.872342, train_acc = 0.437500, train ppl = 1.546774
+Step 9200: train_loss = 0.530056, train_acc = 0.656250, train ppl = 1.303468
+Step 9300: train_loss = 0.638143, train_acc = 0.781250, train ppl = 1.375850
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.694000 -- validation perplexity = 1.533847
+Epoch 33: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? mary got the milk there . sandra grabbed the football there . john went to the hallway . sandra left the football there . mary moved to the hallway . mary handed the milk to john . mary moved to the bathroom . mary moved to the hallway . john journeyed to the bedroom . john handed the milk to daniel . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: none </s>
+Model prediction: none </s>
+=========================
+Step 9400: train_loss = 0.752072, train_acc = 0.656250, train ppl = 1.456500
+Step 9500: train_loss = 0.663347, train_acc = 0.718750, train ppl = 1.393298
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.497000 -- validation perplexity = 1.505983
+Epoch 34: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: how many objects is mary carrying ? mary travelled to the garden . john journeyed to the kitchen . john travelled to the hallway . daniel went back to the garden . daniel journeyed to the office . mary grabbed the football there . john went to the garden . mary handed the football to john . daniel moved to the hallway . john handed the football to mary . how many objects is mary carrying ?
+Question: how many objects is mary carrying ?
+Answer: one </s>
+Model prediction: one </s>
+=========================
+Step 9600: train_loss = 0.493068, train_acc = 0.531250, train ppl = 1.279582
+Step 9700: train_loss = 0.591039, train_acc = 0.531250, train ppl = 1.343824
+Step 9800: train_loss = 0.610409, train_acc = 0.812500, train ppl = 1.356902
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.694000 -- validation perplexity = 1.486568
+Epoch 35: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is daniel carrying ? daniel went to the kitchen . daniel travelled to the hallway . john moved to the office . john moved to the kitchen . daniel moved to the bathroom . john moved to the bathroom . daniel got the football there . daniel handed the football to john . how many objects is daniel carrying ?
+Question: how many objects is daniel carrying ?
+Answer: none </s>
+Model prediction: none </s>
+=========================
+Step 9900: train_loss = 0.901687, train_acc = 0.656250, train ppl = 1.569636
+Step 10000: train_loss = 0.663863, train_acc = 0.593750, train ppl = 1.393658
+Step 10100: train_loss = 0.768604, train_acc = 0.656250, train ppl = 1.468589
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.694000 -- validation perplexity = 1.489028
+Epoch 36: test accuracy: 0.703000
+---- Qualitative Analysis
+Context: how many objects is sandra carrying ? sandra picked up the apple there . daniel moved to the office . how many objects is sandra carrying ?
+Question: how many objects is sandra carrying ?
+Answer: one </s>
+Model prediction: one </s>
+=========================
+Step 10200: train_loss = 0.730907, train_acc = 0.687500, train ppl = 1.441167
+Step 10300: train_loss = 0.520085, train_acc = 0.843750, train ppl = 1.296985
+Step 10400: train_loss = 0.683738, train_acc = 0.812500, train ppl = 1.407576
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.705000 -- validation perplexity = 1.409448
+Epoch 37: test accuracy: 0.712000
+---- Qualitative Analysis
+Context: how many objects is john carrying ? sandra travelled to the garden . john took the apple there . mary went back to the hallway . john travelled to the hallway . how many objects is john carrying ?
+Question: how many objects is john carrying ?
+Answer: one </s>
+Model prediction: one </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 10500: train_loss = 0.942732, train_acc = 0.656250, train ppl = 1.602181
+Step 10600: train_loss = 0.642010, train_acc = 0.593750, train ppl = 1.378513
+Step 10700: train_loss = 0.685409, train_acc = 0.781250, train ppl = 1.408752
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.497000 -- validation perplexity = 1.484653
+Epoch 38: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: how many objects is mary carrying ? daniel went back to the kitchen . mary travelled to the bathroom . john moved to the office . daniel travelled to the bedroom . daniel moved to the kitchen . daniel went back to the bathroom . john journeyed to the hallway . mary got the apple there . how many objects is mary carrying ?
+Question: how many objects is mary carrying ?
+Answer: one </s>
+Model prediction: one </s>
+=========================

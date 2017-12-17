@@ -1,0 +1,1063 @@
+num_epochs:               50
+vocab:                    data/vocab.txt
+max_gradient_norm:        1.0
+optimizer:                adam
+merge_mode:               concat
+task:                     19
+model_type:               normal
+cell_type:                gru
+learning_rate:            0.01
+embedding_size:           256
+num_enc_layers:           1
+encoder_type:             bi
+data_dir:                 data/en-10k
+val_split:                0.1
+model_dir:                models/dummy
+num_units:                128
+dropout_keep_prob:        0.7
+batch_size:               8
+restore_from_dir:         None
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: how do you go from the garden to the hallway ? the kitchen is north of the bedroom . the bedroom is north of the garden . the hallway is west of the bedroom . the bathroom is south of the hallway . the office is west of the hallway . how do you go from the garden to the hallway ?
+Question: how do you go from the garden to the hallway ?
+Answer: n w </s>
+Model prediction: back back back back back inside inside inside inside inside
+=========================
+Step 100: train_loss = 2.555729, train_acc = 0.375000, train ppl = 2.344119
+Step 200: train_loss = 2.729098, train_acc = 0.312500, train ppl = 2.483576
+Step 300: train_loss = 2.689188, train_acc = 0.250000, train ppl = 2.450754
+Step 400: train_loss = 2.489871, train_acc = 0.312500, train ppl = 2.293220
+Step 500: train_loss = 2.704624, train_acc = 0.375000, train ppl = 2.463397
+Step 600: train_loss = 2.553216, train_acc = 0.312500, train ppl = 2.342156
+Step 700: train_loss = 2.489199, train_acc = 0.375000, train ppl = 2.292706
+Step 800: train_loss = 2.418594, train_acc = 0.437500, train ppl = 2.239378
+Step 900: train_loss = 2.761017, train_acc = 0.187500, train ppl = 2.510141
+Step 1000: train_loss = 2.559541, train_acc = 0.250000, train ppl = 2.347099
+Step 1100: train_loss = 2.779028, train_acc = 0.250000, train ppl = 2.525257
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.289500 -- validation perplexity = 2.366101
+Epoch 1: test accuracy: 0.250500
+---- Qualitative Analysis
+Context: how do you go from the office to the bathroom ? the bedroom is west of the office . the kitchen is north of the office . the garden is north of the bathroom . the kitchen is east of the bathroom . the hallway is east of the kitchen . how do you go from the office to the bathroom ?
+Question: how do you go from the office to the bathroom ?
+Answer: n w </s>
+Model prediction: s s </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 1200: train_loss = 2.575491, train_acc = 0.187500, train ppl = 2.359612
+Step 1300: train_loss = 2.758417, train_acc = 0.312500, train ppl = 2.507967
+Step 1400: train_loss = 2.645565, train_acc = 0.312500, train ppl = 2.415376
+Step 1500: train_loss = 2.612344, train_acc = 0.187500, train ppl = 2.388776
+Step 1600: train_loss = 2.970079, train_acc = 0.187500, train ppl = 2.691305
+Step 1700: train_loss = 3.256720, train_acc = 0.250000, train ppl = 2.961137
+Step 1800: train_loss = 2.444793, train_acc = 0.375000, train ppl = 2.259020
+Step 1900: train_loss = 2.554787, train_acc = 0.437500, train ppl = 2.343383
+Step 2000: train_loss = 2.719214, train_acc = 0.125000, train ppl = 2.475407
+Step 2100: train_loss = 2.703084, train_acc = 0.312500, train ppl = 2.462133
+Step 2200: train_loss = 2.952121, train_acc = 0.375000, train ppl = 2.675244
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.283000 -- validation perplexity = 2.664219
+Epoch 2: test accuracy: 0.248500
+---- Qualitative Analysis
+Context: how do you go from the garden to the office ? the garden is east of the kitchen . the hallway is west of the bathroom . the office is south of the bathroom . the garden is north of the bathroom . the bedroom is east of the bathroom . how do you go from the garden to the office ?
+Question: how do you go from the garden to the office ?
+Answer: s s </s>
+Model prediction: e e </s>
+=========================
+Step 2300: train_loss = 2.550653, train_acc = 0.250000, train ppl = 2.340156
+Step 2400: train_loss = 2.586309, train_acc = 0.375000, train ppl = 2.368136
+Step 2500: train_loss = 2.822175, train_acc = 0.125000, train ppl = 2.561838
+Step 2600: train_loss = 2.417743, train_acc = 0.500000, train ppl = 2.238743
+Step 2700: train_loss = 2.778271, train_acc = 0.125000, train ppl = 2.524620
+Step 2800: train_loss = 2.367563, train_acc = 0.375000, train ppl = 2.201608
+Step 2900: train_loss = 2.627701, train_acc = 0.250000, train ppl = 2.401036
+Step 3000: train_loss = 2.734969, train_acc = 0.312500, train ppl = 2.488441
+Step 3100: train_loss = 2.498326, train_acc = 0.312500, train ppl = 2.299692
+Step 3200: train_loss = 3.110372, train_acc = 0.250000, train ppl = 2.820152
+Step 3300: train_loss = 3.148812, train_acc = 0.187500, train ppl = 2.856520
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.316000 -- validation perplexity = 2.812231
+Epoch 3: test accuracy: 0.244500
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the office ? the bathroom is north of the office . the kitchen is south of the garden . the bedroom is south of the office . the hallway is east of the garden . the garden is east of the office . how do you go from the kitchen to the office ?
+Question: how do you go from the kitchen to the office ?
+Answer: n w </s>
+Model prediction: s s </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 3400: train_loss = 2.288940, train_acc = 0.437500, train ppl = 2.144658
+Step 3500: train_loss = 2.438708, train_acc = 0.375000, train ppl = 2.254443
+Step 3600: train_loss = 3.051000, train_acc = 0.187500, train ppl = 2.764887
+Step 3700: train_loss = 2.968808, train_acc = 0.125000, train ppl = 2.690166
+Step 3800: train_loss = 2.491964, train_acc = 0.250000, train ppl = 2.294821
+Step 3900: train_loss = 2.772749, train_acc = 0.187500, train ppl = 2.519977
+Step 4000: train_loss = 2.881756, train_acc = 0.125000, train ppl = 2.613225
+Step 4100: train_loss = 3.042915, train_acc = 0.187500, train ppl = 2.757446
+Step 4200: train_loss = 2.490416, train_acc = 0.437500, train ppl = 2.293636
+Step 4300: train_loss = 2.795280, train_acc = 0.312500, train ppl = 2.538974
+Step 4400: train_loss = 3.595666, train_acc = 0.312500, train ppl = 3.315324
+Step 4500: train_loss = 2.316540, train_acc = 0.375000, train ppl = 2.164479
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.293000 -- validation perplexity = 2.608448
+Epoch 4: test accuracy: 0.241500
+---- Qualitative Analysis
+Context: how do you go from the hallway to the garden ? the bathroom is west of the garden . the hallway is north of the bathroom . the office is north of the garden . the bedroom is west of the hallway . the kitchen is south of the bathroom . how do you go from the hallway to the garden ?
+Question: how do you go from the hallway to the garden ?
+Answer: s e </s>
+Model prediction: e e </s>
+=========================
+Step 4600: train_loss = 2.847946, train_acc = 0.250000, train ppl = 2.583940
+Step 4700: train_loss = 2.939995, train_acc = 0.250000, train ppl = 2.664452
+Step 4800: train_loss = 2.494169, train_acc = 0.437500, train ppl = 2.296508
+Step 4900: train_loss = 2.548475, train_acc = 0.437500, train ppl = 2.338458
+Step 5000: train_loss = 2.971529, train_acc = 0.375000, train ppl = 2.692607
+Step 5100: train_loss = 2.555471, train_acc = 0.250000, train ppl = 2.343917
+Step 5200: train_loss = 2.814455, train_acc = 0.250000, train ppl = 2.555254
+Step 5300: train_loss = 2.969424, train_acc = 0.312500, train ppl = 2.690718
+Step 5400: train_loss = 2.503083, train_acc = 0.312500, train ppl = 2.303341
+Step 5500: train_loss = 2.482312, train_acc = 0.437500, train ppl = 2.287449
+Step 5600: train_loss = 2.725823, train_acc = 0.375000, train ppl = 2.480866
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.296500 -- validation perplexity = 2.654005
+Epoch 5: test accuracy: 0.253000
+---- Qualitative Analysis
+Context: how do you go from the bedroom to the hallway ? the garden is north of the hallway . the kitchen is south of the bedroom . the bedroom is east of the bathroom . the hallway is east of the office . the office is east of the bedroom . how do you go from the bedroom to the hallway ?
+Question: how do you go from the bedroom to the hallway ?
+Answer: e e </s>
+Model prediction: s s </s>
+=========================
+Step 5700: train_loss = 2.319585, train_acc = 0.437500, train ppl = 2.166678
+Step 5800: train_loss = 2.570637, train_acc = 0.312500, train ppl = 2.355796
+Step 5900: train_loss = 2.410284, train_acc = 0.312500, train ppl = 2.233183
+Step 6000: train_loss = 2.558912, train_acc = 0.250000, train ppl = 2.346607
+Step 6100: train_loss = 2.351205, train_acc = 0.437500, train ppl = 2.189635
+Step 6200: train_loss = 2.508607, train_acc = 0.375000, train ppl = 2.307587
+Step 6300: train_loss = 3.190326, train_acc = 0.250000, train ppl = 2.896323
+Step 6400: train_loss = 2.680610, train_acc = 0.250000, train ppl = 2.443757
+Step 6500: train_loss = 2.815655, train_acc = 0.187500, train ppl = 2.556277
+Step 6600: train_loss = 2.578538, train_acc = 0.437500, train ppl = 2.362009
+Step 6700: train_loss = 2.724959, train_acc = 0.312500, train ppl = 2.480152
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.290000 -- validation perplexity = 2.495237
+Epoch 6: test accuracy: 0.260000
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the bedroom ? the hallway is south of the kitchen . the bedroom is east of the hallway . the bathroom is north of the garden . the office is east of the bathroom . the hallway is north of the bathroom . how do you go from the bathroom to the bedroom ?
+Question: how do you go from the bathroom to the bedroom ?
+Answer: n e </s>
+Model prediction: n n </s>
+=========================
+Step 6800: train_loss = 2.629315, train_acc = 0.312500, train ppl = 2.402328
+Step 6900: train_loss = 2.548625, train_acc = 0.375000, train ppl = 2.338575
+Step 7000: train_loss = 2.904039, train_acc = 0.312500, train ppl = 2.632708
+Step 7100: train_loss = 2.999737, train_acc = 0.375000, train ppl = 2.718043
+Step 7200: train_loss = 2.665851, train_acc = 0.125000, train ppl = 2.431764
+Step 7300: train_loss = 2.442971, train_acc = 0.375000, train ppl = 2.257649
+Step 7400: train_loss = 2.434818, train_acc = 0.312500, train ppl = 2.251521
+Step 7500: train_loss = 2.729991, train_acc = 0.250000, train ppl = 2.484315
+Step 7600: train_loss = 2.889281, train_acc = 0.125000, train ppl = 2.619789
+Step 7700: train_loss = 2.987735, train_acc = 0.250000, train ppl = 2.707191
+Step 7800: train_loss = 2.743626, train_acc = 0.125000, train ppl = 2.495632
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.290500 -- validation perplexity = 2.744976
+Epoch 7: test accuracy: 0.264500
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the hallway ? the hallway is west of the kitchen . the bedroom is east of the bathroom . the office is west of the garden . the garden is north of the bathroom . the hallway is north of the garden . how do you go from the bathroom to the hallway ?
+Question: how do you go from the bathroom to the hallway ?
+Answer: n n </s>
+Model prediction: n n </s>
+=========================
+Step 7900: train_loss = 2.750148, train_acc = 0.375000, train ppl = 2.501063
+Step 8000: train_loss = 3.038429, train_acc = 0.375000, train ppl = 2.753326
+Step 8100: train_loss = 2.504921, train_acc = 0.375000, train ppl = 2.304754
+Step 8200: train_loss = 2.720068, train_acc = 0.250000, train ppl = 2.476112
+Step 8300: train_loss = 2.988898, train_acc = 0.312500, train ppl = 2.708241
+Step 8400: train_loss = 3.397973, train_acc = 0.187500, train ppl = 3.103895
+Step 8500: train_loss = 2.786520, train_acc = 0.375000, train ppl = 2.531570
+Step 8600: train_loss = 2.913847, train_acc = 0.187500, train ppl = 2.641329
+Step 8700: train_loss = 3.123126, train_acc = 0.250000, train ppl = 2.832166
+Step 8800: train_loss = 3.250462, train_acc = 0.187500, train ppl = 2.954967
+Step 8900: train_loss = 2.905183, train_acc = 0.437500, train ppl = 2.633713
+Step 9000: train_loss = 2.708672, train_acc = 0.187500, train ppl = 2.466723
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.303500 -- validation perplexity = 2.462566
+Epoch 8: test accuracy: 0.265500
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the office ? the kitchen is west of the bathroom . the hallway is south of the kitchen . the office is north of the bathroom . the office is south of the garden . the bedroom is south of the bathroom . how do you go from the kitchen to the office ?
+Question: how do you go from the kitchen to the office ?
+Answer: e n </s>
+Model prediction: n n </s>
+=========================
+Step 9100: train_loss = 2.726085, train_acc = 0.187500, train ppl = 2.481083
+Step 9200: train_loss = 3.115098, train_acc = 0.187500, train ppl = 2.824598
+Step 9300: train_loss = 4.743765, train_acc = 0.062500, train ppl = 4.861053
+Step 9400: train_loss = 2.655389, train_acc = 0.375000, train ppl = 2.423299
+Step 9500: train_loss = 2.725835, train_acc = 0.437500, train ppl = 2.480876
+Step 9600: train_loss = 2.594368, train_acc = 0.062500, train ppl = 2.374506
+Step 9700: train_loss = 2.308025, train_acc = 0.562500, train ppl = 2.158345
+Step 9800: train_loss = 3.124133, train_acc = 0.187500, train ppl = 2.833117
+Step 9900: train_loss = 3.370451, train_acc = 0.062500, train ppl = 3.075550
+Step 10000: train_loss = 2.005917, train_acc = 0.687500, train ppl = 1.951579
+Step 10100: train_loss = 2.926418, train_acc = 0.250000, train ppl = 2.652421
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.305000 -- validation perplexity = 2.401526
+Epoch 9: test accuracy: 0.266500
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the bedroom ? the bedroom is north of the hallway . the office is north of the bathroom . the garden is north of the kitchen . the garden is east of the bedroom . the garden is south of the bathroom . how do you go from the bathroom to the bedroom ?
+Question: how do you go from the bathroom to the bedroom ?
+Answer: s w </s>
+Model prediction: n n </s>
+=========================
+Step 10200: train_loss = 3.279829, train_acc = 0.312500, train ppl = 2.984034
+Step 10300: train_loss = 2.450135, train_acc = 0.250000, train ppl = 2.263046
+Step 10400: train_loss = 2.709472, train_acc = 0.250000, train ppl = 2.467381
+Step 10500: train_loss = 2.910660, train_acc = 0.312500, train ppl = 2.638525
+Step 10600: train_loss = 2.842534, train_acc = 0.250000, train ppl = 2.579283
+Step 10700: train_loss = 2.500178, train_acc = 0.250000, train ppl = 2.301112
+Step 10800: train_loss = 2.391794, train_acc = 0.437500, train ppl = 2.219461
+Step 10900: train_loss = 2.566221, train_acc = 0.375000, train ppl = 2.352332
+Step 11000: train_loss = 2.427202, train_acc = 0.312500, train ppl = 2.245813
+Step 11100: train_loss = 2.514546, train_acc = 0.250000, train ppl = 2.312160
+Step 11200: train_loss = 2.429382, train_acc = 0.437500, train ppl = 2.247445
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.327500 -- validation perplexity = 2.353495
+Epoch 10: test accuracy: 0.241000
+---- Qualitative Analysis
+Context: how do you go from the garden to the office ? the kitchen is north of the garden . the bathroom is south of the office . the office is west of the bedroom . the garden is north of the hallway . the hallway is west of the office . how do you go from the garden to the office ?
+Question: how do you go from the garden to the office ?
+Answer: s e </s>
+Model prediction: s s </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 11300: train_loss = 3.429749, train_acc = 0.250000, train ppl = 3.136946
+Step 11400: train_loss = 2.886349, train_acc = 0.312500, train ppl = 2.617229
+Step 11500: train_loss = 2.686946, train_acc = 0.250000, train ppl = 2.448924
+Step 11600: train_loss = 2.671996, train_acc = 0.250000, train ppl = 2.436750
+Step 11700: train_loss = 3.184295, train_acc = 0.250000, train ppl = 2.890506
+Step 11800: train_loss = 2.692561, train_acc = 0.250000, train ppl = 2.453511
+Step 11900: train_loss = 2.828866, train_acc = 0.562500, train ppl = 2.567558
+Step 12000: train_loss = 3.061908, train_acc = 0.312500, train ppl = 2.774959
+Step 12100: train_loss = 2.763926, train_acc = 0.375000, train ppl = 2.512576
+Step 12200: train_loss = 2.785847, train_acc = 0.250000, train ppl = 2.531003
+Step 12300: train_loss = 3.476932, train_acc = 0.187500, train ppl = 3.186673
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.279500 -- validation perplexity = 2.577664
+Epoch 11: test accuracy: 0.260500
+---- Qualitative Analysis
+Context: how do you go from the garden to the hallway ? the kitchen is north of the bedroom . the bedroom is north of the garden . the hallway is west of the bedroom . the bathroom is south of the hallway . the office is west of the hallway . how do you go from the garden to the hallway ?
+Question: how do you go from the garden to the hallway ?
+Answer: n w </s>
+Model prediction: n n </s>
+=========================
+Step 12400: train_loss = 2.739655, train_acc = 0.437500, train ppl = 2.492331
+Step 12500: train_loss = 3.279249, train_acc = 0.312500, train ppl = 2.983458
+Step 12600: train_loss = 2.676743, train_acc = 0.187500, train ppl = 2.440609
+Step 12700: train_loss = 2.638753, train_acc = 0.375000, train ppl = 2.409898
+Step 12800: train_loss = 2.651253, train_acc = 0.250000, train ppl = 2.419960
+Step 12900: train_loss = 4.519895, train_acc = 0.187500, train ppl = 4.511508
+Step 13000: train_loss = 2.901132, train_acc = 0.375000, train ppl = 2.630158
+Step 13100: train_loss = 3.564707, train_acc = 0.187500, train ppl = 3.281287
+Step 13200: train_loss = 2.809200, train_acc = 0.187500, train ppl = 2.550782
+Step 13300: train_loss = 2.729438, train_acc = 0.312500, train ppl = 2.483857
+Step 13400: train_loss = 2.935953, train_acc = 0.250000, train ppl = 2.660864
+Step 13500: train_loss = 3.212567, train_acc = 0.312500, train ppl = 2.917875
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.295500 -- validation perplexity = 2.870906
+Epoch 12: test accuracy: 0.254000
+---- Qualitative Analysis
+Context: how do you go from the garden to the bedroom ? the bathroom is north of the garden . the office is north of the kitchen . the kitchen is north of the bedroom . the hallway is west of the kitchen . the garden is east of the kitchen . how do you go from the garden to the bedroom ?
+Question: how do you go from the garden to the bedroom ?
+Answer: w s </s>
+Model prediction: w n </s>
+=========================
+Step 13600: train_loss = 3.164218, train_acc = 0.312500, train ppl = 2.871226
+Step 13700: train_loss = 2.388277, train_acc = 0.500000, train ppl = 2.216861
+Step 13800: train_loss = 3.189745, train_acc = 0.375000, train ppl = 2.895763
+Step 13900: train_loss = 2.662814, train_acc = 0.312500, train ppl = 2.429303
+Step 14000: train_loss = 2.468567, train_acc = 0.500000, train ppl = 2.276993
+Step 14100: train_loss = 3.274011, train_acc = 0.312500, train ppl = 2.978254
+Step 14200: train_loss = 3.008150, train_acc = 0.187500, train ppl = 2.725677
+Step 14300: train_loss = 3.247386, train_acc = 0.312500, train ppl = 2.951938
+Step 14400: train_loss = 2.704483, train_acc = 0.375000, train ppl = 2.463281
+Step 14500: train_loss = 2.849729, train_acc = 0.375000, train ppl = 2.585476
+Step 14600: train_loss = 2.785563, train_acc = 0.250000, train ppl = 2.530764
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.286000 -- validation perplexity = 3.109579
+Epoch 13: test accuracy: 0.238500
+---- Qualitative Analysis
+Context: how do you go from the garden to the hallway ? the bathroom is east of the garden . the garden is south of the bedroom . the kitchen is east of the hallway . the kitchen is west of the garden . the office is south of the garden . how do you go from the garden to the hallway ?
+Question: how do you go from the garden to the hallway ?
+Answer: w w </s>
+Model prediction: e e </s>
+=========================
+Step 14700: train_loss = 3.251061, train_acc = 0.187500, train ppl = 2.955556
+Step 14800: train_loss = 2.915074, train_acc = 0.250000, train ppl = 2.642410
+Step 14900: train_loss = 2.888196, train_acc = 0.312500, train ppl = 2.618841
+Step 15000: train_loss = 2.746169, train_acc = 0.312500, train ppl = 2.497748
+Step 15100: train_loss = 2.540421, train_acc = 0.375000, train ppl = 2.332188
+Step 15200: train_loss = 3.040802, train_acc = 0.250000, train ppl = 2.755505
+Step 15300: train_loss = 3.427623, train_acc = 0.125000, train ppl = 3.134723
+Step 15400: train_loss = 2.966719, train_acc = 0.250000, train ppl = 2.688293
+Step 15500: train_loss = 2.258491, train_acc = 0.500000, train ppl = 2.123000
+Step 15600: train_loss = 3.526636, train_acc = 0.375000, train ppl = 3.239909
+Step 15700: train_loss = 4.406323, train_acc = 0.375000, train ppl = 4.343908
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.308000 -- validation perplexity = 2.436370
+Epoch 14: test accuracy: 0.240500
+---- Qualitative Analysis
+Context: how do you go from the office to the kitchen ? the hallway is north of the office . the bathroom is west of the hallway . the kitchen is north of the hallway . the garden is south of the office . the bedroom is north of the kitchen . how do you go from the office to the kitchen ?
+Question: how do you go from the office to the kitchen ?
+Answer: n n </s>
+Model prediction: s s </s>
+=========================
+Step 15800: train_loss = 2.676898, train_acc = 0.437500, train ppl = 2.440736
+Step 15900: train_loss = 3.153304, train_acc = 0.250000, train ppl = 2.860800
+Step 16000: train_loss = 2.706727, train_acc = 0.437500, train ppl = 2.465124
+Step 16100: train_loss = 2.505750, train_acc = 0.375000, train ppl = 2.305391
+Step 16200: train_loss = 2.548653, train_acc = 0.312500, train ppl = 2.338597
+Step 16300: train_loss = 3.161967, train_acc = 0.062500, train ppl = 2.869073
+Step 16400: train_loss = 2.248938, train_acc = 0.312500, train ppl = 2.116251
+Step 16500: train_loss = 2.562103, train_acc = 0.312500, train ppl = 2.349105
+Step 16600: train_loss = 2.611771, train_acc = 0.187500, train ppl = 2.388320
+Step 16700: train_loss = 2.411000, train_acc = 0.250000, train ppl = 2.233716
+Step 16800: train_loss = 3.212671, train_acc = 0.187500, train ppl = 2.917977
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.307000 -- validation perplexity = 2.961054
+Epoch 15: test accuracy: 0.244500
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the hallway ? the bedroom is north of the bathroom . the bedroom is east of the hallway . the garden is south of the hallway . the hallway is south of the kitchen . the office is east of the bathroom . how do you go from the bathroom to the hallway ?
+Question: how do you go from the bathroom to the hallway ?
+Answer: n w </s>
+Model prediction: n w </s>
+=========================
+Step 16900: train_loss = 2.788349, train_acc = 0.187500, train ppl = 2.533115
+Step 17000: train_loss = 3.257446, train_acc = 0.312500, train ppl = 2.961854
+Step 17100: train_loss = 3.972953, train_acc = 0.250000, train ppl = 3.759619
+Step 17200: train_loss = 2.597934, train_acc = 0.437500, train ppl = 2.377330
+Step 17300: train_loss = 2.586652, train_acc = 0.375000, train ppl = 2.368407
+Step 17400: train_loss = 3.236300, train_acc = 0.062500, train ppl = 2.941050
+Step 17500: train_loss = 2.686640, train_acc = 0.312500, train ppl = 2.448674
+Step 17600: train_loss = 3.291339, train_acc = 0.250000, train ppl = 2.995506
+Step 17700: train_loss = 2.864047, train_acc = 0.375000, train ppl = 2.597845
+Step 17800: train_loss = 2.715503, train_acc = 0.125000, train ppl = 2.472346
+Step 17900: train_loss = 2.763493, train_acc = 0.312500, train ppl = 2.512214
+Step 18000: train_loss = 4.595337, train_acc = 0.250000, train ppl = 4.626400
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.285000 -- validation perplexity = 3.256730
+Epoch 16: test accuracy: 0.255000
+---- Qualitative Analysis
+Context: how do you go from the bedroom to the office ? the office is north of the hallway . the kitchen is east of the bedroom . the office is west of the garden . the bedroom is north of the garden . the bedroom is south of the bathroom . how do you go from the bedroom to the office ?
+Question: how do you go from the bedroom to the office ?
+Answer: s w </s>
+Model prediction: s w </s>
+=========================
+Step 18100: train_loss = 3.013469, train_acc = 0.187500, train ppl = 2.730514
+Step 18200: train_loss = 2.843392, train_acc = 0.312500, train ppl = 2.580020
+Step 18300: train_loss = 3.224586, train_acc = 0.312500, train ppl = 2.929589
+Step 18400: train_loss = 2.663888, train_acc = 0.375000, train ppl = 2.430174
+Step 18500: train_loss = 2.685757, train_acc = 0.250000, train ppl = 2.447953
+Step 18600: train_loss = 4.959975, train_acc = 0.187500, train ppl = 5.224322
+Step 18700: train_loss = 2.663928, train_acc = 0.187500, train ppl = 2.430206
+Step 18800: train_loss = 2.805490, train_acc = 0.375000, train ppl = 2.547630
+Step 18900: train_loss = 2.576701, train_acc = 0.437500, train ppl = 2.360563
+Step 19000: train_loss = 2.732856, train_acc = 0.437500, train ppl = 2.486689
+Step 19100: train_loss = 2.520213, train_acc = 0.125000, train ppl = 2.316531
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.287000 -- validation perplexity = 2.540173
+Epoch 17: test accuracy: 0.264500
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the garden ? the kitchen is west of the office . the hallway is west of the kitchen . the bedroom is south of the garden . the bathroom is south of the kitchen . the bathroom is west of the garden . how do you go from the kitchen to the garden ?
+Question: how do you go from the kitchen to the garden ?
+Answer: s e </s>
+Model prediction: n n </s>
+=========================
+Step 19200: train_loss = 2.582252, train_acc = 0.375000, train ppl = 2.364935
+Step 19300: train_loss = 2.870825, train_acc = 0.187500, train ppl = 2.603721
+Step 19400: train_loss = 3.043664, train_acc = 0.125000, train ppl = 2.758134
+Step 19500: train_loss = 3.234710, train_acc = 0.187500, train ppl = 2.939492
+Step 19600: train_loss = 2.450129, train_acc = 0.437500, train ppl = 2.263042
+Step 19700: train_loss = 3.607710, train_acc = 0.250000, train ppl = 3.328660
+Step 19800: train_loss = 3.018722, train_acc = 0.500000, train ppl = 2.735299
+Step 19900: train_loss = 3.574401, train_acc = 0.312500, train ppl = 3.291907
+Step 20000: train_loss = 3.328745, train_acc = 0.312500, train ppl = 3.033090
+Step 20100: train_loss = 2.695504, train_acc = 0.312500, train ppl = 2.455920
+Step 20200: train_loss = 2.620456, train_acc = 0.437500, train ppl = 2.395245
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.295500 -- validation perplexity = 3.477025
+Epoch 18: test accuracy: 0.238000
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the garden ? the kitchen is south of the office . the bathroom is west of the garden . the garden is west of the office . the kitchen is east of the bedroom . the hallway is north of the office . how do you go from the kitchen to the garden ?
+Question: how do you go from the kitchen to the garden ?
+Answer: n w </s>
+Model prediction: w s </s>
+=========================
+Step 20300: train_loss = 2.612174, train_acc = 0.312500, train ppl = 2.388641
+Step 20400: train_loss = 2.987369, train_acc = 0.250000, train ppl = 2.706861
+Step 20500: train_loss = 2.902591, train_acc = 0.125000, train ppl = 2.631438
+Step 20600: train_loss = 2.508530, train_acc = 0.312500, train ppl = 2.307528
+Step 20700: train_loss = 2.555850, train_acc = 0.250000, train ppl = 2.344213
+Step 20800: train_loss = 4.545026, train_acc = 0.312500, train ppl = 4.549461
+Step 20900: train_loss = 3.262090, train_acc = 0.312500, train ppl = 2.966442
+Step 21000: train_loss = 3.458817, train_acc = 0.125000, train ppl = 3.167488
+Step 21100: train_loss = 3.374290, train_acc = 0.125000, train ppl = 3.079488
+Step 21200: train_loss = 4.317034, train_acc = 0.187500, train ppl = 4.216525
+Step 21300: train_loss = 4.587033, train_acc = 0.125000, train ppl = 4.613611
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.286000 -- validation perplexity = 2.635390
+Epoch 19: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the office to the hallway ? the bedroom is north of the office . the kitchen is north of the hallway . the hallway is north of the garden . the bathroom is west of the garden . the garden is west of the office . how do you go from the office to the hallway ?
+Question: how do you go from the office to the hallway ?
+Answer: w n </s>
+Model prediction: w w </s>
+=========================
+Step 21400: train_loss = 3.127774, train_acc = 0.062500, train ppl = 2.836558
+Step 21500: train_loss = 2.814757, train_acc = 0.312500, train ppl = 2.555512
+Step 21600: train_loss = 3.156780, train_acc = 0.312500, train ppl = 2.864116
+Step 21700: train_loss = 3.101807, train_acc = 0.187500, train ppl = 2.812111
+Step 21800: train_loss = 3.243901, train_acc = 0.187500, train ppl = 2.948512
+Step 21900: train_loss = 2.600394, train_acc = 0.312500, train ppl = 2.379280
+Step 22000: train_loss = 2.927904, train_acc = 0.187500, train ppl = 2.653734
+Step 22100: train_loss = 2.124450, train_acc = 0.562500, train ppl = 2.030232
+Step 22200: train_loss = 2.837924, train_acc = 0.312500, train ppl = 2.575322
+Step 22300: train_loss = 3.048663, train_acc = 0.312500, train ppl = 2.762734
+Step 22400: train_loss = 3.745501, train_acc = 0.312500, train ppl = 3.485112
+Step 22500: train_loss = 3.778816, train_acc = 0.187500, train ppl = 3.524030
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.301000 -- validation perplexity = 3.280424
+Epoch 20: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the hallway to the kitchen ? the bedroom is south of the hallway . the garden is west of the hallway . the office is west of the kitchen . the bathroom is south of the kitchen . the office is east of the hallway . how do you go from the hallway to the kitchen ?
+Question: how do you go from the hallway to the kitchen ?
+Answer: e e </s>
+Model prediction: s s </s>
+=========================
+Step 22600: train_loss = 2.639715, train_acc = 0.312500, train ppl = 2.410671
+Step 22700: train_loss = 3.161009, train_acc = 0.187500, train ppl = 2.868157
+Step 22800: train_loss = 2.775165, train_acc = 0.500000, train ppl = 2.522007
+Step 22900: train_loss = 3.923676, train_acc = 0.062500, train ppl = 3.698369
+Step 23000: train_loss = 2.702066, train_acc = 0.250000, train ppl = 2.461298
+Step 23100: train_loss = 2.440825, train_acc = 0.437500, train ppl = 2.256033
+Step 23200: train_loss = 3.031117, train_acc = 0.375000, train ppl = 2.746623
+Step 23300: train_loss = 2.922755, train_acc = 0.375000, train ppl = 2.649184
+Step 23400: train_loss = 2.941800, train_acc = 0.312500, train ppl = 2.666055
+Step 23500: train_loss = 3.145318, train_acc = 0.312500, train ppl = 2.853195
+Step 23600: train_loss = 2.900022, train_acc = 0.437500, train ppl = 2.629185
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.302500 -- validation perplexity = 2.501595
+Epoch 21: test accuracy: 0.244000
+---- Qualitative Analysis
+Context: how do you go from the office to the hallway ? the bedroom is south of the hallway . the bedroom is east of the office . the kitchen is south of the office . the bathroom is north of the office . the bedroom is west of the garden . how do you go from the office to the hallway ?
+Question: how do you go from the office to the hallway ?
+Answer: e n </s>
+Model prediction: e s </s>
+=========================
+Step 23700: train_loss = 2.913443, train_acc = 0.375000, train ppl = 2.640974
+Step 23800: train_loss = 3.106585, train_acc = 0.250000, train ppl = 2.816594
+Step 23900: train_loss = 2.833177, train_acc = 0.187500, train ppl = 2.571250
+Step 24000: train_loss = 2.341998, train_acc = 0.437500, train ppl = 2.182926
+Step 24100: train_loss = 2.967762, train_acc = 0.125000, train ppl = 2.689228
+Step 24200: train_loss = 2.813763, train_acc = 0.187500, train ppl = 2.554665
+Step 24300: train_loss = 3.149093, train_acc = 0.312500, train ppl = 2.856787
+Step 24400: train_loss = 2.571015, train_acc = 0.500000, train ppl = 2.356094
+Step 24500: train_loss = 3.552331, train_acc = 0.250000, train ppl = 3.267779
+Step 24600: train_loss = 2.486428, train_acc = 0.312500, train ppl = 2.290590
+Step 24700: train_loss = 2.727962, train_acc = 0.312500, train ppl = 2.482635
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.302000 -- validation perplexity = 2.696900
+Epoch 22: test accuracy: 0.248500
+---- Qualitative Analysis
+Context: how do you go from the office to the garden ? the kitchen is west of the office . the bedroom is north of the office . the bathroom is south of the garden . the office is north of the hallway . the garden is south of the hallway . how do you go from the office to the garden ?
+Question: how do you go from the office to the garden ?
+Answer: s s </s>
+Model prediction: e e </s>
+=========================
+Step 24800: train_loss = 2.689106, train_acc = 0.125000, train ppl = 2.450688
+Step 24900: train_loss = 2.789858, train_acc = 0.312500, train ppl = 2.534389
+Step 25000: train_loss = 3.411515, train_acc = 0.500000, train ppl = 3.117937
+Step 25100: train_loss = 2.391858, train_acc = 0.375000, train ppl = 2.219509
+Step 25200: train_loss = 3.986923, train_acc = 0.250000, train ppl = 3.777167
+Step 25300: train_loss = 2.546673, train_acc = 0.562500, train ppl = 2.337053
+Step 25400: train_loss = 2.519221, train_acc = 0.375000, train ppl = 2.315765
+Step 25500: train_loss = 4.225841, train_acc = 0.375000, train ppl = 4.090281
+Step 25600: train_loss = 3.207097, train_acc = 0.250000, train ppl = 2.912559
+Step 25700: train_loss = 3.187818, train_acc = 0.375000, train ppl = 2.893902
+Step 25800: train_loss = 3.017061, train_acc = 0.250000, train ppl = 2.733785
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.281000 -- validation perplexity = 2.442807
+Epoch 23: test accuracy: 0.260000
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the kitchen ? the bathroom is north of the office . the kitchen is west of the office . the bedroom is north of the bathroom . the office is west of the hallway . the office is north of the garden . how do you go from the bathroom to the kitchen ?
+Question: how do you go from the bathroom to the kitchen ?
+Answer: s w </s>
+Model prediction: n w </s>
+=========================
+Step 25900: train_loss = 2.761748, train_acc = 0.312500, train ppl = 2.510753
+Step 26000: train_loss = 2.742468, train_acc = 0.375000, train ppl = 2.494669
+Step 26100: train_loss = 3.128463, train_acc = 0.312500, train ppl = 2.837209
+Step 26200: train_loss = 2.778775, train_acc = 0.187500, train ppl = 2.525044
+Step 26300: train_loss = 2.113169, train_acc = 0.500000, train ppl = 2.022612
+Step 26400: train_loss = 3.586073, train_acc = 0.125000, train ppl = 3.304740
+Step 26500: train_loss = 3.056831, train_acc = 0.250000, train ppl = 2.770267
+Step 26600: train_loss = 2.409496, train_acc = 0.375000, train ppl = 2.232597
+Step 26700: train_loss = 3.176627, train_acc = 0.250000, train ppl = 2.883127
+Step 26800: train_loss = 3.505154, train_acc = 0.312500, train ppl = 3.216792
+Step 26900: train_loss = 3.071197, train_acc = 0.375000, train ppl = 2.783565
+Step 27000: train_loss = 2.571109, train_acc = 0.375000, train ppl = 2.356168
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.285500 -- validation perplexity = 2.912385
+Epoch 24: test accuracy: 0.238000
+---- Qualitative Analysis
+Context: how do you go from the bedroom to the garden ? the office is west of the bedroom . the hallway is north of the office . the garden is south of the office . the garden is east of the kitchen . the bathroom is west of the office . how do you go from the bedroom to the garden ?
+Question: how do you go from the bedroom to the garden ?
+Answer: w s </s>
+Model prediction: w s </s>
+=========================
+Step 27100: train_loss = 2.888397, train_acc = 0.312500, train ppl = 2.619017
+Step 27200: train_loss = 2.612150, train_acc = 0.375000, train ppl = 2.388622
+Step 27300: train_loss = 4.740197, train_acc = 0.125000, train ppl = 4.855274
+Step 27400: train_loss = 2.420547, train_acc = 0.375000, train ppl = 2.240836
+Step 27500: train_loss = 2.010982, train_acc = 0.562500, train ppl = 1.954877
+Step 27600: train_loss = 2.841977, train_acc = 0.437500, train ppl = 2.578804
+Step 27700: train_loss = 2.634035, train_acc = 0.500000, train ppl = 2.406111
+Step 27800: train_loss = 3.475523, train_acc = 0.187500, train ppl = 3.185176
+Step 27900: train_loss = 3.700647, train_acc = 0.187500, train ppl = 3.433393
+Step 28000: train_loss = 3.147702, train_acc = 0.375000, train ppl = 2.855463
+Step 28100: train_loss = 2.750701, train_acc = 0.312500, train ppl = 2.501525
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.284500 -- validation perplexity = 3.011878
+Epoch 25: test accuracy: 0.247500
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the office ? the garden is west of the kitchen . the hallway is east of the office . the bedroom is north of the kitchen . the bathroom is north of the office . the kitchen is north of the bathroom . how do you go from the kitchen to the office ?
+Question: how do you go from the kitchen to the office ?
+Answer: s s </s>
+Model prediction: w s </s>
+=========================
+Step 28200: train_loss = 2.879494, train_acc = 0.187500, train ppl = 2.611256
+Step 28300: train_loss = 2.788943, train_acc = 0.250000, train ppl = 2.533617
+Step 28400: train_loss = 2.477595, train_acc = 0.500000, train ppl = 2.283856
+Step 28500: train_loss = 2.614916, train_acc = 0.250000, train ppl = 2.390825
+Step 28600: train_loss = 3.097747, train_acc = 0.312500, train ppl = 2.808308
+Step 28700: train_loss = 2.496249, train_acc = 0.437500, train ppl = 2.298101
+Step 28800: train_loss = 3.346709, train_acc = 0.125000, train ppl = 3.051306
+Step 28900: train_loss = 3.541755, train_acc = 0.125000, train ppl = 3.256279
+Step 29000: train_loss = 2.945996, train_acc = 0.375000, train ppl = 2.669787
+Step 29100: train_loss = 2.968968, train_acc = 0.250000, train ppl = 2.690309
+Step 29200: train_loss = 3.065527, train_acc = 0.250000, train ppl = 2.778309
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.307500 -- validation perplexity = 3.150454
+Epoch 26: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the bedroom ? the bathroom is north of the kitchen . the bedroom is east of the office . the hallway is east of the kitchen . the bedroom is south of the garden . the kitchen is north of the garden . how do you go from the kitchen to the bedroom ?
+Question: how do you go from the kitchen to the bedroom ?
+Answer: s s </s>
+Model prediction: s s </s>
+=========================
+Step 29300: train_loss = 2.962972, train_acc = 0.250000, train ppl = 2.684937
+Step 29400: train_loss = 2.408464, train_acc = 0.437500, train ppl = 2.231829
+Step 29500: train_loss = 2.580081, train_acc = 0.250000, train ppl = 2.363224
+Step 29600: train_loss = 2.717708, train_acc = 0.437500, train ppl = 2.474164
+Step 29700: train_loss = 2.710498, train_acc = 0.375000, train ppl = 2.468225
+Step 29800: train_loss = 2.848938, train_acc = 0.250000, train ppl = 2.584795
+Step 29900: train_loss = 3.143105, train_acc = 0.187500, train ppl = 2.851091
+Step 30000: train_loss = 2.650509, train_acc = 0.250000, train ppl = 2.419360
+Step 30100: train_loss = 2.889678, train_acc = 0.187500, train ppl = 2.620136
+Step 30200: train_loss = 2.513660, train_acc = 0.437500, train ppl = 2.311477
+Step 30300: train_loss = 3.558085, train_acc = 0.250000, train ppl = 3.274052
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.272000 -- validation perplexity = 2.485610
+Epoch 27: test accuracy: 0.242000
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the hallway ? the bathroom is east of the kitchen . the office is east of the garden . the bedroom is west of the hallway . the garden is north of the hallway . the garden is south of the kitchen . how do you go from the kitchen to the hallway ?
+Question: how do you go from the kitchen to the hallway ?
+Answer: s s </s>
+Model prediction: w n </s>
+=========================
+Step 30400: train_loss = 3.595028, train_acc = 0.437500, train ppl = 3.314619
+Step 30500: train_loss = 3.157532, train_acc = 0.125000, train ppl = 2.864835
+Step 30600: train_loss = 2.910204, train_acc = 0.312500, train ppl = 2.638124
+Step 30700: train_loss = 3.024308, train_acc = 0.250000, train ppl = 2.740396
+Step 30800: train_loss = 3.032595, train_acc = 0.437500, train ppl = 2.747977
+Step 30900: train_loss = 3.603543, train_acc = 0.437500, train ppl = 3.324040
+Step 31000: train_loss = 3.529544, train_acc = 0.250000, train ppl = 3.243052
+Step 31100: train_loss = 2.321278, train_acc = 0.375000, train ppl = 2.167901
+Step 31200: train_loss = 2.245589, train_acc = 0.437500, train ppl = 2.113890
+Step 31300: train_loss = 3.589012, train_acc = 0.125000, train ppl = 3.307979
+Step 31400: train_loss = 2.411866, train_acc = 0.312500, train ppl = 2.234361
+Step 31500: train_loss = 2.830592, train_acc = 0.250000, train ppl = 2.569036
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.295500 -- validation perplexity = 2.416802
+Epoch 28: test accuracy: 0.238000
+---- Qualitative Analysis
+Context: how do you go from the office to the bedroom ? the hallway is north of the garden . the bedroom is west of the garden . the kitchen is south of the office . the bathroom is south of the garden . the garden is west of the office . how do you go from the office to the bedroom ?
+Question: how do you go from the office to the bedroom ?
+Answer: w w </s>
+Model prediction: w s </s>
+=========================
+Step 31600: train_loss = 3.624433, train_acc = 0.312500, train ppl = 3.347267
+Step 31700: train_loss = 2.678476, train_acc = 0.187500, train ppl = 2.442019
+Step 31800: train_loss = 2.688041, train_acc = 0.375000, train ppl = 2.449818
+Step 31900: train_loss = 2.501020, train_acc = 0.312500, train ppl = 2.301758
+Step 32000: train_loss = 3.449299, train_acc = 0.312500, train ppl = 3.157455
+Step 32100: train_loss = 2.513374, train_acc = 0.375000, train ppl = 2.311257
+Step 32200: train_loss = 2.415645, train_acc = 0.437500, train ppl = 2.237178
+Step 32300: train_loss = 2.852180, train_acc = 0.375000, train ppl = 2.587589
+Step 32400: train_loss = 2.893835, train_acc = 0.125000, train ppl = 2.623769
+Step 32500: train_loss = 3.838350, train_acc = 0.187500, train ppl = 3.594662
+Step 32600: train_loss = 3.425877, train_acc = 0.250000, train ppl = 3.132899
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.316000 -- validation perplexity = 2.822047
+Epoch 29: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the garden ? the kitchen is south of the bedroom . the bedroom is east of the garden . the hallway is east of the bedroom . the office is west of the garden . the bathroom is south of the garden . how do you go from the kitchen to the garden ?
+Question: how do you go from the kitchen to the garden ?
+Answer: n w </s>
+Model prediction: s s </s>
+=========================
+Step 32700: train_loss = 3.930737, train_acc = 0.062500, train ppl = 3.707084
+Step 32800: train_loss = 3.521052, train_acc = 0.125000, train ppl = 3.233884
+Step 32900: train_loss = 3.824450, train_acc = 0.187500, train ppl = 3.578046
+Step 33000: train_loss = 2.642551, train_acc = 0.250000, train ppl = 2.412951
+Step 33100: train_loss = 2.725657, train_acc = 0.375000, train ppl = 2.480729
+Step 33200: train_loss = 3.810655, train_acc = 0.250000, train ppl = 3.561630
+Step 33300: train_loss = 2.900053, train_acc = 0.187500, train ppl = 2.629212
+Step 33400: train_loss = 2.504938, train_acc = 0.312500, train ppl = 2.304766
+Step 33500: train_loss = 2.418054, train_acc = 0.312500, train ppl = 2.238974
+Step 33600: train_loss = 2.944944, train_acc = 0.437500, train ppl = 2.668851
+Step 33700: train_loss = 3.355591, train_acc = 0.312500, train ppl = 3.060353
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.281000 -- validation perplexity = 3.438770
+Epoch 30: test accuracy: 0.264500
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the hallway ? the kitchen is south of the bedroom . the garden is south of the hallway . the kitchen is north of the office . the bathroom is west of the hallway . the hallway is west of the office . how do you go from the kitchen to the hallway ?
+Question: how do you go from the kitchen to the hallway ?
+Answer: s w </s>
+Model prediction: n n </s>
+=========================
+Step 33800: train_loss = 4.249957, train_acc = 0.187500, train ppl = 4.123294
+Step 33900: train_loss = 3.759665, train_acc = 0.250000, train ppl = 3.501605
+Step 34000: train_loss = 2.315297, train_acc = 0.500000, train ppl = 2.163583
+Step 34100: train_loss = 4.364992, train_acc = 0.250000, train ppl = 4.284472
+Step 34200: train_loss = 3.194363, train_acc = 0.312500, train ppl = 2.900223
+Step 34300: train_loss = 2.479078, train_acc = 0.437500, train ppl = 2.284985
+Step 34400: train_loss = 2.990670, train_acc = 0.375000, train ppl = 2.709841
+Step 34500: train_loss = 2.844209, train_acc = 0.250000, train ppl = 2.580723
+Step 34600: train_loss = 2.863994, train_acc = 0.187500, train ppl = 2.597800
+Step 34700: train_loss = 3.503577, train_acc = 0.250000, train ppl = 3.215102
+Step 34800: train_loss = 3.219159, train_acc = 0.312500, train ppl = 2.924294
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.309500 -- validation perplexity = 2.550629
+Epoch 31: test accuracy: 0.238000
+---- Qualitative Analysis
+Context: how do you go from the bedroom to the garden ? the office is east of the hallway . the hallway is east of the garden . the bathroom is east of the bedroom . the kitchen is north of the garden . the hallway is north of the bedroom . how do you go from the bedroom to the garden ?
+Question: how do you go from the bedroom to the garden ?
+Answer: n w </s>
+Model prediction: e s </s>
+=========================
+Step 34900: train_loss = 3.169362, train_acc = 0.250000, train ppl = 2.876154
+Step 35000: train_loss = 2.498485, train_acc = 0.437500, train ppl = 2.299814
+Step 35100: train_loss = 2.458391, train_acc = 0.437500, train ppl = 2.269282
+Step 35200: train_loss = 3.261085, train_acc = 0.250000, train ppl = 2.965449
+Step 35300: train_loss = 2.832988, train_acc = 0.250000, train ppl = 2.571089
+Step 35400: train_loss = 2.886005, train_acc = 0.062500, train ppl = 2.616930
+Step 35500: train_loss = 2.702289, train_acc = 0.250000, train ppl = 2.461481
+Step 35600: train_loss = 3.394556, train_acc = 0.187500, train ppl = 3.100362
+Step 35700: train_loss = 2.887162, train_acc = 0.250000, train ppl = 2.617939
+Step 35800: train_loss = 2.888376, train_acc = 0.375000, train ppl = 2.618999
+Step 35900: train_loss = 2.798070, train_acc = 0.312500, train ppl = 2.541336
+Step 36000: train_loss = 3.313964, train_acc = 0.250000, train ppl = 3.018182
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.301000 -- validation perplexity = 3.594284
+Epoch 32: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the kitchen to the bathroom ? the bathroom is south of the garden . the kitchen is south of the hallway . the bathroom is west of the office . the bedroom is west of the kitchen . the kitchen is west of the garden . how do you go from the kitchen to the bathroom ?
+Question: how do you go from the kitchen to the bathroom ?
+Answer: e s </s>
+Model prediction: s s </s>
+=========================
+Step 36100: train_loss = 3.695298, train_acc = 0.250000, train ppl = 3.427277
+Step 36200: train_loss = 3.436701, train_acc = 0.312500, train ppl = 3.144224
+Step 36300: train_loss = 2.980664, train_acc = 0.312500, train ppl = 2.700818
+Step 36400: train_loss = 2.775362, train_acc = 0.312500, train ppl = 2.522173
+Step 36500: train_loss = 2.827688, train_acc = 0.250000, train ppl = 2.566550
+Step 36600: train_loss = 2.703087, train_acc = 0.312500, train ppl = 2.462136
+Step 36700: train_loss = 3.802694, train_acc = 0.375000, train ppl = 3.552191
+Step 36800: train_loss = 5.450389, train_acc = 0.250000, train ppl = 6.152117
+Step 36900: train_loss = 2.514263, train_acc = 0.375000, train ppl = 2.311942
+Step 37000: train_loss = 2.788238, train_acc = 0.250000, train ppl = 2.533021
+Step 37100: train_loss = 4.474696, train_acc = 0.125000, train ppl = 4.444046
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.276500 -- validation perplexity = 3.190188
+Epoch 33: test accuracy: 0.265000
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the garden ? the office is east of the bathroom . the garden is south of the kitchen . the hallway is west of the kitchen . the bedroom is west of the garden . the kitchen is west of the bathroom . how do you go from the bathroom to the garden ?
+Question: how do you go from the bathroom to the garden ?
+Answer: w s </s>
+Model prediction: n n </s>
+=========================
+Step 37200: train_loss = 3.482944, train_acc = 0.125000, train ppl = 3.193065
+Step 37300: train_loss = 3.414992, train_acc = 0.250000, train ppl = 3.121554
+Step 37400: train_loss = 3.540830, train_acc = 0.187500, train ppl = 3.255275
+Step 37500: train_loss = 2.833140, train_acc = 0.375000, train ppl = 2.571219
+Step 37600: train_loss = 3.467978, train_acc = 0.500000, train ppl = 3.177176
+Step 37700: train_loss = 2.641237, train_acc = 0.437500, train ppl = 2.411894
+Step 37800: train_loss = 3.246866, train_acc = 0.312500, train ppl = 2.951426
+Step 37900: train_loss = 3.311011, train_acc = 0.187500, train ppl = 3.015213
+Step 38000: train_loss = 2.879333, train_acc = 0.375000, train ppl = 2.611116
+Step 38100: train_loss = 2.935529, train_acc = 0.312500, train ppl = 2.660488
+Step 38200: train_loss = 3.554091, train_acc = 0.125000, train ppl = 3.269696
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.303000 -- validation perplexity = 3.136053
+Epoch 34: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the garden to the office ? the hallway is north of the office . the bathroom is south of the garden . the bedroom is south of the office . the office is east of the kitchen . the garden is south of the bedroom . how do you go from the garden to the office ?
+Question: how do you go from the garden to the office ?
+Answer: n n </s>
+Model prediction: s s </s>
+=========================
+Step 38300: train_loss = 2.936326, train_acc = 0.250000, train ppl = 2.661195
+Step 38400: train_loss = 2.781891, train_acc = 0.250000, train ppl = 2.527667
+Step 38500: train_loss = 3.196752, train_acc = 0.375000, train ppl = 2.902534
+Step 38600: train_loss = 6.726750, train_acc = 0.125000, train ppl = 9.414492
+Step 38700: train_loss = 2.594781, train_acc = 0.312500, train ppl = 2.374833
+Step 38800: train_loss = 2.943162, train_acc = 0.250000, train ppl = 2.667266
+Step 38900: train_loss = 3.138823, train_acc = 0.125000, train ppl = 2.847024
+Step 39000: train_loss = 2.373986, train_acc = 0.500000, train ppl = 2.206326
+Step 39100: train_loss = 2.889488, train_acc = 0.187500, train ppl = 2.619969
+Step 39200: train_loss = 3.318713, train_acc = 0.375000, train ppl = 3.022963
+Step 39300: train_loss = 3.573737, train_acc = 0.312500, train ppl = 3.291178
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.285000 -- validation perplexity = 3.829717
+Epoch 35: test accuracy: 0.264500
+---- Qualitative Analysis
+Context: how do you go from the hallway to the garden ? the garden is south of the bedroom . the bathroom is east of the garden . the kitchen is east of the hallway . the hallway is north of the office . the office is west of the garden . how do you go from the hallway to the garden ?
+Question: how do you go from the hallway to the garden ?
+Answer: s e </s>
+Model prediction: n n </s>
+=========================
+Step 39400: train_loss = 2.742751, train_acc = 0.250000, train ppl = 2.494905
+Step 39500: train_loss = 3.304389, train_acc = 0.437500, train ppl = 3.008564
+Step 39600: train_loss = 3.027192, train_acc = 0.312500, train ppl = 2.743032
+Step 39700: train_loss = 3.944588, train_acc = 0.187500, train ppl = 3.724239
+Step 39800: train_loss = 2.804997, train_acc = 0.250000, train ppl = 2.547211
+Step 39900: train_loss = 2.518502, train_acc = 0.437500, train ppl = 2.315211
+Step 40000: train_loss = 3.407931, train_acc = 0.187500, train ppl = 3.114214
+Step 40100: train_loss = 2.668647, train_acc = 0.375000, train ppl = 2.434031
+Step 40200: train_loss = 4.012509, train_acc = 0.187500, train ppl = 3.809520
+Step 40300: train_loss = 3.025309, train_acc = 0.125000, train ppl = 2.741311
+Step 40400: train_loss = 3.412309, train_acc = 0.062500, train ppl = 3.118763
+Step 40500: train_loss = 2.515737, train_acc = 0.562500, train ppl = 2.313077
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.281000 -- validation perplexity = 2.651673
+Epoch 36: test accuracy: 0.264500
+---- Qualitative Analysis
+Context: how do you go from the office to the bedroom ? the bedroom is north of the bathroom . the bathroom is east of the hallway . the garden is south of the office . the kitchen is south of the bathroom . the office is east of the bathroom . how do you go from the office to the bedroom ?
+Question: how do you go from the office to the bedroom ?
+Answer: w n </s>
+Model prediction: e e </s>
+=========================
+Step 40600: train_loss = 3.081321, train_acc = 0.375000, train ppl = 2.792974
+Step 40700: train_loss = 2.509510, train_acc = 0.500000, train ppl = 2.308281
+Step 40800: train_loss = 2.767516, train_acc = 0.250000, train ppl = 2.515585
+Step 40900: train_loss = 2.915019, train_acc = 0.187500, train ppl = 2.642361
+Step 41000: train_loss = 2.363524, train_acc = 0.562500, train ppl = 2.198646
+Step 41100: train_loss = 2.806194, train_acc = 0.500000, train ppl = 2.548228
+Step 41200: train_loss = 3.861353, train_acc = 0.312500, train ppl = 3.622330
+Step 41300: train_loss = 2.829724, train_acc = 0.312500, train ppl = 2.568293
+Step 41400: train_loss = 4.023593, train_acc = 0.312500, train ppl = 3.823621
+Step 41500: train_loss = 3.400045, train_acc = 0.312500, train ppl = 3.106039
+Step 41600: train_loss = 2.851332, train_acc = 0.312500, train ppl = 2.586858
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.304000 -- validation perplexity = 2.621241
+Epoch 37: test accuracy: 0.248000
+---- Qualitative Analysis
+Context: how do you go from the hallway to the office ? the bedroom is west of the hallway . the kitchen is east of the bathroom . the office is west of the bathroom . the garden is south of the hallway . the hallway is south of the bathroom . how do you go from the hallway to the office ?
+Question: how do you go from the hallway to the office ?
+Answer: n w </s>
+Model prediction: w n </s>
+=========================
+Step 41700: train_loss = 2.944475, train_acc = 0.437500, train ppl = 2.668433
+Step 41800: train_loss = 2.274259, train_acc = 0.562500, train ppl = 2.134188
+Step 41900: train_loss = 2.907463, train_acc = 0.375000, train ppl = 2.635715
+Step 42000: train_loss = 2.764789, train_acc = 0.437500, train ppl = 2.513300
+Step 42100: train_loss = 2.509998, train_acc = 0.312500, train ppl = 2.308657
+Step 42200: train_loss = 3.108232, train_acc = 0.312500, train ppl = 2.818141
+Step 42300: train_loss = 2.987404, train_acc = 0.250000, train ppl = 2.706892
+Step 42400: train_loss = 3.113857, train_acc = 0.312500, train ppl = 2.823430
+Step 42500: train_loss = 3.281724, train_acc = 0.187500, train ppl = 2.985920
+Step 42600: train_loss = 3.141354, train_acc = 0.125000, train ppl = 2.849427
+Step 42700: train_loss = 3.323214, train_acc = 0.312500, train ppl = 3.027503
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.305000 -- validation perplexity = 2.515677
+Epoch 38: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the garden to the bedroom ? the garden is north of the office . the bedroom is south of the hallway . the bathroom is north of the garden . the kitchen is east of the bathroom . the bedroom is north of the bathroom . how do you go from the garden to the bedroom ?
+Question: how do you go from the garden to the bedroom ?
+Answer: n n </s>
+Model prediction: s s </s>
+=========================
+Step 42800: train_loss = 2.321843, train_acc = 0.500000, train ppl = 2.168309
+Step 42900: train_loss = 2.741521, train_acc = 0.312500, train ppl = 2.493881
+Step 43000: train_loss = 2.621687, train_acc = 0.312500, train ppl = 2.396228
+Step 43100: train_loss = 2.801898, train_acc = 0.250000, train ppl = 2.544581
+Step 43200: train_loss = 2.677567, train_acc = 0.437500, train ppl = 2.441280
+Step 43300: train_loss = 3.197361, train_acc = 0.187500, train ppl = 2.903123
+Step 43400: train_loss = 3.639812, train_acc = 0.375000, train ppl = 3.364471
+Step 43500: train_loss = 2.787645, train_acc = 0.312500, train ppl = 2.532520
+Step 43600: train_loss = 2.067872, train_acc = 0.500000, train ppl = 1.992302
+Step 43700: train_loss = 2.952919, train_acc = 0.250000, train ppl = 2.675956
+Step 43800: train_loss = 3.498674, train_acc = 0.125000, train ppl = 3.209851
+==== Finshed epoch 39 ====
+Evaluating model...
+Epoch 39: validation accuracy = 0.279500 -- validation perplexity = 2.635289
+Epoch 39: test accuracy: 0.250500
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the bedroom ? the kitchen is east of the bedroom . the bathroom is west of the garden . the bedroom is east of the office . the bathroom is south of the office . the hallway is north of the office . how do you go from the bathroom to the bedroom ?
+Question: how do you go from the bathroom to the bedroom ?
+Answer: n e </s>
+Model prediction: e s </s>
+=========================
+Step 43900: train_loss = 2.841195, train_acc = 0.250000, train ppl = 2.578132
+Step 44000: train_loss = 3.301326, train_acc = 0.250000, train ppl = 3.005494
+Step 44100: train_loss = 3.312176, train_acc = 0.125000, train ppl = 3.016384
+Step 44200: train_loss = 2.308522, train_acc = 0.187500, train ppl = 2.158703
+Step 44300: train_loss = 3.873913, train_acc = 0.187500, train ppl = 3.637528
+Step 44400: train_loss = 4.122183, train_acc = 0.250000, train ppl = 3.951365
+Step 44500: train_loss = 3.331489, train_acc = 0.250000, train ppl = 3.035865
+Step 44600: train_loss = 2.764984, train_acc = 0.250000, train ppl = 2.513463
+Step 44700: train_loss = 2.288938, train_acc = 0.375000, train ppl = 2.144656
+Step 44800: train_loss = 6.544902, train_acc = 0.187500, train ppl = 8.860772
+Step 44900: train_loss = 2.913182, train_acc = 0.375000, train ppl = 2.640744
+Step 45000: train_loss = 3.756370, train_acc = 0.250000, train ppl = 3.497762
+==== Finshed epoch 40 ====
+Evaluating model...
+Epoch 40: validation accuracy = 0.308000 -- validation perplexity = 2.897637
+Epoch 40: test accuracy: 0.244000
+---- Qualitative Analysis
+Context: how do you go from the hallway to the garden ? the garden is north of the kitchen . the bathroom is north of the hallway . the garden is east of the bedroom . the kitchen is west of the office . the kitchen is east of the hallway . how do you go from the hallway to the garden ?
+Question: how do you go from the hallway to the garden ?
+Answer: e n </s>
+Model prediction: s s </s>
+=========================
+Step 45100: train_loss = 2.830969, train_acc = 0.250000, train ppl = 2.569359
+Step 45200: train_loss = 3.745164, train_acc = 0.125000, train ppl = 3.484721
+Step 45300: train_loss = 3.463811, train_acc = 0.437500, train ppl = 3.172765
+Step 45400: train_loss = 3.583896, train_acc = 0.312500, train ppl = 3.302342
+Step 45500: train_loss = 2.951913, train_acc = 0.312500, train ppl = 2.675058
+Step 45600: train_loss = 3.086895, train_acc = 0.312500, train ppl = 2.798169
+Step 45700: train_loss = 2.586442, train_acc = 0.312500, train ppl = 2.368241
+Step 45800: train_loss = 3.074445, train_acc = 0.187500, train ppl = 2.786580
+Step 45900: train_loss = 2.914596, train_acc = 0.375000, train ppl = 2.641989
+Step 46000: train_loss = 2.386904, train_acc = 0.312500, train ppl = 2.215847
+Step 46100: train_loss = 3.993573, train_acc = 0.250000, train ppl = 3.785550
+==== Finshed epoch 41 ====
+Evaluating model...
+Epoch 41: validation accuracy = 0.294000 -- validation perplexity = 2.604183
+Epoch 41: test accuracy: 0.244000
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the garden ? the hallway is north of the bedroom . the office is east of the bedroom . the garden is south of the bedroom . the kitchen is south of the bathroom . the bathroom is west of the bedroom . how do you go from the bathroom to the garden ?
+Question: how do you go from the bathroom to the garden ?
+Answer: e s </s>
+Model prediction: e s </s>
+=========================
+Step 46200: train_loss = 2.414989, train_acc = 0.500000, train ppl = 2.236689
+Step 46300: train_loss = 2.454352, train_acc = 0.437500, train ppl = 2.266229
+Step 46400: train_loss = 2.929908, train_acc = 0.312500, train ppl = 2.655508
+Step 46500: train_loss = 1.985717, train_acc = 0.625000, train ppl = 1.938483
+Step 46600: train_loss = 3.215744, train_acc = 0.312500, train ppl = 2.920967
+Step 46700: train_loss = 2.981227, train_acc = 0.312500, train ppl = 2.701325
+Step 46800: train_loss = 4.735886, train_acc = 0.187500, train ppl = 4.848302
+Step 46900: train_loss = 3.942645, train_acc = 0.187500, train ppl = 3.721828
+Step 47000: train_loss = 3.186020, train_acc = 0.250000, train ppl = 2.892169
+Step 47100: train_loss = 2.173334, train_acc = 0.562500, train ppl = 2.063585
+Step 47200: train_loss = 2.565379, train_acc = 0.500000, train ppl = 2.351671
+==== Finshed epoch 42 ====
+Evaluating model...
+Epoch 42: validation accuracy = 0.299000 -- validation perplexity = 2.476769
+Epoch 42: test accuracy: 0.265000
+---- Qualitative Analysis
+Context: how do you go from the office to the bedroom ? the hallway is east of the bedroom . the bathroom is east of the office . the bedroom is south of the kitchen . the office is east of the garden . the kitchen is south of the office . how do you go from the office to the bedroom ?
+Question: how do you go from the office to the bedroom ?
+Answer: s s </s>
+Model prediction: n n </s>
+=========================
+Step 47300: train_loss = 1.856399, train_acc = 0.625000, train ppl = 1.856698
+Step 47400: train_loss = 2.775911, train_acc = 0.312500, train ppl = 2.522634
+Step 47500: train_loss = 3.762929, train_acc = 0.312500, train ppl = 3.505418
+Step 47600: train_loss = 3.615800, train_acc = 0.125000, train ppl = 3.337649
+Step 47700: train_loss = 2.824021, train_acc = 0.375000, train ppl = 2.563415
+Step 47800: train_loss = 2.448552, train_acc = 0.312500, train ppl = 2.261852
+Step 47900: train_loss = 2.621214, train_acc = 0.312500, train ppl = 2.395850
+Step 48000: train_loss = 2.650995, train_acc = 0.125000, train ppl = 2.419752
+Step 48100: train_loss = 2.675371, train_acc = 0.187500, train ppl = 2.439493
+Step 48200: train_loss = 2.564418, train_acc = 0.187500, train ppl = 2.350918
+Step 48300: train_loss = 2.435320, train_acc = 0.437500, train ppl = 2.251898
+==== Finshed epoch 43 ====
+Evaluating model...
+Epoch 43: validation accuracy = 0.306000 -- validation perplexity = 3.328264
+Epoch 43: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the bedroom ? the kitchen is north of the bathroom . the hallway is south of the garden . the hallway is east of the bathroom . the office is east of the bedroom . the bedroom is south of the hallway . how do you go from the bathroom to the bedroom ?
+Question: how do you go from the bathroom to the bedroom ?
+Answer: e s </s>
+Model prediction: s s </s>
+=========================
+Step 48400: train_loss = 3.415241, train_acc = 0.250000, train ppl = 3.121812
+Step 48500: train_loss = 3.329955, train_acc = 0.125000, train ppl = 3.034312
+Step 48600: train_loss = 4.303953, train_acc = 0.125000, train ppl = 4.198180
+Step 48700: train_loss = 4.177075, train_acc = 0.312500, train ppl = 4.024330
+Step 48800: train_loss = 2.682895, train_acc = 0.250000, train ppl = 2.445619
+Step 48900: train_loss = 3.477166, train_acc = 0.187500, train ppl = 3.186921
+Step 49000: train_loss = 3.357280, train_acc = 0.125000, train ppl = 3.062076
+Step 49100: train_loss = 3.991762, train_acc = 0.187500, train ppl = 3.783265
+Step 49200: train_loss = 3.173276, train_acc = 0.312500, train ppl = 2.879909
+Step 49300: train_loss = 3.960797, train_acc = 0.375000, train ppl = 3.744416
+Step 49400: train_loss = 2.577362, train_acc = 0.375000, train ppl = 2.361084
+Step 49500: train_loss = 3.645168, train_acc = 0.250000, train ppl = 3.370483
+==== Finshed epoch 44 ====
+Evaluating model...
+Epoch 44: validation accuracy = 0.303500 -- validation perplexity = 3.275790
+Epoch 44: test accuracy: 0.248500
+---- Qualitative Analysis
+Context: how do you go from the bedroom to the garden ? the bedroom is east of the office . the office is north of the garden . the hallway is west of the garden . the garden is north of the bathroom . the kitchen is east of the bedroom . how do you go from the bedroom to the garden ?
+Question: how do you go from the bedroom to the garden ?
+Answer: w s </s>
+Model prediction: e e </s>
+=========================
+Step 49600: train_loss = 3.198211, train_acc = 0.312500, train ppl = 2.903946
+Step 49700: train_loss = 2.869795, train_acc = 0.187500, train ppl = 2.602828
+Step 49800: train_loss = 3.344279, train_acc = 0.125000, train ppl = 3.048835
+Step 49900: train_loss = 2.968672, train_acc = 0.187500, train ppl = 2.690043
+Step 50000: train_loss = 2.776509, train_acc = 0.312500, train ppl = 2.523137
+Step 50100: train_loss = 3.370192, train_acc = 0.187500, train ppl = 3.075284
+Step 50200: train_loss = 2.870609, train_acc = 0.312500, train ppl = 2.603534
+Step 50300: train_loss = 3.881840, train_acc = 0.187500, train ppl = 3.647153
+Step 50400: train_loss = 2.844185, train_acc = 0.187500, train ppl = 2.580703
+Step 50500: train_loss = 3.276065, train_acc = 0.312500, train ppl = 2.980293
+Step 50600: train_loss = 2.960610, train_acc = 0.187500, train ppl = 2.682824
+==== Finshed epoch 45 ====
+Evaluating model...
+Epoch 45: validation accuracy = 0.268500 -- validation perplexity = 2.870617
+Epoch 45: test accuracy: 0.260500
+---- Qualitative Analysis
+Context: how do you go from the garden to the bathroom ? the garden is east of the bedroom . the kitchen is north of the garden . the office is north of the kitchen . the bathroom is west of the kitchen . the hallway is north of the bathroom . how do you go from the garden to the bathroom ?
+Question: how do you go from the garden to the bathroom ?
+Answer: n w </s>
+Model prediction: n e </s>
+=========================
+Step 50700: train_loss = 2.985407, train_acc = 0.375000, train ppl = 2.705091
+Step 50800: train_loss = 3.322479, train_acc = 0.187500, train ppl = 3.026761
+Step 50900: train_loss = 2.860307, train_acc = 0.437500, train ppl = 2.594608
+Step 51000: train_loss = 2.854905, train_acc = 0.250000, train ppl = 2.589941
+Step 51100: train_loss = 2.635899, train_acc = 0.250000, train ppl = 2.407606
+Step 51200: train_loss = 3.094521, train_acc = 0.187500, train ppl = 2.805291
+Step 51300: train_loss = 4.066227, train_acc = 0.375000, train ppl = 3.878347
+Step 51400: train_loss = 2.913678, train_acc = 0.375000, train ppl = 2.641181
+Step 51500: train_loss = 3.684272, train_acc = 0.250000, train ppl = 3.414703
+Step 51600: train_loss = 2.977711, train_acc = 0.312500, train ppl = 2.698161
+Step 51700: train_loss = 2.533025, train_acc = 0.437500, train ppl = 2.326446
+==== Finshed epoch 46 ====
+Evaluating model...
+Epoch 46: validation accuracy = 0.297500 -- validation perplexity = 2.635360
+Epoch 46: test accuracy: 0.248500
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the garden ? the hallway is east of the bathroom . the office is west of the bathroom . the bedroom is south of the garden . the bedroom is north of the bathroom . the garden is south of the kitchen . how do you go from the bathroom to the garden ?
+Question: how do you go from the bathroom to the garden ?
+Answer: n n </s>
+Model prediction: e e </s>
+=========================
+Step 51800: train_loss = 3.526290, train_acc = 0.125000, train ppl = 3.239536
+Step 51900: train_loss = 3.475265, train_acc = 0.125000, train ppl = 3.184902
+Step 52000: train_loss = 2.579432, train_acc = 0.312500, train ppl = 2.362714
+Step 52100: train_loss = 3.331407, train_acc = 0.187500, train ppl = 3.035781
+Step 52200: train_loss = 2.769109, train_acc = 0.312500, train ppl = 2.516921
+Step 52300: train_loss = 2.879199, train_acc = 0.312500, train ppl = 2.610999
+Step 52400: train_loss = 5.207915, train_acc = 0.187500, train ppl = 5.674439
+Step 52500: train_loss = 3.309414, train_acc = 0.312500, train ppl = 3.013608
+Step 52600: train_loss = 2.624894, train_acc = 0.437500, train ppl = 2.398791
+Step 52700: train_loss = 2.403703, train_acc = 0.437500, train ppl = 2.228290
+Step 52800: train_loss = 3.741623, train_acc = 0.250000, train ppl = 3.480610
+==== Finshed epoch 47 ====
+Evaluating model...
+Epoch 47: validation accuracy = 0.291000 -- validation perplexity = 2.980807
+Epoch 47: test accuracy: 0.248500
+---- Qualitative Analysis
+Context: how do you go from the office to the bedroom ? the bedroom is south of the garden . the hallway is north of the office . the garden is west of the office . the bathroom is west of the garden . the office is west of the kitchen . how do you go from the office to the bedroom ?
+Question: how do you go from the office to the bedroom ?
+Answer: w s </s>
+Model prediction: e e </s>
+=========================
+Step 52900: train_loss = 3.276478, train_acc = 0.375000, train ppl = 2.980704
+Step 53000: train_loss = 2.448271, train_acc = 0.312500, train ppl = 2.261641
+Step 53100: train_loss = 3.345698, train_acc = 0.312500, train ppl = 3.050278
+Step 53200: train_loss = 2.725297, train_acc = 0.437500, train ppl = 2.480431
+Step 53300: train_loss = 2.386851, train_acc = 0.312500, train ppl = 2.215808
+Step 53400: train_loss = 2.813563, train_acc = 0.375000, train ppl = 2.554494
+Step 53500: train_loss = 3.017176, train_acc = 0.250000, train ppl = 2.733890
+Step 53600: train_loss = 3.422758, train_acc = 0.187500, train ppl = 3.129644
+Step 53700: train_loss = 3.016457, train_acc = 0.375000, train ppl = 2.733234
+Step 53800: train_loss = 3.711385, train_acc = 0.125000, train ppl = 3.445704
+Step 53900: train_loss = 3.213097, train_acc = 0.312500, train ppl = 2.918391
+Step 54000: train_loss = 2.605882, train_acc = 0.375000, train ppl = 2.383637
+==== Finshed epoch 48 ====
+Evaluating model...
+Epoch 48: validation accuracy = 0.291000 -- validation perplexity = 3.344714
+Epoch 48: test accuracy: 0.243500
+---- Qualitative Analysis
+Context: how do you go from the bathroom to the office ? the bedroom is north of the bathroom . the hallway is east of the bathroom . the bedroom is west of the office . the office is south of the garden . the kitchen is west of the bathroom . how do you go from the bathroom to the office ?
+Question: how do you go from the bathroom to the office ?
+Answer: n e </s>
+Model prediction: w w </s>
+=========================
+Step 54100: train_loss = 3.018207, train_acc = 0.312500, train ppl = 2.734829
+Step 54200: train_loss = 2.823153, train_acc = 0.187500, train ppl = 2.562673
+Step 54300: train_loss = 2.115613, train_acc = 0.375000, train ppl = 2.024260
+Step 54400: train_loss = 1.921736, train_acc = 0.562500, train ppl = 1.897579
+Step 54500: train_loss = 3.971475, train_acc = 0.125000, train ppl = 3.757767
+Step 54600: train_loss = 2.931862, train_acc = 0.312500, train ppl = 2.657239
+Step 54700: train_loss = 3.171917, train_acc = 0.312500, train ppl = 2.878605
+Step 54800: train_loss = 2.951284, train_acc = 0.250000, train ppl = 2.674497
+Step 54900: train_loss = 3.967723, train_acc = 0.187500, train ppl = 3.753071

@@ -1,0 +1,815 @@
+model_dir:                models/dummy
+num_enc_layers:           1
+model_type:               normal
+max_gradient_norm:        1.0
+batch_size:               16
+num_epochs:               50
+learning_rate:            0.001
+cell_type:                gru
+dropout_keep_prob:        0.7
+vocab:                    data/vocab.txt
+val_split:                0.1
+embedding_size:           128
+encoder_type:             bi
+merge_mode:               concat
+task:                     16
+num_units:                256
+data_dir:                 data/en-10k
+optimizer:                adam
+restore_from_dir:         None
+Loading data...
+vocabulary size = 487
+Building model...
+Running initializers...
+Creating summary writers...
+Performing evaluation before training...
+---- Qualitative Analysis
+Context: what color is brian ? greg is a frog . julius is a rhino . julius is gray . lily is a swan . bernhard is a lion . brian is a lion . greg is yellow . lily is green . bernhard is green . what color is brian ?
+Question: what color is brian ?
+Answer: green </s>
+Model prediction: 219 219 e e 194 194 18 106 mouse no
+=========================
+Step 100: train_loss = 1.597844, train_acc = 0.125000, train ppl = 2.223143
+Step 200: train_loss = 1.105403, train_acc = 0.687500, train ppl = 1.737942
+Step 300: train_loss = 1.108426, train_acc = 0.375000, train ppl = 1.740571
+Step 400: train_loss = 1.075034, train_acc = 0.437500, train ppl = 1.711751
+Step 500: train_loss = 1.064067, train_acc = 0.437500, train ppl = 1.702391
+==== Finshed epoch 1 ====
+Evaluating model...
+Epoch 1: validation accuracy = 0.490000 -- validation perplexity = 1.592176
+Epoch 1: test accuracy: 0.458000
+---- Qualitative Analysis
+Context: what color is lily ? lily is a frog . greg is a frog . bernhard is a rhino . brian is a swan . julius is a swan . julius is yellow . greg is white . bernhard is gray . brian is yellow . what color is lily ?
+Question: what color is lily ?
+Answer: white </s>
+Model prediction: gray </s>
+=========================
+Model checkpoint saved in models/dummy/best_model.ckpt
+Step 600: train_loss = 1.022648, train_acc = 0.375000, train ppl = 1.667498
+Step 700: train_loss = 0.961847, train_acc = 0.250000, train ppl = 1.617568
+Step 800: train_loss = 1.036110, train_acc = 0.375000, train ppl = 1.678759
+Step 900: train_loss = 1.214692, train_acc = 0.437500, train ppl = 1.835553
+Step 1000: train_loss = 0.848229, train_acc = 0.562500, train ppl = 1.528237
+Step 1100: train_loss = 0.863307, train_acc = 0.437500, train ppl = 1.539802
+==== Finshed epoch 2 ====
+Evaluating model...
+Epoch 2: validation accuracy = 0.461000 -- validation perplexity = 1.576576
+Epoch 2: test accuracy: 0.455000
+---- Qualitative Analysis
+Context: what color is bernhard ? bernhard is a rhino . greg is a rhino . lily is a lion . greg is green . brian is a frog . julius is a frog . lily is green . julius is yellow . brian is yellow . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: green </s>
+Model prediction: yellow </s>
+=========================
+Step 1200: train_loss = 1.030527, train_acc = 0.312500, train ppl = 1.674079
+Step 1300: train_loss = 0.977309, train_acc = 0.312500, train ppl = 1.630122
+Step 1400: train_loss = 0.857425, train_acc = 0.562500, train ppl = 1.535280
+Step 1500: train_loss = 1.059702, train_acc = 0.312500, train ppl = 1.698679
+Step 1600: train_loss = 0.932978, train_acc = 0.312500, train ppl = 1.594387
+==== Finshed epoch 3 ====
+Evaluating model...
+Epoch 3: validation accuracy = 0.461000 -- validation perplexity = 1.571716
+Epoch 3: test accuracy: 0.457000
+---- Qualitative Analysis
+Context: what color is lily ? brian is a lion . bernhard is a swan . greg is a swan . bernhard is white . brian is yellow . greg is white . lily is a swan . julius is a swan . julius is gray . what color is lily ?
+Question: what color is lily ?
+Answer: gray </s>
+Model prediction: yellow </s>
+=========================
+Step 1700: train_loss = 0.894681, train_acc = 0.500000, train ppl = 1.564147
+Step 1800: train_loss = 0.738030, train_acc = 0.562500, train ppl = 1.446310
+Step 1900: train_loss = 0.823791, train_acc = 0.375000, train ppl = 1.509677
+Step 2000: train_loss = 0.971691, train_acc = 0.375000, train ppl = 1.625549
+Step 2100: train_loss = 1.132870, train_acc = 0.375000, train ppl = 1.761974
+Step 2200: train_loss = 0.918185, train_acc = 0.312500, train ppl = 1.582637
+==== Finshed epoch 4 ====
+Evaluating model...
+Epoch 4: validation accuracy = 0.458000 -- validation perplexity = 1.565140
+Epoch 4: test accuracy: 0.456000
+---- Qualitative Analysis
+Context: what color is greg ? bernhard is a swan . greg is a lion . bernhard is gray . julius is a swan . lily is a rhino . brian is a lion . lily is gray . julius is yellow . brian is white . what color is greg ?
+Question: what color is greg ?
+Answer: white </s>
+Model prediction: gray </s>
+=========================
+Step 2300: train_loss = 0.764854, train_acc = 0.562500, train ppl = 1.465837
+Step 2400: train_loss = 0.916766, train_acc = 0.312500, train ppl = 1.581515
+Step 2500: train_loss = 0.847039, train_acc = 0.375000, train ppl = 1.527328
+Step 2600: train_loss = 0.951734, train_acc = 0.437500, train ppl = 1.609409
+Step 2700: train_loss = 0.814855, train_acc = 0.500000, train ppl = 1.502947
+Step 2800: train_loss = 0.852559, train_acc = 0.375000, train ppl = 1.531549
+==== Finshed epoch 5 ====
+Evaluating model...
+Epoch 5: validation accuracy = 0.464000 -- validation perplexity = 1.554337
+Epoch 5: test accuracy: 0.477000
+---- Qualitative Analysis
+Context: what color is julius ? bernhard is a frog . lily is a frog . lily is white . greg is a lion . julius is a lion . brian is a frog . bernhard is white . greg is yellow . brian is white . what color is julius ?
+Question: what color is julius ?
+Answer: yellow </s>
+Model prediction: white </s>
+=========================
+Step 2900: train_loss = 0.871372, train_acc = 0.625000, train ppl = 1.546023
+Step 3000: train_loss = 0.739728, train_acc = 0.625000, train ppl = 1.447537
+Step 3100: train_loss = 0.780749, train_acc = 0.500000, train ppl = 1.477534
+Step 3200: train_loss = 0.756134, train_acc = 0.625000, train ppl = 1.459461
+Step 3300: train_loss = 0.813658, train_acc = 0.500000, train ppl = 1.502048
+==== Finshed epoch 6 ====
+Evaluating model...
+Epoch 6: validation accuracy = 0.486000 -- validation perplexity = 1.549837
+Epoch 6: test accuracy: 0.456000
+---- Qualitative Analysis
+Context: what color is lily ? brian is a lion . julius is a rhino . brian is yellow . greg is a frog . greg is green . julius is yellow . lily is a rhino . bernhard is a swan . bernhard is gray . what color is lily ?
+Question: what color is lily ?
+Answer: yellow </s>
+Model prediction: gray </s>
+=========================
+Step 3400: train_loss = 0.808748, train_acc = 0.687500, train ppl = 1.498364
+Step 3500: train_loss = 0.805375, train_acc = 0.500000, train ppl = 1.495840
+Step 3600: train_loss = 0.718127, train_acc = 0.687500, train ppl = 1.431988
+Step 3700: train_loss = 0.978642, train_acc = 0.437500, train ppl = 1.631208
+Step 3800: train_loss = 0.958275, train_acc = 0.500000, train ppl = 1.614681
+Step 3900: train_loss = 0.999412, train_acc = 0.375000, train ppl = 1.648237
+==== Finshed epoch 7 ====
+Evaluating model...
+Epoch 7: validation accuracy = 0.472000 -- validation perplexity = 1.555488
+Epoch 7: test accuracy: 0.468000
+---- Qualitative Analysis
+Context: what color is bernhard ? lily is a rhino . julius is a swan . lily is gray . brian is a rhino . brian is white . bernhard is a lion . julius is gray . greg is a lion . greg is green . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: green </s>
+Model prediction: gray </s>
+=========================
+Step 4000: train_loss = 0.877760, train_acc = 0.750000, train ppl = 1.550969
+Step 4100: train_loss = 0.758098, train_acc = 0.562500, train ppl = 1.460895
+Step 4200: train_loss = 0.944766, train_acc = 0.375000, train ppl = 1.603812
+Step 4300: train_loss = 0.874075, train_acc = 0.562500, train ppl = 1.548114
+Step 4400: train_loss = 0.570007, train_acc = 0.812500, train ppl = 1.329767
+Step 4500: train_loss = 0.907197, train_acc = 0.312500, train ppl = 1.573966
+==== Finshed epoch 8 ====
+Evaluating model...
+Epoch 8: validation accuracy = 0.464000 -- validation perplexity = 1.566748
+Epoch 8: test accuracy: 0.480000
+---- Qualitative Analysis
+Context: what color is greg ? julius is a swan . brian is a lion . brian is green . julius is white . lily is a frog . lily is white . bernhard is a rhino . bernhard is yellow . greg is a swan . what color is greg ?
+Question: what color is greg ?
+Answer: white </s>
+Model prediction: white </s>
+=========================
+Step 4600: train_loss = 0.944682, train_acc = 0.312500, train ppl = 1.603744
+Step 4700: train_loss = 0.930043, train_acc = 0.437500, train ppl = 1.592048
+Step 4800: train_loss = 0.899925, train_acc = 0.625000, train ppl = 1.568253
+Step 4900: train_loss = 0.800569, train_acc = 0.625000, train ppl = 1.492249
+Step 5000: train_loss = 0.857192, train_acc = 0.562500, train ppl = 1.535101
+==== Finshed epoch 9 ====
+Evaluating model...
+Epoch 9: validation accuracy = 0.442000 -- validation perplexity = 1.591482
+Epoch 9: test accuracy: 0.444000
+---- Qualitative Analysis
+Context: what color is brian ? julius is a lion . julius is green . lily is a lion . lily is white . bernhard is a swan . bernhard is yellow . greg is a frog . greg is white . brian is a frog . what color is brian ?
+Question: what color is brian ?
+Answer: white </s>
+Model prediction: white </s>
+=========================
+Step 5100: train_loss = 0.887563, train_acc = 0.312500, train ppl = 1.558590
+Step 5200: train_loss = 0.778362, train_acc = 0.812500, train ppl = 1.475772
+Step 5300: train_loss = 0.842678, train_acc = 0.625000, train ppl = 1.524001
+Step 5400: train_loss = 0.853535, train_acc = 0.437500, train ppl = 1.532297
+Step 5500: train_loss = 0.972081, train_acc = 0.312500, train ppl = 1.625866
+Step 5600: train_loss = 0.798468, train_acc = 0.687500, train ppl = 1.490682
+==== Finshed epoch 10 ====
+Evaluating model...
+Epoch 10: validation accuracy = 0.477000 -- validation perplexity = 1.559952
+Epoch 10: test accuracy: 0.474000
+---- Qualitative Analysis
+Context: what color is bernhard ? julius is a swan . brian is a lion . brian is gray . lily is a rhino . julius is yellow . lily is green . bernhard is a swan . greg is a rhino . greg is gray . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: yellow </s>
+Model prediction: gray </s>
+=========================
+Step 5700: train_loss = 0.771565, train_acc = 0.625000, train ppl = 1.470765
+Step 5800: train_loss = 0.974698, train_acc = 0.500000, train ppl = 1.627995
+Step 5900: train_loss = 0.900379, train_acc = 0.500000, train ppl = 1.568610
+Step 6000: train_loss = 0.753323, train_acc = 0.750000, train ppl = 1.457411
+Step 6100: train_loss = 0.960506, train_acc = 0.437500, train ppl = 1.616483
+==== Finshed epoch 11 ====
+Evaluating model...
+Epoch 11: validation accuracy = 0.481000 -- validation perplexity = 1.567605
+Epoch 11: test accuracy: 0.481000
+---- Qualitative Analysis
+Context: what color is greg ? julius is a swan . lily is a rhino . bernhard is a swan . brian is a swan . lily is gray . julius is gray . greg is a swan . brian is green . bernhard is green . what color is greg ?
+Question: what color is greg ?
+Answer: green </s>
+Model prediction: gray </s>
+=========================
+Step 6200: train_loss = 0.725178, train_acc = 0.625000, train ppl = 1.437045
+Step 6300: train_loss = 0.869025, train_acc = 0.625000, train ppl = 1.544210
+Step 6400: train_loss = 0.856447, train_acc = 0.437500, train ppl = 1.534529
+Step 6500: train_loss = 1.010042, train_acc = 0.500000, train ppl = 1.657020
+Step 6600: train_loss = 0.807019, train_acc = 0.625000, train ppl = 1.497070
+Step 6700: train_loss = 0.800591, train_acc = 0.375000, train ppl = 1.492265
+==== Finshed epoch 12 ====
+Evaluating model...
+Epoch 12: validation accuracy = 0.453000 -- validation perplexity = 1.603537
+Epoch 12: test accuracy: 0.468000
+---- Qualitative Analysis
+Context: what color is greg ? bernhard is a frog . lily is a rhino . lily is green . bernhard is yellow . brian is a frog . greg is a rhino . julius is a lion . julius is yellow . brian is green . what color is greg ?
+Question: what color is greg ?
+Answer: green </s>
+Model prediction: yellow </s>
+=========================
+Step 6800: train_loss = 0.763687, train_acc = 0.500000, train ppl = 1.464983
+Step 6900: train_loss = 0.983627, train_acc = 0.562500, train ppl = 1.635279
+Step 7000: train_loss = 0.877996, train_acc = 0.500000, train ppl = 1.551152
+Step 7100: train_loss = 0.771574, train_acc = 0.625000, train ppl = 1.470771
+Step 7200: train_loss = 0.831784, train_acc = 0.625000, train ppl = 1.515722
+Step 7300: train_loss = 0.820323, train_acc = 0.625000, train ppl = 1.507061
+==== Finshed epoch 13 ====
+Evaluating model...
+Epoch 13: validation accuracy = 0.487000 -- validation perplexity = 1.619297
+Epoch 13: test accuracy: 0.469000
+---- Qualitative Analysis
+Context: what color is bernhard ? greg is a swan . brian is a rhino . brian is green . julius is a frog . greg is gray . lily is a lion . lily is yellow . bernhard is a lion . julius is green . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: yellow </s>
+Model prediction: green </s>
+=========================
+Step 7400: train_loss = 0.970089, train_acc = 0.375000, train ppl = 1.624247
+Step 7500: train_loss = 0.901928, train_acc = 0.562500, train ppl = 1.569825
+Step 7600: train_loss = 0.738320, train_acc = 0.500000, train ppl = 1.446519
+Step 7700: train_loss = 0.960706, train_acc = 0.312500, train ppl = 1.616645
+Step 7800: train_loss = 0.938716, train_acc = 0.250000, train ppl = 1.598967
+==== Finshed epoch 14 ====
+Evaluating model...
+Epoch 14: validation accuracy = 0.482000 -- validation perplexity = 1.647303
+Epoch 14: test accuracy: 0.472000
+---- Qualitative Analysis
+Context: what color is bernhard ? lily is a frog . julius is a lion . lily is gray . julius is green . brian is a frog . brian is yellow . greg is a frog . greg is gray . bernhard is a frog . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: gray </s>
+Model prediction: gray </s>
+=========================
+Step 7900: train_loss = 0.608713, train_acc = 0.875000, train ppl = 1.355752
+Step 8000: train_loss = 0.834433, train_acc = 0.562500, train ppl = 1.517731
+Step 8100: train_loss = 0.800595, train_acc = 0.625000, train ppl = 1.492268
+Step 8200: train_loss = 0.533987, train_acc = 0.750000, train ppl = 1.306032
+Step 8300: train_loss = 0.690990, train_acc = 0.625000, train ppl = 1.412689
+Step 8400: train_loss = 0.757606, train_acc = 0.625000, train ppl = 1.460535
+==== Finshed epoch 15 ====
+Evaluating model...
+Epoch 15: validation accuracy = 0.470000 -- validation perplexity = 1.676667
+Epoch 15: test accuracy: 0.456000
+---- Qualitative Analysis
+Context: what color is bernhard ? julius is a frog . lily is a lion . lily is yellow . brian is a swan . greg is a rhino . bernhard is a swan . brian is gray . greg is yellow . julius is yellow . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: gray </s>
+Model prediction: yellow </s>
+=========================
+Step 8500: train_loss = 0.598099, train_acc = 0.750000, train ppl = 1.348577
+Step 8600: train_loss = 0.921023, train_acc = 0.750000, train ppl = 1.584884
+Step 8700: train_loss = 0.422086, train_acc = 0.875000, train ppl = 1.234966
+Step 8800: train_loss = 0.326161, train_acc = 0.875000, train ppl = 1.177131
+Step 8900: train_loss = 0.545921, train_acc = 0.812500, train ppl = 1.313848
+Step 9000: train_loss = 0.439628, train_acc = 0.812500, train ppl = 1.245845
+==== Finshed epoch 16 ====
+Evaluating model...
+Epoch 16: validation accuracy = 0.446000 -- validation perplexity = 1.835350
+Epoch 16: test accuracy: 0.443000
+---- Qualitative Analysis
+Context: what color is brian ? greg is a rhino . julius is a swan . lily is a frog . bernhard is a lion . julius is yellow . bernhard is yellow . lily is white . greg is yellow . brian is a lion . what color is brian ?
+Question: what color is brian ?
+Answer: yellow </s>
+Model prediction: yellow </s>
+=========================
+Step 9100: train_loss = 0.623730, train_acc = 0.750000, train ppl = 1.365970
+Step 9200: train_loss = 0.579275, train_acc = 0.625000, train ppl = 1.335943
+Step 9300: train_loss = 0.458059, train_acc = 0.875000, train ppl = 1.257379
+Step 9400: train_loss = 0.481385, train_acc = 0.687500, train ppl = 1.272130
+Step 9500: train_loss = 0.589366, train_acc = 0.687500, train ppl = 1.342700
+==== Finshed epoch 17 ====
+Evaluating model...
+Epoch 17: validation accuracy = 0.446000 -- validation perplexity = 2.008247
+Epoch 17: test accuracy: 0.447000
+---- Qualitative Analysis
+Context: what color is lily ? julius is a rhino . lily is a rhino . julius is green . greg is a rhino . greg is white . brian is a swan . bernhard is a rhino . brian is green . bernhard is yellow . what color is lily ?
+Question: what color is lily ?
+Answer: yellow </s>
+Model prediction: white </s>
+=========================
+Step 9600: train_loss = 0.594556, train_acc = 0.687500, train ppl = 1.346189
+Step 9700: train_loss = 0.362640, train_acc = 0.812500, train ppl = 1.198799
+Step 9800: train_loss = 0.409366, train_acc = 0.812500, train ppl = 1.227136
+Step 9900: train_loss = 0.580761, train_acc = 0.750000, train ppl = 1.336936
+Step 10000: train_loss = 0.279479, train_acc = 0.875000, train ppl = 1.149974
+Step 10100: train_loss = 0.447084, train_acc = 0.812500, train ppl = 1.250498
+==== Finshed epoch 18 ====
+Evaluating model...
+Epoch 18: validation accuracy = 0.471000 -- validation perplexity = 2.276982
+Epoch 18: test accuracy: 0.471000
+---- Qualitative Analysis
+Context: what color is lily ? julius is a lion . greg is a swan . julius is yellow . bernhard is a lion . brian is a frog . lily is a frog . greg is white . bernhard is yellow . brian is gray . what color is lily ?
+Question: what color is lily ?
+Answer: gray </s>
+Model prediction: white </s>
+=========================
+Step 10200: train_loss = 0.179304, train_acc = 0.937500, train ppl = 1.093794
+Step 10300: train_loss = 0.399829, train_acc = 0.812500, train ppl = 1.221298
+Step 10400: train_loss = 0.549914, train_acc = 0.625000, train ppl = 1.316474
+Step 10500: train_loss = 0.481722, train_acc = 0.750000, train ppl = 1.272344
+Step 10600: train_loss = 0.592454, train_acc = 0.812500, train ppl = 1.344775
+==== Finshed epoch 19 ====
+Evaluating model...
+Epoch 19: validation accuracy = 0.451000 -- validation perplexity = 2.502722
+Epoch 19: test accuracy: 0.475000
+---- Qualitative Analysis
+Context: what color is brian ? brian is a swan . greg is a frog . julius is a frog . greg is yellow . julius is yellow . bernhard is a rhino . lily is a swan . lily is white . bernhard is white . what color is brian ?
+Question: what color is brian ?
+Answer: white </s>
+Model prediction: white </s>
+=========================
+Step 10700: train_loss = 0.531648, train_acc = 0.812500, train ppl = 1.304506
+Step 10800: train_loss = 0.194174, train_acc = 0.937500, train ppl = 1.101956
+Step 10900: train_loss = 0.283509, train_acc = 0.875000, train ppl = 1.152294
+Step 11000: train_loss = 0.150124, train_acc = 0.937500, train ppl = 1.077951
+Step 11100: train_loss = 0.099713, train_acc = 0.937500, train ppl = 1.051120
+Step 11200: train_loss = 0.196958, train_acc = 0.875000, train ppl = 1.103491
+==== Finshed epoch 20 ====
+Evaluating model...
+Epoch 20: validation accuracy = 0.454000 -- validation perplexity = 3.084746
+Epoch 20: test accuracy: 0.478000
+---- Qualitative Analysis
+Context: what color is greg ? lily is a lion . lily is green . brian is a swan . bernhard is a rhino . julius is a frog . julius is gray . brian is green . bernhard is white . greg is a frog . what color is greg ?
+Question: what color is greg ?
+Answer: gray </s>
+Model prediction: gray </s>
+=========================
+Step 11300: train_loss = 0.062689, train_acc = 1.000000, train ppl = 1.031841
+Step 11400: train_loss = 0.070866, train_acc = 0.937500, train ppl = 1.036068
+Step 11500: train_loss = 0.126041, train_acc = 1.000000, train ppl = 1.065049
+Step 11600: train_loss = 0.109990, train_acc = 0.937500, train ppl = 1.056535
+Step 11700: train_loss = 0.145138, train_acc = 0.937500, train ppl = 1.075267
+Step 11800: train_loss = 0.354648, train_acc = 0.812500, train ppl = 1.194018
+==== Finshed epoch 21 ====
+Evaluating model...
+Epoch 21: validation accuracy = 0.466000 -- validation perplexity = 3.598957
+Epoch 21: test accuracy: 0.473000
+---- Qualitative Analysis
+Context: what color is julius ? bernhard is a lion . lily is a lion . lily is yellow . greg is a rhino . bernhard is yellow . julius is a rhino . greg is green . brian is a frog . brian is white . what color is julius ?
+Question: what color is julius ?
+Answer: green </s>
+Model prediction: white </s>
+=========================
+Step 11900: train_loss = 0.059184, train_acc = 1.000000, train ppl = 1.030034
+Step 12000: train_loss = 0.198630, train_acc = 0.875000, train ppl = 1.104414
+Step 12100: train_loss = 0.489815, train_acc = 0.937500, train ppl = 1.277503
+Step 12200: train_loss = 0.209017, train_acc = 0.937500, train ppl = 1.110165
+Step 12300: train_loss = 0.421905, train_acc = 0.812500, train ppl = 1.234854
+==== Finshed epoch 22 ====
+Evaluating model...
+Epoch 22: validation accuracy = 0.460000 -- validation perplexity = 3.993041
+Epoch 22: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: what color is lily ? brian is a swan . greg is a frog . julius is a rhino . bernhard is a rhino . julius is white . greg is white . bernhard is white . brian is white . lily is a frog . what color is lily ?
+Question: what color is lily ?
+Answer: white </s>
+Model prediction: white </s>
+=========================
+Step 12400: train_loss = 0.155533, train_acc = 0.937500, train ppl = 1.080870
+Step 12500: train_loss = 0.206194, train_acc = 0.875000, train ppl = 1.108599
+Step 12600: train_loss = 0.132723, train_acc = 0.937500, train ppl = 1.068613
+Step 12700: train_loss = 0.124105, train_acc = 0.937500, train ppl = 1.064018
+Step 12800: train_loss = 0.621678, train_acc = 0.812500, train ppl = 1.364570
+Step 12900: train_loss = 0.101870, train_acc = 0.937500, train ppl = 1.052255
+==== Finshed epoch 23 ====
+Evaluating model...
+Epoch 23: validation accuracy = 0.465000 -- validation perplexity = 4.433537
+Epoch 23: test accuracy: 0.468000
+---- Qualitative Analysis
+Context: what color is lily ? julius is a frog . greg is a rhino . brian is a swan . brian is green . greg is yellow . bernhard is a lion . julius is white . lily is a frog . bernhard is gray . what color is lily ?
+Question: what color is lily ?
+Answer: white </s>
+Model prediction: yellow </s>
+=========================
+Step 13000: train_loss = 0.746036, train_acc = 0.937500, train ppl = 1.452110
+Step 13100: train_loss = 0.332913, train_acc = 0.875000, train ppl = 1.181112
+Step 13200: train_loss = 0.084606, train_acc = 0.937500, train ppl = 1.043211
+Step 13300: train_loss = 0.015972, train_acc = 1.000000, train ppl = 1.008018
+Step 13400: train_loss = 0.021740, train_acc = 1.000000, train ppl = 1.010929
+Step 13500: train_loss = 0.181885, train_acc = 0.937500, train ppl = 1.095206
+==== Finshed epoch 24 ====
+Evaluating model...
+Epoch 24: validation accuracy = 0.458000 -- validation perplexity = 5.083572
+Epoch 24: test accuracy: 0.466000
+---- Qualitative Analysis
+Context: what color is brian ? greg is a rhino . julius is a lion . lily is a swan . julius is green . lily is white . bernhard is a frog . greg is yellow . bernhard is gray . brian is a lion . what color is brian ?
+Question: what color is brian ?
+Answer: green </s>
+Model prediction: yellow </s>
+=========================
+Step 13600: train_loss = 0.048422, train_acc = 1.000000, train ppl = 1.024507
+Step 13700: train_loss = 0.133781, train_acc = 0.937500, train ppl = 1.069178
+Step 13800: train_loss = 0.115517, train_acc = 0.937500, train ppl = 1.059459
+Step 13900: train_loss = 0.032198, train_acc = 1.000000, train ppl = 1.016230
+Step 14000: train_loss = 0.033056, train_acc = 1.000000, train ppl = 1.016665
+==== Finshed epoch 25 ====
+Evaluating model...
+Epoch 25: validation accuracy = 0.444000 -- validation perplexity = 5.166564
+Epoch 25: test accuracy: 0.484000
+---- Qualitative Analysis
+Context: what color is brian ? brian is a lion . lily is a swan . greg is a lion . julius is a swan . julius is gray . bernhard is a frog . bernhard is yellow . lily is gray . greg is gray . what color is brian ?
+Question: what color is brian ?
+Answer: gray </s>
+Model prediction: yellow </s>
+=========================
+Step 14100: train_loss = 0.022322, train_acc = 1.000000, train ppl = 1.011223
+Step 14200: train_loss = 0.051943, train_acc = 1.000000, train ppl = 1.026312
+Step 14300: train_loss = 0.197039, train_acc = 0.937500, train ppl = 1.103536
+Step 14400: train_loss = 0.018247, train_acc = 1.000000, train ppl = 1.009165
+Step 14500: train_loss = 0.245573, train_acc = 0.937500, train ppl = 1.130643
+Step 14600: train_loss = 0.114433, train_acc = 1.000000, train ppl = 1.058885
+==== Finshed epoch 26 ====
+Evaluating model...
+Epoch 26: validation accuracy = 0.456000 -- validation perplexity = 5.784002
+Epoch 26: test accuracy: 0.469000
+---- Qualitative Analysis
+Context: what color is julius ? lily is a frog . greg is a frog . greg is white . julius is a frog . lily is white . bernhard is a frog . brian is a frog . bernhard is white . brian is white . what color is julius ?
+Question: what color is julius ?
+Answer: white </s>
+Model prediction: white </s>
+=========================
+Step 14700: train_loss = 0.081157, train_acc = 0.937500, train ppl = 1.041413
+Step 14800: train_loss = 0.149607, train_acc = 0.937500, train ppl = 1.077672
+Step 14900: train_loss = 0.091667, train_acc = 1.000000, train ppl = 1.046900
+Step 15000: train_loss = 0.094343, train_acc = 0.937500, train ppl = 1.048302
+Step 15100: train_loss = 0.145680, train_acc = 0.937500, train ppl = 1.075559
+Step 15200: train_loss = 0.078003, train_acc = 0.937500, train ppl = 1.039772
+==== Finshed epoch 27 ====
+Evaluating model...
+Epoch 27: validation accuracy = 0.463000 -- validation perplexity = 5.838760
+Epoch 27: test accuracy: 0.493000
+---- Qualitative Analysis
+Context: what color is lily ? greg is a swan . bernhard is a frog . julius is a frog . julius is green . bernhard is green . brian is a frog . lily is a frog . greg is white . brian is yellow . what color is lily ?
+Question: what color is lily ?
+Answer: yellow </s>
+Model prediction: yellow </s>
+=========================
+Step 15300: train_loss = 0.027499, train_acc = 1.000000, train ppl = 1.013844
+Step 15400: train_loss = 0.003519, train_acc = 1.000000, train ppl = 1.001761
+Step 15500: train_loss = 0.412251, train_acc = 0.937500, train ppl = 1.228907
+Step 15600: train_loss = 0.010806, train_acc = 1.000000, train ppl = 1.005418
+Step 15700: train_loss = 0.013387, train_acc = 1.000000, train ppl = 1.006716
+==== Finshed epoch 28 ====
+Evaluating model...
+Epoch 28: validation accuracy = 0.455000 -- validation perplexity = 6.525656
+Epoch 28: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: what color is bernhard ? brian is a lion . brian is white . bernhard is a lion . julius is a rhino . greg is a rhino . julius is yellow . lily is a swan . lily is green . greg is yellow . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: white </s>
+Model prediction: yellow </s>
+=========================
+Step 15800: train_loss = 0.428634, train_acc = 0.937500, train ppl = 1.239016
+Step 15900: train_loss = 0.024090, train_acc = 1.000000, train ppl = 1.012118
+Step 16000: train_loss = 0.373073, train_acc = 0.937500, train ppl = 1.205069
+Step 16100: train_loss = 0.009880, train_acc = 1.000000, train ppl = 1.004952
+Step 16200: train_loss = 0.025830, train_acc = 1.000000, train ppl = 1.012999
+Step 16300: train_loss = 0.017682, train_acc = 1.000000, train ppl = 1.008880
+==== Finshed epoch 29 ====
+Evaluating model...
+Epoch 29: validation accuracy = 0.447000 -- validation perplexity = 6.750414
+Epoch 29: test accuracy: 0.470000
+---- Qualitative Analysis
+Context: what color is bernhard ? lily is a rhino . greg is a rhino . greg is yellow . bernhard is a rhino . lily is yellow . julius is a lion . brian is a rhino . brian is green . julius is white . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: green </s>
+Model prediction: yellow </s>
+=========================
+Step 16400: train_loss = 0.391883, train_acc = 0.875000, train ppl = 1.216456
+Step 16500: train_loss = 0.016958, train_acc = 1.000000, train ppl = 1.008515
+Step 16600: train_loss = 0.242812, train_acc = 0.937500, train ppl = 1.129083
+Step 16700: train_loss = 0.062054, train_acc = 0.937500, train ppl = 1.031513
+Step 16800: train_loss = 0.328723, train_acc = 0.937500, train ppl = 1.178641
+==== Finshed epoch 30 ====
+Evaluating model...
+Epoch 30: validation accuracy = 0.478000 -- validation perplexity = 7.381263
+Epoch 30: test accuracy: 0.471000
+---- Qualitative Analysis
+Context: what color is bernhard ? brian is a swan . lily is a rhino . greg is a swan . julius is a lion . greg is gray . lily is gray . brian is gray . julius is green . bernhard is a rhino . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: gray </s>
+Model prediction: green </s>
+=========================
+Step 16900: train_loss = 0.024077, train_acc = 1.000000, train ppl = 1.012111
+Step 17000: train_loss = 0.419371, train_acc = 0.937500, train ppl = 1.233290
+Step 17100: train_loss = 0.002208, train_acc = 1.000000, train ppl = 1.001105
+Step 17200: train_loss = 0.058307, train_acc = 1.000000, train ppl = 1.029582
+Step 17300: train_loss = 0.021312, train_acc = 1.000000, train ppl = 1.010713
+Step 17400: train_loss = 0.000874, train_acc = 1.000000, train ppl = 1.000437
+==== Finshed epoch 31 ====
+Evaluating model...
+Epoch 31: validation accuracy = 0.462000 -- validation perplexity = 7.973154
+Epoch 31: test accuracy: 0.469000
+---- Qualitative Analysis
+Context: what color is julius ? bernhard is a frog . brian is a frog . greg is a rhino . brian is yellow . lily is a frog . greg is yellow . lily is gray . bernhard is gray . julius is a frog . what color is julius ?
+Question: what color is julius ?
+Answer: gray </s>
+Model prediction: yellow </s>
+=========================
+Step 17500: train_loss = 0.003548, train_acc = 1.000000, train ppl = 1.001776
+Step 17600: train_loss = 0.058153, train_acc = 1.000000, train ppl = 1.029504
+Step 17700: train_loss = 0.015333, train_acc = 1.000000, train ppl = 1.007696
+Step 17800: train_loss = 0.062756, train_acc = 1.000000, train ppl = 1.031875
+Step 17900: train_loss = 0.085630, train_acc = 0.937500, train ppl = 1.043745
+Step 18000: train_loss = 0.037100, train_acc = 1.000000, train ppl = 1.018723
+==== Finshed epoch 32 ====
+Evaluating model...
+Epoch 32: validation accuracy = 0.429000 -- validation perplexity = 8.738757
+Epoch 32: test accuracy: 0.471000
+---- Qualitative Analysis
+Context: what color is julius ? bernhard is a frog . brian is a frog . greg is a rhino . brian is yellow . lily is a frog . greg is yellow . lily is gray . bernhard is gray . julius is a frog . what color is julius ?
+Question: what color is julius ?
+Answer: gray </s>
+Model prediction: yellow </s>
+=========================
+Step 18100: train_loss = 0.005126, train_acc = 1.000000, train ppl = 1.002566
+Step 18200: train_loss = 0.205151, train_acc = 0.937500, train ppl = 1.108021
+Step 18300: train_loss = 0.251097, train_acc = 0.937500, train ppl = 1.133770
+Step 18400: train_loss = 0.040896, train_acc = 1.000000, train ppl = 1.020658
+Step 18500: train_loss = 0.055225, train_acc = 1.000000, train ppl = 1.027997
+==== Finshed epoch 33 ====
+Evaluating model...
+Epoch 33: validation accuracy = 0.460000 -- validation perplexity = 8.711691
+Epoch 33: test accuracy: 0.465000
+---- Qualitative Analysis
+Context: what color is brian ? bernhard is a swan . julius is a frog . lily is a swan . julius is white . lily is yellow . greg is a swan . greg is white . bernhard is white . brian is a frog . what color is brian ?
+Question: what color is brian ?
+Answer: white </s>
+Model prediction: white </s>
+=========================
+Step 18600: train_loss = 0.000680, train_acc = 1.000000, train ppl = 1.000340
+Step 18700: train_loss = 0.000893, train_acc = 1.000000, train ppl = 1.000446
+Step 18800: train_loss = 0.009662, train_acc = 1.000000, train ppl = 1.004843
+Step 18900: train_loss = 0.002380, train_acc = 1.000000, train ppl = 1.001191
+Step 19000: train_loss = 0.441164, train_acc = 0.875000, train ppl = 1.246802
+Step 19100: train_loss = 0.000084, train_acc = 1.000000, train ppl = 1.000042
+==== Finshed epoch 34 ====
+Evaluating model...
+Epoch 34: validation accuracy = 0.455000 -- validation perplexity = 8.575830
+Epoch 34: test accuracy: 0.468000
+---- Qualitative Analysis
+Context: what color is bernhard ? lily is a rhino . greg is a rhino . greg is yellow . bernhard is a rhino . lily is yellow . julius is a lion . brian is a rhino . brian is green . julius is white . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: green </s>
+Model prediction: yellow </s>
+=========================
+Step 19200: train_loss = 0.023004, train_acc = 1.000000, train ppl = 1.011568
+Step 19300: train_loss = 0.001506, train_acc = 1.000000, train ppl = 1.000754
+Step 19400: train_loss = 0.084874, train_acc = 0.937500, train ppl = 1.043350
+Step 19500: train_loss = 0.007534, train_acc = 1.000000, train ppl = 1.003774
+Step 19600: train_loss = 0.000863, train_acc = 1.000000, train ppl = 1.000432
+Step 19700: train_loss = 0.005919, train_acc = 1.000000, train ppl = 1.002964
+==== Finshed epoch 35 ====
+Evaluating model...
+Epoch 35: validation accuracy = 0.456000 -- validation perplexity = 8.216277
+Epoch 35: test accuracy: 0.451000
+---- Qualitative Analysis
+Context: what color is greg ? greg is a lion . lily is a swan . lily is gray . julius is a rhino . julius is green . bernhard is a swan . brian is a lion . bernhard is white . brian is gray . what color is greg ?
+Question: what color is greg ?
+Answer: gray </s>
+Model prediction: gray </s>
+=========================
+Step 19800: train_loss = 0.073369, train_acc = 0.937500, train ppl = 1.037366
+Step 19900: train_loss = 0.000470, train_acc = 1.000000, train ppl = 1.000235
+Step 20000: train_loss = 0.013395, train_acc = 1.000000, train ppl = 1.006720
+Step 20100: train_loss = 0.058446, train_acc = 0.937500, train ppl = 1.029654
+Step 20200: train_loss = 0.011190, train_acc = 1.000000, train ppl = 1.005611
+==== Finshed epoch 36 ====
+Evaluating model...
+Epoch 36: validation accuracy = 0.452000 -- validation perplexity = 7.788023
+Epoch 36: test accuracy: 0.483000
+---- Qualitative Analysis
+Context: what color is greg ? julius is a frog . julius is gray . lily is a lion . brian is a frog . lily is white . bernhard is a swan . brian is gray . bernhard is green . greg is a lion . what color is greg ?
+Question: what color is greg ?
+Answer: white </s>
+Model prediction: gray </s>
+=========================
+Step 20300: train_loss = 0.005337, train_acc = 1.000000, train ppl = 1.002672
+Step 20400: train_loss = 0.007199, train_acc = 1.000000, train ppl = 1.003606
+Step 20500: train_loss = 0.000268, train_acc = 1.000000, train ppl = 1.000134
+Step 20600: train_loss = 0.041072, train_acc = 1.000000, train ppl = 1.020748
+Step 20700: train_loss = 0.008645, train_acc = 1.000000, train ppl = 1.004332
+Step 20800: train_loss = 0.206001, train_acc = 0.937500, train ppl = 1.108492
+==== Finshed epoch 37 ====
+Evaluating model...
+Epoch 37: validation accuracy = 0.453000 -- validation perplexity = 8.995493
+Epoch 37: test accuracy: 0.486000
+---- Qualitative Analysis
+Context: what color is lily ? brian is a rhino . julius is a frog . greg is a lion . bernhard is a swan . lily is a frog . julius is green . brian is yellow . bernhard is white . greg is yellow . what color is lily ?
+Question: what color is lily ?
+Answer: green </s>
+Model prediction: yellow </s>
+=========================
+Step 20900: train_loss = 0.000387, train_acc = 1.000000, train ppl = 1.000193
+Step 21000: train_loss = 0.004116, train_acc = 1.000000, train ppl = 1.002060
+Step 21100: train_loss = 0.051769, train_acc = 1.000000, train ppl = 1.026223
+Step 21200: train_loss = 0.145943, train_acc = 0.937500, train ppl = 1.075700
+Step 21300: train_loss = 0.046849, train_acc = 0.937500, train ppl = 1.023701
+==== Finshed epoch 38 ====
+Evaluating model...
+Epoch 38: validation accuracy = 0.467000 -- validation perplexity = 9.170938
+Epoch 38: test accuracy: 0.473000
+---- Qualitative Analysis
+Context: what color is julius ? bernhard is a rhino . julius is a frog . greg is a swan . brian is a rhino . lily is a frog . greg is gray . brian is green . bernhard is green . lily is white . what color is julius ?
+Question: what color is julius ?
+Answer: white </s>
+Model prediction: gray </s>
+=========================
+Step 21400: train_loss = 0.360971, train_acc = 0.937500, train ppl = 1.197799
+Step 21500: train_loss = 0.003158, train_acc = 1.000000, train ppl = 1.001580
+Step 21600: train_loss = 0.239445, train_acc = 0.875000, train ppl = 1.127184
+Step 21700: train_loss = 0.002449, train_acc = 1.000000, train ppl = 1.001225
+Step 21800: train_loss = 0.000417, train_acc = 1.000000, train ppl = 1.000209
+Step 21900: train_loss = 0.030923, train_acc = 1.000000, train ppl = 1.015581
+==== Finshed epoch 39 ====
+Evaluating model...
+Epoch 39: validation accuracy = 0.446000 -- validation perplexity = 9.304694
+Epoch 39: test accuracy: 0.475000
+---- Qualitative Analysis
+Context: what color is bernhard ? brian is a swan . brian is white . greg is a lion . lily is a rhino . bernhard is a lion . julius is a rhino . julius is yellow . greg is gray . lily is yellow . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: gray </s>
+Model prediction: gray </s>
+=========================
+Step 22000: train_loss = 0.007148, train_acc = 1.000000, train ppl = 1.003580
+Step 22100: train_loss = 0.059918, train_acc = 0.937500, train ppl = 1.030412
+Step 22200: train_loss = 0.071942, train_acc = 0.937500, train ppl = 1.036626
+Step 22300: train_loss = 0.001935, train_acc = 1.000000, train ppl = 1.000968
+Step 22400: train_loss = 0.002041, train_acc = 1.000000, train ppl = 1.001021
+Step 22500: train_loss = 0.029417, train_acc = 1.000000, train ppl = 1.014817
+==== Finshed epoch 40 ====
+Evaluating model...
+Epoch 40: validation accuracy = 0.454000 -- validation perplexity = 9.015672
+Epoch 40: test accuracy: 0.470000
+---- Qualitative Analysis
+Context: what color is greg ? lily is a swan . brian is a lion . bernhard is a frog . brian is white . greg is a swan . lily is yellow . bernhard is yellow . julius is a rhino . julius is gray . what color is greg ?
+Question: what color is greg ?
+Answer: yellow </s>
+Model prediction: white </s>
+=========================
+Step 22600: train_loss = 0.000775, train_acc = 1.000000, train ppl = 1.000388
+Step 22700: train_loss = 0.417137, train_acc = 0.937500, train ppl = 1.231913
+Step 22800: train_loss = 0.064118, train_acc = 0.937500, train ppl = 1.032579
+Step 22900: train_loss = 0.003546, train_acc = 1.000000, train ppl = 1.001775
+Step 23000: train_loss = 0.255294, train_acc = 0.937500, train ppl = 1.136152
+==== Finshed epoch 41 ====
+Evaluating model...
+Epoch 41: validation accuracy = 0.452000 -- validation perplexity = 9.619371
+Epoch 41: test accuracy: 0.475000
+---- Qualitative Analysis
+Context: what color is brian ? julius is a frog . bernhard is a rhino . brian is a lion . julius is gray . bernhard is white . greg is a lion . lily is a swan . lily is yellow . greg is green . what color is brian ?
+Question: what color is brian ?
+Answer: green </s>
+Model prediction: gray </s>
+=========================
+Step 23100: train_loss = 0.003110, train_acc = 1.000000, train ppl = 1.001556
+Step 23200: train_loss = 0.237902, train_acc = 0.937500, train ppl = 1.126314
+Step 23300: train_loss = 0.137641, train_acc = 0.937500, train ppl = 1.071244
+Step 23400: train_loss = 0.000357, train_acc = 1.000000, train ppl = 1.000179
+Step 23500: train_loss = 0.181373, train_acc = 0.937500, train ppl = 1.094926
+Step 23600: train_loss = 0.008146, train_acc = 1.000000, train ppl = 1.004081
+==== Finshed epoch 42 ====
+Evaluating model...
+Epoch 42: validation accuracy = 0.449000 -- validation perplexity = 10.419842
+Epoch 42: test accuracy: 0.485000
+---- Qualitative Analysis
+Context: what color is bernhard ? greg is a rhino . greg is green . lily is a frog . julius is a rhino . brian is a rhino . brian is green . lily is yellow . julius is green . bernhard is a rhino . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: green </s>
+Model prediction: green </s>
+=========================
+Step 23700: train_loss = 0.067127, train_acc = 0.937500, train ppl = 1.034133
+Step 23800: train_loss = 0.018017, train_acc = 1.000000, train ppl = 1.009049
+Step 23900: train_loss = 0.024160, train_acc = 1.000000, train ppl = 1.012153
+Step 24000: train_loss = 0.008869, train_acc = 1.000000, train ppl = 1.004444
+Step 24100: train_loss = 0.030676, train_acc = 1.000000, train ppl = 1.015456
+Step 24200: train_loss = 0.078396, train_acc = 0.937500, train ppl = 1.039976
+==== Finshed epoch 43 ====
+Evaluating model...
+Epoch 43: validation accuracy = 0.433000 -- validation perplexity = 9.514493
+Epoch 43: test accuracy: 0.476000
+---- Qualitative Analysis
+Context: what color is bernhard ? julius is a swan . lily is a swan . brian is a rhino . bernhard is a swan . julius is yellow . lily is yellow . greg is a swan . greg is white . brian is gray . what color is bernhard ?
+Question: what color is bernhard ?
+Answer: white </s>
+Model prediction: gray </s>
+=========================
+Step 24300: train_loss = 0.025083, train_acc = 1.000000, train ppl = 1.012620
+Step 24400: train_loss = 0.251762, train_acc = 0.937500, train ppl = 1.134147
+Step 24500: train_loss = 0.002563, train_acc = 1.000000, train ppl = 1.001282
+Step 24600: train_loss = 0.000136, train_acc = 1.000000, train ppl = 1.000068
+Step 24700: train_loss = 0.036397, train_acc = 1.000000, train ppl = 1.018365
+==== Finshed epoch 44 ====
+Evaluating model...
+Epoch 44: validation accuracy = 0.445000 -- validation perplexity = 11.625174
+Epoch 44: test accuracy: 0.473000
+---- Qualitative Analysis
+Context: what color is brian ? julius is a rhino . brian is a lion . greg is a swan . julius is gray . bernhard is a frog . lily is a lion . greg is yellow . bernhard is yellow . lily is gray . what color is brian ?
+Question: what color is brian ?
+Answer: gray </s>
+Model prediction: gray </s>
+=========================
+Step 24800: train_loss = 0.034057, train_acc = 1.000000, train ppl = 1.017174
+Step 24900: train_loss = 0.030142, train_acc = 1.000000, train ppl = 1.015185
+Step 25000: train_loss = 0.017472, train_acc = 1.000000, train ppl = 1.008775
+Step 25100: train_loss = 0.015520, train_acc = 1.000000, train ppl = 1.007790
+Step 25200: train_loss = 0.140160, train_acc = 0.937500, train ppl = 1.072594
+Step 25300: train_loss = 0.027347, train_acc = 1.000000, train ppl = 1.013767
+==== Finshed epoch 45 ====
+Evaluating model...
+Epoch 45: validation accuracy = 0.446000 -- validation perplexity = 11.245064
+Epoch 45: test accuracy: 0.492000
+---- Qualitative Analysis
+Context: what color is brian ? julius is a lion . bernhard is a rhino . brian is a lion . julius is white . bernhard is white . greg is a swan . greg is gray . lily is a rhino . lily is yellow . what color is brian ?
+Question: what color is brian ?
+Answer: white </s>
+Model prediction: gray </s>
+=========================
+Step 25400: train_loss = 0.009954, train_acc = 1.000000, train ppl = 1.004989
+Step 25500: train_loss = 0.037522, train_acc = 1.000000, train ppl = 1.018938
+Step 25600: train_loss = 0.005297, train_acc = 1.000000, train ppl = 1.002652
+Step 25700: train_loss = 0.000133, train_acc = 1.000000, train ppl = 1.000067
+Step 25800: train_loss = 0.295690, train_acc = 0.937500, train ppl = 1.159333
+==== Finshed epoch 46 ====
+Evaluating model...
+Epoch 46: validation accuracy = 0.454000 -- validation perplexity = 12.025012
+Epoch 46: test accuracy: 0.501000
+---- Qualitative Analysis
+Context: what color is greg ? bernhard is a frog . bernhard is gray . lily is a lion . brian is a rhino . lily is yellow . julius is a lion . brian is green . julius is green . greg is a frog . what color is greg ?
+Question: what color is greg ?
+Answer: gray </s>
+Model prediction: green </s>
+=========================
+Step 25900: train_loss = 0.000227, train_acc = 1.000000, train ppl = 1.000114
+Step 26000: train_loss = 0.023725, train_acc = 1.000000, train ppl = 1.011933
+Step 26100: train_loss = 0.000164, train_acc = 1.000000, train ppl = 1.000082
+Step 26200: train_loss = 0.003214, train_acc = 1.000000, train ppl = 1.001608
+Step 26300: train_loss = 0.105401, train_acc = 0.937500, train ppl = 1.054114
+Step 26400: train_loss = 0.005545, train_acc = 1.000000, train ppl = 1.002776
+==== Finshed epoch 47 ====
+Evaluating model...
+Epoch 47: validation accuracy = 0.456000 -- validation perplexity = 11.932599
+Epoch 47: test accuracy: 0.492000
+---- Qualitative Analysis
+Context: what color is lily ? julius is a lion . bernhard is a swan . bernhard is gray . greg is a lion . julius is white . brian is a frog . greg is white . brian is gray . lily is a swan . what color is lily ?
+Question: what color is lily ?
+Answer: gray </s>
+Model prediction: white </s>
+=========================
+Step 26500: train_loss = 0.034957, train_acc = 1.000000, train ppl = 1.017632
+Step 26600: train_loss = 0.007414, train_acc = 1.000000, train ppl = 1.003714
+Step 26700: train_loss = 0.002567, train_acc = 1.000000, train ppl = 1.001284
+Step 26800: train_loss = 0.000358, train_acc = 1.000000, train ppl = 1.000179
+Step 26900: train_loss = 0.002156, train_acc = 1.000000, train ppl = 1.001079
+Step 27000: train_loss = 0.021665, train_acc = 1.000000, train ppl = 1.010891
+==== Finshed epoch 48 ====
+Evaluating model...
+Epoch 48: validation accuracy = 0.457000 -- validation perplexity = 12.839299
+Epoch 48: test accuracy: 0.477000
+---- Qualitative Analysis
+Context: what color is julius ? bernhard is a frog . brian is a frog . greg is a frog . lily is a rhino . greg is gray . julius is a frog . bernhard is white . lily is white . brian is white . what color is julius ?
+Question: what color is julius ?
+Answer: gray </s>
+Model prediction: gray </s>
+=========================
+Step 27100: train_loss = 0.198813, train_acc = 0.937500, train ppl = 1.104515
+Step 27200: train_loss = 0.000213, train_acc = 1.000000, train ppl = 1.000107
+Step 27300: train_loss = 0.047718, train_acc = 1.000000, train ppl = 1.024146
+Step 27400: train_loss = 0.000092, train_acc = 1.000000, train ppl = 1.000046
+Step 27500: train_loss = 0.000170, train_acc = 1.000000, train ppl = 1.000085
+==== Finshed epoch 49 ====
+Evaluating model...
+Epoch 49: validation accuracy = 0.452000 -- validation perplexity = 13.483756
+Epoch 49: test accuracy: 0.476000
+---- Qualitative Analysis
+Context: what color is greg ? bernhard is a swan . brian is a lion . brian is white . greg is a frog . lily is a lion . lily is green . julius is a frog . julius is green . bernhard is gray . what color is greg ?
+Question: what color is greg ?
+Answer: green </s>
+Model prediction: gray </s>
+=========================
+Step 27600: train_loss = 0.003161, train_acc = 1.000000, train ppl = 1.001582
+Step 27700: train_loss = 0.002566, train_acc = 1.000000, train ppl = 1.001284
+Step 27800: train_loss = 0.057154, train_acc = 0.937500, train ppl = 1.028989
+Step 27900: train_loss = 0.643078, train_acc = 0.937500, train ppl = 1.379248
+Step 28000: train_loss = 0.205293, train_acc = 0.937500, train ppl = 1.108100
+Step 28100: train_loss = 0.001467, train_acc = 1.000000, train ppl = 1.000734
+==== Finshed epoch 50 ====
+Evaluating model...
+Epoch 50: validation accuracy = 0.458000 -- validation perplexity = 11.368815
+Epoch 50: test accuracy: 0.488000
+---- Qualitative Analysis
+Context: what color is lily ? bernhard is a swan . brian is a frog . julius is a rhino . bernhard is gray . lily is a frog . julius is yellow . brian is yellow . greg is a swan . greg is yellow . what color is lily ?
+Question: what color is lily ?
+Answer: yellow </s>
+Model prediction: yellow </s>
+=========================
+Best model (acc) at epoch 1 -- validation perplexity = 1.592176 -- validation accuracy = 0.490000 -- test accuracy = 0.458000
+0.49
