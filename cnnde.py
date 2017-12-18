@@ -33,23 +33,24 @@ class ABCNN:
     def _conv1d( x, W ):
         return tf.nn.conv1d(x, W, stride=1, padding='SAME')
 
-    def create_embedding( self, name, seq, seq_len ):
-        with tf.variable_scope(name):
+    def create_embedding( self, name, seq, seq_len, reuse=False ):
+        with tf.variable_scope("word_embedding_model", reuse=reuse):
             w_embedding = tf.get_variable("word_embedding", [self.vocab_size, self.h_size], dtype=tf.float32)
+            w = tf.nn.embedding_lookup(w_embedding, seq)  # [batch, time, emb_size]
+        with tf.variable_scope(name):
             p_embedding = tf.get_variable("positional_embedding", [seq_len, self.h_size], dtype=tf.float32)
 
-            w = tf.nn.embedding_lookup(w_embedding, seq)  # [batch, time, emb_size]
             p = tf.nn.embedding_lookup(p_embedding, tf.range(seq_len))  # [batch, time, emb_size]
             e = w + p
             return e
 
-    def create_encoder( self, name, e, k ):
+    def create_encoder( self, name, e, k, num_layers ):
         with tf.variable_scope(name):
             # Todo: add batch_normalization
 
             # Initialize the conv_output of the loop with the initial embedding(word + pos) of the input
             conv_output = e
-            for i in range(1, self.num_layers + 1):
+            for i in range(1, num_layers + 1):
                 with tf.name_scope('conv' + str(i)):
                     W_conv = self._get_weights_variable("W" + str(i), [k, self.h_size, self.h_size],
                                                         tf.sqrt(4.0*self.keep_prob/self.h_size))

@@ -15,10 +15,8 @@ from cnnde import ABCNN
 
 parser = argparse.ArgumentParser()
 
-# Todo check which arguments are needed
 # Task info arguments.
-parser.add_argument("--task", type=str, default="1",
-                    help="Task number")
+parser.add_argument("--task", type=str, default="1", help="Task number")
 
 # I/O arguments.
 parser.add_argument("--data_dir", type=str, default=None,
@@ -52,8 +50,8 @@ parser.add_argument("--embedding_size", type=int, default=32,
                     help="Size of the word embeddings and conv output")
 parser.add_argument("--num_layers", type=int, default=2,
                     help="Amount of convolutional layer blocks")
-parser.add_argument("--kernel_size", type=int, default=10,
-                    help="Width of the convolutional filter")
+parser.add_argument("--kernel_size", type=int, default=16,
+                    help="Width of the convolutional filter for the context encoding")
 
 np.random.seed(42)
 tf.set_random_seed(42)
@@ -78,7 +76,7 @@ print("Loading data...")
 tokenizer = MosesTokenizer()
 
 # Load the training / testing data.
-train_val, test = utils.load_data(args.task, "", "./tasks/en-10k", w2i, tokenizer, args.batch_size, True)
+train_val, test = utils.load_data(args.task, "", args.data_dir, w2i, tokenizer, args.batch_size, True)
 train, val = train_val
 
 train_context, train_question, train_answer = list(zip(*train))
@@ -113,14 +111,13 @@ with tf.variable_scope("ABCNN"):
                         keep_prob=args.dropout_keep_prob,
                         optimizer=optimizer,
                         learning_rate=args.learning_rate,
-                        num_layers=args.num_layers,
                         decay_steps=args.decay_steps)
 
     # Build the training model graph.
     e_context = train_model.create_embedding("context_encoder", context, max_c_length)
-    e_question = train_model.create_embedding("question_encoder", question, max_q_length)
-    encoded_context = train_model.create_encoder("context_encoder", e_context, k=args.kernel_size)
-    encoded_question = train_model.create_encoder("question_encoder", e_question, k=5)
+    e_question = train_model.create_embedding("question_encoder", question, max_q_length, True)
+    encoded_context = train_model.create_encoder("context_encoder", e_context, k=args.kernel_size, num_layers=args.num_layers)
+    encoded_question = train_model.create_encoder("question_encoder", e_question, k=5, num_layers=1)
     attention_matrix = train_model.create_attention_matrix(encoded_context, encoded_question)
     logits = train_model.create_decoder(attention_matrix, encoded_context, e_context, max_c_length, max_q_length,
                                         avg_c_length)
@@ -140,14 +137,13 @@ with tf.variable_scope("ABCNN", reuse=True):
                        keep_prob=1.0,
                        optimizer=optimizer,
                        learning_rate=args.learning_rate,
-                       num_layers=args.num_layers,
                        decay_steps=args.decay_steps)
 
     # Build the testing model graph.
     val_e_context = val_model.create_embedding("context_encoder", val_context, max_c_length)
     val_e_question = val_model.create_embedding("question_encoder", val_question, max_q_length)
-    val_encoded_context = val_model.create_encoder("context_encoder", val_e_context, k=args.kernel_size)
-    val_encoded_question = val_model.create_encoder("question_encoder", val_e_question, k=5)
+    val_encoded_context = val_model.create_encoder("context_encoder", val_e_context, k=args.kernel_size, num_layers=args.num_layers)
+    val_encoded_question = val_model.create_encoder("question_encoder", val_e_question, k=5, num_layers=1)
     val_attention_matrix = val_model.create_attention_matrix(val_encoded_context, val_encoded_question)
     val_logits = val_model.create_decoder(val_attention_matrix, val_encoded_context, val_e_context, max_c_length,
                                             max_q_length, avg_c_length)
@@ -171,8 +167,8 @@ with tf.variable_scope("ABCNN", reuse=True):
     # Build the testing model graph.
     test_e_context = test_model.create_embedding("context_encoder", test_context, max_c_length)
     test_e_question = test_model.create_embedding("question_encoder", test_question, max_q_length)
-    test_encoded_context = test_model.create_encoder("context_encoder", test_e_context, k=args.kernel_size)
-    test_encoded_question = test_model.create_encoder("question_encoder", test_e_question, k=5)
+    test_encoded_context = test_model.create_encoder("context_encoder", test_e_context, k=args.kernel_size, num_layers=args.num_layers)
+    test_encoded_question = test_model.create_encoder("question_encoder", test_e_question, k=5, num_layers=1)
     test_attention_matrix = test_model.create_attention_matrix(test_encoded_context, test_encoded_question)
     test_logits = test_model.create_decoder(test_attention_matrix, test_encoded_context, test_e_context, max_c_length,
                                             max_q_length, avg_c_length)
@@ -232,10 +228,10 @@ with tf.Session() as sess:
     print("Running task {}".format(args.task))
 
     # Bookkeeping stuff.
-    total_step = 0
-    best_test = 0
-    best_val = 0
-    best_e = 0
+    total_step = 0.0
+    best_test = 0.0
+    best_val = 0.0
+    best_e = 0.0
     stop = False
 
     # Evaluate before training.
