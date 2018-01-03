@@ -31,10 +31,6 @@ The following steps describe how to train or experiment with the conv seq2seq mo
 
 - bAbi website: https://research.fb.com/downloads/babi/
 
-### Sharelatex
-
-- https://www.sharelatex.com/project/5a004d7dc2a42c52c415bdb5
-
 ## Related Work
 ### Papers
 
